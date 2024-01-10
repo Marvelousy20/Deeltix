@@ -25,6 +25,9 @@ const config = {
         background: "#FEF5FF",
         primary: "#574DFF",
         card: "#F0F3F8",
+        milky: "#F7F7F7",
+        dark: "#2C2929",
+        offwhite: "#FEFEFE",
       },
       keyframes: {
         "accordion-down": {

@@ -12,7 +12,13 @@ import { MapPin, Star } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
-export default function CarouselSlider() {
+import { IRestaurent } from "@/types";
+
+interface DataProps {
+  data: IRestaurent[];
+}
+
+export default function CarouselSlider({ data }: DataProps) {
   return (
     <Carousel
       opts={{
@@ -33,12 +39,17 @@ export default function CarouselSlider() {
           </CarouselItem>
         ))} */}
 
-        {topRestaurentData.map((d, index) => (
+        {data.map((d, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
             <div className="p-1">
               <Card>
                 <CardContent>
-                  <Image src={d.img} alt={d.img} width={300} height={300} />
+                  <div className="relative">
+                    <Image src={d.img} alt={d.img} width={350} height={300} />
+                    <h1 className="stroke absolute right-0 -bottom-8">
+                      {index + 1}
+                    </h1>
+                  </div>
                   <div className="flex justify-between mt-4">
                     <div>
                       <h3 className="text-xl font-medium">{d.name}</h3>
