@@ -22,7 +22,12 @@ const config = {
         grayblack: "#162026",
         pink: "#FF003D",
         input: "#FEFEFE",
-        background: "#FEF5FF"
+        background: "#F4F5FF",
+        primary: "#574DFF",
+        card: "#F0F3F8",
+        milky: "#F7F7F7",
+        dark: "#2C2929",
+        offwhite: "#FEFEFE",
       },
       keyframes: {
         "accordion-down": {
