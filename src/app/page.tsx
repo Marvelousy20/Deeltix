@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 import { Input } from "@/components/ui/input";
 import Food from "../../public/food.png";
 import Image from "next/image";
@@ -8,16 +8,17 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="bg">
       <div className="bg-background">
-        <Navbar />
-
-        <div className="max-w-[40rem] mx-auto text-[3.5rem] text-center mt-20">
+        <div className="max-w-[40rem] mx-auto text-[3.5rem] text-center pt-20">
           <h1>
             Discover
-            <span className="text-grayblack font-extrabold">retaurants</span>
+            <span className="text-grayblack font-extrabold"> retaurants </span>
             and make
-            <span className="text-grayblack font-extrabold">reservations.</span>
+            <span className="text-grayblack font-extrabold">
+              {" "}
+              reservations.
+            </span>
           </h1>
 
           <Input
@@ -111,14 +112,14 @@ export default function Home() {
               <Button className="bg-dark text-white w-full">
                 Get started now
               </Button>
-              <Button className="bg-offwhite w-full hover:bg-opacity-70">
+              <Button className="bg-offwhite w-full hover:bg-opacity-40">
                 Learn more
               </Button>
             </div>
 
             <div className="mt-10">
               <span className="">
-                Wanna discover places?{" "}
+                Wanna discover places?
                 <a href="" className="underline underline-offset-4">
                   Join Deeltix
                 </a>
