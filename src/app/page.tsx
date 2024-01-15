@@ -1,3 +1,4 @@
+"use client"
 // import Navbar from "@/components/Navbar";
 import { Input } from "@/components/ui/input";
 import Food from "../../public/food.png";
@@ -5,8 +6,20 @@ import Image from "next/image";
 import CarouselSlider from "@/components/carousel";
 import { topRestaurentData } from "@/components/data/TopRestaurant";
 import { Button } from "@/components/ui/button";
+import Modal from "@/components/ui/Modal";
+import { useEffect, useState } from "react";
+import Signup from "@/components/signup";
+import Signin from "@/components/signin";
+import ForgetPassword from "@/components/ForgetPassword";
 
 export default function Home() {
+  const [showModal, setShowModal] = useState(false)
+  const [signUpModal, setsignUpModal] = useState(false)
+  const [resetpassword, setResetpassword] = useState(false)
+
+  useEffect(() => {
+    console.log(showModal)
+  })
   return (
     <main className="bg">
       <div className="bg-background">
@@ -109,10 +122,10 @@ export default function Home() {
             </p>
 
             <div className="flex justify-between gap-6 mt-8">
-              <Button className="bg-dark text-white w-full">
+              <Button onClick={() => setShowModal(true)} className="bg-dark text-white w-full">
                 Get started now
               </Button>
-              <Button className="bg-offwhite w-full hover:bg-opacity-40">
+              <Button onClick={() => setsignUpModal(true)} className="bg-offwhite w-full hover:bg-opacity-40">
                 Learn more
               </Button>
             </div>
@@ -126,11 +139,20 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <div className="justify-self-end">
+          <div onClick={() => setResetpassword(true)}  className="justify-self-end">
             <Image src="/compt.png" alt="compt" width={460} height={450} />
           </div>
         </div>
       </div>
+      {showModal && <Modal onClose={() => setShowModal(false)}>
+        <Signup />
+      </Modal> }
+      {signUpModal && <Modal onClose={() => setsignUpModal(false)}>
+        <Signin />
+      </Modal> }
+      {resetpassword && <Modal onClose={() => setResetpassword(false)}>
+        <ForgetPassword />
+      </Modal> }
     </main>
   );
 }
