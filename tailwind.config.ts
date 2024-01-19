@@ -28,6 +28,7 @@ const config = {
         milky: "#F7F7F7",
         dark: "#2C2929",
         offwhite: "#FEFEFE",
+        grayBlack: "#121212",
       },
       keyframes: {
         "accordion-down": {

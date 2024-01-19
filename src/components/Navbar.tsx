@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 export default function Navbar() {
   return (
-    <div className="bg-background pt-10">
+    <div className="pt-10 fixed w-full z-50">
       <nav className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
         <div className="flex items-center gap-x-10">
           <div className="flex items-center">
