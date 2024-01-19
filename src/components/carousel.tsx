@@ -1,4 +1,6 @@
-import { topRestaurentData } from "./data/TopRestaurant";
+"use client";
+
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
 import {
@@ -19,6 +21,14 @@ interface DataProps {
 }
 
 export default function CarouselSlider({ data }: DataProps) {
+  const router = useRouter();
+
+  function handleShowDetail(restaurantName: string) {
+    router.push(`/${restaurantName}`, {
+      
+    })
+  }
+
   return (
     <Carousel
       opts={{
@@ -27,18 +37,6 @@ export default function CarouselSlider({ data }: DataProps) {
       className="w-full mx-auto relative"
     >
       <CarouselContent>
-        {/* {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
-            <div className="p-1">
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-3xl font-semibold">{index + 1}</span>
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))} */}
-
         {data.map((d, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
             <div className="p-1">
@@ -67,7 +65,11 @@ export default function CarouselSlider({ data }: DataProps) {
                       </h6>
                     </div>
                   </div>
-                  <Button variant="card" className="mt-5">
+                  <Button
+                    variant="card"
+                    className="mt-5"
+                    onClick={() => handleShowDetail(d.name)}
+                  >
                     View Details
                   </Button>
                 </CardContent>
@@ -76,7 +78,7 @@ export default function CarouselSlider({ data }: DataProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="" />
+      <CarouselPrevious />
       <CarouselNext />
     </Carousel>
   );
