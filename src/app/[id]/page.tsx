@@ -12,7 +12,7 @@ export default function DetailPage() {
   const { id } = useParams();
 
   const data = topRestaurentData.find(
-    (item) => item.name === decodeURIComponent(id)
+    (item) => item.name === decodeURIComponent(id as string)
   );
 
   return (
