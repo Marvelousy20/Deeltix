@@ -20,7 +20,7 @@ export default function DetailPage() {
       <div>
         <div>
           <Image
-            src="/img.png"
+            src="/bg.svg"
             alt="img"
             width="1800"
             height={1400}
