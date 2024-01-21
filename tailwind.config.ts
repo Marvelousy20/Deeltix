@@ -29,6 +29,7 @@ const config = {
         dark: "#2C2929",
         offwhite: "#FEFEFE",
         grayBlack: "#121212",
+        comment: "#42474B",
       },
       keyframes: {
         "accordion-down": {
