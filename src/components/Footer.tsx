@@ -2,7 +2,7 @@ import { Linkedin, Instagram, Twitter, Facebook } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="py-12 bg-milky mt-20 px-20">
+    <footer className="py-12 w-full bg-milky mt-20 px-20">
       <div className="flex justify-between ">
         <div>
           <h1>Deeltix</h1>
