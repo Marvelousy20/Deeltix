@@ -20,3 +20,9 @@ export interface IMenu {
     | "hotdog"
     | "salads";
 }
+
+export interface ILoggedinUser {
+  name: string;
+  icon: React.ReactNode;
+  chevron: React.ReactNode;
+}

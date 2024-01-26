@@ -3,11 +3,7 @@ import React from "react";
 import { UserRound, Bookmark, ChevronRight } from "lucide-react";
 import { ShoppingBag, Note1, LogoutCurve } from "iconsax-react";
 import clsx from "clsx";
-interface ILoggedinUser {
-  name: string;
-  icon: React.ReactNode;
-  chevron: React.ReactNode;
-}
+import { ILoggedinUser } from "@/types";
 
 export const MenuDropDown = () => {
   const userDetails: ILoggedinUser[] = [
@@ -40,7 +36,7 @@ export const MenuDropDown = () => {
   return (
     <div className=" bg-white flex flex-col space-y-2 p-3">
       {userDetails.map((items, idx) => (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3" key={idx}>
           <div className=" w-6 h-6 flex items-center justify-center rounded-full bg-gray border border-grayoutline">
             {items.icon}
           </div>
