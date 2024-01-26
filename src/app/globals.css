@@ -6,7 +6,22 @@
   -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
   -webkit-text-stroke-width: 3px;
   -webkit-text-stroke-color: white;
-    color: white;
-    font-size: 5rem;
-    font-weight: 700;
+  color: white;
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.transact-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+.transact-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #283b46;
+  border-radius: 10px;
+}
+
+/* Handle */
+.transact-scroll::-webkit-scrollbar-thumb {
+  background: #121212;
+  border-radius: 10px;
 }

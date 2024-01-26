@@ -7,6 +7,7 @@ import CarouselSlider from "@/components/carousel";
 import { topRestaurentData } from "@/components/data/TopRestaurant";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/Modal";
+import { MyOrder } from "@/components/order";
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
         <div className="max-w-[40rem] mx-auto text-[3.5rem] text-center pt-20">
           <h1>
             Discover
-            <span className="text-grayblack font-extrabold"> retaurants </span>
+            <span className="text-grayblack font-extrabold"> Restaurants </span>
             and make
             <span className="text-grayblack font-extrabold">
               {" "}
@@ -25,7 +26,7 @@ export default function Home() {
 
           <Input
             type="search"
-            placeholder="Search for a restaurant, cruisine e.t.c"
+            placeholder="Search for a restaurant, cuisine e.t.c"
             className="mt-8 px-6 py-6"
           />
         </div>
@@ -134,5 +135,8 @@ export default function Home() {
         </div>
       </div>
     </main>
+    // <div>
+    //   <MyOrder/>
+    // </div>
   );
 }
