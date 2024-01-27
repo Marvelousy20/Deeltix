@@ -16,18 +16,17 @@ export default function Navbar() {
   let authorization = false;
   return (
     <>
-      {authorization ? (
+      {!authorization ? (
         <div className="pt-10 fixed w-full z-50">
           <nav className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
             <div className="flex items-center gap-x-10">
               <div className="flex items-center">
                 <Image
-                  src="/dashboard/flash.svg"
+                  src="/dashboard/logo.svg"
                   alt="img"
-                  width="28"
-                  height="28"
+                  width="80"
+                  height="80"
                 />
-                <span className="text-2xl">Deeltix</span>
               </div>
 
               <span className="font-bold text-xl">For business</span>
