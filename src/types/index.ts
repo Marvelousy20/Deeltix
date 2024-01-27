@@ -25,4 +25,5 @@ export interface ILoggedinUser {
   name: string;
   icon: React.ReactNode;
   chevron: React.ReactNode;
+  route: string;
 }
