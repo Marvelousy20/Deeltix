@@ -12,7 +12,7 @@ export const MyOrder = () => {
           <h3 className=" text-[56px] font-medium text-grayBlack">My Order</h3>
 
           {/* Tab */}
-          <Tabs defaultValue="account" className="w-full h-full pt-6 pb-20">
+          <Tabs defaultValue="ongoing" className="w-full h-full pt-6 pb-20">
             <div className="w-[300px] flex mx-auto">
               <TabsList className="w-full flex rounded-[56px] border border-grayoutline bg-card items-center justify-between">
                 <div className="w-full flex justify-between items-center transition ease-in ">
@@ -31,16 +31,17 @@ export const MyOrder = () => {
                 </div>
               </TabsList>
             </div>
-            <div>
+            <div className="bg-red-500">
               <TabsContent value="ongoing" className="w-full">
-                Order ongoing
+                <OngoingDelivery />
               </TabsContent>
-              <TabsContent value="completed">Order completed</TabsContent>
+              <TabsContent value="completed">
+                <Completed />
+              </TabsContent>
             </div>
           </Tabs>
         </div>
       </div>
-      {completed ? <OngoingDelivery /> : <Completed />}
     </div>
   );
 };
