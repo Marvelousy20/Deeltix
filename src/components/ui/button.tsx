@@ -23,7 +23,7 @@ const buttonVariants = cva(
         card: "w-full rounded-[2rem] bg-white font-medium",
       },
       size: {
-        default: "h-10 px-4 py-6",
+        default: "h-12 px-4 py-6",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
