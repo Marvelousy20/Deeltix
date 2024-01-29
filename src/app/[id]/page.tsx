@@ -10,6 +10,9 @@ import Menu from "@/components/Menu/All/Menu";
 import { MenuData } from "@/components/Menu/All/data";
 import Reservation from "@/components/Reservation";
 import Rating from "@/components/Rating";
+import { Cart } from "@/components/Reservation/AddToCart";
+import AllRestaurants from "@/components/Reservation/AllRestuarant";
+import CarouselSlider from "@/components/carousel";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -35,7 +38,7 @@ export default function DetailPage() {
           />
         </div>
 
-        <div className="px-20 mt-10">
+        <div className="px-20 mt-10 flex flex-col gap-20">
           <div className="text-4xl font-bold">
             <h2>{data?.name}</h2>
 
@@ -74,9 +77,9 @@ export default function DetailPage() {
             </div>
           </div>
 
-          <div className="grid gap-10 grid-cols-6 mt-16">
+          <div className="flex  gap-10 mt-16">
             {/* Tabs component */}
-            <div className="col-span-4">
+            <div className="col-span-4 w-[70%]">
               <Tabs defaultValue="overview" className="max-w-4xl">
                 <TabsList className="grid grid-cols-4 w-full">
                   <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -149,8 +152,34 @@ export default function DetailPage() {
             </div>
 
             {/* Reservation */}
-            <div className="col-span-2">
+            <div className="flex flex-col gap-20 border-l border-[#EDEDED] w-[30%]">
               <Reservation />
+              <Cart />
+            </div>
+          </div>
+          <div>
+            <div className=" text-2xl font-bold text-grayBlack">Photos</div>
+            <div className="mt-9">
+              <AllRestaurants />
+            </div>
+
+            {/* Restaurant around lekki */}
+            <div className="mt-20">
+              <div className="flex items-center gap-x-2">
+                <h3 className="text-4xl font-medium">
+                  Restaurants around Lekki
+                </h3>
+                <Image
+                  src="/greenheart.svg"
+                  alt="glowing_stars"
+                  width={28}
+                  height={28}
+                />
+              </div>
+
+              <div className="mt-9">
+                <CarouselSlider data={topRestaurentData} />
+              </div>
             </div>
           </div>
         </div>

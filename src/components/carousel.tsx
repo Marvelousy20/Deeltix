@@ -10,7 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
-import { MapPin, Star } from "lucide-react";
+import { MapPin, Star, Bookmark } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
@@ -24,9 +24,7 @@ export default function CarouselSlider({ data }: DataProps) {
   const router = useRouter();
 
   function handleShowDetail(restaurantName: string) {
-    router.push(`/${restaurantName}`, {
-      
-    })
+    router.push(`/${restaurantName}`, {});
   }
 
   return (
@@ -47,6 +45,9 @@ export default function CarouselSlider({ data }: DataProps) {
                     <h1 className="stroke absolute right-0 -bottom-8">
                       {index + 1}
                     </h1>
+                    <div className="h-[30px] w-[30px] rounded-full flex items-center justify-center bg-grayoutline absolute top-3 right-3">
+                      <Bookmark size={20} className=" " />
+                    </div>
                   </div>
                   <div className="flex justify-between mt-4">
                     <div>

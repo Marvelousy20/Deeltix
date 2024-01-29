@@ -32,12 +32,13 @@ const config = {
         dark: "#2C2929",
         offwhite: "#FEFEFE",
         grayBlack: "#121212",
-        grayBlack2:"#2C2929",
+        grayBlack2: "#2C2929",
         grayHelp: "#565D62",
         gray: "#F7F7F7",
         grayoutline: "#E7EAF1",
         grayInactive: "#636C71",
         comment: "#42474B",
+        dividerColor: "#EDEDED",
       },
       keyframes: {
         "accordion-down": {

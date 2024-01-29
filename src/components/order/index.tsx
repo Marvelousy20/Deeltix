@@ -18,13 +18,13 @@ export const MyOrder = () => {
                 <div className="w-full flex justify-between items-center transition ease-in ">
                   <TabsTrigger
                     value="ongoing"
-                    className=" w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
+                    className=" w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input py-3 text-grayInactive"
                   >
                     Ongoing
                   </TabsTrigger>
                   <TabsTrigger
                     value="completed"
-                    className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
+                    className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input py-3 text-grayInactive"
                   >
                     Completed
                   </TabsTrigger>
