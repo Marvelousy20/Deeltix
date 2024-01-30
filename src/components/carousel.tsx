@@ -34,7 +34,7 @@ export default function CarouselSlider({ data }: DataProps) {
       }}
       className="w-full mx-auto relative"
     >
-      <CarouselContent>
+      <CarouselContent className="h-[340px] lg:h-fit">
         {data.map((d, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
             <div className="p-1">

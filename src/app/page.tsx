@@ -59,7 +59,7 @@ export default function Home() {
 
       {/* Content till footer */}
       <div className="lg:mt-20 mt-0 lg:px-20 px-8">
-        <div className="flex gap-6 lg:gap-0 flex-col">
+        <div className="flex gap-10 lg:gap-0 flex-col">
           <div className="flex flex-col lg:gap-0 gap-10">
             <div className="flex items-center gap-x-2">
               <h3 className="lg:text-4xl text-2xl lg:font-medium font-bold">
