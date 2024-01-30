@@ -42,9 +42,9 @@ export default function CarouselSlider({ data }: DataProps) {
                 <CardContent>
                   <div className="relative">
                     <Image src={d.img} alt={d.img} width={350} height={300} />
-                    <h1 className="stroke absolute right-0 -bottom-8">
+                    {/* <h1 className="stroke absolute right-0 -bottom-8">
                       {index + 1}
-                    </h1>
+                    </h1> */}
                     <div className="h-[30px] w-[30px] rounded-full flex items-center justify-center bg-grayoutline absolute top-3 right-3">
                       <Bookmark size={20} className=" " />
                     </div>

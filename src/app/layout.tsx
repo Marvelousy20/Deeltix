@@ -19,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} transact-scroll`}>
-        <Navbar />
+        <div className="hidden lg:flex">
+          <Navbar />
+        </div>
         {children}
         <Footer />
       </body>
