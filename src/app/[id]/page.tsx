@@ -176,7 +176,7 @@ export default function DetailPage() {
                   </p>
                 </div>
 
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col md:flex-row md:justify-between items-center">
                   <Rating />
                   <Rating />
                   <Rating />
