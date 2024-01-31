@@ -13,6 +13,8 @@ import Rating from "@/components/Rating";
 import { Cart } from "@/components/Reservation/AddToCart";
 import AllRestaurants from "@/components/Reservation/AllRestuarant";
 import CarouselSlider from "@/components/carousel";
+import { Input } from "@/components/ui/input";
+import UserDrawer from "@/components/Drawer";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -20,32 +22,45 @@ export default function DetailPage() {
   const data = topRestaurentData.find(
     (item) => item.name === decodeURIComponent(id as string)
   );
-
+  console.log({ data });
   const chickenMenu = MenuData.filter((menu) => menu.category === "chicken");
   const pastriesMenu = MenuData.filter((menu) => menu.category === "pastries");
   const burgerMenu = MenuData.filter((menu) => menu.category === "burger");
 
   return (
-    <div>
+    <div className="w-full">
       <div>
-        <div>
+        {/* mobile navbar */}
+        <div className="lg:hidden block">
+          <div className="border-b-[1px] flex items-center px-6 justify-between max-h-[70px] border-[#E9E9E9] fixed inset-0 z-[9999] backdrop-blur-md bg-grayblack">
+            <Image
+              src="/dashboard/logo.svg"
+              alt="img"
+              width="120"
+              height="120"
+            />
+            <UserDrawer />
+          </div>
+        </div>
+        <div className="mt-16 lg:mt-0">
           <Image
             src="/bg.svg"
             alt="img"
-            width="1800"
+            width={1800}
             height={1400}
             objectFit="cover"
+            className="w-full h-full object-cover"
           />
         </div>
 
-        <div className="px-20 mt-10 flex flex-col gap-20">
+        <div className="lg:px-20 px-8 lg:mt-10 mt-0 py-5 lg:py-0 flex flex-col lg:gap-20 gap-8">
           <div className="text-4xl font-bold">
             <h2>{data?.name}</h2>
 
             {/* bookmark icon here */}
           </div>
 
-          <div className="mt-10 flex justify-between">
+          <div className="lg:mt-10 mt-0 lg:flex lg:justify-between justify-center space-y-6">
             <div className="flex items-center gap-2">
               <Image src="/money.svg" alt="money" width={48} height={48} />
               <p>&#8358;{formatPrice(data?.price)} average price</p>
@@ -77,11 +92,11 @@ export default function DetailPage() {
             </div>
           </div>
 
-          <div className="flex  gap-10 mt-16">
+          <div className="lg:flex lg:gap-10 gap-0 space-y-5 lg:mt-16 mt-0">
             {/* Tabs component */}
-            <div className="col-span-4 w-[70%]">
+            <div className="col-span-4 lg:w-[70%] w-full">
               <Tabs defaultValue="overview" className="max-w-4xl">
-                <TabsList className="grid grid-cols-4 w-full">
+                <TabsList className="lg:grid lg:grid-cols-4 w-full flex items-center justify-between">
                   <TabsTrigger value="overview">Overview</TabsTrigger>
                   <TabsTrigger value="menu">Menu</TabsTrigger>
                   <TabsTrigger value="photos">Photos</TabsTrigger>
@@ -100,9 +115,23 @@ export default function DetailPage() {
                 </TabsContent>
               </Tabs>
 
+              <div className="lg:grid grid-cols-6 hidden">
+                <h1 className="text-3xl font-bold col-span-2">Menu</h1>
+                <div className="col-span-4 w-full">
+                  <Input placeholder="Search store menu" className="w-full" />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-5 items-center justify-center lg:hidden">
+                <h1 className="text-3xl font-bold">Menu</h1>
+                <div className="w-full">
+                  <Input placeholder="Search store menu" className="w-full" />
+                </div>
+              </div>
+
               <div className="mt-6 w-full">
-                <Tabs defaultValue="all" className="max-w-4xl w-full">
-                  <TabsList className="grid grid-cols-7 w-full data-[state=active]:!text-blue-500 mb-8">
+                <Tabs defaultValue="all" className="lg:max-w-4xl w-full">
+                  <TabsList className="grid lg:grid-cols-7 grid-cols-4 data-[state=active]:!text-blue-500 mb-8">
                     <TabsTrigger value="all">All</TabsTrigger>
                     <TabsTrigger value="chicken">Chicken</TabsTrigger>
                     <TabsTrigger value="pastries">Pastries</TabsTrigger>
@@ -137,13 +166,17 @@ export default function DetailPage() {
                 </Tabs>
               </div>
 
-              <div className="mt-20">
-                <h1 className="text-[2rem] font-bold">Ratings & Reviews</h1>
-                <p>
-                  The most commonly ordered items and dishes from this store
-                </p>
+              <div className="lg:mt-20 mt-10">
+                <div className="flex flex-col gap-2 items-center lg:items-start justify-center lg:justify-normal">
+                  <h1 className="lg:text-[2rem] text-xl font-bold">
+                    Ratings & Reviews
+                  </h1>
+                  <p className="font-normal text-base  ">
+                    The most commonly ordered items and dishes from this store
+                  </p>
+                </div>
 
-                <div>
+                <div className="flex flex-col items-center">
                   <Rating />
                   <Rating />
                   <Rating />
@@ -151,22 +184,25 @@ export default function DetailPage() {
               </div>
             </div>
 
-            {/* Reservation */}
-            <div className="flex flex-col gap-20 border-l border-[#EDEDED] w-[30%]">
+            {/* Reservation on desktop */}
+            <div className="lg:flex flex-col gap-20 border-l border-[#EDEDED] w-[30%] hidden">
               <Reservation />
               <Cart />
             </div>
           </div>
-          <div>
-            <div className=" text-2xl font-bold text-grayBlack">Photos</div>
-            <div className="mt-9">
-              <AllRestaurants />
+
+          <div className=" flex flex-col gap-6">
+            <div className="flex flex-col gap-8 lg:gap-0">
+              <p className=" text-2xl font-bold text-grayBlack">Photos</p>
+              <div className="lg:mt-9 mt-0">
+                <AllRestaurants />
+              </div>
             </div>
 
             {/* Restaurant around lekki */}
-            <div className="mt-20">
+            <div className="lg:mt-20 mt-0 flex flex-col gap-10 lg:gap-0">
               <div className="flex items-center gap-x-2">
-                <h3 className="text-4xl font-medium">
+                <h3 className="lg:text-4xl text-2xl font-bold lg:font-medium">
                   Restaurants around Lekki
                 </h3>
                 <Image
@@ -174,13 +210,19 @@ export default function DetailPage() {
                   alt="glowing_stars"
                   width={28}
                   height={28}
+                  className="hidden lg:block"
                 />
               </div>
 
-              <div className="mt-9">
+              <div className="lg:mt-9 mt-0">
                 <CarouselSlider data={topRestaurentData} />
               </div>
             </div>
+          </div>
+          {/* Reservation on mobile */}
+          <div className="lg:hidden flex flex-col gap-20">
+            <Reservation />
+            <Cart />
           </div>
         </div>
       </div>

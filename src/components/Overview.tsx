@@ -23,12 +23,12 @@ export default function Overview() {
       </div>
       <hr className="my-10" />
 
-      <div className="grid grid-cols-6">
+      {/* <div className="grid grid-cols-6">
         <h1 className="text-3xl font-bold col-span-2">Menu</h1>
         <div className="col-span-4 w-full">
           <Input placeholder="Search store menu" className="w-full" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
