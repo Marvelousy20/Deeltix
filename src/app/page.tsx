@@ -23,7 +23,6 @@ export default function Home() {
               height="120"
             />
             <UserDrawer />
-            {/* <Menu color="white" size={40} onClick={open} />? */}
           </div>
         </div>
         <div className="lg:max-w-[40rem] mt-20 max-w-[300px] mx-auto lg:text-[3.5rem] text-[2rem] text-center lg:pt-20 pt-5">
@@ -37,11 +36,13 @@ export default function Home() {
             </span>
           </h1>
 
-          <Input
-            type="search"
-            placeholder="Search for a restaurant, cuisine e.t.c"
-            className="mt-8 px-6 py-6"
-          />
+          <div className="flex items-center justify-center">
+            <Input
+              type="search"
+              placeholder="Search for a restaurant, cuisine e.t.c"
+              className="mt-8 px-6 py-6"
+            />
+          </div>
         </div>
 
         <div className="flex justify-center">
