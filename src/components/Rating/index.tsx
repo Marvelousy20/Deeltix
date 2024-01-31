@@ -12,7 +12,7 @@ export default function Rating() {
           </div>
           <div className="">
             <h1 className="text-[1.375rem] font-medium">Ademola Adeniyi</h1>
-            <div className="lg:flex lg:items-center  gap-1">
+            <div className="lg:flex lg:items-center gap-1">
               <span>12th January, 2023</span>
               {/* <div className="h-1 w-1 rounded-full bg-black"></div> */}
               <span>19:07</span>

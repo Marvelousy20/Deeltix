@@ -43,7 +43,7 @@ export default function ConfirmationModal() {
     },
   });
   return (
-    <div className="flex flex-col w-[500px] bg-white rounded-lg z-[9999]">
+    <div className="flex flex-col w-[500px] bg-white rounded-lg">
       <div className="w-[500px]">
         <div className=" flex gap-1 text-lg text-[#565D62] items-center justify-center w-full h-8 bg-background my-4">
           <Image src="/voltage.png" width={30} height={30} alt="Voltage" />
