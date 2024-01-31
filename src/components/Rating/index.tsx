@@ -3,8 +3,8 @@ import { Star } from "lucide-react";
 
 export default function Rating() {
   return (
-    <div className="mt-8 border rounded-[1.25rem] w-fit lg:p-6 p-4">
-      <div className="flex flex-col justify-between items-center">
+    <div className="mt-8 border rounded-[1.25rem] w-fit md:w-full lg:p-6 p-4">
+      <div className="flex flex-col justify-between items-center md:flex-row">
         {/* Profile part */}
         <div className="flex items-center gap-4">
           <div className="lg:h-12 lg:w-12 h-12 w-12 rounded-full bg-background flex justify-center items-center text-[1.5rem]">
