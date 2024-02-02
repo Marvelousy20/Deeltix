@@ -12,7 +12,7 @@ export const MyOrder = () => {
           <h3 className=" text-[56px] font-medium text-grayBlack">My Order</h3>
 
           {/* Tab */}
-          <Tabs defaultValue="ongoing" className="w-full h-full pt-6 pb-20">
+          <Tabs defaultValue="ongoing" className="w-full h-full pt-6">
             <div className="w-[300px] flex mx-auto">
               <TabsList className="w-full flex rounded-[56px] border border-grayoutline bg-card items-center justify-between">
                 <div className="w-full flex justify-between items-center transition ease-in ">

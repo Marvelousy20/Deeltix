@@ -206,7 +206,7 @@ export default function Reservation() {
             )}
           />
           {/* Full name */}
-          <FormField
+          {/* <FormField
             control={form.control}
             name="username"
             render={({ field }) => (
@@ -225,11 +225,11 @@ export default function Reservation() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           {/* Email address */}
 
-          <FormField
+          {/* <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
@@ -249,10 +249,10 @@ export default function Reservation() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           {/* phone number */}
-          <FormField
+          {/* <FormField
             control={form.control}
             name="phone"
             render={({ field }) => (
@@ -272,7 +272,7 @@ export default function Reservation() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           {/* special request */}
           <FormField

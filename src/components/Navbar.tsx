@@ -14,7 +14,7 @@ export default function Navbar() {
   const [signUpModal, setsignUpModal] = useState(false);
   const [resetpassword, setResetpassword] = useState(false);
 
-  let authorization = true;
+  let authorization = false;
   return (
     <>
       {authorization ? (
