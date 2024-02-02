@@ -27,6 +27,7 @@ const config = {
         background: "#F4F5FF",
         primary: "#574DFF",
         card: "#F0F3F8",
+        dark3: "#121212",
         dark2: "#10181C",
         milky: "#F7F7F7",
         dark: "#2C2929",

@@ -15,6 +15,7 @@ import AllRestaurants from "@/components/Reservation/AllRestuarant";
 import CarouselSlider from "@/components/carousel";
 import { Input } from "@/components/ui/input";
 import UserDrawer from "@/components/Drawer";
+import { Bookmark } from "lucide-react";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -53,14 +54,16 @@ export default function DetailPage() {
           />
         </div>
 
-        <div className="lg:px-20 px-8 lg:mt-10 mt-0 py-5 lg:py-0 flex flex-col lg:gap-20 gap-8">
-          <div className="text-4xl font-bold">
-            <h2>{data?.name}</h2>
+        <div className="lg:px-20 px-8 lg:mt-10 mt-0 py-5 lg:py-0 flex flex-col gap-8">
+          <div className="flex items-center justify-between">
+            <h2 className="text-4xl text-grayBlack font-bold">{data?.name}</h2>
 
-            {/* bookmark icon here */}
+            <div className="h-[40px] w-[40px] rounded-full border-[2px] border-grayoutline flex items-center justify-center">
+              <Bookmark size={25} color="#2C2929" className=" " />
+            </div>
           </div>
 
-          <div className="lg:mt-10 mt-0 lg:flex lg:justify-between justify-center space-y-6">
+          <div className=" mt-0 flex flex-col lg:justify-between justify-center space-y-6">
             <div className="flex items-center gap-2">
               <Image src="/money.svg" alt="money" width={48} height={48} />
               <p>&#8358;{formatPrice(data?.price)} average price</p>
