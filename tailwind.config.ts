@@ -21,6 +21,8 @@ const config = {
       colors: {
         Gainsboro: "#DEDEDE",
         grayblack: "#162026",
+        grayBottom: "#EAECF0",
+        grayHeader: "#F2F4F7",
         indigo: "#283B46",
         pink: "#FF003D",
         input: "#FEFEFE",

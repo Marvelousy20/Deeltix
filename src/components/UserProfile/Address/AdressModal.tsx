@@ -7,7 +7,7 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
+  label,
   FormMessage,
 } from "@/components/ui/form";
 import { z } from "zod";
@@ -64,7 +64,7 @@ export default function UserAddressModal() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="flex items-center justify-between">
+                  <label className="flex items-center justify-between">
                     <p className="font-bold text-lg text-grayHelp">
                       Your address
                     </p>
@@ -79,7 +79,7 @@ export default function UserAddressModal() {
                         Get current location
                       </p>
                     </div>
-                  </FormLabel>
+                  </label>
                   <FormControl>
                     <Input placeholder="Enter address" {...field} />
                   </FormControl>
@@ -94,9 +94,9 @@ export default function UserAddressModal() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold text-lg text-grayHelp">
+                  <label className="font-bold text-lg text-grayHelp">
                     Landmark
-                  </FormLabel>
+                  </label>
                   <FormControl>
                     <Input placeholder="Enter landmark" {...field} />
                   </FormControl>

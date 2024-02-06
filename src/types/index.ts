@@ -27,3 +27,9 @@ export interface ILoggedinUser {
   chevron: React.ReactNode;
   route: string;
 }
+
+export interface Isidebar {
+  name: string;
+  link: string;
+  icon: React.ReactNode;
+}

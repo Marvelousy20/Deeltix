@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ExcludeFooter, ExcludeNavbar } from "@/lib/exclude";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +21,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} transact-scroll`}>
         <div className="hidden lg:flex">
-          <Navbar />
+          {/* <Navbar /> */}
+          <ExcludeNavbar />
         </div>
         {children}
-        <Footer />
+        {/* <Footer /> */}
+        <ExcludeFooter />
       </body>
     </html>
   );
