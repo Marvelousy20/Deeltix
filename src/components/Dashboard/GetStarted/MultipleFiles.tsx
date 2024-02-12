@@ -78,16 +78,6 @@ export const MultipleUpload = () => {
                     </div>
                   </div>
                 ))}
-
-                {/* {userfile && (
-              <Image
-                src={URL.createObjectURL(userfile)}
-                width={80}
-                height={80}
-                alt="user upload"
-                className="w-full h-full object-cover"
-              />
-            )} */}
               </div>
             </div>
           )}
@@ -103,7 +93,3 @@ export const MultipleUpload = () => {
     </section>
   );
 };
-
-//    <div className="w-[15px] h-[15px] flex items-center justify-center rounded-full bg-red-500  border border-[#EAECF0]">
-//   <X color="#636C71" strokeWidth="1.75px" />
-// </div>

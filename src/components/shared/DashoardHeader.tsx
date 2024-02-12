@@ -6,7 +6,7 @@ import { User } from "lucide-react";
 
 export const Header = () => {
   return (
-    <section className="flex items-center w-full justify-between py-4 px-8 border-b-[2px] border-grayBottom ">
+    <section className="flex sticky top-0 z-[9999] items-center w-full justify-between py-4 px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
       <div className="flex items-center">
         <Input
           type="search"

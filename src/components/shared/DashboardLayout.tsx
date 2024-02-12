@@ -16,6 +16,7 @@ export const DashboardLayout = ({
 }) => {
   const sideBar: Isidebar[] = [
     { name: "Get started", link: "/get-started", icon: <Category size="18" /> },
+
     { name: "Dashboard", link: "/dashboard", icon: <Home2 size="18" /> },
     { name: "Reservation", link: "/reservation", icon: <Wine size={18} /> },
     { name: "Menu", link: "/menu", icon: <Reserve size="18" /> },
@@ -27,7 +28,7 @@ export const DashboardLayout = ({
 
   return (
     <section className="flex items-start w-full h-screen">
-      <div className="h-full w-[240px] bg-[#121212] flex flex-col items-center py-10 gap-20">
+      <div className="h-full w-[240px] bg-[#101323] flex flex-col items-center py-10 gap-20">
         <figure>
           <Image
             src="/dashboard/logo.svg"
@@ -43,11 +44,11 @@ export const DashboardLayout = ({
               key={name}
               className={clsx(
                 link === pathName
-                  ? "text-[#574DFF] border border-grayoutline rounded-[20px] bg-gray py-3 px-4 text-base font-medium"
-                  : "text-base font-medium text-white border-none bg-none"
+                  ? "text-[#574DFF] border outline-none border-[#636C71] rounded-[20px] bg-[#574DFF12]  text-base font-medium"
+                  : "text-base font-medium text-white border-none bg-none "
               )}
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 py-[8px] px-[10px]">
                 <span>{icon}</span>
                 <span>{name}</span>
               </div>
@@ -55,7 +56,7 @@ export const DashboardLayout = ({
           ))}
         </div>
       </div>
-      <div className="h-full flex-1">
+      <div className="h-full flex-1 overflow-y-auto transact-scroll">
         <Header />
         {children}
       </div>

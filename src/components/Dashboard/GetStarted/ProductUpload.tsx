@@ -68,10 +68,15 @@ export const Product = () => {
                   height={20}
                   alt="upload logo"
                 />
-                <div>{userfile?.name}</div>
+                <div className=" text-base font-normal text-grayBlack2">
+                  {userfile?.name.slice(0, 10)}
+                </div>
               </div>
 
-              <div> {userfile?.size}</div>
+              <div className="text-base font-normal text-grayBlack2">
+                {" "}
+                {userfile?.size}
+              </div>
             </div>
             <div className="flex items-center gap-2">
               <span
