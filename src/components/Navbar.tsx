@@ -16,7 +16,7 @@ export default function Navbar() {
 
   let authorization = false;
   return (
-    <>
+    <header>
       {authorization ? (
         <section>
           <div className="pt-10 fixed w-full z-50 hidden lg:block">
@@ -112,6 +112,6 @@ export default function Navbar() {
       ) : (
         <LoggedInNavbar />
       )}
-    </>
+    </header>
   );
 }

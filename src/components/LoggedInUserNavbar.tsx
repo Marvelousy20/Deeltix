@@ -26,7 +26,12 @@ export default function LoggedInNavbar() {
       <div className="pt-10 fixed w-full z-50 hidden lg:block">
         <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
           <div>
-            <Image src="/dashboard/logo.svg" alt="img" width="160" height="100" />
+            <Image
+              src="/dashboard/logo.svg"
+              alt="img"
+              width="160"
+              height="100"
+            />
           </div>
 
           {/* location */}
