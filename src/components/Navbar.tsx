@@ -20,7 +20,7 @@ export default function Navbar() {
       {authorization ? (
         <section>
           <div className="pt-10 fixed w-full z-50 hidden lg:block">
-            <nav className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
+            <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
               <div className="flex items-center gap-x-10">
                 <div className="flex items-center">
                   <Image
@@ -45,7 +45,7 @@ export default function Navbar() {
                   Create Account
                 </Button>
               </div>
-            </nav>
+            </section>
 
             {showModal && (
               <Modal onClose={() => setShowModal(false)}>

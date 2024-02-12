@@ -8,7 +8,7 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
+  label,
   FormMessage,
 } from "@/components/ui/form";
 import { z } from "zod";
@@ -61,9 +61,9 @@ export default function EditUserProfile() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-grayHelp text-lg font-medium">
+                        <label className="text-grayHelp text-lg font-medium">
                           Full name
-                        </FormLabel>
+                        </label>
                         <FormControl>
                           <Input
                             placeholder="Enter your phone number"
@@ -82,9 +82,9 @@ export default function EditUserProfile() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-grayHelp text-lg font-medium">
+                        <label className="text-grayHelp text-lg font-medium">
                           Phone number
-                        </FormLabel>
+                        </label>
                         <FormControl>
                           <Input
                             type="phone"
@@ -107,9 +107,9 @@ export default function EditUserProfile() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-grayHelp text-lg font-medium">
+                        <label className="text-grayHelp text-lg font-medium">
                           Email
-                        </FormLabel>
+                        </label>
                         <FormControl>
                           <Input
                             type="email"
@@ -131,9 +131,9 @@ export default function EditUserProfile() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-grayHelp text-lg font-medium">
+                        <label className="text-grayHelp text-lg font-medium">
                           Date of birth
-                        </FormLabel>
+                        </label>
                         <FormControl>
                           <Input
                             type="password"

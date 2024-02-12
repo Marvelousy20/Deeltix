@@ -17,7 +17,7 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
+  label,
   FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
@@ -106,9 +106,9 @@ export default function Reservation() {
             name="dob"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel className="text-grayHelp text-lg font-medium">
+                <label className="text-grayHelp text-lg font-medium">
                   Date
-                </FormLabel>
+                </label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -151,9 +151,9 @@ export default function Reservation() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-grayHelp text-lg font-medium">
+                <label className="text-grayHelp text-lg font-medium">
                   Time
-                </FormLabel>
+                </label>
                 <FormControl>
                   <Input
                     type="time"
@@ -173,9 +173,9 @@ export default function Reservation() {
             name="guest"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-grayHelp text-lg font-medium">
+                <label className="text-grayHelp text-lg font-medium">
                   Number of people
-                </FormLabel>
+                </label>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -211,9 +211,9 @@ export default function Reservation() {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-grayHelp text-lg font-medium">
+                <label className="text-grayHelp text-lg font-medium">
                   Full name
-                </FormLabel>
+                </label>
                 <FormControl>
                   <Input
                     placeholder="Enter your full name"
@@ -234,9 +234,9 @@ export default function Reservation() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-grayHelp text-lg font-medium">
+                <label className="text-grayHelp text-lg font-medium">
                   Email
-                </FormLabel>
+                </label>
                 <FormControl>
                   <Input
                     type="email"
@@ -257,9 +257,9 @@ export default function Reservation() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-grayHelp text-lg font-medium">
+                <label className="text-grayHelp text-lg font-medium">
                   Phone number
-                </FormLabel>
+                </label>
                 <FormControl>
                   <Input
                     type="phone"
@@ -280,9 +280,9 @@ export default function Reservation() {
             name="request"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-grayHelp text-lg font-medium">
+                <label className="text-grayHelp text-lg font-medium">
                   Special request (optional)
-                </FormLabel>
+                </label>
                 <FormControl>
                   <Input
                     placeholder="e.g a Table next to a window"
@@ -303,9 +303,9 @@ export default function Reservation() {
             name="promo"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-grayHelp text-lg font-medium">
+                <label className="text-grayHelp text-lg font-medium">
                   Promo code (optional)
-                </FormLabel>
+                </label>
                 <FormControl>
                   <Input
                     placeholder="e.g welcome023"

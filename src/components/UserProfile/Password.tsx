@@ -5,7 +5,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
+  label,
   FormMessage,
 } from "@/components/ui/form";
 import { z } from "zod";
@@ -58,9 +58,9 @@ export default function UserPassword() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-grayHelp text-lg font-medium">
+                        <label className="text-grayHelp text-lg font-medium">
                           Old password
-                        </FormLabel>
+                        </label>
                         <FormControl>
                           <Input
                             type="password"
@@ -79,9 +79,9 @@ export default function UserPassword() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-grayHelp text-lg font-medium">
+                        <label className="text-grayHelp text-lg font-medium">
                           Re-enter new password
-                        </FormLabel>
+                        </label>
                         <FormControl>
                           <Input
                             type="password"
@@ -102,9 +102,9 @@ export default function UserPassword() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-grayHelp text-lg font-medium">
+                        <label className="text-grayHelp text-lg font-medium">
                           New password
-                        </FormLabel>
+                        </label>
                         <FormControl>
                           <Input
                             type="password"

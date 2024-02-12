@@ -10,7 +10,9 @@
   font-size: 5rem;
   font-weight: 700;
 }
-
+.hide::-webkit-scrollbar {
+  display: none;
+}
 .transact-scroll::-webkit-scrollbar {
   width: 5px;
 }

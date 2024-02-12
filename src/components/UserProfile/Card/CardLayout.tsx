@@ -1,10 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Location } from "iconsax-react";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import Modal from "@/components/ui/Modal";
 
 export const AtmCards = () => {
   const [showModal, setShowModal] = useState(false);

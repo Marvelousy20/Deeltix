@@ -6,7 +6,7 @@
 //   FormControl,
 //   FormField,
 //   FormItem,
-//   FormLabel,
+//   label,
 //   FormMessage,
 // } from "@/components/ui/form";
 // import { Input } from "../ui/input";
@@ -30,7 +30,7 @@
 //               name="username"
 //               render={({ field }) => (
 //                 <FormItem>
-//                   <FormLabel>Full name</FormLabel>
+//                   <label>Full name</label>
 //                   <FormControl>
 //                     <Input placeholder="John doe" {...field} />
 //                   </FormControl>
@@ -46,9 +46,9 @@
 //               name="email"
 //               render={({ field }) => (
 //                 <FormItem>
-//                   <FormLabel className="text-grayHelp text-lg font-medium">
+//                   <label className="text-grayHelp text-lg font-medium">
 //                     Email
-//                   </FormLabel>
+//                   </label>
 //                   <FormControl>
 //                     <Input
 //                       type="email"
@@ -70,9 +70,9 @@
 //               name="phone"
 //               render={({ field }) => (
 //                 <FormItem>
-//                   <FormLabel className="text-grayHelp text-lg font-medium">
+//                   <label className="text-grayHelp text-lg font-medium">
 //                     Phone number
-//                   </FormLabel>
+//                   </label>
 //                   <FormControl>
 //                     <Input
 //                       type="phone"
@@ -93,9 +93,9 @@
 //               name="phone"
 //               render={({ field }) => (
 //                 <FormItem>
-//                   <FormLabel className="text-grayHelp text-lg font-medium">
+//                   <label className="text-grayHelp text-lg font-medium">
 //                     Password
-//                   </FormLabel>
+//                   </label>
 //                   <FormControl>
 //                     <Input
 //                       type="password"

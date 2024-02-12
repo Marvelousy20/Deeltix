@@ -8,7 +8,7 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
+  label,
   FormMessage,
 } from "@/components/ui/form";
 import { z } from "zod";
@@ -62,7 +62,7 @@ export default function ConfirmationModal() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full name</FormLabel>
+                  <label>Full name</label>
                   <FormControl>
                     <Input placeholder="John doe" {...field} />
                   </FormControl>
@@ -78,9 +78,9 @@ export default function ConfirmationModal() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-grayHelp text-lg font-medium">
+                  <label className="text-grayHelp text-lg font-medium">
                     Email
-                  </FormLabel>
+                  </label>
                   <FormControl>
                     <Input
                       type="email"
@@ -102,9 +102,9 @@ export default function ConfirmationModal() {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-grayHelp text-lg font-medium">
+                  <label className="text-grayHelp text-lg font-medium">
                     Phone number
-                  </FormLabel>
+                  </label>
                   <FormControl>
                     <Input
                       type="phone"
@@ -126,9 +126,9 @@ export default function ConfirmationModal() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-grayHelp text-lg font-medium">
+                    <label className="text-grayHelp text-lg font-medium">
                       Password
-                    </FormLabel>
+                    </label>
                     <FormControl>
                       <Input
                         type="password"
