@@ -24,8 +24,6 @@ export default function RootLayout({
   );
 }
 
-// (Aut
-
 //
 //Create a escape folder (General)
 // inside the folder, create a layout.tsx and then copy everything we have inside the root layout to the layout.tsx that was created and include your header and footer component.

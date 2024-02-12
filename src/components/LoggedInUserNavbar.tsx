@@ -4,22 +4,13 @@ import { MapPin, ChevronDown, ChevronUp } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MenuDropDown } from "./menu-dropdown";
 import { useState } from "react";
-import clsx from "clsx";
 
 export default function LoggedInNavbar() {
   const [rotate, setRotate] = useState<boolean>(false);
-
-  const handleRotate = () => {
-    setRotate(!rotate);
-    console.log("true");
-  };
 
   return (
     <div>
