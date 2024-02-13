@@ -2,8 +2,8 @@ import React from "react";
 import { Headings } from "../GetStarted/Headings";
 import { DashboardReservation } from "./UpcomingReservation";
 import { Guest } from "./RecentGuest";
-import { StatTransactionTable } from "./TransactionTable";
-import { MantineTableee } from "./MantineTable";
+import { DataTable } from "@/components/Table/DataTable";
+import { transactionColumns, transactionData } from "./TransactionTable";
 
 export interface IStat {
   title: string;
@@ -54,8 +54,15 @@ export const Dashboard = () => {
       <section className="flex items-start gap-4">
         <DashboardReservation />
         <Guest />
-        <StatTransactionTable />
-        {/* <MantineTableee /> */}
+        <div className="border-[2px] border-[#F7F7F7] rounded-[24px]">
+          <div className="flex items-center justify-between py-[20px] px-[18px]">
+            <p className="font-medium text-xl text-[#101828]">Transaction</p>
+            <p className="text-sm font-normal text-[#574DFF] cursor-pointer">
+              View all
+            </p>
+          </div>
+          <DataTable columns={transactionColumns} data={transactionData} />
+        </div>
       </section>
     </div>
   );
