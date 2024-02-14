@@ -49,7 +49,7 @@ export const MenuUpload = () => {
   };
   return (
     <div className="p-8 gap-[48px] flex flex-col">
-      <Breadcrumbs breadcrumb={"Add first menu"} />
+      {/* <Breadcrumbs breadcrumb={"Add first menu"} /> */}
 
       <section className="flex flex-col items-center justify-center ">
         <div className="border border-grayBottom rounded-[24px] p-[64px] w-fit">
