@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Provider } from "../../provider";
-import "@mantine/core/styles.css";
-
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <Provider>
-    <html lang="en">
-      <body className={`${inter.className} transact-scroll`}>
-        <div className="hidden lg:flex"></div>
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+        <body className={`${inter.className} transact-scroll`}>
+          <div className="hidden lg:flex"></div>
+          {children}
+        </body>
+      </html>
     </Provider>
   );
 }
