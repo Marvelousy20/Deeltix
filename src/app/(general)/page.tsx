@@ -33,7 +33,7 @@ export default function Home() {
             and make
             <span className="text-grayblack font-extrabold">
               {" "}
-              reservations.
+              Reservations.
             </span>
           </h1>
 

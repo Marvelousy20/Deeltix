@@ -116,7 +116,7 @@ export default function Footer() {
           </div>
 
           <div className="flex justify-center text-background max-w-[500px]">
-            ©2023, by DeelTix LLC. DeelTix is a registered company, UK Co.
+            ©2023, by DeelTix 2024. DeelTix is a registered company, UK Co.
             [14806326]
           </div>
         </div>
