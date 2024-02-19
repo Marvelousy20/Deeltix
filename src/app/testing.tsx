@@ -5,17 +5,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Button } from "@/components/ui/button";
-import { Product } from "./ProductUpload";
-import { Breadcrumbs } from "./Breadcrumb";
-export const MenuUpload = () => {
+export const AdvancedPage = () => {
   const formSchema = z.object({
     name: z.string().min(2, {
       message: "Enter food name",
@@ -23,9 +15,7 @@ export const MenuUpload = () => {
     description: z.string().min(10, {
       message: "Enter food description",
     }),
-    category: z.string().min(2, {
-      message: "Enter food category",
-    }),
+
     price: z.string().min(2, {
       message: "Enter food price",
     }),
@@ -38,7 +28,6 @@ export const MenuUpload = () => {
     defaultValues: {
       name: "",
       description: "",
-      category: "",
       price: "",
     },
   });
@@ -65,7 +54,7 @@ export const MenuUpload = () => {
               <div className="flex flex-col gap-6">
                 <div className="">
                   <label className="text-grayHelp text-lg font-medium">
-                    Name
+                    Full name
                   </label>
                   <Input
                     placeholder="eg. Fried rice"
@@ -81,7 +70,7 @@ export const MenuUpload = () => {
 
                 <div>
                   <label className="text-grayHelp text-lg font-medium">
-                    Description
+                    Description DeelTix's
                   </label>
                   <Textarea
                     placeholder="Seasoned with curry, thyme"
@@ -94,47 +83,6 @@ export const MenuUpload = () => {
                       {errors.description?.message}
                     </div>
                   )}
-                </div>
-
-                {/* Select input */}
-                <div>
-                  <label className="text-grayHelp text-lg font-medium">
-                    Category
-                  </label>
-
-                  <Select
-                    onValueChange={(value) =>
-                      setValue("category", value, {
-                        shouldValidate: true,
-                      })
-                    }
-                    defaultValue={watch().category}
-                  >
-                    <SelectTrigger>
-                      <SelectValue
-                        placeholder="eg.  Seafood"
-                        className="text-grayInactive text-lg font-normal"
-                      />
-                    </SelectTrigger>
-                    <SelectContent className="text-grayInactive text-lg font-normal">
-                      {[
-                        { label: "Jollof rice", value: "Jollof rice" },
-                        { label: "Fried rice", value: "Fried rice" },
-                        { label: "okro", value: "okro" },
-                      ].map((state, _i) => (
-                        <SelectItem
-                          key={_i}
-                          className="rounded-xl"
-                          value={state.value}
-                        >
-                          {state.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <div className="text-red-500 text-sm font-normal pt-1">
-                    {errors.category?.message}
-                  </div>
                 </div>
 
                 {/* price */}
@@ -157,9 +105,7 @@ export const MenuUpload = () => {
             </div>
 
             {/*  file upload */}
-            <div>
-              <Product />
-            </div>
+
             <Button type="submit" className="bg-blue-600 text-white">
               Submit
             </Button>
