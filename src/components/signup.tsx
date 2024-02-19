@@ -146,8 +146,9 @@ export default function SignupPage() {
           <div className="text-sm flex gap-1">
             <input type="checkbox" id="scales" name="scales" />
             <label htmlFor="scales">
-              I agree to DeelTix's <span className="text-blue-500">terms</span>{" "}
-              and <span className="text-blue-500">conditions</span>
+              I agree to DeelTix&apos;s
+              <span className="text-blue-500">terms</span> and
+              <span className="text-blue-500">conditions</span>
             </label>
           </div>
 

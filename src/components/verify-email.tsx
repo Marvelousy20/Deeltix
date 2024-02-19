@@ -90,7 +90,7 @@ export const EmailVerification = () => {
           </div>
 
           <section className="text-sm font-normal text-[#565D62] flex items-center gap-1">
-            Didn't get a code{" "}
+            Didn&apos;t get a code{" "}
             <div
               onClick={handleReverify}
               className="text-[#574DFF] cursor-pointer "

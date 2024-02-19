@@ -70,7 +70,7 @@ export const AdvancedPage = () => {
 
                 <div>
                   <label className="text-grayHelp text-lg font-medium">
-                    Description DeelTix's
+                    Description DeelTix&apos;s
                   </label>
                   <Textarea
                     placeholder="Seasoned with curry, thyme"
