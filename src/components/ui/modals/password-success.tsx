@@ -45,7 +45,7 @@ export const SuccessMessage = ({
               </p>
             </div>
             <Button
-              onClick={handleClicked}
+              // onClick={handleClicked}
               className="bg-[#2C2929] font-bold text-xl text-center text-white"
             >
               Go back to sign in

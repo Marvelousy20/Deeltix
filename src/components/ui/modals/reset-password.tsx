@@ -1,3 +1,4 @@
+"use client";
 import { Modal } from "@mantine/core";
 import { MoveLeft } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +26,7 @@ function ModalResetPassword({
   opened: any;
   close: () => void;
 }) {
-  const [resetOpened, { open, close: resetClose }] = useDisclosure();
+  // const [resetOpened, { open, close: resetClose }] = useDisclosure();
   const [otp, setOtp] = useState("");
   const { push } = useRouter();
   const formSchema = z
@@ -56,9 +57,11 @@ function ModalResetPassword({
     mutationKey: ["reset-password"],
 
     onSuccess() {
-      close();
-      open();
+      // close();
+      // open();
+      push("/");
       reset();
+      toast.success("Kindly log in your account");
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -168,7 +171,7 @@ function ModalResetPassword({
           <div className="rounded-r-lg w-full bg-[url('/signup-rest.png')] bg-cover bg-no-repeat"></div>
         </div>
       </Modal>
-      <SuccessMessage opened={resetOpened} close={resetClose} />
+      {/* <SuccessMessage opened={resetOpened} close={resetClose} /> */}
     </>
   );
 }
