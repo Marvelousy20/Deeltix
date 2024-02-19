@@ -33,3 +33,35 @@ export interface Isidebar {
   link: string;
   icon: React.ReactNode;
 }
+
+export interface ISignUp {
+  name: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+}
+
+export interface ISignIn {
+  email: string;
+  password: string;
+}
+
+export interface IVerifyEmail {
+  email: string | null;
+  otp: string;
+}
+
+export interface IReVerifyEmail {
+  email: string | null;
+}
+
+export interface ForgotPassword {
+  email: string;
+}
+
+export interface IResetPassword {
+  email: string | null;
+  password: string;
+  confirmPassword: string;
+  otp: string;
+}

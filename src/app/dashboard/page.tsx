@@ -5,7 +5,8 @@ import React from "react";
 const DashboardStat = () => {
   return (
     <DashboardLayout>
-      <Dashboard />
+      {/* <Dashboard /> */}
+      <div>Hello</div>
     </DashboardLayout>
   );
 };

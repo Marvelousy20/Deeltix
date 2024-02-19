@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Provider } from "../../provider";
+import { QueryProvider } from "./query-provider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,18 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Provider>
-      <html lang="en">
+    <html lang="en">
+      <QueryProvider>
         <body className={`${inter.className} transact-scroll`}>
-          <div className="hidden lg:flex"></div>
           {children}
+          <ToastContainer />
         </body>
-      </html>
-    </Provider>
+      </QueryProvider>
+    </html>
   );
 }
-
-//
-//Create a escape folder (General)
-// inside the folder, create a layout.tsx and then copy everything we have inside the root layout to the layout.tsx that was created and include your header and footer component.
-// move the root page.tsx into the escape folder that was created and also move all folder that uses the navbar and footer into the escape folder.

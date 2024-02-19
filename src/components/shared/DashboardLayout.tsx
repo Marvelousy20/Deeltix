@@ -1,7 +1,14 @@
 "use client";
 import React from "react";
 import { Header } from "./DashoardHeader";
-import { Category, Home2, People, Reserve, Wallet } from "iconsax-react";
+import {
+  Category,
+  Home2,
+  People,
+  Reserve,
+  Wallet,
+  Wallet3,
+} from "iconsax-react";
 import { Wine } from "lucide-react";
 import { Isidebar } from "@/types";
 import Link from "next/link";
@@ -21,8 +28,11 @@ export const DashboardLayout = ({
     { name: "Reservation", link: "/reservation", icon: <Wine size={18} /> },
     { name: "Menu", link: "/menu", icon: <Reserve size="18" /> },
     { name: "Guest Book", link: "/guest-book", icon: <People size="18" /> },
-    { name: "Marketting", link: "/marketting", icon: <People size="18" /> },
-    { name: "Team", link: "/team", icon: <People size="18" /> },
+    {
+      name: "Wallet",
+      link: "/wallet",
+      icon: <Wallet3 size="18" />,
+    },
   ];
   const pathName = usePathname();
 

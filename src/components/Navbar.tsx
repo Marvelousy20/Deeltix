@@ -8,13 +8,24 @@ import Signin from "@/components/signin";
 import ForgetPassword from "@/components/ForgetPassword";
 import LoggedInNavbar from "@/components/LoggedInUserNavbar";
 import { X } from "lucide-react";
+import ModalPassword from "./ui/modals/modal-password";
+import { useDisclosure } from "@mantine/hooks";
+import { SignUp } from "./ui/modals/sign-up";
+import { SuccessMessage } from "./ui/modals/password-success";
+import ModalSignIn from "./ui/modals/sign-in";
 
 export default function Navbar() {
+  const [opened, { open, close }] = useDisclosure(false);
+  // const [success, { open: successOpen, close: successClose }] =
+  //   useDisclosure(false);
+  const [signin, { open: signinOpen, close: signinClose }] =
+    useDisclosure(false);
+
   const [showModal, setShowModal] = useState(false);
   const [signUpModal, setsignUpModal] = useState(false);
   const [resetpassword, setResetpassword] = useState(false);
 
-  let authorization = false;
+  let authorization = true;
   return (
     <header>
       {authorization ? (
@@ -35,33 +46,32 @@ export default function Navbar() {
               </div>
 
               {/* location */}
-              <div>Lekki</div>
+              <div className="cursor-pointer">Lekki</div>
 
               {/* Profile */}
               {/* onClick={() => setsignUpModal(true)} */}
               <div className="space-x-4">
-                <Button onClick={() => setsignUpModal(true)}>Sign in</Button>
-                <Button variant="primary" onClick={() => setShowModal(true)}>
+                <Button onClick={signinOpen}>Sign in</Button>
+
+                <Button variant="primary" onClick={open}>
                   Create Account
                 </Button>
               </div>
             </section>
-
-            {showModal && (
+            {/* <SuccessMessage opened={success} close={successClose} /> */}
+            <ModalSignIn opened={signin} close={signinClose} />
+            <SignUp opened={opened} close={close} />
+            {/* {showModal && (
               <Modal onClose={() => setShowModal(false)}>
                 <Signup />
               </Modal>
-            )}
-            {signUpModal && (
-              <Modal onClose={() => setsignUpModal(false)}>
-                <Signin />
-              </Modal>
-            )}
-            {resetpassword && (
+            )} */}
+            /
+            {/* {resetpassword && (
               <Modal onClose={() => setResetpassword(false)}>
                 <ForgetPassword />
               </Modal>
-            )}
+            )} */}
           </div>
 
           {/* mobile nav */}
