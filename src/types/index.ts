@@ -65,3 +65,11 @@ export interface IResetPassword {
   confirmPassword: string;
   otp: string;
 }
+
+export interface IRestaurantSignUp {
+  name: string;
+  restaurantName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+}

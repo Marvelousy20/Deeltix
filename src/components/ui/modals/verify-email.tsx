@@ -1,6 +1,5 @@
 "use client";
 import React, { FormEvent, useState } from "react";
-
 import { Modal } from "@mantine/core";
 import { Button } from "../button";
 import OtpInput from "react-otp-input";
