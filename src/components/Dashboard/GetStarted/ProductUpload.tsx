@@ -4,7 +4,12 @@ import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import React, { useRef, useState } from "react";
 
-export const Product = () => {
+interface ProductProps {
+  fileName: string | null;
+  onFileNameChange: (newFileName: string | null) => void;
+}
+
+export const Product = ({ fileName, onFileNameChange }: ProductProps) => {
   const [userfile, setUserFile] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -17,6 +22,7 @@ export const Product = () => {
     const file = event.target.files?.[0];
     if (file) {
       setUserFile(file);
+      onFileNameChange(file.name);
     }
   };
 

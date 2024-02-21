@@ -6,16 +6,18 @@ import Image from "next/image";
 import { Button } from "../button";
 import ModalSignIn from "./sign-in";
 
-export const SuccessMessage = ({
+export default function SuccessMessage({
   opened,
   close,
 }: {
   opened: any;
   close: () => void;
-}) => {
-  const [login, { open, close: loginClose }] = useDisclosure();
+}) {
+  const [login, { open, close: loginClose }] = useDisclosure(false);
+  const [isOpened, setIsOpened] = React.useState(false);
 
   const handleClicked = () => {
+    setIsOpened(true);
     close();
     open();
   };
@@ -45,7 +47,7 @@ export const SuccessMessage = ({
               </p>
             </div>
             <Button
-              // onClick={handleClicked}
+              onClick={handleClicked}
               className="bg-[#2C2929] font-bold text-xl text-center text-white"
             >
               Go back to sign in
@@ -53,7 +55,7 @@ export const SuccessMessage = ({
           </div>
         </section>
       </Modal>
-      <ModalSignIn opened={login} close={loginClose} />
+      {isOpened && <ModalSignIn opened={login} close={loginClose} />}
     </div>
   );
-};
+}

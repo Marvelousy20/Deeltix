@@ -144,7 +144,12 @@ export default function ModalSignIn({
                 </p>
               </div>
 
-              <Button type="submit" className=" w-[300px]" variant="primary">
+              <Button
+                type="submit"
+                className=" w-[300px]"
+                variant="primary"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <span className="flex items-center gap-1 text-white font-medium text-xl">
                     <span>Signing in</span> <Loader size="sm" />

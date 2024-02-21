@@ -17,7 +17,7 @@ import { Input } from "../input";
 import { Button } from "../button";
 import OtpInput from "react-otp-input";
 import { cookieStorage } from "@ibnlanre/portal";
-import { SuccessMessage } from "./password-success";
+import SuccessMessage from "./password-success";
 
 function ModalResetPassword({
   opened,
@@ -26,7 +26,7 @@ function ModalResetPassword({
   opened: any;
   close: () => void;
 }) {
-  // const [resetOpened, { open, close: resetClose }] = useDisclosure();
+  const [resetOpened, { open, close: resetClose }] = useDisclosure(false);
   const [otp, setOtp] = useState("");
   const { push } = useRouter();
   const formSchema = z
@@ -57,11 +57,11 @@ function ModalResetPassword({
     mutationKey: ["reset-password"],
 
     onSuccess() {
-      // close();
-      // open();
       push("/");
       reset();
       toast.success("Kindly log in your account");
+      close();
+      open();
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -122,7 +122,7 @@ function ModalResetPassword({
                   Password
                 </label>
                 <Input
-                  placeholder="Enter your email address"
+                  placeholder="Enter your password"
                   // type="password"
                   className="text-grayInactive text-lg font-normal mt-2"
                   {...register("password")}
@@ -139,7 +139,7 @@ function ModalResetPassword({
                   Confirm password
                 </label>
                 <Input
-                  placeholder="Enter your email address"
+                  placeholder="Confirm your password"
                   // type="password"
                   className="text-grayInactive text-lg font-normal mt-2"
                   {...register("confirmPassword")}
@@ -171,7 +171,7 @@ function ModalResetPassword({
           <div className="rounded-r-lg w-full bg-[url('/signup-rest.png')] bg-cover bg-no-repeat"></div>
         </div>
       </Modal>
-      {/* <SuccessMessage opened={resetOpened} close={resetClose} /> */}
+      <SuccessMessage opened={resetOpened} close={resetClose} />
     </>
   );
 }

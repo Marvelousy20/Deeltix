@@ -11,7 +11,7 @@ import { X } from "lucide-react";
 import ModalPassword from "./ui/modals/modal-password";
 import { useDisclosure } from "@mantine/hooks";
 import { SignUp } from "./ui/modals/sign-up";
-import { SuccessMessage } from "./ui/modals/password-success";
+import SuccessMessage from "./ui/modals/password-success";
 import ModalSignIn from "./ui/modals/sign-in";
 
 export default function Navbar() {
@@ -66,7 +66,7 @@ export default function Navbar() {
                 <Signup />
               </Modal>
             )} */}
-            /
+
             {/* {resetpassword && (
               <Modal onClose={() => setResetpassword(false)}>
                 <ForgetPassword />

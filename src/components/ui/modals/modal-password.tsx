@@ -100,7 +100,12 @@ function ModalPassword({ opened, close }: { opened: any; close: () => void }) {
                   </div>
                 )}
               </div>
-              <Button type="submit" className=" w-[300px]" variant="primary">
+              <Button
+                type="submit"
+                className=" w-[300px]"
+                variant="primary"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <span className="flex items-center gap-2 text-white font-medium text-xl">
                     <span> Resetting password</span> <Loader size="sm" />

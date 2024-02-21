@@ -15,7 +15,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Product } from "./ProductUpload";
 import { Breadcrumbs } from "./Breadcrumb";
+
 export const MenuUpload = () => {
+  const [fileName, setFileName] = useState<string | null>(null);
+
+  const handleFileNameChange = (newFileName: string | null) => {
+    setFileName(newFileName);
+  };
+
+  console.log("Selected file", fileName);
+ 
   const formSchema = z.object({
     name: z.string().min(2, {
       message: "Enter food name",
@@ -29,6 +38,7 @@ export const MenuUpload = () => {
     price: z.string().min(2, {
       message: "Enter food price",
     }),
+    image: z.string().default(fileName || ""),
   });
 
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
@@ -40,6 +50,7 @@ export const MenuUpload = () => {
       description: "",
       category: "",
       price: "",
+      image: "",
     },
   });
   const { errors } = formState;
@@ -47,6 +58,7 @@ export const MenuUpload = () => {
     console.log(values);
     reset();
   };
+
   return (
     <div className="p-8 gap-[48px] flex flex-col">
       {/* <Breadcrumbs breadcrumb={"Add first menu"} /> */}
@@ -158,8 +170,12 @@ export const MenuUpload = () => {
 
             {/*  file upload */}
             <div>
-              <Product />
+              <Product
+                fileName={fileName}
+                onFileNameChange={handleFileNameChange}
+              />
             </div>
+
             <Button type="submit" className="bg-blue-600 text-white">
               Submit
             </Button>
