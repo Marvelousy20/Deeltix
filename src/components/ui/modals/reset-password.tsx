@@ -4,7 +4,7 @@ import { MoveLeft } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import auth from "@/axios-config";
+import { auth } from "@/axios-config";
 import { useMutation } from "@tanstack/react-query";
 import { ForgotPassword, IResetPassword } from "@/types";
 import { toast } from "react-toastify";

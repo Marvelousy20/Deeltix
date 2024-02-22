@@ -73,3 +73,11 @@ export interface IRestaurantSignUp {
   password: string;
   phoneNumber: string;
 }
+
+export interface IMenus {
+  name: string;
+  description: string;
+  category: string;
+  price: string;
+  image: string | null;
+}

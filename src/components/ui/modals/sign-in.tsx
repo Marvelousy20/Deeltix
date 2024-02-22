@@ -6,7 +6,7 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 import { Loader } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
-import auth from "@/axios-config";
+import { auth } from "@/axios-config";
 import { ISignIn } from "@/types";
 import { useRouter } from "next/navigation";
 import { cookieStorage } from "@ibnlanre/portal";

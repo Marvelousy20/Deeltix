@@ -6,7 +6,7 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 import { Loader } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
-import auth from "@/axios-config";
+import { api } from "@/axios-config";
 import { ISignIn } from "@/types";
 import { useRouter } from "next/navigation";
 import { cookieStorage } from "@ibnlanre/portal";
@@ -41,7 +41,7 @@ export const RestaurantSignIn = () => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: ISignIn) => {
-      const response = await auth.post(
+      const response = await api.post(
         `/api/auth/restaurant-manager/login`,
         data
       );
@@ -54,6 +54,7 @@ export const RestaurantSignIn = () => {
     onSuccess(data) {
       toast.success("Successfully logged in");
       reset(), push("/get-started");
+      console.log(data);
     },
 
     onError(error) {

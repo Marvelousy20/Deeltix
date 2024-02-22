@@ -15,6 +15,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Product } from "./ProductUpload";
 import { Breadcrumbs } from "./Breadcrumb";
+import { useMutation } from "@tanstack/react-query";
+import { auth } from "@/axios-config";
+import { IMenus } from "@/types";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
 
 export const MenuUpload = () => {
   const [fileName, setFileName] = useState<string | null>(null);
@@ -23,8 +28,6 @@ export const MenuUpload = () => {
     setFileName(newFileName);
   };
 
-  console.log("Selected file", fileName);
- 
   const formSchema = z.object({
     name: z.string().min(2, {
       message: "Enter food name",
@@ -38,7 +41,6 @@ export const MenuUpload = () => {
     price: z.string().min(2, {
       message: "Enter food price",
     }),
-    image: z.string().default(fileName || ""),
   });
 
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
@@ -50,12 +52,28 @@ export const MenuUpload = () => {
       description: "",
       category: "",
       price: "",
-      image: "",
     },
   });
   const { errors } = formState;
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (data: IMenus) => {
+      await auth.post("/restaurants/65ba1e5797aa8ffdb9208993/menu", data);
+    },
+    mutationKey: ["menu, restuarant"],
+    onSuccess() {
+      toast.success("Yuppy! Menu added successfully.");
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    console.log("fileName", fileName);
+    const data = { ...values, image: fileName };
+    mutate(data);
+
     reset();
   };
 

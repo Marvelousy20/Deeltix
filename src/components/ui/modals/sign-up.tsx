@@ -9,7 +9,7 @@ import { ISignUp } from "@/types";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { Loader } from "@mantine/core";
-import auth from "@/axios-config";
+import { auth } from "@/axios-config";
 import { cookieStorage } from "@ibnlanre/portal";
 import { useDisclosure } from "@mantine/hooks";
 import { Button } from "../button";

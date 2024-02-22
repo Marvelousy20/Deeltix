@@ -3,7 +3,7 @@ import React, { FormEvent, useMemo, useState } from "react";
 import OtpInput from "react-otp-input";
 import { Loader } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
-import auth from "@/axios-config";
+import { api } from "@/axios-config";
 import Image from "next/image";
 import { IReVerifyEmail, IVerifyEmail } from "@/types";
 import { toast } from "react-toastify";
@@ -20,7 +20,7 @@ export const RestaurantVerifyPage = () => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: IVerifyEmail) => {
-      await auth.post(`/api/auth/restaurant-manager/verify-email`, data);
+      await api.post(`/api/auth/restaurant-manager/verify-email`, data);
     },
     mutationKey: ["restaurant-verify"],
     onSuccess() {
@@ -37,7 +37,7 @@ export const RestaurantVerifyPage = () => {
   // Resend verify email
   const { mutate: resendPin, isLoading: resendLoading } = useMutation({
     mutationFn: async (data: IReVerifyEmail) => {
-      await auth.post(`/api/auth/restaurant-manager/resend-verify-email`, data);
+      await api.post(`/api/auth/restaurant-manager/resend-verify-email`, data);
     },
     mutationKey: ["restaurant-re-verify"],
     onSuccess() {

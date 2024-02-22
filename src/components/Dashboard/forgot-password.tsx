@@ -4,7 +4,7 @@ import { MoveLeft } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import auth from "@/axios-config";
+import { api } from "@/axios-config";
 import { useMutation } from "@tanstack/react-query";
 import { ForgotPassword } from "@/types";
 import { toast } from "react-toastify";
@@ -34,7 +34,7 @@ export const RestaurantForgotPassword = () => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: ForgotPassword) => {
-      await auth.post(`/api/auth/restaurant-manager/forgot-password`, data);
+      await api.post(`/api/auth/restaurant-manager/forgot-password`, data);
     },
     mutationKey: ["restaurant-forgot-password"],
 

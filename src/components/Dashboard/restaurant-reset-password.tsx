@@ -3,7 +3,7 @@ import { MoveLeft } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import auth from "@/axios-config";
+import { api } from "@/axios-config";
 import { useMutation } from "@tanstack/react-query";
 import { IReVerifyEmail, IResetPassword } from "@/types";
 import { toast } from "react-toastify";
@@ -43,7 +43,7 @@ export const RestaurantResetPassword = () => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: IResetPassword) => {
-      await auth.post(`/api/auth/restaurant-manager/reset-password`, data);
+      await api.post(`/api/auth/restaurant-manager/reset-password`, data);
     },
     mutationKey: ["restaurant-reset-password"],
 
@@ -69,7 +69,7 @@ export const RestaurantResetPassword = () => {
   // Resend password
   const { mutate: Resendpassword, isLoading: ResendLoading } = useMutation({
     mutationFn: async (data: IReVerifyEmail) => {
-      await auth.post(
+      await api.post(
         `/api/auth/restaurant-manager/resend-forgot-password`,
         data
       );

@@ -35,7 +35,7 @@ export const Product = ({ fileName, onFileNameChange }: ProductProps) => {
 
   const upload = () => {
     if (userfile) {
-      console.log("file upload:", userfile);
+      // console.log("file upload:", userfile);
     }
   };
   return (

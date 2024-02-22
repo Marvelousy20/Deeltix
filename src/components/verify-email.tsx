@@ -4,7 +4,7 @@ import OtpInput from "react-otp-input";
 import { Button } from "./ui/button";
 import { Loader } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
-import auth from "@/axios-config";
+import { auth } from "@/axios-config";
 
 import { IReVerifyEmail, IVerifyEmail } from "@/types";
 import { toast } from "react-toastify";
