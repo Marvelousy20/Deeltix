@@ -9,12 +9,12 @@ import { useRouter } from "next/navigation";
 import { cookieStorage } from "@ibnlanre/portal";
 
 export const Header = () => {
-  // const { getUser } = useUser();
+  const { fetchUser, restuarantName, managerName } = useUser();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const handleLogout = () => {
     cookieStorage.clear();
@@ -31,7 +31,7 @@ export const Header = () => {
         />
 
         <button
-          // onClick={handleLogout}
+          onClick={handleLogout}
           className="bg-blue-500 p-3 text-white rounded-lg ml-4"
         >
           Logout
@@ -46,9 +46,11 @@ export const Header = () => {
             <User size={20} />
           </div>
           <div className="flex flex-col gap-1">
-            <h3 className="text-comment text-base font-medium">Restaurant</h3>
+            <h3 className="text-comment text-base font-medium">
+              {restuarantName}
+            </h3>
             <p className="font-normal text-sm text-grayInactive">
-              Olivia Martins
+              {managerName}
             </p>
           </div>
         </div>

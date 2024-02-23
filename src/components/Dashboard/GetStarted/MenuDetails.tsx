@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,18 +16,35 @@ import { Button } from "@/components/ui/button";
 import { Product } from "./ProductUpload";
 import { Breadcrumbs } from "./Breadcrumb";
 import { useMutation } from "@tanstack/react-query";
-import { auth } from "@/axios-config";
+import { api } from "@/axios-config";
 import { IMenus } from "@/types";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
+import { useUser } from "@/context/user";
+import { useQuery } from "@tanstack/react-query";
+
+// const sample = {
+//   name: "Prawns",
+//   description: "exceptional seafood",
+//   price: 25000,
+//   image:
+//     "https://res.cloudinary.com/elik/image/upload/v1706701611/uch1hbjxeivc7mvahhm2.jpg",
+//   category: "65c2d02f0b8471c2f27aefee",
+// };
+
+type categoryType = {
+  name: string;
+};
 
 export const MenuUpload = () => {
   const [fileName, setFileName] = useState<string | null>(null);
-
+  const [categories, setCategories] = useState<categoryType[] | null>(null);
+  const { restaurantId } = useUser();
   const handleFileNameChange = (newFileName: string | null) => {
     setFileName(newFileName);
   };
 
+  // console.log(restaurantId);
   const formSchema = z.object({
     name: z.string().min(2, {
       message: "Enter food name",
@@ -58,7 +75,7 @@ export const MenuUpload = () => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: IMenus) => {
-      await auth.post("/restaurants/65ba1e5797aa8ffdb9208993/menu", data);
+      await api.post(`/api/restaurants/${restaurantId}/menu`, data);
     },
     mutationKey: ["menu, restuarant"],
     onSuccess() {
@@ -70,12 +87,41 @@ export const MenuUpload = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("fileName", fileName);
-    const data = { ...values, image: fileName };
+    // console.log("fileName", fileName);cons
+    const price = Number(values["price"]);
+
+    const category = { name: values["category"] }
+
+    const data = { ...values, category: category, price: price, image: fileName };
     mutate(data);
 
     reset();
   };
+
+  const fetchCategory = async () => {
+    if (!restaurantId) {
+      return;
+    }
+    try {
+      const result = await api.get(
+        `/api/restaurants/${restaurantId}/menu/categories/all`
+      );
+      const allCategories = result.data.data.data;
+      setCategories(allCategories.menuCategories);
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const { data } = useQuery({
+    queryFn: fetchCategory,
+    queryKey: ["category resturant"],
+  });
+
+  useEffect(() => {
+    fetchCategory();
+  }, [restaurantId]);
 
   return (
     <div className="p-8 gap-[48px] flex flex-col">
@@ -147,17 +193,13 @@ export const MenuUpload = () => {
                       />
                     </SelectTrigger>
                     <SelectContent className="text-grayInactive text-lg font-normal">
-                      {[
-                        { label: "Jollof rice", value: "Jollof rice" },
-                        { label: "Fried rice", value: "Fried rice" },
-                        { label: "okro", value: "okro" },
-                      ].map((state, _i) => (
+                      {categories?.map((category, _i) => (
                         <SelectItem
                           key={_i}
                           className="rounded-xl"
-                          value={state.value}
+                          value={category.name}
                         >
-                          {state.label}
+                          {category.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -194,7 +236,11 @@ export const MenuUpload = () => {
               />
             </div>
 
-            <Button type="submit" className="bg-blue-600 text-white">
+            <Button
+              type="submit"
+              className="bg-blue-600 text-white"
+              disabled={isLoading}
+            >
               Submit
             </Button>
           </form>
