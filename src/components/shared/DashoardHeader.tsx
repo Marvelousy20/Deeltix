@@ -16,10 +16,10 @@ export const Header = () => {
   //   getUser();
   // }, []);
 
-  // const handleLogout = () => {
-  //   cookieStorage.clear()
-  //   router.push("/");
-  // };
+  const handleLogout = () => {
+    cookieStorage.clear();
+    router.push("/");
+  };
 
   return (
     <section className="flex sticky top-0 z-[9999] items-center w-full justify-between py-4 px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
