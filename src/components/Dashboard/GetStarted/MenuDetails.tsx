@@ -33,6 +33,7 @@ import { useQuery } from "@tanstack/react-query";
 // };
 
 type categoryType = {
+  id: string;
   name: string;
 };
 
@@ -88,11 +89,8 @@ export const MenuUpload = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     // console.log("fileName", fileName);cons
-    const price = Number(values["price"]);
 
-    const category = { name: values["category"] }
-
-    const data = { ...values, category: category, price: price, image: fileName };
+    const data = { ...values, image: fileName };
     mutate(data);
 
     reset();
@@ -197,7 +195,7 @@ export const MenuUpload = () => {
                         <SelectItem
                           key={_i}
                           className="rounded-xl"
-                          value={category.name}
+                          value={category.id}
                         >
                           {category.name}
                         </SelectItem>

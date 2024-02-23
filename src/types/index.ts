@@ -77,8 +77,8 @@ export interface IRestaurantSignUp {
 export interface IMenus {
   name: string;
   description: string;
-  category: { name: string };
-  price: number;
+  category: string;
+  price: string;
   image: string | null;
 }
 
