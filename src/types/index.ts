@@ -81,3 +81,48 @@ export interface IMenus {
   price: string;
   image: string | null;
 }
+
+//user sign data
+interface restaurantDetails {
+  user: UserData;
+  restaurant: Restaurant;
+  token: string;
+}
+interface newData {
+  data: restaurantDetails;
+}
+
+export interface UserProfile {
+  message: string;
+  data: newData;
+}
+
+// export interface RestaurantData {
+//   user: UserData;
+//   restaurant: Restaurant;
+//   token: string;
+// }
+
+export interface Restaurant {
+  name: string;
+  manager: string;
+  reservationCharge: boolean;
+  averageRating: number;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
+
+export interface UserData {
+  email: string;
+  phoneNumber: string;
+  fullName: string;
+  isActive: boolean;
+  isEmailVerified: boolean;
+  createdAt: string;
+  updatedAt: string;
+  otp: null;
+  otpExpiresIn: null;
+  lastLogin: string;
+  id: string;
+}

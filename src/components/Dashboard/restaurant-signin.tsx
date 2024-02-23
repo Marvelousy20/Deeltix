@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { Loader } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/axios-config";
-import { ISignIn } from "@/types";
+import { ISignIn, UserProfile } from "@/types";
 import { useRouter } from "next/navigation";
 import { cookieStorage } from "@ibnlanre/portal";
 import { ErrorType, handleError } from "@/lib/handle-error";
@@ -41,20 +41,21 @@ export const RestaurantSignIn = () => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: ISignIn) => {
-      const response = await api.post(
+      const response = await api.post<UserProfile>(
         `/api/auth/restaurant-manager/login`,
         data
       );
-      const values = await response.data?.data?.data;
-      cookieStorage.setItem("restaurant", JSON.stringify(values));
-      console.log(values?.token);
+      const restuarantToken = response?.data?.data?.data?.token;
+      cookieStorage.setItem("restaurant", JSON.stringify(restuarantToken));
+      console.log("allValues: ", response?.data?.data);
+      // const allValues = response?.data?.data?.data?.token;
+      // console.log(allValues);
     },
     mutationKey: ["restaurant-sign-in"],
 
     onSuccess(data) {
       toast.success("Successfully logged in");
       reset(), push("/get-started");
-      console.log(data);
     },
 
     onError(error) {

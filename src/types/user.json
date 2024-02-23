@@ -1,0 +1,28 @@
+{
+  "message": "Login Successful.",
+  "data": {
+    "user": {
+      "email": "lekan@mailinator.com",
+      "phoneNumber": "08078313642",
+      "fullName": "Lekan",
+      "isActive": true,
+      "isEmailVerified": true,
+      "createdAt": "2024-02-22T22:47:18.487Z",
+      "updatedAt": "2024-02-22T22:49:21.089Z",
+      "otp": null,
+      "otpExpiresIn": null,
+      "lastLogin": "2024-02-22T22:49:21.088Z",
+      "id": "65d7cef69877a606ddb41ff7"
+    },
+    "restaurant": {
+      "name": "Foodie",
+      "manager": "65d7cef69877a606ddb41ff7",
+      "reservationCharge": false,
+      "averageRating": 0,
+      "createdAt": "2024-02-22T22:47:18.633Z",
+      "updatedAt": "2024-02-22T22:47:18.633Z",
+      "id": "65d7cef69877a606ddb41ff9"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDdjZWY2OTg3N2E2MDZkZGI0MWZmNyIsImVtYWlsIjoibGVrYW5AbWFpbGluYXRvci5jb20iLCJ0eXBlIjoiTE9HSU5fVE9LRU4iLCJ0aW1lIjoiMjAyNC0wMi0yMlQyMzowMTowMi4xOTZaIiwidXNlclR5cGUiOiJSRVNUQVVSQU5UIE1BTkFHRVIiLCJpYXQiOjE3MDg2NDI4NjIsImV4cCI6MTcwODcyOTI2Mn0.6U1yriLd73HqGtAOS9bSj4jnYFNcsDdzFCspvZAHFJk"
+  }
+}

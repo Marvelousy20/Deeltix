@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from "react";
 import { api } from "@/axios-config";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { cookieStorage } from "@ibnlanre/portal";
 
@@ -13,7 +13,7 @@ type UserProps = {
 
 interface userStoreContextProps {
   user: UserProps | null;
-  getUser: () => void;
+  // getUser: () => void;
 }
 
 const UserContext = createContext<userStoreContextProps | undefined>(undefined);
@@ -21,36 +21,25 @@ const UserContext = createContext<userStoreContextProps | undefined>(undefined);
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserProps | null>(null);
 
-  //   let token = cookieStorage.getItem("user");
-  //   if (token) {
-  //     token = JSON.parse(token)?.token;
-  //     console.log(token);
-  //   }
-
-  const { mutate, isLoading } = useMutation({
-    mutationFn: async () => {
+  const { data } = useQuery({
+    queryFn: async () => {
       await api.get("/api/restaurant-manager/profile");
-      const token = cookieStorage.getItem("user");
-      console.log(token);
     },
-    mutationKey: ["user, restuarant"],
-    onSuccess(data, variables, context) {
+    queryKey: ["user, restuarant"],
+    onSuccess() {
       //   setUser(data);
-      console.log(data);
+      // console.log(data);
     },
     onError(error) {
       handleError(error as ErrorType);
     },
   });
 
-  const getUser = () => {
-    mutate();
-  };
+  // console.log({ data });
 
   return (
-    <UserContext.Provider value={{ user, getUser }}>
-      {children}
-    </UserContext.Provider>
+    // getUser
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
   );
 };
 

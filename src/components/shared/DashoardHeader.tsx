@@ -9,17 +9,17 @@ import { useRouter } from "next/navigation";
 import { cookieStorage } from "@ibnlanre/portal";
 
 export const Header = () => {
-  const { getUser } = useUser();
+  // const { getUser } = useUser();
   const router = useRouter();
 
-  useEffect(() => {
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
 
-  const handleLogout = () => {
-    cookieStorage.clear()
-    router.push("/");
-  };
+  // const handleLogout = () => {
+  //   cookieStorage.clear()
+  //   router.push("/");
+  // };
 
   return (
     <section className="flex sticky top-0 z-[9999] items-center w-full justify-between py-4 px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
@@ -31,7 +31,7 @@ export const Header = () => {
         />
 
         <button
-          onClick={handleLogout}
+          // onClick={handleLogout}
           className="bg-blue-500 p-3 text-white rounded-lg ml-4"
         >
           Logout
