@@ -22,15 +22,9 @@ import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { useUser } from "@/context/user";
 import { useQuery } from "@tanstack/react-query";
+import AddMenu from "../Menu/addMenu";
+import { useDisclosure } from "@mantine/hooks";
 
-// const sample = {
-//   name: "Prawns",
-//   description: "exceptional seafood",
-//   price: 25000,
-//   image:
-//     "https://res.cloudinary.com/elik/image/upload/v1706701611/uch1hbjxeivc7mvahhm2.jpg",
-//   category: "65c2d02f0b8471c2f27aefee",
-// };
 
 type categoryType = {
   id: string;
@@ -38,6 +32,7 @@ type categoryType = {
 };
 
 export const MenuUpload = () => {
+  const [opened, { open, close }] = useDisclosure(false);
   const [fileName, setFileName] = useState<string | null>(null);
   const [categories, setCategories] = useState<categoryType[] | null>(null);
   const { restaurantId } = useUser();
@@ -176,6 +171,10 @@ export const MenuUpload = () => {
                     Category
                   </label>
 
+                  <div className="mb-2 bg-blue-600 text-white w-fit p-1.5 rounded-full">
+                    <p onClick={() =>open() } className="">Add Category</p>
+                  </div>
+
                   <Select
                     onValueChange={(value) =>
                       setValue("category", value, {
@@ -202,6 +201,7 @@ export const MenuUpload = () => {
                       ))}
                     </SelectContent>
                   </Select>
+                  
                   <div className="text-red-500 text-sm font-normal pt-1">
                     {errors.category?.message}
                   </div>
@@ -244,6 +244,7 @@ export const MenuUpload = () => {
           </form>
         </div>
       </section>
+      <AddMenu  opened={opened} close={close} fetchCategory={fetchCategory}/>
     </div>
   );
 };

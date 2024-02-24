@@ -55,6 +55,10 @@ export interface IReVerifyEmail {
   email: string | null;
 }
 
+export interface IVerifyCategory {
+  name: string;
+}
+
 export interface ForgotPassword {
   email: string;
 }
