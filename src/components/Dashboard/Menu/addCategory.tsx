@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button';
 import { MoveLeft } from 'lucide-react';
 import { Category } from 'iconsax-react';
 
-function AddMenu({
+function AddCategory({
   opened,
   close,
   fetchCategory,
@@ -103,11 +103,10 @@ function AddMenu({
                   Category
                 </label> */}
                 <Input
-                  placeholder="e.g seafood"
+                  placeholder="e.g seafoods"
                   type="string"
                   className="text-grayInactive text-lg font-normal mt-2"
                   {...register('name')}
-                  // name="category"
                 />
                 {errors.name && (
                   <div className="text-red-500 text-sm font-normal pt-3">
@@ -141,4 +140,4 @@ function AddMenu({
   );
 }
 
-export default AddMenu;
+export default AddCategory;

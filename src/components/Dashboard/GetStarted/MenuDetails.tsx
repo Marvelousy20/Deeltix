@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { useUser } from "@/context/user";
 import { useQuery } from "@tanstack/react-query";
-import AddMenu from "../Menu/addMenu";
+import AddCategory from "../Menu/addCategory";
 import { useDisclosure } from "@mantine/hooks";
 
 
@@ -171,7 +171,7 @@ export const MenuUpload = () => {
                     Category
                   </label>
 
-                  <div className="mb-2 bg-blue-600 text-white w-fit p-1.5 rounded-full">
+                  <div className="m-2 bg-blue-600 text-white w-fit p-1.5 rounded cursor-pointer">
                     <p onClick={() =>open() } className="">Add Category</p>
                   </div>
 
@@ -185,7 +185,7 @@ export const MenuUpload = () => {
                   >
                     <SelectTrigger>
                       <SelectValue
-                        placeholder="eg.  Seafood"
+                        placeholder="Select category"
                         className="text-grayInactive text-lg font-normal"
                       />
                     </SelectTrigger>
@@ -244,7 +244,7 @@ export const MenuUpload = () => {
           </form>
         </div>
       </section>
-      <AddMenu  opened={opened} close={close} fetchCategory={fetchCategory}/>
+      <AddCategory  opened={opened} close={close} fetchCategory={fetchCategory}/>
     </div>
   );
 };
