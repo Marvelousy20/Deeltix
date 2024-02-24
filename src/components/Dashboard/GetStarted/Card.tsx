@@ -27,7 +27,7 @@ export const Cards = () => {
   const { push } = useRouter();
   return (
     <div className="">
-      <div className="grid grid-cols-3 gap-5  ">
+      <div className="grid lg:grid-cols-3 gap-5  ">
         {list.map(({ title, details, icon, link }) => (
           <div
             onClick={() => push(link)}

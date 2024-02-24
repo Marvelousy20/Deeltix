@@ -40,7 +40,7 @@ export const Product = ({ fileName, onFileNameChange }: ProductProps) => {
   };
   return (
     <div>
-      <h3 className="font-bold text-xl text-grayBlack2 pb-8">Product name</h3>
+      <h3 className="font-bold text-xl text-grayBlack2 pb-8">Product Image</h3>
       <div className="flex flex-col gap-3">
         {!userfile ? (
           <div className="w-[220px] overflow-hidden flex items-center justify-center h-[220px] border border-spacing-2 border-dashed border-[#574DFF] rounded-[40px]">

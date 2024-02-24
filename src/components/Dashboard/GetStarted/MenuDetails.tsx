@@ -25,7 +25,6 @@ import { useQuery } from "@tanstack/react-query";
 import AddCategory from "../Menu/addCategory";
 import { useDisclosure } from "@mantine/hooks";
 
-
 type categoryType = {
   id: string;
   name: string;
@@ -120,11 +119,11 @@ export const MenuUpload = () => {
     <div className="p-8 gap-[48px] flex flex-col">
       {/* <Breadcrumbs breadcrumb={"Add first menu"} /> */}
 
-      <section className="flex flex-col items-center justify-center ">
-        <div className="border border-grayBottom rounded-[24px] p-[64px] w-fit">
+      <section className="flex flex-col items-center justify-center">
+        <div className="border border-grayBottom rounded-[24px] px-4 py-8 lg:p-[4rem] w-fit">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex items-start gap-[147px]"
+            className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[9.1rem]"
           >
             <div className="">
               <h3 className="text-xl font-bold text-grayBlack2 pb-8">
@@ -171,10 +170,6 @@ export const MenuUpload = () => {
                     Category
                   </label>
 
-                  <div className="m-2 bg-blue-600 text-white w-fit p-1.5 rounded cursor-pointer">
-                    <p onClick={() =>open() } className="">Add Category</p>
-                  </div>
-
                   <Select
                     onValueChange={(value) =>
                       setValue("category", value, {
@@ -201,7 +196,15 @@ export const MenuUpload = () => {
                       ))}
                     </SelectContent>
                   </Select>
-                  
+
+                  <div className="opacity-50 mt-2 text-sm">OR</div>
+
+                  <div className="bg-blue-600 text-white w-fit p-1.5 mt-2 rounded cursor-pointer">
+                    <p onClick={() => open()} className="">
+                      Add Category
+                    </p>
+                  </div>
+
                   <div className="text-red-500 text-sm font-normal pt-1">
                     {errors.category?.message}
                   </div>
@@ -244,7 +247,11 @@ export const MenuUpload = () => {
           </form>
         </div>
       </section>
-      <AddCategory  opened={opened} close={close} fetchCategory={fetchCategory}/>
+      <AddCategory
+        opened={opened}
+        close={close}
+        fetchCategory={fetchCategory}
+      />
     </div>
   );
 };

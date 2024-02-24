@@ -6,7 +6,7 @@ import React from "react";
 const Menu = () => {
   return (
     <DashboardLayout>
-      <div className="p-8">
+      <div className="p-4 lg:p-8">
         <Breadcrumbs breadcrumb={"Add first menu"} />
       </div>
       <MenuUpload />

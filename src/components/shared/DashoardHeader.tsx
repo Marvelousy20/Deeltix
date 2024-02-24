@@ -22,8 +22,8 @@ export const Header = () => {
   };
 
   return (
-    <section className="flex sticky top-0 z-[9999] items-center w-full justify-between py-4 px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
-      <div className="flex items-center">
+    <section className="flex flex-col lg:flex-row sticky top-0 z-[9999] items-center gap-y-4 w-full justify-between py-4 px-4 md:px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
+      <div className="flex items-center order-2">
         <Input
           type="search"
           placeholder="Search for a restaurant, cuisine e.t.c"
@@ -37,7 +37,7 @@ export const Header = () => {
           Logout
         </button>
       </div>
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-6 order-1 place-self-end">
         <div className="h-[30px] w-[30px] bg-milky border rounded-full border-grayoutline flex items-center justify-center">
           <NotificationBing size="20" />
         </div>

@@ -1,22 +1,22 @@
-'use client';
-import { Modal } from '@mantine/core';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { api, auth } from '@/axios-config';
-import { useMutation } from '@tanstack/react-query';
-import { IVerifyCategory } from '@/types';
-import { toast } from 'react-toastify';
-import { ErrorType, handleError } from '@/lib/handle-error';
-import { Loader } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useUser } from '@/context/user';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { MoveLeft } from 'lucide-react';
-import { Category } from 'iconsax-react';
+"use client";
+import { Modal } from "@mantine/core";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { api, auth } from "@/axios-config";
+import { useMutation } from "@tanstack/react-query";
+import { IVerifyCategory } from "@/types";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
+import { Loader } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useUser } from "@/context/user";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { MoveLeft } from "lucide-react";
+import { Category } from "iconsax-react";
 
 function AddCategory({
   opened,
@@ -33,7 +33,7 @@ function AddCategory({
   //   const { push } = useRouter();
   const formSchema = z.object({
     name: z.string().min(2, {
-      message: 'Add category',
+      message: "Add category",
     }),
   });
 
@@ -42,7 +42,7 @@ function AddCategory({
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      name: "",
     },
   });
   const { errors } = formState;
@@ -54,10 +54,10 @@ function AddCategory({
         data
       );
     },
-    mutationKey: ['restaurantId'],
+    mutationKey: ["restaurantId"],
 
     onSuccess() {
-      toast.success('Yuppy! New category has been added');
+      toast.success("Yuppy! New category has been added");
       fetchCategory();
       close();
       open();
@@ -83,10 +83,9 @@ function AddCategory({
         onClose={close}
         centered
         withCloseButton={false}
-        size="50%"
+        size="40%"
       >
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="text-3xl font-bold pb-6">New Category</h1>
+        <div className="flex flex-col py-6">
           <div className="flex w-full bg-white rounded-lg gap-5 justify-center items-center">
             <div
               onClick={close}
@@ -94,43 +93,47 @@ function AddCategory({
             >
               {/* <MoveLeft /> */}
             </div>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-6 "
-            >
-              <div className="">
-                {/* <label className="text-grayHelp text-lg font-medium">
+
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div>
+                <h1 className="text-xl font-bold mb-6">New Category</h1>
+              </div>
+              <div className="flex items-center gap-6">
+                <div className="">
+                  {/* <label className="text-grayHelp text-lg font-medium">
                   Category
                 </label> */}
-                <Input
-                  placeholder="e.g seafoods"
-                  type="string"
-                  className="text-grayInactive text-lg font-normal mt-2"
-                  {...register('name')}
-                />
-                {errors.name && (
-                  <div className="text-red-500 text-sm font-normal pt-3">
-                    {errors.name?.message}
-                  </div>
-                )}
-              </div>
-              <div >
-                <Button
-                  type="submit"
-                  className="w-fit"
-                  variant="primary"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <span className="flex items-center gap-2 text-white font-medium text-xl">
-                      <span> Adding Category</span> <Loader size="sm" />
-                    </span>
-                  ) : (
-                    <span className="text-white font-medium text-xl">
-                      Add Category
-                    </span>
+
+                  <Input
+                    placeholder="e.g seafoods"
+                    type="string"
+                    className="text-grayInactive text-lg font-normal mt-2"
+                    {...register("name")}
+                  />
+                  {errors.name && (
+                    <div className="text-red-500 text-sm font-normal pt-3">
+                      {errors.name?.message}
+                    </div>
                   )}
-                </Button>
+                </div>
+                <div>
+                  <Button
+                    type="submit"
+                    className="w-fit"
+                    variant="primary"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <span className="flex items-center gap-2 text-white font-medium text-xl">
+                        <span> Adding Category</span> <Loader size="sm" />
+                      </span>
+                    ) : (
+                      <span className="text-white font-medium">
+                        Add Category
+                      </span>
+                    )}
+                  </Button>
+                </div>
               </div>
             </form>
           </div>

@@ -38,7 +38,7 @@ export const DashboardLayout = ({
 
   return (
     <section className="flex items-start w-full h-screen">
-      <div className="h-full w-[240px] bg-[#101323] flex flex-col items-center py-10 gap-20">
+      <div className="h-full w-[240px] bg-[#101323] hidden flex-col items-center py-10 gap-20 lg:flex">
         <figure>
           <Image
             src="/dashboard/logo.svg"
