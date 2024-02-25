@@ -1,10 +1,14 @@
-"use client";
-import { DataTable } from "@/components/Table/DataTable";
-import { People, Reserve } from "iconsax-react";
-import { FolderOpen, PlusCircle } from "lucide-react";
-import React from "react";
-import { Input } from "@/components/ui/input";
-import { menuColumns, menuData } from "./table-column";
+'use client';
+import { DataTable } from '@/components/Table/DataTable';
+import { People, Reserve } from 'iconsax-react';
+import { FolderOpen, PlusCircle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { menuColumns, menuData } from './table-column';
+import { useUser } from '@/context/user';
+import { api } from '@/axios-config';
+import { toast } from 'react-toastify';
+import { useQuery } from '@tanstack/react-query';
 
 export interface IMenu {
   headings: string;
@@ -12,15 +16,37 @@ export interface IMenu {
   icon: React.ReactNode;
 }
 export const CustomerMenu = () => {
+  const { restaurantId } = useUser();
+  const [menu, setMenu] = useState([]);
+
+  const fetchMenu = async () => {
+    if (!restaurantId) {
+      return;
+    }
+    try {
+      const result = await api.get(
+        `/api/restaurants/${restaurantId}/menu`
+      );
+      const allMenu = result.data.data.data.menu;
+      setMenu(allMenu);
+      return allMenu;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchMenu();
+  });
+
   const list: IMenu[] = [
     {
-      headings: "Total Guest",
-      number: "40",
+      headings: 'Total Guest',
+      number: '40',
       icon: <Reserve color="#574DFF" />,
     },
     {
-      headings: "Total Guest",
-      number: "40",
+      headings: 'Total Guest',
+      number: '40',
       icon: <FolderOpen color="#574DFF" />,
     },
   ];
@@ -66,7 +92,7 @@ export const CustomerMenu = () => {
           <Input placeholder="Filter names..." className="max-w-sm" />
         </div>
         <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
-          <DataTable columns={menuColumns} data={menuData} />
+          <DataTable columns={menuColumns} data={menu} />
         </div>
       </section>
     </div>
