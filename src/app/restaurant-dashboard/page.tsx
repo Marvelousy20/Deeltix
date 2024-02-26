@@ -69,7 +69,7 @@ export default function RestaurantDashboard() {
       </div>
 
       {/* Section black*/}
-      <section className="mt-20 lg:mt-36 bg-black text-white py-20 lg:py-40 px-3 lg:px-[6.25rem]">
+      <section className="mt-20 lg:mt-36 bg-black text-white py-20 lg:py-40 px-3 lg:px-[4rem]">
         <div>
           <h1 className="text-[2rem] lg:text-[3.5rem] font-medium text-center">
             <span className="text-[#667085]">Seamless Reservations, </span>
