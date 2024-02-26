@@ -9,6 +9,7 @@ import { topRestaurentData } from "@/components/data/TopRestaurant";
 import { Button } from "@/components/ui/button";
 import { useDisclosure } from "@mantine/hooks";
 import UserDrawer from "@/components/Drawer";
+import Link from "next/link";
 
 export default function Home() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -133,9 +134,12 @@ export default function Home() {
             </p>
 
             <div className="flex justify-between items-center gap-3 lg:gap-6 mt-8 w-full">
-              <Button className="bg-dark lg:text-base text-sm font-normal p-2 text-white w-1/2">
+              <Link
+                href="/restaurant-dashboard"
+                className="bg-dark lg:text-base text-sm font-normal text-white w-1/2 rounded-[2.5rem] h-12 px-4 items-center flex"
+              >
                 Get started now
-              </Button>
+              </Link>
               <Button className="bg-offwhite lg:text-base text-sm w-1/2 font-normal hover:bg-opacity-40">
                 Learn more
               </Button>

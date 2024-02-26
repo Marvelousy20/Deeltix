@@ -83,7 +83,7 @@ function AddCategory({
         onClose={close}
         centered
         withCloseButton={false}
-        size="40%"
+        size="60%"
       >
         <div className="flex flex-col py-6 ">
           <div className="flex w-full bg-white rounded-lg gap-5 justify-center items-center">
