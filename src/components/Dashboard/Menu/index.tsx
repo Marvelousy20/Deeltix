@@ -2,16 +2,65 @@
 import { DataTable } from "@/components/Table/DataTable";
 import { People, Reserve } from "iconsax-react";
 import { FolderOpen, PlusCircle } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { menuColumns, menuData } from "./table-column";
+import { useUser } from "@/context/user";
+import { api } from "@/axios-config";
+import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import { MenuType } from "@/types";
 
 export interface IMenu {
   headings: string;
   number: string;
   icon: React.ReactNode;
 }
+
+// type MenuType = {
+//   available: boolean;
+//   category: { name: string; available: boolean; id: string };
+//   createdAt: string;
+//   deleted: boolean;
+//   description: string;
+//   id: string;
+//   image: string;
+//   name: string;
+//   price: number;
+//   restaurant: string;
+//   updatedAt: string;
+// };
+
 export const CustomerMenu = () => {
+  const { restaurantId } = useUser();
+  const [menu, setMenu] = useState<MenuType[]>([]);
+
+  const { data, isLoading, isError, isSuccess } = useQuery({
+    queryKey: ["menu"],
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      return api.get(`/api/restaurants/${restaurantId}/menu`);
+    },
+    enabled: !!restaurantId,
+  });
+  // if (isLoading) {
+  //   toast.success('Loading');
+  // }
+  if (isError) {
+    toast.error("Something happened getting menu");
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      setMenu(data?.data.data.data.menu);
+      // toast.success('Your menu is here!');
+      // console.log(data?.data.data.data.menu);
+    }
+  }, [restaurantId, data]);
+
   const list: IMenu[] = [
     {
       headings: "Total Guest",
@@ -24,6 +73,8 @@ export const CustomerMenu = () => {
       icon: <FolderOpen color="#574DFF" />,
     },
   ];
+
+  console.log(menu);
   return (
     <div className="p-[32px]">
       <section className="flex items-center justify-between">
@@ -35,7 +86,12 @@ export const CustomerMenu = () => {
         </div>
         <div className="flex items-center gap-2 py-3 px-4 bg-[#574DFF] rounded-[40px]">
           <PlusCircle color="#F0F3F8" />
-          <p className="text-[#F0F3F8] text-sm font-medium">new item</p>
+          <Link
+            href="/get-started/menu"
+            className="text-[#F0F3F8] text-sm font-medium"
+          >
+            new item
+          </Link>
         </div>
       </section>
 
@@ -66,7 +122,7 @@ export const CustomerMenu = () => {
           <Input placeholder="Filter names..." className="max-w-sm" />
         </div>
         <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
-          <DataTable columns={menuColumns} data={menuData} />
+          <DataTable columns={menuColumns} data={menu} />
         </div>
       </section>
     </div>

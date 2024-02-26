@@ -130,3 +130,17 @@ export interface UserData {
   lastLogin: string;
   id: string;
 }
+
+export interface MenuType {
+  available: boolean;
+  category: { name: string; available: boolean; id: string };
+  createdAt: string;
+  deleted: boolean;
+  description: string;
+  id: string;
+  image: string;
+  name: string;
+  price: number;
+  restaurant: string;
+  updatedAt: string;
+}

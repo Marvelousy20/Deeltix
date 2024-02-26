@@ -78,14 +78,14 @@ function AddCategory({
   return (
     <>
       <Modal
-        className="bg-blue-500"
+        className="bg-blue-500 !z-[5000000]"
         opened={opened}
         onClose={close}
         centered
         withCloseButton={false}
         size="40%"
       >
-        <div className="flex flex-col py-6">
+        <div className="flex flex-col py-6 ">
           <div className="flex w-full bg-white rounded-lg gap-5 justify-center items-center">
             <div
               onClick={close}
