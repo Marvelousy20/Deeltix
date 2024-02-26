@@ -4,6 +4,7 @@ import "./globals.css";
 import { QueryProvider } from "./query-provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserProvider } from "@/context/user";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <QueryProvider>
         <body className={`${inter.className} transact-scroll`}>
-          {children}
+          <UserProvider>{children}</UserProvider>
           <ToastContainer />
         </body>
       </QueryProvider>

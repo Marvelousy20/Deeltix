@@ -15,7 +15,7 @@ export const Breadcrumbs = ({ breadcrumb }: { breadcrumb: string }) => {
       </div>
       <Button
         type="submit"
-        className=" text-card font-medium text-sm bg-primary py-5 px-6 rounded-[40px] h-0"
+        className=" text-card font-medium text-sm bg-primary lg:py-5 px-6 rounded-[40px] h-0 py-4"
       >
         Save
       </Button>

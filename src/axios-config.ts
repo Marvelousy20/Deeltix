@@ -1,17 +1,16 @@
 import { cookieStorage } from "@ibnlanre/portal";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { UserProfile } from "./types";
 
-console.log("baseurl: ", process.env.NEXT_PUBLIC_BASE_URL as string);
-
-const auth = axios.create({
+export const auth = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL as string,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL as string,
   headers: {
     "Content-Type": "application/json",
@@ -19,6 +18,21 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(
+  (config) => {
+    const rest = cookieStorage.getItem("restaurant");
+    if (rest) {
+      const token = JSON.parse(rest as string);
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    toast.error("Something went wrong");
+    Promise.reject(error);
+  }
+);
+
+auth.interceptors.request.use(
   (req) => {
     let token = cookieStorage.getItem("user");
     if (token) {
@@ -32,8 +46,6 @@ api.interceptors.request.use(
     Promise.reject(error);
   }
 );
-
-export default auth;
 
 // API.interceptors.request.use(
 //   (req) => {

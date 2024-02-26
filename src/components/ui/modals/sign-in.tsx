@@ -6,7 +6,7 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 import { Loader } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
-import auth from "@/axios-config";
+import { auth } from "@/axios-config";
 import { ISignIn } from "@/types";
 import { useRouter } from "next/navigation";
 import { cookieStorage } from "@ibnlanre/portal";
@@ -144,7 +144,12 @@ export default function ModalSignIn({
                 </p>
               </div>
 
-              <Button type="submit" className=" w-[300px]" variant="primary">
+              <Button
+                type="submit"
+                className=" w-[300px]"
+                variant="primary"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <span className="flex items-center gap-1 text-white font-medium text-xl">
                     <span>Signing in</span> <Loader size="sm" />

@@ -9,7 +9,7 @@ import { IRestaurantSignUp, ISignUp } from "@/types";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { Loader } from "@mantine/core";
-import auth from "@/axios-config";
+import { api } from "@/axios-config";
 import { cookieStorage } from "@ibnlanre/portal";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -52,7 +52,7 @@ export const RestaurantSignUp = () => {
   const { errors } = formState;
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: IRestaurantSignUp) => {
-      await auth.post(`/api/auth/restaurant-manager/register`, data);
+      await api.post(`/api/auth/restaurant-manager/register`, data);
     },
     mutationKey: ["restaurant-signup", "user"],
 
@@ -175,7 +175,7 @@ export const RestaurantSignUp = () => {
             <div className="text-sm flex gap-1">
               <input type="checkbox" id="scales" name="scales" />
               <label htmlFor="scales">
-                I agree to DeelTix's{" "}
+                I agree to DeelTix&apos;s
                 <span className="text-blue-500">terms</span> and{" "}
                 <span className="text-blue-500">conditions</span>
               </label>
@@ -185,7 +185,7 @@ export const RestaurantSignUp = () => {
               type="submit"
               className=" w-[300px]"
               variant="primary"
-              // disabled={disabled}
+              disabled={isLoading}
             >
               {isLoading ? (
                 <span className="flex items-center gap-2 text-white font-medium text-xl">

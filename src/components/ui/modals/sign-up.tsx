@@ -9,7 +9,7 @@ import { ISignUp } from "@/types";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { Loader } from "@mantine/core";
-import auth from "@/axios-config";
+import { auth } from "@/axios-config";
 import { cookieStorage } from "@ibnlanre/portal";
 import { useDisclosure } from "@mantine/hooks";
 import { Button } from "../button";
@@ -66,6 +66,7 @@ export const SignUp = ({
       cookieStorage.setItem("email", getValues("email"));
       console.log(cookieStorage.setItem("email", getValues("email")));
       reset();
+      close();
       open();
     },
     onError(error) {
@@ -163,7 +164,7 @@ export const SignUp = ({
               <div className="text-sm flex gap-1">
                 <input type="checkbox" id="scales" name="scales" />
                 <label htmlFor="scales">
-                  I agree to DeelTix&apos;s
+                  I agree to DeelTix&apos;s{" "}
                   <span className="text-blue-500">terms</span> and{" "}
                   <span className="text-blue-500">conditions</span>
                 </label>
@@ -174,6 +175,7 @@ export const SignUp = ({
                 className=" w-[300px]"
                 variant="primary"
                 // disabled={disabled}
+                disabled={isLoading}
               >
                 {isLoading ? (
                   <span className="flex items-center gap-2 text-white font-medium text-xl">
@@ -188,9 +190,9 @@ export const SignUp = ({
             </form>
           </div>
           <div className="rounded-r-lg w-1/2 bg-[url('/signup-rest.png')] bg-cover bg-no-repeat bg-center"></div>
-          <VerifyEmail opened={isOpened} close={isClose} />
         </div>
       </Modal>
+      <VerifyEmail opened={isOpened} close={isClose} />
     </section>
   );
 };

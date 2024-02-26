@@ -11,8 +11,9 @@ import { X } from "lucide-react";
 import ModalPassword from "./ui/modals/modal-password";
 import { useDisclosure } from "@mantine/hooks";
 import { SignUp } from "./ui/modals/sign-up";
-import { SuccessMessage } from "./ui/modals/password-success";
+import SuccessMessage from "./ui/modals/password-success";
 import ModalSignIn from "./ui/modals/sign-in";
+import Link from "next/link";
 
 export default function Navbar() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -42,7 +43,12 @@ export default function Navbar() {
                   />
                 </div>
 
-                <span className="font-bold text-xl">For business</span>
+                <Link
+                  href="/restaurant-dashboard"
+                  className="font-bold text-xl hover:text-primary transition-all ease-in duration-500"
+                >
+                  For business
+                </Link>
               </div>
 
               {/* location */}
@@ -66,7 +72,7 @@ export default function Navbar() {
                 <Signup />
               </Modal>
             )} */}
-            /
+
             {/* {resetpassword && (
               <Modal onClose={() => setResetpassword(false)}>
                 <ForgetPassword />
@@ -78,7 +84,12 @@ export default function Navbar() {
 
           <nav className=" flex lg:hidden flex-col items-start gap-6 text-white">
             <div className="">
-              <span className="font-bold text-xl">For business</span>
+              <Link
+                href="/restaurant-dashboard"
+                className="font-bold text-xl transition-all ease-in-out duration-200"
+              >
+                For business
+              </Link>
             </div>
 
             {/* location */}

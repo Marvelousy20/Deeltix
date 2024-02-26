@@ -4,7 +4,7 @@ import { MoveLeft } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import auth from "@/axios-config";
+import { auth } from "@/axios-config";
 import { useMutation } from "@tanstack/react-query";
 import { ForgotPassword } from "@/types";
 import { toast } from "react-toastify";
@@ -100,7 +100,12 @@ function ModalPassword({ opened, close }: { opened: any; close: () => void }) {
                   </div>
                 )}
               </div>
-              <Button type="submit" className=" w-[300px]" variant="primary">
+              <Button
+                type="submit"
+                className=" w-[300px]"
+                variant="primary"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <span className="flex items-center gap-2 text-white font-medium text-xl">
                     <span> Resetting password</span> <Loader size="sm" />
