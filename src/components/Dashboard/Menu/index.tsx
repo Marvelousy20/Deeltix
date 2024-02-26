@@ -15,28 +15,49 @@ export interface IMenu {
   number: string;
   icon: React.ReactNode;
 }
+
+type MenuType = {
+  available: boolean;
+  category: { name: string; available: boolean; id: string };
+  createdAt: string;
+  deleted: boolean;
+  description: string;
+  id: string;
+  image: string;
+  name: string;
+  price: number;
+  restaurant: string;
+  updatedAt: string;
+};
+
 export const CustomerMenu = () => {
   const { restaurantId } = useUser();
-  const [menu, setMenu] = useState([]);
+  const [menu, setMenu] = useState<MenuType[]>([]);
 
-  const fetchMenu = async () => {
-    if (!restaurantId) {
-      return;
-    }
-    try {
-      const result = await api.get(
-        `/api/restaurants/${restaurantId}/menu`
-      );
-      const allMenu = result.data.data.data.menu;
-      setMenu(allMenu);
-      return allMenu;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    fetchMenu();
+  const { data, isLoading, isError, isSuccess } = useQuery({
+    queryKey: ['menu'],
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      return api.get(`/api/restaurants/${restaurantId}/menu`);
+    },
+    enabled: !!restaurantId,
   });
+  // if (isLoading) {
+  //   toast.success('Loading');
+  // }
+  if (isError) {
+    toast.error('Something happened getting menu');
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      setMenu(data?.data.data.data.menu);
+      // toast.success('Your menu is here!');
+      // console.log(data?.data.data.data.menu);
+    }
+  }, [restaurantId, data]);
 
   const list: IMenu[] = [
     {
