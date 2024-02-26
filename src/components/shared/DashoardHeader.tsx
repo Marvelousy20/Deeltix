@@ -22,7 +22,7 @@ export const Header = () => {
   };
 
   return (
-    <section className="flex flex-col lg:flex-row sticky top-0 z-[9999] items-center gap-y-4 w-full justify-between py-4 px-4 md:px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
+    <section className="flex flex-col lg:flex-row sticky top-0 z-[99] items-center gap-y-4 w-full justify-between py-4 px-4 md:px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
       <div className="flex items-center order-2">
         <Input
           type="search"

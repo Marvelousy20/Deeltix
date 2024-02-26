@@ -4,17 +4,18 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MenuDetails } from "./menu";
+import { MenuType } from "@/types";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type menu = {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
+// export type menu = {
+//   id: number;
+//   name: string;
+//   description: string;
+//   price: string;
 
-  category: string;
-};
+//   category: string;
+// };
 
 export const menuData = [
   {
@@ -54,7 +55,7 @@ export const menuData = [
   },
 ];
 
-export const menuColumns: ColumnDef<menu>[] = [
+export const menuColumns: ColumnDef<MenuType>[] = [
   {
     id: "image",
     header: "Image",
@@ -90,7 +91,7 @@ export const menuColumns: ColumnDef<menu>[] = [
       return (
         <div>
           {/* onclick of this will console the user id based on the role you clicked */}
-          <MenuDetails />
+          <MenuDetails id = {user.id} restaurantId = {user.restaurant} />
           {/* <MoreHorizontal onClick={() => console.log(user.id)} /> */}
         </div>
       );
