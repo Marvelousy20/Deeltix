@@ -62,6 +62,7 @@ export default function RestaurantDashboard() {
               alt="hero"
               width={608}
               height={584}
+              priority
             />
           </div>
         </section>
