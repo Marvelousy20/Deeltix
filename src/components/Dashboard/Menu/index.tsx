@@ -46,6 +46,7 @@ export const CustomerMenu = () => {
     },
     enabled: !!restaurantId,
   });
+  console.log("menu-data :", data);
   // if (isLoading) {
   //   toast.success('Loading');
   // }

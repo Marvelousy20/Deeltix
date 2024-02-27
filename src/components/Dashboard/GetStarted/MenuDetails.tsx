@@ -82,8 +82,6 @@ export const MenuUpload = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // console.log("fileName", fileName);cons
-
     const data = { ...values, image: fileName };
     mutate(data);
 

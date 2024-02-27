@@ -17,8 +17,7 @@ import Link from "next/link";
 
 export default function Navbar() {
   const [opened, { open, close }] = useDisclosure(false);
-  // const [success, { open: successOpen, close: successClose }] =
-  //   useDisclosure(false);
+
   const [signin, { open: signinOpen, close: signinClose }] =
     useDisclosure(false);
 
