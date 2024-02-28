@@ -13,7 +13,7 @@ import {
   upcomingReservationsData,
 } from "./tables/upcomingReservations";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const reservations = [{ id: 1 }];
 
@@ -29,9 +29,12 @@ export default function Reservation() {
             Manage your restaurants reservations
           </p>
         </div>
-        <div className="flex items-center gap-2 bg-[#574DFF] rounded-[40px]">
+        <div className="flex items-center px-4 py-3 gap-2 bg-[#574DFF] rounded-[40px]">
           {/* <PlusCircle color="#F0F3F8" /> */}
-          <Button className="text-[#F0F3F8] text-sm font-medium flex items-center gap-x-1">
+          <Link
+            href="/reservation/create"
+            className="text-[#F0F3F8] text-sm font-medium flex items-center gap-x-1"
+          >
             <Image
               src="/restaurants/reservations/reserve.svg"
               alt="reserve"
@@ -39,7 +42,7 @@ export default function Reservation() {
               height={16}
             />
             Book Reservation
-          </Button>
+          </Link>
         </div>
       </section>
 
