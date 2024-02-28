@@ -7,6 +7,8 @@ import { useUser } from "@/context/user";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cookieStorage } from "@ibnlanre/portal";
+import { NotificationDrawer } from "./drawer";
+import { useDisclosure } from "@mantine/hooks";
 
 export const Header = () => {
   const { fetchUser, restuarantName, managerName } = useUser();
@@ -21,6 +23,7 @@ export const Header = () => {
     router.push("/");
   };
 
+  const [opened, { open, close }] = useDisclosure();
   return (
     <section className="flex flex-col lg:flex-row sticky top-0 z-[99] items-center gap-y-4 w-full justify-between py-4 px-4 md:px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
       <div className="flex items-center order-2">
@@ -37,8 +40,11 @@ export const Header = () => {
           Logout
         </button>
       </div>
-      <div className="flex items-center gap-6 order-3 place-self-end">
-        <div className="h-[30px] w-[30px] bg-milky border rounded-full border-grayoutline flex items-center justify-center">
+      <div className="flex items-center gap-6  place-self-end">
+        <div
+          onClick={open}
+          className="h-[30px] w-[30px] cursor-pointer bg-milky border rounded-full border-grayoutline flex items-center justify-center"
+        >
           <NotificationBing size="20" />
         </div>
         <div className="flex items-center gap-3">
@@ -55,6 +61,7 @@ export const Header = () => {
           </div>
         </div>
       </div>
+      <NotificationDrawer opened={opened} close={close} />
     </section>
   );
 };
