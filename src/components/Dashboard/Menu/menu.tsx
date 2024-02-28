@@ -56,5 +56,3 @@ export const MenuDetails = ({
     </div>
   );
 };
-
-// api.delete(`/api/restaurants/:restaurantId/menu/:${id}`);
