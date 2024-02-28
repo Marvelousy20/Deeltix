@@ -8,7 +8,9 @@ export const NotificationEmptyState = () => {
         <NotificationStatus />
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-[#2C2929] font-medium text-lg">It's empty here</p>
+        <p className="text-[#2C2929] font-medium text-lg">
+          It&apos;s empty here
+        </p>
         <p className="font-normal text-sm text-[#636C71]">
           {" "}
           Check back in some other time
