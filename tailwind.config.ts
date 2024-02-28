@@ -43,6 +43,9 @@ const config = {
         comment: "#42474B",
         dividerColor: "#EDEDED",
       },
+      fontFamily: {
+        roman: ["var(--font-roman)"],
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

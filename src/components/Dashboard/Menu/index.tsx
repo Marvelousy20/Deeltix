@@ -4,7 +4,7 @@ import { People, Reserve } from "iconsax-react";
 import { FolderOpen, PlusCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { menuColumns, menuData } from "./table-column";
+import { menuColumns } from "./table-column";
 import { useUser } from "@/context/user";
 import { api } from "@/axios-config";
 import { toast } from "react-toastify";
@@ -46,6 +46,7 @@ export const CustomerMenu = () => {
     },
     enabled: !!restaurantId,
   });
+  console.log("menu-data :", data);
   // if (isLoading) {
   //   toast.success('Loading');
   // }

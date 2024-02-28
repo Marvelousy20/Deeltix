@@ -1,6 +1,25 @@
+"use client";
 import Image from "next/image";
+import EmptyReservations from "./EmptyReservations";
+import { DataTable } from "@/components/Table/DataTable";
+import { pendingReservationData } from "./tables/pendingReservations";
+import { pendingReservationsColumn } from "./tables/pendingReservations";
+import {
+  pastReservationsData,
+  pastReservationsColumn,
+} from "./tables/pastReservations";
+import {
+  upcomingReservationsColumn,
+  upcomingReservationsData,
+} from "./tables/upcomingReservations";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+
+const reservations = [{ id: 1 }];
 
 export default function Reservation() {
+  // const [reservations, setReservation] = useState("")
+
   return (
     <div className="pt-5 px-8">
       <section className="flex items-center justify-between">
@@ -12,7 +31,9 @@ export default function Reservation() {
         </div>
         <div className="flex items-center gap-2 py-3 px-4 bg-[#574DFF] rounded-[40px]">
           {/* <PlusCircle color="#F0F3F8" /> */}
-          <p className="text-[#F0F3F8] text-sm font-medium">new item</p>
+          <Button className="text-[#F0F3F8] text-sm font-medium">
+            new item
+          </Button>
         </div>
       </section>
 
@@ -64,6 +85,47 @@ export default function Reservation() {
             />
           </div>
         </div>
+      </section>
+
+      <section>
+        {reservations.length >= 1 ? (
+          <div>
+            {/* Pending Reservations */}
+            <div className="mt-8">
+              <h1 className="p-5 font-medium text-lg">Pending Reservations</h1>
+              <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
+                <DataTable
+                  columns={pendingReservationsColumn}
+                  data={pendingReservationData}
+                />
+              </div>
+            </div>
+
+            {/* Upcoming Reservations */}
+            <div className="mt-8">
+              <h1 className="p-5 font-medium text-lg">Upcoming Reservations</h1>
+              <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
+                <DataTable
+                  columns={upcomingReservationsColumn}
+                  data={upcomingReservationsData}
+                />
+              </div>
+            </div>
+
+            {/* Past Reservations */}
+            <div className="mt-8">
+              <h1 className="p-5 font-medium text-lg">Past Reservations</h1>
+              <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
+                <DataTable
+                  columns={pastReservationsColumn}
+                  data={pastReservationsData}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <EmptyReservations />
+        )}
       </section>
     </div>
   );

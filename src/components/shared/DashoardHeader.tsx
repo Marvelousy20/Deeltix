@@ -37,7 +37,7 @@ export const Header = () => {
           Logout
         </button>
       </div>
-      <div className="flex items-center gap-6 order-3  place-self-end">
+      <div className="flex items-center gap-6 order-3 place-self-end">
         <div className="h-[30px] w-[30px] bg-milky border rounded-full border-grayoutline flex items-center justify-center">
           <NotificationBing size="20" />
         </div>
