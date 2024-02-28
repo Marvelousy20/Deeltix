@@ -5,6 +5,7 @@ import {
   Category,
   Home2,
   People,
+  Profile,
   Reserve,
   Wallet,
   Wallet3,
@@ -32,6 +33,11 @@ export const DashboardLayout = ({
       name: "Wallet",
       link: "/wallet",
       icon: <Wallet3 size="18" />,
+    },
+    {
+      name: "Profile",
+      link: "/restaurant-profile",
+      icon: <Profile size="18" />,
     },
   ];
   const pathName = usePathname();
