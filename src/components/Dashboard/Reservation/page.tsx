@@ -46,7 +46,7 @@ export default function Reservation() {
       <section className="grid grid-cols-3 mt-4">
         <div className="flex justify-between border border-[#EAECF0] col-span-1 lg:p-10">
           <div>
-            <h2>Total Reservations</h2>
+            <h2>Total Reservations </h2>
             <p className="text-xl lg:text-3xl mt-4 font-bold">550</p>
           </div>
 
