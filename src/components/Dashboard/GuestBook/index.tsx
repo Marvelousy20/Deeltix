@@ -15,7 +15,7 @@ export const Guests = () => {
   const list: IGuest[] = [
     {
       headings: "Total Guest",
-      number: "5,20",
+      number: "520",
       icon: <People color="#574DFF" />,
     },
     {
