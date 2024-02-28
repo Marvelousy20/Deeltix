@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "@mantine/core";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Button } from "../button";
 import { Input } from "../input";
 import { VerifyEmail } from "./verify-email";
+import { Eye, EyeSlash } from "iconsax-react";
 
 export const SignUp = ({
   opened,
@@ -24,6 +25,18 @@ export const SignUp = ({
   close: () => void;
 }) => {
   const [isOpened, { open, close: isClose }] = useDisclosure(false);
+  const [eyeopen, setEyeOpen] = useState(false);
+  const [type, setType] = useState("password");
+
+  function handleOpen() {
+    setType("text");
+    setEyeOpen(true);
+  }
+
+  function handleClose() {
+    setType("password");
+    setEyeOpen(false);
+  }
 
   const formSchema = z.object({
     name: z.string().min(5, {
@@ -132,7 +145,6 @@ export const SignUp = ({
                   Phone number
                 </label>
                 <Input
-                  // type="password"
                   placeholder="Enter your phone number"
                   className="text-grayInactive text-lg font-normal mt-2"
                   {...register("phoneNumber")}
@@ -148,12 +160,28 @@ export const SignUp = ({
                 <label className="text-grayHelp text-lg font-medium">
                   Password
                 </label>
-                <Input
-                  // type="password"
-                  placeholder="Enter your password"
-                  className="text-grayInactive text-lg font-normal mt-2"
-                  {...register("password")}
-                />
+                <div className=" items-center  mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+                  <input
+                    type={type}
+                    placeholder="Search"
+                    className="w-[300px] h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                    {...register("password")}
+                  />
+
+                  {eyeopen ? (
+                    <Eye
+                      size={32}
+                      className=" cursor-pointer pr-3"
+                      onClick={handleClose}
+                    />
+                  ) : (
+                    <EyeSlash
+                      size={32}
+                      className=" cursor-pointer pr-3"
+                      onClick={handleOpen}
+                    />
+                  )}
+                </div>
                 {errors.password && (
                   <div className="text-red-500 max-w-[400px] text-sm font-normal pt-3">
                     {errors.password?.message}
@@ -162,7 +190,7 @@ export const SignUp = ({
               </div>
 
               <div className="text-sm flex gap-1">
-                <input type="checkbox" id="scales" name="scales" />
+                <input required type="checkbox" id="scales" name="scales" />
                 <label htmlFor="scales">
                   I agree to DeelTix&apos;s{" "}
                   <span className="text-blue-500">terms</span> and{" "}
@@ -174,7 +202,6 @@ export const SignUp = ({
                 type="submit"
                 className=" w-[300px]"
                 variant="primary"
-                // disabled={disabled}
                 disabled={isLoading}
               >
                 {isLoading ? (

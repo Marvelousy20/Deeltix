@@ -83,7 +83,7 @@ function AddCategory({
         onClose={close}
         centered
         withCloseButton={false}
-        size="60%"
+        size="30%"
       >
         <div className="flex flex-col py-6 ">
           <div className="flex w-full bg-white rounded-lg gap-5 justify-center items-center">
@@ -98,7 +98,7 @@ function AddCategory({
               <div>
                 <h1 className="text-xl font-bold mb-6">New Category</h1>
               </div>
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col items-start gap-6">
                 <div className="">
                   {/* <label className="text-grayHelp text-lg font-medium">
                   Category
