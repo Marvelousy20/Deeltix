@@ -29,10 +29,16 @@ export default function Reservation() {
             Manage your restaurants reservations
           </p>
         </div>
-        <div className="flex items-center gap-2 py-3 px-4 bg-[#574DFF] rounded-[40px]">
+        <div className="flex items-center gap-2 bg-[#574DFF] rounded-[40px]">
           {/* <PlusCircle color="#F0F3F8" /> */}
-          <Button className="text-[#F0F3F8] text-sm font-medium">
-            new item
+          <Button className="text-[#F0F3F8] text-sm font-medium flex items-center gap-x-1">
+            <Image
+              src="/restaurants/reservations/reserve.svg"
+              alt="reserve"
+              width={16}
+              height={16}
+            />
+            Book Reservation
           </Button>
         </div>
       </section>
