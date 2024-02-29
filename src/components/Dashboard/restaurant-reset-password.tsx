@@ -111,7 +111,7 @@ export const RestaurantResetPassword = () => {
 
   return (
     <section className="h-screen">
-      <div className="flex w-full h-full bg-white rounded-lg gap-5">
+      <div className="md:flex w-full h-full bg-white rounded-lg p-5 md:p-0">
         <div className="md:w-1/2 md:flex flex-col justify-center items-center">
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -225,7 +225,7 @@ export const RestaurantResetPassword = () => {
             </div>
             <Button
               type="submit"
-              className=" w-[300px]"
+              className="md:w-[300px] fixed bottom-0 right-0 left-0 md:static mb-4 mx-5 md:mx-0 md:mb-0"
               variant="primary"
               disabled={otp === "" ? true : false}
             >
