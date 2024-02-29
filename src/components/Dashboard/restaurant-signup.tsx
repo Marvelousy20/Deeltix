@@ -102,7 +102,7 @@ export const RestaurantSignUp = () => {
               </p>
             </div>
 
-            <div className="">
+            <div className="lg:w-[27rem]">
               <label className="text-grayHelp text-lg font-medium">
                 Restaurant name
               </label>

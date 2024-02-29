@@ -71,7 +71,7 @@ export const RestaurantForgotPassword = () => {
               <h1 className="text-3xl font-bold text-dark3">Forget password</h1>
             </div>
 
-            <div className="">
+            <div className="lg:w-[27rem]">
               <label className="text-grayHelp text-lg font-medium">
                 Email address
               </label>

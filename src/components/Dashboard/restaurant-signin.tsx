@@ -92,7 +92,7 @@ export const RestaurantSignIn = () => {
           >
             <h1 className="text-3xl font-bold text-dark3">Welcome back</h1>
 
-            <div className="">
+            <div className="lg:w-[27rem]">
               <label className="text-grayHelp text-lg font-medium">
                 Email address
               </label>
@@ -100,7 +100,7 @@ export const RestaurantSignIn = () => {
                 <Input
                   placeholder="Enter your email address"
                   type="email"
-                  className="text-grayInactive text-lg font-normal mt-2"
+                  className="text-grayInactive text-lg font-normal mt-2 !w-full"
                   {...register("email", {
                     onChange: () => setIsTyping(true),
                   })}
