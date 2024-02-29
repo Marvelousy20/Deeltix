@@ -4,7 +4,6 @@ import OtpInput from "react-otp-input";
 import { Loader } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/axios-config";
-import Image from "next/image";
 import { IReVerifyEmail, IVerifyEmail } from "@/types";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -68,28 +67,26 @@ export const RestaurantVerifyPage = () => {
   };
   return (
     <div className="h-screen">
-      <section className="flex w-full h-full bg-white rounded-lg">
-        <div className="h-full w-1/2 p-5">
-          <Image
-            src="/restaurant-image.png"
-            width={400}
-            height={400}
-            alt="restaurant"
-            objectFit="cover"
-            className="w-full h-full rounded-lg object-cover"
-          />
-        </div>
-
-        <div className="w-1/2 p-10">
-          <h1 className="text-3xl font-bold pb-6">Verify Email</h1>
+      <section className="md:flex w-full h-full bg-white rounded-lg p-5 md:p-0">
+        <div className="md:w-1/2 md:flex flex-col justify-center items-center">
           <form onSubmit={onSubmit} className="flex flex-col gap-6">
+            <div>
+              <h1 className="text-3xl font-bold pb-6 text-dark3">
+                Verify Email
+              </h1>
+
+              <p className="mt-2 text-grayInactive">
+                {`Enter the code sent to ${email}`}
+              </p>
+            </div>
+
             <div className="">
               <OtpInput
                 value={otp}
                 onChange={setOtp}
                 numInputs={6}
                 inputType="tel"
-                inputStyle="!w-[45px] h-10 bg-[#F0F3F8] rounded-[16px] text-center outline-none transition-all4 border border-[#F0F3F8] text-[32px] text-[#2C2929] font-medium"
+                inputStyle="!w-[45px] h-10 bg-[#F0F3F8] rounded-[8px] text-center outline-none transition-all4 border border-[#F0F3F8] text-[32px] text-[#2C2929] font-medium"
                 containerStyle="flex items-start gap-x-2 !max-w-[400px]"
                 renderInput={(props) => (
                   <input {...props} style={{ width: "3.3rem" }} />
@@ -102,12 +99,9 @@ export const RestaurantVerifyPage = () => {
                 </div>
               )}
             </div>
-            <div className="text-sm font-normal text-[#565D62]">
-              {`Enter the code sent to ${email}`}
-            </div>
 
             <section className="text-sm font-normal text-[#565D62] flex items-center gap-1">
-              Didn&apos;t get a code{" "}
+              Didn&apos;t get a code?{" "}
               <div
                 onClick={handleReverify}
                 className="text-[#574DFF] cursor-pointer "
@@ -124,7 +118,7 @@ export const RestaurantVerifyPage = () => {
             <Button
               disabled={otp === "" ? true : false}
               type="submit"
-              className=" w-[300px]"
+              className="md:w-[300px] fixed bottom-0 right-0 left-0 md:static mb-4 mx-5 md:mx-0 md:mb-0"
               variant="primary"
             >
               {isLoading ? (
@@ -138,6 +132,18 @@ export const RestaurantVerifyPage = () => {
               )}
             </Button>
           </form>
+        </div>
+
+        <div className="bg-primary text-white hidden md:flex flex-col h-full justify-center items-center w-1/2">
+          <div className="max-w-sm lg:max-w-[26.75rem]">
+            <h1 className="font-bold md:text-4xl lg:text-7xl md:!leading-[50px] lg:!leading-[90px]">
+              Elevate your Restaurant Experience
+            </h1>
+            <p className="text-lg leading-7 mt-6 lg:mt-8">
+              Streamline your operations, enhance guest experience, and maximize
+              your revenue effortlessly. Join the DeelTix family today!
+            </p>
+          </div>
         </div>
       </section>
     </div>
