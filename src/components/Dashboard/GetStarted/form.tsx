@@ -199,7 +199,7 @@ export const RestaurantForm = () => {
               {...register("bio")}
             />
             <p className="pt-3">
-              NB: Be very expressive with your offerings 😉
+              NB: Be very expressive with your offeringss 😉
             </p>
             {errors.bio && (
               <div className="text-red-500 text-sm font-normal pt-1">
@@ -216,7 +216,7 @@ export const RestaurantForm = () => {
                 </label>
                 <Input
                   placeholder="Monday"
-                  className="text-grayInactive text-lg font-normal w-[140px] mt-2"
+                  className="text-grayInactive text-lg font-normal !w-[140px] mt-2"
                   {...register("openDay")}
                 />
                 {errors.openDay && (
@@ -232,7 +232,7 @@ export const RestaurantForm = () => {
                 </label>
                 <Input
                   placeholder="Sunday"
-                  className="text-grayInactive text-lg font-normal w-[140px] mt-2"
+                  className="text-grayInactive text-lg font-normal !w-[140px] mt-2"
                   {...register("closeDay", {
                     required: true,
                   })}
@@ -245,14 +245,14 @@ export const RestaurantForm = () => {
               </div>
             </article>
 
-            <article className="flex items-center justify-between w-[300px]">
+            <article className="flex items-center justify-between !w-[300px]">
               <div className="">
                 <label className="text-grayHelp text-lg font-medium">
                   From
                 </label>
                 <Input
                   placeholder="9:00 AM"
-                  className="text-grayInactive text-lg font-normal w-[140px] mt-2"
+                  className="text-grayInactive text-lg font-normal !w-[140px] mt-2"
                   {...register("openTime", {
                     required: true,
                   })}
@@ -268,7 +268,7 @@ export const RestaurantForm = () => {
                 <label className="text-grayHelp text-lg font-medium">To</label>
                 <Input
                   placeholder="9:00 AM"
-                  className="text-grayInactive text-lg font-normal w-[140px] mt-2"
+                  className="text-grayInactive text-lg font-normal !w-[140px] mt-2"
                   {...register("closeTime", {
                     required: true,
                   })}

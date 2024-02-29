@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { TextRevealCard } from "@/components/ui/text-reveal-card";
 
 export default function RestaurantDashboard() {
+  const words = "Elevate your Restaurant Experience";
+
   return (
     <div className="pt-8 bg-[#FAFAFA]">
       {/* Navbar */}
@@ -30,7 +33,7 @@ export default function RestaurantDashboard() {
           <div className="px-10 lg:px-14 py-14 col-span-1 bg-white rounded-[40px]">
             <div className="max-w-[25rem]">
               <h1 className="text-[2.5rem] lg:text-[4rem] text-[#000060] leading-[40px] lg:leading-[65px] font-medium">
-                Elevate your Restaurant Experience
+                <TextGenerateEffect words={words} />
               </h1>
             </div>
 
