@@ -46,10 +46,7 @@ export const CustomerMenu = () => {
     },
     enabled: !!restaurantId,
   });
-  console.log("menu-data :", data);
-  // if (isLoading) {
-  //   toast.success('Loading');
-  // }
+
   if (isError) {
     toast.error("Something happened getting menu");
   }
@@ -57,8 +54,6 @@ export const CustomerMenu = () => {
   useEffect(() => {
     if (isSuccess) {
       setMenu(data?.data.data.data.menu);
-      // toast.success('Your menu is here!');
-      // console.log(data?.data.data.data.menu);
     }
   }, [restaurantId, data]);
 

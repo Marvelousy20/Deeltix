@@ -2,9 +2,12 @@
 import { DataTable } from "@/components/Table/DataTable";
 import { People } from "iconsax-react";
 import { PlusCircle } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { guestColumns, guestData } from "./table-column";
 import { Input } from "@/components/ui/input";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/axios-config";
+import { useUser } from "@/context/user";
 
 export interface IGuest {
   headings: string;
@@ -12,6 +15,21 @@ export interface IGuest {
   icon: React.ReactNode;
 }
 export const Guests = () => {
+  const { restaurantId } = useUser();
+
+  const { data, isLoading } = useQuery({
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      return await api.get(`/api/reservations/${restaurantId}/guests/all`);
+    },
+    queryKey: ["guestbook", "book"],
+    enabled: !!restaurantId,
+  });
+
+  console.log({ data });
+
   const list: IGuest[] = [
     {
       headings: "Total Guest",
