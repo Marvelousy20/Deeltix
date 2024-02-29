@@ -41,7 +41,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { data } = useQuery({
     queryFn: fetchUser,
-    queryKey: ["user, restuarant"],
+    queryKey: ["user", "restuarant"],
     enabled: false,
   });
 

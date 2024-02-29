@@ -4,57 +4,100 @@ import { DashboardReservation } from "./UpcomingReservation";
 import { Guest } from "./RecentGuest";
 import { DataTable } from "@/components/Table/DataTable";
 import { transactionColumns, transactionData } from "./TransactionTable";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 export interface IStat {
   title: string;
   data: string;
 }
 export const Dashboard = () => {
-  const result: IStat[] = [
-    { title: "Page view", data: "52" },
-    { title: "Upcoming reservation", data: "16" },
+  const sales = [
+    {
+      sale: "Gross sales",
+      amount: "540,432.50",
+      percentage: "10% from yesterday",
+      arrow: <ArrowUpRight color="#1DA533" />,
+    },
+    {
+      sale: "Total revenue",
+      amount: "30,647.00",
+      percentage: "10% from yesterday",
+      arrow: <ArrowDownRight color="#F71616" />,
+    },
   ];
+
+  const user = [
+    {
+      type: "Reservation",
+      amount: "500",
+    },
+    {
+      type: "Customer",
+      amount: "50",
+    },
+  ];
+
   return (
     <div className="p-8 flex flex-col gap-8">
-      <Headings user={"Olivia"} detail={"Here’s the update with Cilantro 🥙"} />
-
-      {/* Chart and stat */}
-      <section className="flex items-start gap-8">
-        <div className="h-[350px] w-[70%] border border-grayBottom rounded-[20px] p-[24px]"></div>
-        <div className="w-[30%] flex flex-col gap-[24px] p-[20px] rounded-[20px] border border-grayBottom">
-          <div className="flex items-center justify-between ">
-            <h3 className="font-medium text-xl text-[#42474B]">Stats</h3>
-            <div>Date</div>
-          </div>
-
-          <section className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              {result.map((item, _idx) => (
-                <div
-                  key={_idx}
-                  className="border flex flex-col justify-between w-[50%] h-[125px] border-[#F9FAFB] bg-[#F9FAFB] p-[16px] rounded-[20px]"
-                >
-                  <h3>{item?.title}</h3>
-                  <p>{item?.data}</p>
-                </div>
-              ))}
-            </div>
-            <div className="border flex flex-col justify-between w-full h-[125px] border-[#F9FAFB] bg-[#F9FAFB] p-[16px] rounded-[20px]">
-              <h3 className="font-normal text-sm text-grayInactive">
-                Total Revenue
-              </h3>
-              <h3 className="font-bold text-[22px]  text-grayBlack2">
-                ₦1,000,000,000.00
-              </h3>
-            </div>
-          </section>
+      <section className="flex items-center justify-between">
+        <Headings
+          user={"Olivia"}
+          detail={"Here’s the update with Cilantro 🥙"}
+        />
+        <div className="w-fit text-sm font-normal text-white  bg-[#121212] rounded-[20px] py-2 px-3">
+          Download sales report
         </div>
       </section>
+      {/* Chart and stat */}
+      <div className="grid grid-cols-2 gap-6">
+        <section className="grid grid-cols-2 gap-6">
+          {sales.map((item, _idx) => (
+            <div
+              key={_idx}
+              className="border border-[#0000001A] bg-[#F9F9F9]  p-6"
+            >
+              <section className="flex flex-col">
+                <p className="text-sm font-normal text-grayInactive ">
+                  {item.sale}
+                </p>
+                <h3 className="font-medium pt-3 pb-2 text-3xl text-[#000000]">
+                  {item.amount}
+                </h3>
+                <div className="flex items-center gap-1">
+                  <div>{item.arrow}</div>
+                  <p className="font-normal text-sm text-[#000000]">
+                    {item.percentage}
+                  </p>
+                </div>
+              </section>
+            </div>
+          ))}
+        </section>
 
-      <section className="flex items-start gap-4">
+        <section className="grid grid-cols-2 gap-6">
+          {user.map((item, _idx) => (
+            <div
+              key={_idx}
+              className="border border-[#0000001A] bg-[#F9F9F9] p-6"
+            >
+              <section className="flex flex-col gap-3">
+                <p className="text-sm font-normal text-grayInactive ">
+                  {item.type}
+                </p>
+                <h3 className="font-medium text-3xl text-[#000000]">
+                  {item.amount}
+                </h3>
+              </section>
+            </div>
+          ))}
+        </section>
+      </div>
+
+      <div className="h-[350px] w-full border border-grayBottom rounded-[20px] p-[24px]"></div>
+
+      <section className="grid grid-cols-2 gap-8">
         <DashboardReservation />
-        <Guest />
-        <div className="border-[2px] border-[#F7F7F7] rounded-[24px]">
+        <div className="border-[2px] border-[#F7F7F7] rounded-[24px] w-full">
           <div className="flex items-center justify-between py-[20px] px-[18px]">
             <p className="font-medium text-xl text-[#101828]">Transaction</p>
             <p className="text-sm font-normal text-[#574DFF] cursor-pointer">
