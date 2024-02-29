@@ -14,13 +14,13 @@ import { cookieStorage } from "@ibnlanre/portal";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { Eye } from "lucide-react";
 import { EyeSlash } from "iconsax-react";
 
 export const RestaurantSignUp = () => {
   const [eyeopen, setEyeOpen] = useState(false);
   const [type, setType] = useState("password");
+  const [isTyping, setIsTyping] = useState(false);
 
   function handleOpen() {
     setType("text");
@@ -85,26 +85,23 @@ export const RestaurantSignUp = () => {
     mutate(values);
   };
 
+  console.log(errors);
+
   return (
     <section className="h-screen">
-      <div className="flex items-center w-full h-full bg-white">
-        <div className="h-full w-1/2 p-5">
-          <Image
-            src="/restaurant-image.png"
-            width={400}
-            height={400}
-            alt="restaurant"
-            objectFit="cover"
-            className="w-full h-full rounded-lg object-cover"
-          />
-        </div>
-
-        <div className="w-1/2 p-10">
-          <h1 className="text-3xl font-bold pb-6">Create an account</h1>
+      <div className="md:flex w-full h-full p-5 bg-white rounded-lg md:p-0">
+        <div className="md:w-1/2 md:flex flex-col justify-center items-center">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
+            <div>
+              <h1 className="text-3xl font-bold text-dark3">Create Account</h1>
+              <p className="mt-2 text-grayInactive">
+                Let&apos;s get to know you
+              </p>
+            </div>
+
             <div className="">
               <label className="text-grayHelp text-lg font-medium">
                 Restaurant name
@@ -112,7 +109,9 @@ export const RestaurantSignUp = () => {
               <Input
                 placeholder="e.g John Doe"
                 className="text-grayInactive text-lg font-normal mt-2"
-                {...register("restaurantName")}
+                {...register("restaurantName", {
+                  onChange: () => setIsTyping(true),
+                })}
               />
               {errors.restaurantName && (
                 <div className="text-red-500 text-sm font-normal pt-3">
@@ -126,7 +125,9 @@ export const RestaurantSignUp = () => {
               <Input
                 placeholder="e.g John Doe"
                 className="text-grayInactive text-lg font-normal mt-2"
-                {...register("name")}
+                {...register("name", {
+                  onChange: () => setIsTyping(true),
+                })}
               />
               {errors.name && (
                 <div className="text-red-500 text-sm font-normal pt-3">
@@ -143,7 +144,9 @@ export const RestaurantSignUp = () => {
                 placeholder="Enter your email address"
                 type="email"
                 className="text-grayInactive text-lg font-normal mt-2"
-                {...register("email")}
+                {...register("email", {
+                  onChange: () => setIsTyping(true),
+                })}
               />
               {errors.email && (
                 <div className="text-red-500 text-sm font-normal pt-3">
@@ -159,7 +162,9 @@ export const RestaurantSignUp = () => {
               <Input
                 placeholder="Enter your phone number"
                 className="text-grayInactive text-lg font-normal mt-2"
-                {...register("phoneNumber")}
+                {...register("phoneNumber", {
+                  onChange: () => setIsTyping(true),
+                })}
               />
               {errors.phoneNumber && (
                 <div className="text-red-500 text-sm font-normal pt-3">
@@ -172,12 +177,14 @@ export const RestaurantSignUp = () => {
               <label className="text-grayHelp text-lg font-medium">
                 Password
               </label>
-              <div className=" items-center  mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+              <div className=" items-center  mt-2 justify-between flex h-12 rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                 <input
                   type={type}
                   placeholder="Enter your password"
-                  className="w-[300px] h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
-                  {...register("password")}
+                  className="w-full h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                  {...register("password", {
+                    onChange: () => setIsTyping(true),
+                  })}
                 />
 
                 {eyeopen ? (
@@ -204,7 +211,7 @@ export const RestaurantSignUp = () => {
             <div className="text-sm flex gap-1">
               <input type="checkbox" id="scales" name="scales" />
               <label htmlFor="scales">
-                I agree to DeelTix&apos;s
+                I agree to DeelTix&apos;s{" "}
                 <span className="text-blue-500">terms</span> and{" "}
                 <span className="text-blue-500">conditions</span>
               </label>
@@ -212,21 +219,40 @@ export const RestaurantSignUp = () => {
 
             <Button
               type="submit"
-              className=" w-[300px]"
+              // className={`${
+              //   errors !== null ? "hidden md:flex" : ""
+              // } md:w-[300px] fixed bottom-0 right-0 left-0 md:static mb-4 mx-5 md:mx-0 md:mb-0`}
+              className="md:w-[300px] fixed bottom-0 right-0 left-0 md:static mb-4 mx-5 md:mx-0 md:mb-0"
               variant="primary"
-              disabled={isLoading}
+              disabled={isLoading || !isTyping}
             >
               {isLoading ? (
                 <span className="flex items-center gap-2 text-white font-medium text-xl">
-                  <span> Creating account</span> <Loader size="sm" />
+                  <span>Creating account</span> <Loader size="sm" />
                 </span>
               ) : (
-                <span className="text-white font-medium text-xl">
-                  Create account
+                <span
+                  className={`font-medium text-xl ${
+                    isLoading || !isTyping ? "text-[#D8D8D8]" : "text-white"
+                  }`}
+                >
+                  Continue
                 </span>
               )}
             </Button>
           </form>
+        </div>
+
+        <div className="bg-primary text-white hidden md:flex flex-col h-full justify-center items-center w-1/2">
+          <div className="max-w-sm lg:max-w-[26.75rem]">
+            <h1 className="font-bold md:text-4xl lg:text-7xl md:!leading-[50px] lg:!leading-[90px]">
+              Elevate your Restaurant Experience
+            </h1>
+            <p className="text-lg leading-7 mt-6 lg:mt-8">
+              Streamline your operations, enhance guest experience, and maximize
+              your revenue effortlessly. Join the DeelTix family today!
+            </p>
+          </div>
         </div>
       </div>
     </section>

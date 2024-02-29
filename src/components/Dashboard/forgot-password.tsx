@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useState } from "react";
 import { MoveLeft } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,6 @@ import { Loader } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import Image from "next/image";
 export const RestaurantForgotPassword = () => {
   const { push } = useRouter();
   const formSchema = z.object({
@@ -21,6 +20,7 @@ export const RestaurantForgotPassword = () => {
       message: "Enter your email address",
     }),
   });
+  const [isTyping, setIsTyping] = useState(false);
 
   const { handleSubmit, register, formState, reset, getValues } = useForm<
     z.infer<typeof formSchema>
@@ -49,35 +49,28 @@ export const RestaurantForgotPassword = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate(values);
+    console.log(values);
   };
 
   return (
     <section className="h-screen">
-      <div className="flex w-full h-full bg-white rounded-lg gap-5">
-        <div className="h-full w-1/2 p-5">
-          <Image
-            src="/restaurant-image.png"
-            width={400}
-            height={400}
-            alt="restaurant"
-            objectFit="cover"
-            className="w-full h-full rounded-lg object-cover"
-          />
-        </div>
-
-        <div className="w-1/2 p-10">
-          <div
-            onClick={() => push("/restaurant-signin")}
-            className="mb-6 cursor-pointer flex gap-1 text-lg text-[#565D62] items-center"
-          >
-            <MoveLeft />
-            <p>Go back</p>
-          </div>
-          <h1 className="text-3xl font-bold pb-6">Forget password</h1>
+      <div className="md:flex w-full h-full p-5 bg-white md:p-0 rounded-lg gap-5">
+        <div className="md:w-1/2 md:flex flex-col justify-center items-center">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
+            <div>
+              <div
+                onClick={() => push("/restaurant-signin")}
+                className="mb-3 cursor-pointer flex gap-1 text-sm text-[#565D62] items-center"
+              >
+                <MoveLeft />
+                <p>Go back</p>
+              </div>
+              <h1 className="text-3xl font-bold text-dark3">Forget password</h1>
+            </div>
+
             <div className="">
               <label className="text-grayHelp text-lg font-medium">
                 Email address
@@ -86,7 +79,9 @@ export const RestaurantForgotPassword = () => {
                 placeholder="Enter your email address"
                 type="email"
                 className="text-grayInactive text-lg font-normal mt-2"
-                {...register("email")}
+                {...register("email", {
+                  onChange: () => setIsTyping(true),
+                })}
               />
               {errors.email && (
                 <div className="text-red-500 text-sm font-normal pt-3">
@@ -94,7 +89,11 @@ export const RestaurantForgotPassword = () => {
                 </div>
               )}
             </div>
-            <Button type="submit" className=" w-[300px]" variant="primary">
+            <Button
+              type="submit"
+              className="md:w-[300px] fixed bottom-0 right-0 left-0 md:static mb-4 mx-5 md:mx-0 md:mb-0"
+              variant="primary"
+            >
               {isLoading ? (
                 <span className="flex items-center gap-2 text-white font-medium text-xl">
                   <span> Resetting password</span> <Loader size="sm" />
@@ -106,6 +105,18 @@ export const RestaurantForgotPassword = () => {
               )}
             </Button>
           </form>
+        </div>
+
+        <div className="bg-primary text-white hidden md:flex flex-col h-full justify-center items-center w-1/2">
+          <div className="max-w-sm lg:max-w-[26.75rem]">
+            <h1 className="font-bold md:text-4xl lg:text-7xl md:!leading-[50px] lg:!leading-[90px]">
+              Elevate your Restaurant Experience
+            </h1>
+            <p className="text-lg leading-7 mt-6 lg:mt-8">
+              Streamline your operations, enhance guest experience, and maximize
+              your revenue effortlessly. Join the DeelTix family today!
+            </p>
+          </div>
         </div>
       </div>
     </section>

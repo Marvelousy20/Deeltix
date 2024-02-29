@@ -7,7 +7,11 @@ const Menu = () => {
   return (
     <DashboardLayout>
       <div className="p-4 lg:p-8">
-        <Breadcrumbs breadcrumb={"Add first menu"} />
+        <Breadcrumbs
+          firstText="Get Started"
+          breadcrumb={"Add first menu"}
+          action="save"
+        />
       </div>
       <MenuUpload />
     </DashboardLayout>
