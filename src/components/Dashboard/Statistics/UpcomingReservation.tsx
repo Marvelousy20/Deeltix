@@ -1,7 +1,13 @@
 "use client";
 import React from "react";
 import { UserRound, Bookmark, ChevronRight } from "lucide-react";
-import { ShoppingBag, Note1, LogoutCurve, Reserve } from "iconsax-react";
+import {
+  ShoppingBag,
+  Note1,
+  LogoutCurve,
+  Reserve,
+  ArrowDown2,
+} from "iconsax-react";
 import clsx from "clsx";
 import { ILoggedinUser } from "@/types";
 import Link from "next/link";
@@ -9,41 +15,50 @@ import Link from "next/link";
 export const DashboardReservation = () => {
   const userDetails = [
     {
-      name: "My profile",
+      name: "New Reservation",
       para: "Olivia Martins",
       icon: <Reserve color="#565D62" />,
-      chevron: <ChevronRight strokeWidth={1.5} size={18} color="#565D62" />,
+      chevron: <ArrowDown2 color="#574DFF" size={18} />,
+      time: "10:00 AM",
       route: "/profile",
     },
     {
-      name: "My orders",
+      name: "New Reservation",
       para: "Olivia Martins",
       icon: <Reserve color="#565D62" />,
-      chevron: <ChevronRight strokeWidth={1.5} size={18} color="#565D62" />,
+      chevron: <ArrowDown2 color="#574DFF" size={18} />,
+
+      time: "10:00 AM",
       route: "/orders",
     },
     {
-      name: "My reservations",
+      name: "New Reservation",
       para: "Olivia Martins",
       icon: <Reserve color="#565D62" />,
-      chevron: <ChevronRight strokeWidth={1.5} size={18} color="#565D62" />,
+      chevron: <ArrowDown2 color="#574DFF" size={18} />,
+
+      time: "10:00 AM",
       route: "/reservations",
     },
     {
-      name: "My bookmarks",
+      name: "New Reservation",
       para: "Olivia Martins",
       icon: <Reserve color="#565D62" />,
-      chevron: <ChevronRight strokeWidth={1.5} size={18} color="#565D62" />,
+      chevron: <ArrowDown2 color="#574DFF" size={18} />,
+
+      time: "10:00 AM",
       route: "/bookmarks",
     },
   ];
   return (
-    <div className=" bg-[#574DFF0D] rounded-[20px] border border-[#574DFF0D] flex flex-col gap-6 p-5 w-[316px]">
-      <div className="flex items-center justify-between">
+    <div className=" bg-[#574DFF0D] w-full rounded-[20px] border border-[#574DFF0D] flex flex-col gap-6 p-5">
+      <div className="flex items-center justify-between border-b border-[#D0D5DD] pb-3">
         <h3 className="font-medium text-lg text-comment">
           Upcoming reservations
         </h3>
-        <p className="font-normal text-sm text-[#574DFF]">View all</p>
+        <p className="font-normal text-sm text-[#574DFF] cursor-pointer">
+          View all
+        </p>
       </div>
       <div className="flex flex-col gap-4">
         {userDetails.map((items, idx) => (
@@ -60,8 +75,11 @@ export const DashboardReservation = () => {
                 <p>{items.para}</p>
               </div>
             </div>
-
-            <div className="text-[#565D62]">{items.chevron}</div>
+            <p>{items.time}</p>
+            <div className=" gap-2 bg-[#574DFF1A] rounded-[40px] py-2 cursor-pointer h-[100] w-[100px] flex items-center justify-center">
+              <p className="font-normal text-sm text-[#574DFF]">Accept</p>
+              <span>{items.chevron}</span>
+            </div>
           </div>
         ))}
       </div>

@@ -37,7 +37,7 @@ auth.interceptors.request.use(
     let token = cookieStorage.getItem("user");
     if (token) {
       token = JSON.parse(token)?.token;
-      req.headers.Authorization = `bearer ${token}`;
+      req.headers.Authorization = `Bearer ${token}`;
     }
     return req;
   },
@@ -46,18 +46,3 @@ auth.interceptors.request.use(
     Promise.reject(error);
   }
 );
-
-// API.interceptors.request.use(
-//   (req) => {
-//     let token = cookieStorage.getItem("bms-auth");
-//     if (token) {
-//       token = JSON.parse(token)?.access_token;
-//       req.headers.Authorization = `bearer ${token}`;
-//     }
-//     return req;
-//   },
-//   (error) => {
-//     toast.error("something went wrong");
-//     Promise.reject(error);
-//   }
-// );
