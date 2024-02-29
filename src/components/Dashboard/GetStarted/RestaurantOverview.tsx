@@ -6,7 +6,11 @@ import { RestaurantForm } from "./form";
 export const Overview = () => {
   return (
     <div className="p-8 flex flex-col gap-[48px]">
-      <Breadcrumbs breadcrumb={"Restaurant overview"} />
+      <Breadcrumbs
+        firstText="Get Started"
+        breadcrumb={"Restaurant overview"}
+        action="Save"
+      />
       <RestaurantForm />
     </div>
   );
