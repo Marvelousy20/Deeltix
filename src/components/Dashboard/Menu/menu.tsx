@@ -49,10 +49,7 @@ export const MenuDetails = ({
             <MoreHorizontal />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="rounded-xl border border-grayoutline mt-10">
-            <MenuDropDown
-              onDelete={handleDeleteMenu}
-              onEdit={console.log("editt")}
-            />
+            <MenuDropDown onDelete={handleDeleteMenu} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

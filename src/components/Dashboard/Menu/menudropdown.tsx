@@ -16,10 +16,7 @@ export const MenuDropDown = ({ onDelete }: { onDelete: any }) => {
         </div>
         <p className="text-base font-medium text-[#2C2929]">View</p>
       </div>
-      <div
-        onClick={onEdit}
-        className="flex cursor-pointer items-center gap-3 border-b border-[#E7EAF1] py-[12px]"
-      >
+      <div className="flex cursor-pointer items-center gap-3 border-b border-[#E7EAF1] py-[12px]">
         <div className="h-[30px] w-[30px] flex items-center justify-center rounded-full border border-[#E7EAF1]">
           <Edit2 size={20} />
         </div>
