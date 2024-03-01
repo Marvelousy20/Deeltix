@@ -144,7 +144,7 @@ export default function SignupPage() {
           </div>
 
           <div className="text-sm flex gap-1">
-            <input type="checkbox" id="scales" name="scales" />
+            <input type="checkbox" id="scales" name="scales" required />
             <label htmlFor="scales">
               I agree to DeelTix&apos;s
               <span className="text-blue-500">terms</span> and
@@ -156,7 +156,7 @@ export default function SignupPage() {
             type="submit"
             className=" w-[300px]"
             variant="primary"
-            // disabled={disabled}
+            disabled={isLoading}
           >
             {isLoading ? (
               <span className="flex items-center gap-2 text-white font-medium text-xl">

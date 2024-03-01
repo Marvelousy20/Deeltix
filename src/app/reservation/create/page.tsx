@@ -3,11 +3,14 @@ import CreateReservations from "@/components/Dashboard/Reservation/CreateReserva
 export default function createReservations() {
   return (
     <div className="p-4">
-      <Breadcrumbs
-        breadcrumb="Book Reservation"
-        firstText="Reservation"
-        action="Confrim Reservation"
-      />
+      <div>
+        <Breadcrumbs
+          breadcrumb="Book Reservation"
+          firstText="Reservation"
+          action="Confirm Reservation"
+          link="/reservation"
+        />
+      </div>
 
       <CreateReservations />
     </div>

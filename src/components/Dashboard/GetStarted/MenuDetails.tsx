@@ -105,7 +105,7 @@ export const MenuUpload = () => {
 
   const { data } = useQuery({
     queryFn: fetchCategory,
-    queryKey: ["category resturant"],
+    queryKey: ["category restaurant"],
   });
 
   useEffect(() => {

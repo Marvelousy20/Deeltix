@@ -11,6 +11,7 @@ const Menu = () => {
           firstText="Get Started"
           breadcrumb={"Add first menu"}
           action="save"
+          link="/get-started"
         />
       </div>
       <MenuUpload />
