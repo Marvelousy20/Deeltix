@@ -12,7 +12,7 @@ export const Breadcrumbs = ({
   breadcrumb: string;
   firstText: string;
   action: string;
-  link: string;
+  link?: string;
 }) => {
   return (
     <section className="flex items-center justify-between">
