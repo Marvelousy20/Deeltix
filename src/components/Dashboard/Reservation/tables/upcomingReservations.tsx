@@ -2,9 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import { MenuDetails } from "../../Menu/menu";
-// import { MenuType } from "@/types";
 
 type Test = {
   id: number;
@@ -63,21 +60,6 @@ export const upcomingReservationsData = [
 ];
 
 export const upcomingReservationsColumn: ColumnDef<Test>[] = [
-  //   {
-  //     id: "image",
-  //     header: "Image",
-  //     cell: ({ row }) => {
-  //       const details = row.original;
-  //       return (
-  //         <div>
-  //           <Avatar>
-  //             <AvatarImage src="/menu.png" alt="menu" />
-  //             <AvatarFallback>GM</AvatarFallback>
-  //           </Avatar>
-  //         </div>
-  //       );
-  //     },
-  //   },
   {
     accessorKey: "date",
     header: "Date",

@@ -281,9 +281,9 @@ export const RestaurantForm = () => {
               </div>
             </article>
           </section>
-          {/* <Button type="submit" className="text-green-500 p-6">
+          <Button type="submit" className="text-green-500 p-6">
             submit
-          </Button> */}
+          </Button>
         </form>
       </section>
     </div>

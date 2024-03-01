@@ -10,6 +10,7 @@ export const Overview = () => {
         firstText="Get Started"
         breadcrumb={"Restaurant overview"}
         action="Save"
+        link="/get-started"
       />
       <RestaurantForm />
     </div>

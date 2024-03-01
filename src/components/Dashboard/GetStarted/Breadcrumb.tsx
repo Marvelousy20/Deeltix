@@ -7,15 +7,17 @@ export const Breadcrumbs = ({
   breadcrumb,
   firstText,
   action,
+  link,
 }: {
   breadcrumb: string;
   firstText: string;
   action: string;
+  link: string;
 }) => {
   return (
     <section className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <Link href="/get-started">
+        <Link href={link}>
           <p className="text-base font-medium text-comment">{firstText}</p>
         </Link>
         <ArrowRight2 size="16" />
