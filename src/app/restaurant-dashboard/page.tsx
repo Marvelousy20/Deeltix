@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Turn as Hamburger } from "hamburger-react";
 
-export const cards = [
+const cards = [
   {
     title: "Effortless Reservations",
     description:
