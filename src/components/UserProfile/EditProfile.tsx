@@ -35,11 +35,11 @@ function onSubmit(values: z.infer<typeof formSchema>) {
   console.log(values);
 }
 
-const { mutate, isLoading } = useMutation({
-  mutationFn: async () => await api.patch(``),
-});
-
 export default function EditUserProfile() {
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async () => await api.patch(``),
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
