@@ -6,17 +6,19 @@ import { z } from "zod";
 
 import { Input } from "../../ui/input";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/user";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/axios-config";
+import { IProfileUpdate } from "@/types";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
+import { Loader } from "@mantine/core";
 
 const formSchema = z.object({
-  emailAddress: z.string().email(),
-  lastName: z.string().min(5, {
-    message: "Enter last name",
+  fullName: z.string().min(5, {
+    message: "Enter full name",
   }),
-
-  name: z.string().min(5, {
-    message: "Enter first name",
-  }),
-  number: z.string().min(11, {
+  phoneNumber: z.string().min(11, {
     message: "Number must be at least 11 character longer",
   }),
 });
@@ -26,20 +28,33 @@ export const RestaurantAccount = () => {
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      emailAddress: "",
-      lastName: "",
-      name: "",
-      number: "",
+      fullName: "",
+      phoneNumber: "",
     },
   });
   const { errors } = formState;
+
+  const queryClient = useQueryClient();
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (data: IProfileUpdate) =>
+      await api.patch(`/api/restaurant-manager/profile`, data),
+    mutationKey: ["manager-profile", "manager"],
+    onSuccess() {
+      toast.success("Profile updated successfully");
+      queryClient.invalidateQueries(["manager-restaurant-profile"]);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    mutate(values);
     reset();
   };
   return (
     <div className="flex flex-col items-center justify-center">
-      <section className="border border-grayBottom rounded-[24px] p-9 w-fit hide">
+      <section className="border border-grayBottom rounded-[24px] p-12 w-fit">
         <form onSubmit={handleSubmit(onSubmit)} className="">
           <div className="flex item-center justify-between pb-5">
             <h3 className="text-xl font-bold text-grayBlack2">
@@ -47,61 +62,33 @@ export const RestaurantAccount = () => {
             </h3>
             <Button
               type="submit"
-              className="w-fit px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
+              className="w-fit !h-0 !py-4 !px-4 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
             >
-              Save
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <p>Saving</p>
+                  <Loader size="sm" />
+                </div>
+              ) : (
+                <p>Save</p>
+              )}
             </Button>
           </div>
           <div className="flex flex-col gap-6">
             <div>
               <label className="text-grayHelp text-lg font-medium">
-                First name
+                Full name
               </label>
               <Input
                 placeholder="Enter first name"
                 className="text-grayInactive text-lg font-normal mt-2"
-                {...register("name", {
+                {...register("fullName", {
                   required: true,
                 })}
               />
-              {errors.name && (
+              {errors.fullName && (
                 <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.name?.message}
-                </div>
-              )}
-            </div>
-
-            <div>
-              <label className="text-grayHelp text-lg font-medium">
-                Last name
-              </label>
-              <Input
-                placeholder="Enter last name"
-                className="text-grayInactive text-lg font-normal mt-2"
-                {...register("lastName", {
-                  required: true,
-                })}
-              />
-              {errors.lastName && (
-                <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.lastName?.message}
-                </div>
-              )}
-            </div>
-
-            <div className="">
-              <label className="text-grayHelp text-lg font-medium">
-                Restaurant email address
-              </label>
-              <Input
-                type="email"
-                placeholder="cilantro@gmail.com"
-                className="text-grayInactive text-lg font-normal mt-2"
-                {...register("emailAddress")}
-              />
-              {errors.emailAddress && (
-                <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.emailAddress?.message}
+                  {errors.fullName?.message}
                 </div>
               )}
             </div>
@@ -113,13 +100,13 @@ export const RestaurantAccount = () => {
               <Input
                 placeholder="Enter phone number"
                 className="text-grayInactive text-lg font-normal mt-2"
-                {...register("number", {
+                {...register("phoneNumber", {
                   required: true,
                 })}
               />
-              {errors.number && (
+              {errors.phoneNumber && (
                 <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.number?.message}
+                  {errors.phoneNumber.message}
                 </div>
               )}
             </div>

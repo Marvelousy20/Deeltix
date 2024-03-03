@@ -76,7 +76,6 @@ export const RestaurantResetPassword = () => {
   }, [email]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values, email, otp);
     mutate({ ...values, email, otp });
   };
 

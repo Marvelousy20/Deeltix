@@ -89,8 +89,8 @@ export const RestaurantSignUp = () => {
 
   return (
     <section className="h-screen">
-      <div className="md:flex w-full h-full p-5 bg-white rounded-lg md:p-0">
-        <div className="md:w-1/2 md:flex flex-col justify-center items-center">
+      <div className="md:flex w-full h-full  p-5 bg-white rounded-lg md:p-0">
+        <div className="md:w-1/2 h-full md:flex flex-col justify-center items-center">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
@@ -243,7 +243,7 @@ export const RestaurantSignUp = () => {
           </form>
         </div>
 
-        <div className="bg-primary text-white hidden md:flex flex-col h-full justify-center items-center w-1/2">
+        <div className="bg-primary h-full text-white hidden md:flex flex-col justify-center items-center w-1/2">
           <div className="max-w-sm lg:max-w-[26.75rem]">
             <h1 className="font-bold md:text-4xl lg:text-7xl md:!leading-[50px] lg:!leading-[90px]">
               Elevate your Restaurant Experience

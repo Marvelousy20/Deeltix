@@ -3,67 +3,57 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { Button } from "../../ui/button";
-import ModalDetails from "./modal";
 import { useDisclosure } from "@mantine/hooks";
+import { Guest } from "@/types";
+import { ModalEvent } from "./event";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type user = {
   id: number;
-  fullname: string;
+  fullName: string;
   email: string;
-  number: string;
+  phoneNumber: string;
 };
 
 export const guestData = [
   {
     id: 1,
-    fullname: "Olivia Martins",
+    fullName: "Olivia Martins",
     email: "fiyin@gmail.com",
-    number: "09023060000",
+    phoneNumber: "09023060000",
   },
   {
     id: 2,
-    fullname: "Olivia Fiyin",
+    fullName: "Olivia Fiyin",
     email: "fiyin@gmail.com",
-    number: "09023060000",
+    phoneNumber: "09023060000",
   },
   {
     id: 3,
-    fullname: "Olivia cisco",
+    fullName: "Olivia cisco",
     email: "fiyin@gmail.com",
-    number: "09023060000",
+    phoneNumber: "09023060000",
   },
   {
     id: 3,
-    fullname: "Olivia Esther",
+    fullName: "Olivia Esther",
     email: "fiyin@gmail.com",
-    number: "09023060000",
+    phoneNumber: "09023060000",
   },
 ];
 
-export const guestColumns: ColumnDef<user>[] = [
+export const guestColumns: ColumnDef<Guest>[] = [
   {
-    accessorKey: "fullname",
+    accessorKey: "fullName",
     header: "Full name",
-    // header: ({ column }) => {
-    //   return (
-    //     <Button
-    //       variant="ghost"
-    //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //     >
-    //       Fullname
-    //       <ArrowUpDown className="ml-2 h-4 w-4" />
-    //     </Button>
-    //   );
-    // },
   },
   {
     accessorKey: "email",
     header: "Email address",
   },
   {
-    accessorKey: "number",
+    accessorKey: "phoneNumber",
     header: "Phone Number",
   },
   {
@@ -73,9 +63,14 @@ export const guestColumns: ColumnDef<user>[] = [
       const user = row.original;
       return (
         <div>
-          <ModalDetails />
+          <ModalEvent
+            user={user?.fullName as string}
+            email={user?.email as string}
+            number={user?.phoneNumber as string}
+          />
+          {/* <ModalDetails id={user?._id} /> */}
           {/* onclick of this will console the user id based on the role you clicked */}
-          {/* <MoreHorizontal onClick={() => console.log(user.id)} /> */}
+          {/* <MoreHorizontal onClick={() => console.log(user)} /> */}
         </div>
       );
     },

@@ -28,7 +28,7 @@ const formSchema = z.object({
   number: z.string().min(11, {
     message: "Number must be at least 11 character longer",
   }),
-  bio: z.string().min(10, {
+  description: z.string().min(10, {
     message: "provide information about your restaurant",
   }),
   openDay: z.string().min(6, {
@@ -54,7 +54,7 @@ export const RestaurantProfile = () => {
       address: "",
       name: "",
       number: "",
-      bio: "",
+      description: "",
       openDay: "",
       closeDay: "",
       openTime: "",
@@ -165,14 +165,14 @@ export const RestaurantProfile = () => {
               <Textarea
                 placeholder="Tell us a little bit about yourself"
                 className="resize-none  mt-2"
-                {...register("bio")}
+                {...register("description")}
               />
               <p className="pt-3">
                 NB: Be very expressive with your offerings 😉
               </p>
-              {errors.bio && (
+              {errors.description && (
                 <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.bio?.message}
+                  {errors.description?.message}
                 </div>
               )}
             </div>
