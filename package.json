@@ -31,6 +31,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.3.1",
+    "dayjs": "^1.11.10",
     "embla-carousel-react": "^8.0.0-rc19",
     "framer-motion": "^11.0.8",
     "hamburger-react": "^2.5.0",

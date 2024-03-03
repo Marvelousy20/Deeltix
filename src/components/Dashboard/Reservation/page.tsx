@@ -14,12 +14,46 @@ import {
 } from "./tables/upcomingReservations";
 import { useState } from "react";
 import Link from "next/link";
+import { useUser } from "@/context/user";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/axios-config";
+import { UpcomingReservationDetails } from "@/types";
 
 const reservations = [{ id: 1 }];
 
 export default function Reservation() {
-  // const [reservations, setReservation] = useState("")
+  const { restaurantId } = useUser();
+  //  upcoming reservation
+  const { data, isLoading } = useQuery({
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      return await api.get<UpcomingReservationDetails>(
+        `/api/reservations/${restaurantId}/manager/upcoming/all`
+      );
+    },
+    queryKey: ["upcoming-reservation", "upcoming"],
+    enabled: !!restaurantId,
+    select: (data) => data?.data?.data?.data,
+  });
 
+  // past reservation
+  const { data: pastReservation, isLoading: pastLoading } = useQuery({
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      return await api.get<UpcomingReservationDetails>(
+        `/api/reservations/${restaurantId}/manager/past/all`
+      );
+    },
+    queryKey: ["past-reservation", "past"],
+    enabled: !!restaurantId,
+    select: (data) => data?.data?.data?.data,
+  });
+
+  console.log("past-reservation: ", pastReservation);
   return (
     <div className="pt-5 px-8">
       <section className="flex items-center justify-between">
@@ -99,7 +133,7 @@ export default function Reservation() {
       <section>
         {reservations.length >= 1 ? (
           <div>
-            {/* Pending Reservations */}
+            {/* pending Reservations */}
             <div className="mt-8">
               <h1 className="p-5 font-medium text-lg">Pending Reservations</h1>
               <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
@@ -116,7 +150,7 @@ export default function Reservation() {
               <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
                 <DataTable
                   columns={upcomingReservationsColumn}
-                  data={upcomingReservationsData}
+                  data={data?.reservations ?? []}
                 />
               </div>
             </div>
@@ -127,7 +161,7 @@ export default function Reservation() {
               <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
                 <DataTable
                   columns={pastReservationsColumn}
-                  data={pastReservationsData}
+                  data={pastReservation?.reservations ?? []}
                 />
               </div>
             </div>

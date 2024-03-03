@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/axios-config";
 import { useUser } from "@/context/user";
+import { IAllGuestResponse } from "@/types";
 
 export interface IGuest {
   headings: string;
@@ -22,13 +23,16 @@ export const Guests = () => {
       if (!restaurantId) {
         return;
       }
-      return await api.get(`/api/reservations/${restaurantId}/guests/all`);
+      return await api.get<IAllGuestResponse>(
+        `/api/reservations/${restaurantId}/guests/all`
+      );
     },
     queryKey: ["guestbook", "book"],
     enabled: !!restaurantId,
+    select: (data) => data?.data?.data?.data,
   });
 
-  console.log({ data });
+  // console.log("guestss :", data?.guests);
 
   const list: IGuest[] = [
     {
@@ -66,7 +70,7 @@ export const Guests = () => {
                   {item.headings}
                 </p>
                 <h3 className="font-bold text-3xl text-[#2C2929]">
-                  {item.number}
+                  {data?.total}
                 </h3>
               </div>
               <div className="h-[50px] w-[50px] rounded-full flex items-center justify-center bg-[#574DFF1A]">
@@ -84,7 +88,7 @@ export const Guests = () => {
           <Input placeholder="Filter names..." className="max-w-sm" />
         </div>
         <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
-          <DataTable columns={guestColumns} data={guestData} />
+          <DataTable columns={guestColumns} data={data?.guests ?? []} />
         </div>
       </section>
     </div>

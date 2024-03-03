@@ -62,7 +62,6 @@ function AddCategory({
       close();
       open();
       reset();
-      //   push("");
     },
     onError(error) {
       handleError(error as ErrorType);

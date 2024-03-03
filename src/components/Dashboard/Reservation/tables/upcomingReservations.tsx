@@ -1,6 +1,8 @@
 "use client";
 
+import { UpcomingReservation } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import dayjs from "dayjs";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 
 type Test = {
@@ -59,33 +61,44 @@ export const upcomingReservationsData = [
   },
 ];
 
-export const upcomingReservationsColumn: ColumnDef<Test>[] = [
+export const upcomingReservationsColumn: ColumnDef<UpcomingReservation>[] = [
   {
-    accessorKey: "date",
+    accessorKey: "createdAt",
     header: "Date",
+    cell: ({ row }) => {
+      const user = row?.original;
+      return (
+        <>
+          <p>{dayjs(user?.createdAt).format("DD-MM-YYYY")}</p>
+        </>
+      );
+    },
   },
   {
-    accessorKey: "reservedDate",
+    accessorKey: "date",
     header: "Reserved date",
   },
   {
-    accessorKey: "name",
+    accessorKey: "fullName",
     header: "Name",
   },
 
   {
-    accessorKey: "reservationCode",
+    accessorKey: "reference",
     header: "Reserved Code",
   },
 
   {
-    accessorKey: "confirm",
+    accessorKey: "confirmationStatus",
     header: "Confirm Reservation",
     cell: ({ row }) => {
+      const user = row?.original;
       return (
-        <button className="text-[#574DFF] bg-[#F4F5FF] rounded-[40px] py-2 px-4">
-          Confirm
-        </button>
+        <>
+          <button className="text-[#574DFF] bg-[#F4F5FF] rounded-[40px] py-2 px-4">
+            {user?.confirmationStatus}
+          </button>
+        </>
       );
     },
   },
