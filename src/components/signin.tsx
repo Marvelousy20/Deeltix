@@ -121,7 +121,7 @@ export default function Signin() {
             variant="primary"
           >
             {isLoading ? (
-              <span className="flex items-center gap-1 text-white font-medium text-xl">
+              <span className="flex items-center gap-2 text-white font-medium text-xl">
                 <span>Signing in</span> <Loader size="sm" />
               </span>
             ) : (

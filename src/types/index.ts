@@ -112,8 +112,8 @@ export interface Restaurant {
   manager: string;
   reservationCharge: boolean;
   averageRating: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date | undefined | string;
+  updatedAt: Date | undefined | string;
   id: string;
 }
 
@@ -123,8 +123,8 @@ export interface UserData {
   fullName: string;
   isActive: boolean;
   isEmailVerified: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date | undefined | string;
+  updatedAt: Date | undefined | string;
   otp: null;
   otpExpiresIn: null;
   lastLogin: string;
@@ -134,7 +134,7 @@ export interface UserData {
 export interface MenuType {
   available: boolean;
   category: { name: string; available: boolean; id: string };
-  createdAt: string;
+  createdAt: Date | undefined | string;
   deleted: boolean;
   description: string;
   id: string;
@@ -142,5 +142,119 @@ export interface MenuType {
   name: string;
   price: number;
   restaurant: string;
-  updatedAt: string;
+  updatedAt: Date | undefined | string;
+}
+
+export interface IRestaurantReservation {
+  time: string;
+  date: Date | undefined | string;
+  email: string;
+  numberOfPeople: string;
+  specialRequest?: string;
+}
+
+export interface IAllGuestResponse {
+  data: IAllGuestData;
+  status: string;
+}
+
+export interface IAllGuestData {
+  message: string;
+  data: IAllGuest;
+}
+
+export interface IAllGuest {
+  guests: Guest[] | undefined;
+  total: number;
+}
+
+export interface Guest {
+  _id: string;
+  phoneNumber: null | string;
+  fullName: null | string;
+  email: string;
+}
+
+// upcoming reservation
+export interface UpcomingReservationDetails {
+  data: UpcomingData;
+  status: string;
+}
+
+export interface UpcomingData {
+  message: string;
+  data: DataData;
+}
+
+export interface DataData {
+  reservations: UpcomingReservation[];
+  total: number;
+}
+
+export interface UpcomingReservation {
+  date: Date;
+  time: string;
+  dateAndTime: Date;
+  numberOfPeople: number;
+  email: string;
+  specialRequest: string;
+  confirmationStatus: string;
+  reference: string;
+  restaurant: UpcomingRestaurant;
+  approvalTime: Date;
+  approvedBy: string;
+  paymentRequired: boolean;
+  paymentStatus: string;
+  createdAt: Date | undefined | string;
+  updatedAt: Date | undefined | string;
+  id: string;
+  user?: UpcomingUser;
+  fullName?: string;
+  phoneNumber?: string;
+}
+
+export interface UpcomingRestaurant {
+  name: string;
+  manager: string;
+  reservationCharge: boolean;
+  averageRating: number;
+  createdAt: Date | undefined | string;
+  updatedAt: Date | undefined | string;
+  id: string;
+  description?: string;
+  address?: string;
+  averagePrice?: number;
+  country?: string;
+  openingDays?: string;
+  openingHours?: string;
+  state?: string;
+  displayPicture?: string;
+  pictures?: string[];
+}
+
+export interface UpcomingUser {
+  profile: UpcomingProfile;
+  email: string;
+  id: string;
+}
+
+export interface UpcomingProfile {
+  name: string;
+  phoneNumber: string;
+  profilePicture?: string;
+  dob?: string;
+}
+// end of upcoming reservation
+
+// profile update
+export interface IProfileUpdate {
+  fullName: string;
+  phoneNumber: string;
+}
+
+// password update
+export interface IPasswordUpdate {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }

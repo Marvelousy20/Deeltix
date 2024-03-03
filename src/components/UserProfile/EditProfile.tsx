@@ -15,6 +15,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "@/axios-config";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -34,6 +36,10 @@ function onSubmit(values: z.infer<typeof formSchema>) {
 }
 
 export default function EditUserProfile() {
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async () => await api.patch(``),
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

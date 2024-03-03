@@ -1,8 +1,12 @@
 "use client";
+import { api } from "@/axios-config";
+import { ErrorType, handleError } from "@/lib/handle-error";
+import { useMutation } from "@tanstack/react-query";
 import { Camera, DocumentUpload, GalleryEdit } from "iconsax-react";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 export const ProfileUpload = () => {
   const [userfile, setUserFile] = useState<File | null>(null);
@@ -27,11 +31,40 @@ export const ProfileUpload = () => {
     }
   };
 
-  const upload = () => {
-    if (userfile) {
-      // console.log("file upload:", userfile);
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (data: FormData) =>
+      await api.post(`/api/utilities/upload`, data),
+    mutationKey: ["picture-upload"],
+    onSuccess() {
+      toast.success("File uploaded successfully");
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
+  // if (userfile) {
+  //   console.log("imagess: ", userfile);
+  // } else {
+  //   console.log("data not available right now");
+  // }
+
+  const handleSubmit = () => {
+    try {
+      if (userfile) {
+        const formData = new FormData();
+        formData.append("files", userfile);
+        mutate(formData);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  useEffect(() => {
+    handleSubmit();
+  }, [userfile]);
+
   return (
     <div>
       <div className="flex items-center gap-3">

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/popover";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { date, z } from "zod";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -28,12 +28,41 @@ import { api } from "@/axios-config";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { Loader } from "@mantine/core";
-
+import dayjs from "dayjs";
+import { IRestaurantReservation } from "@/types";
 export default function CreateReservations() {
   const { restaurantId } = useUser();
+
+  const reservationSchema = z.object({
+    numberOfPeople: z.string().min(1, {
+      message: "Enter number of guests",
+    }),
+
+    email: z.string().email().min(5, {
+      message: "Enter your email address",
+    }),
+
+    specialRequest: z.string().optional(),
+  });
+
+  const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
+    z.infer<typeof reservationSchema>
+  >({
+    resolver: zodResolver(reservationSchema),
+    defaultValues: {
+      numberOfPeople: "",
+      email: "",
+      specialRequest: "",
+    },
+  });
+  const [userdate, setUserDate] = useState<Date>();
+  const [timer, setTimer] = useState("");
+  const [timeinitial, setTimeInitial] = useState("am");
+  const { errors } = formState;
+
   const { mutate, isLoading } = useMutation({
-    mutationFn: async () =>
-      await api.post(`/api/reservations/${restaurantId}/new`),
+    mutationFn: async (data: IRestaurantReservation) =>
+      await api.post(`/api/reservations/${restaurantId}/new`, data),
 
     mutationKey: ["new-reservation", "book-reservation"],
     onSuccess() {
@@ -44,46 +73,11 @@ export default function CreateReservations() {
     },
   });
 
-  const reservationSchema = z.object({
-    // date: z.string().min(8, {
-    //   message: "Enter date",
-    // }),
-    time: z.string().min(1, {
-      message: "Select availability time",
-    }),
-    guests: z.string().min(1, {
-      message: "Select number of guests",
-    }),
-
-    name: z.string().min(2, {
-      message: "Enter your full name",
-    }),
-    emailAddress: z.string().email().min(5, {
-      message: "Enter your email address",
-    }),
-    phoneNumber: z.string().regex(/^\d{11}$/),
-
-    specialRequests: z.string().optional(),
-  });
-
-  const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
-    z.infer<typeof reservationSchema>
-  >({
-    resolver: zodResolver(reservationSchema),
-    defaultValues: {
-      name: "",
-      time: "",
-      guests: "",
-      emailAddress: "",
-      phoneNumber: "",
-      specialRequests: "",
-    },
-  });
-  const [date, setDate] = useState<Date>();
-  const { errors } = formState;
   const onSubmit = (values: z.infer<typeof reservationSchema>) => {
-    mutate({ ...values, date });
-    // console.log({ ...values, date });
+    const date = dayjs(userdate).format("YYYY-MM-DD");
+    const time = `${timer} ${timeinitial}`;
+    console.log({ ...values, date, time });
+    mutate({ ...values, date, time });
     reset();
   };
   return (
@@ -105,24 +99,45 @@ export default function CreateReservations() {
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : <span>Pick a date</span>}
+                {userdate ? format(userdate, "PPP") : <span>Pick a date</span>}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
-                selected={date}
-                onSelect={setDate}
+                selected={dayjs(userdate).format("DD MM YYYY") as any}
+                onSelect={setUserDate}
                 initialFocus
               />
             </PopoverContent>
           </Popover>
         </div>
 
-        <div>
+        <div className="flex flex-col">
           <label className="text-grayHelp text-lg font-medium">Time</label>
+          <div className="flex items-center mt-2 h-12 rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+            <input
+              required
+              value={timer}
+              onChange={(e) => setTimer(e.target.value)}
+              type="time"
+              className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+            />
 
-          <Select
+            <select
+              required
+              value={timeinitial}
+              onChange={(e) => setTimeInitial(e.target.value)}
+              name=""
+              id=""
+              className=" p-2 focus-within:none focus:none outline-none"
+            >
+              <option value="am">am</option>
+              <option value="pm">pm</option>
+            </select>
+          </div>
+          {/* <Select
+            
             onValueChange={(value) =>
               setValue("time", value, {
                 shouldValidate: true,
@@ -138,69 +153,31 @@ export default function CreateReservations() {
             </SelectTrigger>
             <SelectContent className="text-grayInactive text-lg font-normal">
               {[
-                { label: "2:00pm", value: "2:00pm" },
-                { label: "3:00pm", value: "3:00pm" },
-                { label: "4:00pm", value: "4:00pm" },
+                { label: "am", value: "am" },
+                { label: "pm", value: "pm" },
               ].map((state, _i) => (
                 <SelectItem key={_i} className="rounded-xl" value={state.value}>
                   {state.label}
                 </SelectItem>
               ))}
             </SelectContent>
-          </Select>
-          <div className="text-red-500 text-sm font-normal pt-1">
+          </Select> */}
+          {/* <div className="text-red-500 text-sm font-normal pt-1">
             {errors.time?.message}
-          </div>
+          </div> */}
         </div>
         {/* guest */}
-        <div>
-          <label className="text-grayHelp text-lg font-medium">Guests</label>
 
-          <Select
-            onValueChange={(value) =>
-              setValue("guests", value, {
-                shouldValidate: true,
-              })
-            }
-            defaultValue={watch().guests}
-          >
-            <SelectTrigger>
-              <SelectValue
-                placeholder="Select number of guests"
-                className="text-grayInactive text-lg font-normal"
-              />
-            </SelectTrigger>
-            <SelectContent className="text-grayInactive text-lg font-normal">
-              {[
-                { label: "2", value: "2" },
-                { label: "3", value: "3" },
-                { label: "4", value: "4" },
-              ].map((state, _i) => (
-                <SelectItem key={_i} className="rounded-xl" value={state.value}>
-                  {state.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <div className="text-red-500 text-sm font-normal pt-1">
-            {errors.guests?.message}
-          </div>
-        </div>
-
-        {/* fullname */}
-
-        <div>
-          <label className="text-grayHelp text-lg font-medium">Full name</label>
+        <div className="">
+          <label className="text-grayHelp text-lg font-medium">Guest</label>
           <Input
-            placeholder="Enter your name"
+            placeholder="Enter number of guest"
             className="text-grayInactive text-lg font-normal mt-2"
-            {...register("name", {
-              required: true,
-            })}
+            {...register("numberOfPeople")}
           />
-          {errors.name && (
+          {errors.numberOfPeople && (
             <div className="text-red-500 text-sm font-normal pt-1">
-              {errors.name?.message}
+              {errors.numberOfPeople?.message}
             </div>
           )}
         </div>
@@ -213,16 +190,16 @@ export default function CreateReservations() {
             type="email"
             placeholder="cilantro@gmail.com"
             className="text-grayInactive text-lg font-normal mt-2"
-            {...register("emailAddress")}
+            {...register("email")}
           />
-          {errors.emailAddress && (
+          {errors.email && (
             <div className="text-red-500 text-sm font-normal pt-1">
-              {errors.emailAddress?.message}
+              {errors.email?.message}
             </div>
           )}
         </div>
 
-        <div>
+        {/* <div>
           <label className="text-grayHelp text-lg font-medium">
             Phone number
           </label>
@@ -238,22 +215,22 @@ export default function CreateReservations() {
               {errors.phoneNumber?.message}
             </div>
           )}
-        </div>
+        </div> */}
 
         <div>
           <label className="text-grayHelp text-lg font-medium">
-            Special requests (optional)
+            Special request (optional)
           </label>
           <Input
             placeholder="cilantro@gmail.com"
             className="text-grayInactive text-lg font-normal mt-2"
-            {...register("specialRequests", {
+            {...register("specialRequest", {
               required: true,
             })}
           />
-          {errors.specialRequests && (
+          {errors.specialRequest && (
             <div className="text-red-500 text-sm font-normal pt-1">
-              {errors.specialRequests?.message}
+              {errors.specialRequest?.message}
             </div>
           )}
         </div>
