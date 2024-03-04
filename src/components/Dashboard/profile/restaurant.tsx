@@ -231,7 +231,7 @@ export const RestaurantProfile = ({
             <div className="h-[1px] w-full bg-[#D0D5DD]"></div>
 
             <section className="flex flex-col gap-6">
-              <article className="flex items-center gap-3 justify-between max-w-[27rem]">
+              <article className="flex items-center gap-3 justify-between lg:max-w-[27rem]">
                 <div className="">
                   <label className="text-grayHelp text-lg font-medium">
                     Open at
@@ -267,7 +267,7 @@ export const RestaurantProfile = ({
                 </div>
               </article>
 
-              <article className="flex items-center gap-3 justify-between w-[27rem]">
+              <article className="flex items-center gap-3 justify-between lg:max-w-[27rem]">
                 <div className="">
                   <label className="text-grayHelp text-lg font-medium">
                     From

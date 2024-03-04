@@ -8,7 +8,7 @@ import { ProfileUpload } from "./picture-upload";
 
 export const ProfileTab = () => {
   return (
-    <section className="min-w-[32.5rem]">
+    <section className="max-w-lg lg:min-w-[32.5rem]">
       <div className="flex flex-col gap-2">
         <h3 className=" font-bold text-2xl text-[#000000]">Profile</h3>
         <p className="font-normal text-base text-grayInactive">
