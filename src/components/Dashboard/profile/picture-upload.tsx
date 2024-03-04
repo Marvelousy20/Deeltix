@@ -93,8 +93,9 @@ export const ProfileUpload = () => {
             />
           ) : (
             <div>
-              {userfile.map((item) => (
+              {userfile.map((item, idx) => (
                 <Image
+                  key={idx}
                   src={URL.createObjectURL(item)}
                   width={130}
                   height={130}
