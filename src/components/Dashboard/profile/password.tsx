@@ -79,7 +79,7 @@ export const RestaurantPassword = () => {
   };
   return (
     <div className="flex flex-col items-center justify-center">
-      <section className="border border-grayBottom rounded-[24px] p-12 w-fit hide">
+      <section className="border border-grayBottom rounded-[24px] p-4 md:p-9 w-full hide">
         <form onSubmit={handleSubmit(onSubmit)} className="">
           <div className="flex item-center justify-between pb-5">
             <h3 className="text-xl font-bold text-grayBlack2">Password</h3>
@@ -105,11 +105,11 @@ export const RestaurantPassword = () => {
                 </label>
 
                 {/* input */}
-                <div className=" items-center  mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+                <div className=" items-center lg:min-w-[27rem] mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                   <input
                     type={type}
                     placeholder="Enter your password"
-                    className="w-[300px] h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                    className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
                     {...register("oldPassword")}
                   />
 
@@ -143,11 +143,11 @@ export const RestaurantPassword = () => {
                 </label>
 
                 {/* input */}
-                <div className=" items-center  mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+                <div className=" items-center lg:min-w-[27rem] mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                   <input
                     type={type}
                     placeholder="Enter your password"
-                    className="w-[300px] h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                    className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
                     {...register("newPassword")}
                   />
 
@@ -181,11 +181,11 @@ export const RestaurantPassword = () => {
                 </label>
 
                 {/* input */}
-                <div className=" items-center  mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+                <div className=" items-center lg:min-w-[27rem] mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                   <input
                     type={type}
                     placeholder="Enter your password"
-                    className="w-[300px] h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
                     {...register("confirmPassword")}
                   />
 

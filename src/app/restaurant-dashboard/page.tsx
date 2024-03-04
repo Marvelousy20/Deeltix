@@ -167,7 +167,7 @@ export default function RestaurantDashboard() {
           </h1>
         </div>
 
-        <div className="">
+        {/* <div className="">
           <div className="mt-[5.5rem] grid grid-cols-1 lg:grid-cols-5 gap-x-10">
             <div className="grid gap-y-4 lg:col-span-3">
               <div className="">
@@ -184,10 +184,10 @@ export default function RestaurantDashboard() {
 
                   <div className="flex justify-end mt-12">
                     <Image
-                      src="/dashboard/receipt.svg"
+                      src="/dashboard/integrated.png"
                       alt="receipt"
-                      width={545}
-                      height={800}
+                      width={713}
+                      height={533}
                     />
                   </div>
                 </div>
@@ -233,15 +233,15 @@ export default function RestaurantDashboard() {
 
               <div className="order-2">
                 <Image
-                  src="/dashboard/woman.svg"
+                  src="/dashboard/adaptability.png"
                   alt="woman"
                   width={503}
-                  height={500}
+                  height={759}
                 />
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="flex justify-between flex-wrap lg:flex-nowrap mt-4 gap-4">
           <div className="bg-white rounded-[20px] p-8 text-black w-full">
