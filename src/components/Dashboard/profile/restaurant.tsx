@@ -87,7 +87,7 @@ export const RestaurantProfile = ({
   //         "Content-Type": "application/json",
   //       },
   //     }),
-  //   queryKey: ["state"],
+  //   queryKey: ["state"]
   // });
 
   const { errors } = formState;
