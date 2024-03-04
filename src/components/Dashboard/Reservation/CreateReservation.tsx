@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
 import { useUser } from "@/context/user";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/axios-config";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
@@ -58,6 +58,7 @@ export default function CreateReservations() {
   const [userdate, setUserDate] = useState<Date>();
   const [timer, setTimer] = useState("");
   const [timeinitial, setTimeInitial] = useState("am");
+  const queryClient = useQueryClient();
   const { errors } = formState;
 
   const { mutate, isLoading } = useMutation({
@@ -67,6 +68,7 @@ export default function CreateReservations() {
     mutationKey: ["new-reservation", "book-reservation"],
     onSuccess() {
       toast.success("Reservation created successfully");
+      queryClient.invalidateQueries(["guestbook"]);
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -116,14 +118,15 @@ export default function CreateReservations() {
         <div className="flex flex-col">
           <label className="text-grayHelp text-lg font-medium">Time</label>
           <div className="flex items-center mt-2 h-12 rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
-            <input
-              required
-              value={timer}
-              onChange={(e) => setTimer(e.target.value)}
-              type="time"
-              className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
-            />
-
+            <div className="inner">
+              <input
+                required
+                value={timer}
+                onChange={(e) => setTimer(e.target.value)}
+                type="time"
+                className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
             <select
               required
               value={timeinitial}

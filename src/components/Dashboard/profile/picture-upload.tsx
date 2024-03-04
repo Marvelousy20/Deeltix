@@ -1,15 +1,16 @@
 "use client";
-import { api } from "@/axios-config";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { useMutation } from "@tanstack/react-query";
-import { Camera, DocumentUpload, GalleryEdit } from "iconsax-react";
-import { Trash2 } from "lucide-react";
+import axios from "axios";
+import { Camera } from "iconsax-react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { RestaurantProfile } from "./restaurant";
+import { Button } from "@/components/ui/button";
 
 export const ProfileUpload = () => {
-  const [userfile, setUserFile] = useState<File | null>(null);
+  const [userfile, setUserFile] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef.current) {
@@ -18,23 +19,33 @@ export const ProfileUpload = () => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files;
     if (file) {
-      setUserFile(file);
+      setUserFile(Array.from(file));
     }
   };
 
   const handleDelete = () => {
-    setUserFile(null);
+    setUserFile([]);
     if (inputRef.current) {
       inputRef.current.value === "";
     }
   };
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isLoading, data } = useMutation({
     mutationFn: async (data: FormData) =>
-      await api.post(`/api/utilities/upload`, data),
+      await axios.post(
+        `https://deeltix-nserver.onrender.com/api/utilities/upload`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      ),
+
     mutationKey: ["picture-upload"],
+
     onSuccess() {
       toast.success("File uploaded successfully");
     },
@@ -43,21 +54,19 @@ export const ProfileUpload = () => {
     },
   });
 
-  // if (userfile) {
-  //   console.log("imagess: ", userfile);
-  // } else {
-  //   console.log("data not available right now");
-  // }
-
+  const restaurantUpload = data?.data?.data?.data?.urls[0];
+  // console.log("upload-image: ", data?.data?.data?.data?.urls[0]);
   const handleSubmit = () => {
     try {
       if (userfile) {
         const formData = new FormData();
-        formData.append("files", userfile);
-        mutate(formData);
+        userfile.forEach((file) => {
+          formData.append("files", file);
+          mutate(formData);
+        });
       }
     } catch (error) {
-      console.log(error);
+      console.error("Upload failed", error);
     }
   };
 
@@ -66,42 +75,54 @@ export const ProfileUpload = () => {
   }, [userfile]);
 
   return (
-    <div>
-      <div className="flex items-center gap-3">
-        {!userfile ? (
-          <Image
-            src="/food.png"
-            width={150}
-            height={150}
-            alt="user upload"
-            className=" object-cover"
-          />
-        ) : (
-          <Image
-            src={URL.createObjectURL(userfile)}
-            width={150}
-            height={150}
-            alt="user upload"
-            className=" object-cover"
-          />
-        )}
-
-        <div
-          onClick={handleClick}
-          className="flex items-center  gap-2 cursor-pointer w-fit py-1 px-2 border border-grayoutline bg-grayoutline rounded-[40px]"
-        >
-          <Camera size={16} />
-          <p className="text-sm font-normal text-[#121212]">Upload</p>
+    <div className="flex flex-col items-center justify-center">
+      <section className="border border-grayBottom rounded-[24px] p-9 w-fit flex flex-col gap-6">
+        <div className="flex item-center justify-between">
+          <h3 className="text-xl font-bold text-grayBlack2">
+            Restaurant details
+          </h3>
         </div>
+        <div className=" flex items-center gap-4 w-fit h-fit">
+          {!userfile.length ? (
+            <Image
+              src="/food.png"
+              width={130}
+              height={130}
+              alt="user upload"
+              className=" object-cover "
+            />
+          ) : (
+            <div>
+              {userfile.map((item) => (
+                <Image
+                  src={URL.createObjectURL(item)}
+                  width={130}
+                  height={130}
+                  alt="user upload"
+                  className=" object-cover"
+                />
+              ))}
+            </div>
+          )}
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleChange}
-          ref={inputRef}
-          className="hidden"
-        />
-      </div>
+          <div
+            onClick={handleClick}
+            className="flex items-center  gap-2 cursor-pointer w-fit py-1 px-2 border border-grayoutline bg-grayoutline rounded-[40px]"
+          >
+            <Camera size={16} />
+            <p className="text-sm font-normal text-[#121212]">Upload</p>
+          </div>
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleChange}
+            ref={inputRef}
+            className="hidden"
+          />
+        </div>
+        <RestaurantProfile displayPicture={restaurantUpload} />
+      </section>
     </div>
   );
 };
