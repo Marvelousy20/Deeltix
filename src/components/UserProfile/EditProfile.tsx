@@ -31,11 +31,11 @@ const formSchema = z.object({
   }),
 });
 
-function onSubmit(values: z.infer<typeof formSchema>) {
-  console.log(values);
-}
-
 export default function EditUserProfile() {
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
+
   const { mutate, isLoading } = useMutation({
     mutationFn: async () => await api.patch(``),
   });

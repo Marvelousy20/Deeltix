@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { useDisclosure } from "@mantine/hooks";
 import UserDrawer from "@/components/Drawer";
 import Link from "next/link";
-import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 export default function Home() {
   const word1 = "Discover";

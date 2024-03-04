@@ -34,3 +34,8 @@
 .mantine-1dm1xfw {
   background-color: black;
 }
+
+input[type="time"] {
+  font-size: 16px; /* Adjust font size as needed */
+  width: 100px; /* Define width of input */
+}
