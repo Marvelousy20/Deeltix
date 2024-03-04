@@ -47,7 +47,6 @@ export default function RestaurantDashboard() {
                 height="80"
               />
             </Link>
-
             <div className="sm:hidden">
               <Hamburger size={20} toggled={isOpen} toggle={setOpen} />
             </div>
