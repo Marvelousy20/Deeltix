@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,17 +17,21 @@ import { Input } from "../../ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProfileUpload } from "./picture-upload";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const formSchema = z.object({
-  emailAddress: z.string().email(),
   address: z.string().min(10),
+  state: z.string().min(5, {
+    message: "Enter your state",
+  }),
+  country: z.string().min(5, {
+    message: "Enter your state",
+  }),
+  averagePrice: z.string().min(5, {
+    message: "Enter price",
+  }),
 
-  name: z.string().min(5, {
-    message: "Enter restaurant name",
-  }),
-  number: z.string().min(11, {
-    message: "Number must be at least 11 character longer",
-  }),
   description: z.string().min(10, {
     message: "provide information about your restaurant",
   }),
@@ -44,16 +48,20 @@ const formSchema = z.object({
     message: "Enter your closing time",
   }),
 });
-export const RestaurantProfile = () => {
+export const RestaurantProfile = ({
+  displayPicture,
+}: {
+  displayPicture: string;
+}) => {
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      emailAddress: "",
       address: "",
-      name: "",
-      number: "",
+      state: "",
+      country: "",
+      averagePrice: "",
       description: "",
       openDay: "",
       closeDay: "",
@@ -61,65 +69,55 @@ export const RestaurantProfile = () => {
       closeTime: "",
     },
   });
+  // country
+  const { data } = useQuery({
+    queryFn: async () =>
+      await axios.get("https://restcountries.com/v3.1/all", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    queryKey: ["countries"],
+  });
+
+  // const { data: state } = useQuery({
+  //   queryFn: async () =>
+  //     await axios.get("https://restcountries.com/v3.1/states", {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }),
+  //   queryKey: ["state"],
+  // });
+
   const { errors } = formState;
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     reset();
   };
   return (
-    <div className="flex flex-col items-center justify-center">
-      <section className="border border-grayBottom rounded-[24px] p-9 w-fit hide">
+    <div className="">
+      <section className="">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-          <div className="flex item-center justify-between">
-            <h3 className="text-xl font-bold text-grayBlack2">
-              Restaurant details
-            </h3>
-            <Button
-              type="submit"
-              className="w-fit px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
-            >
-              Save
-            </Button>
-          </div>
-
-          <ProfileUpload />
-
           <div className="flex flex-col gap-6">
             <div>
-              <label className="text-grayHelp text-lg font-medium">
-                Restaurant name
-              </label>
-              <Input
-                placeholder="Enter restaurant name"
-                className="text-grayInactive text-lg font-normal mt-2"
-                {...register("name", {
-                  required: true,
-                })}
+              <label className="text-grayHelp text-lg font-medium">Bio</label>
+              <Textarea
+                placeholder="Tell us a little bit about yourself"
+                className="resize-none  mt-2"
+                {...register("description")}
               />
-              {errors.name && (
+              <p className="pt-3">
+                NB: Be very expressive with your offerings 😉
+              </p>
+              {errors.description && (
                 <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.name?.message}
+                  {errors.description?.message}
                 </div>
               )}
             </div>
 
-            <div className="">
-              <label className="text-grayHelp text-lg font-medium">
-                Restaurant email address
-              </label>
-              <Input
-                type="email"
-                placeholder="cilantro@gmail.com"
-                className="text-grayInactive text-lg font-normal mt-2"
-                {...register("emailAddress")}
-              />
-              {errors.emailAddress && (
-                <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.emailAddress?.message}
-                </div>
-              )}
-            </div>
-
+            {/* address */}
             <div>
               <label className="text-grayHelp text-lg font-medium">
                 <div className="flex items-center justify-between w-[300px]">
@@ -139,53 +137,108 @@ export const RestaurantProfile = () => {
                 {errors.address?.message}
               </div>
             </div>
+            {/* state */}
+            <div>
+              <label className="text-grayHelp text-lg font-medium">State</label>
 
+              <Select
+                onValueChange={(value) =>
+                  setValue("state", value, {
+                    shouldValidate: true,
+                  })
+                }
+                defaultValue={watch().state}
+              >
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder="Select your state"
+                    className="text-grayInactive text-lg font-normal"
+                  />
+                </SelectTrigger>
+                <SelectContent className="text-grayInactive text-lg font-normal">
+                  {[
+                    { label: "am", value: "am" },
+                    { label: "pm", value: "pm" },
+                  ].map((state, _i) => (
+                    <SelectItem
+                      key={_i}
+                      className="rounded-xl"
+                      value={state.value}
+                    >
+                      {state.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <div className="text-red-500 text-sm font-normal pt-1">
+                {errors.state?.message}
+              </div>
+            </div>
+            {/* country */}
             <div>
               <label className="text-grayHelp text-lg font-medium">
-                Phone number
+                Country
+              </label>
+
+              <Select
+                onValueChange={(value) =>
+                  setValue("country", value, {
+                    shouldValidate: true,
+                  })
+                }
+                defaultValue={watch().country}
+              >
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder="Select availability time"
+                    className="text-grayInactive text-lg font-normal"
+                  />
+                </SelectTrigger>
+                <SelectContent className="text-grayInactive text-lg font-normal">
+                  {data?.data?.map((country: any, _i: any) => (
+                    <SelectItem
+                      key={_i}
+                      className="rounded-xl"
+                      value={country?.name?.common}
+                    >
+                      {country?.name?.common}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <div className="text-red-500 text-sm font-normal pt-1">
+                {errors.country?.message}
+              </div>
+            </div>
+
+            <div className="">
+              <label className="text-grayHelp text-lg font-medium">
+                Average price
               </label>
               <Input
+                type="email"
                 placeholder="cilantro@gmail.com"
                 className="text-grayInactive text-lg font-normal mt-2"
-                {...register("number", {
-                  required: true,
-                })}
+                {...register("averagePrice")}
               />
-              {errors.number && (
+              {errors.averagePrice && (
                 <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.number?.message}
+                  {errors.averagePrice?.message}
                 </div>
               )}
             </div>
 
-            <div className="h-[1px] w-[300px] bg-[#D0D5DD]"></div>
-
-            <div>
-              <label className="text-grayHelp text-lg font-medium">Bio</label>
-              <Textarea
-                placeholder="Tell us a little bit about yourself"
-                className="resize-none  mt-2"
-                {...register("description")}
-              />
-              <p className="pt-3">
-                NB: Be very expressive with your offerings 😉
-              </p>
-              {errors.description && (
-                <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.description?.message}
-                </div>
-              )}
-            </div>
+            <div className="h-[1px] w-full bg-[#D0D5DD]"></div>
 
             <section className="flex flex-col gap-6">
-              <article className="flex items-center justify-between w-[300px]">
+              <article className="flex items-center gap-3 justify-between max-w-[27rem]">
                 <div className="">
                   <label className="text-grayHelp text-lg font-medium">
                     Open at
                   </label>
                   <Input
                     placeholder="Monday"
-                    className="text-grayInactive text-lg font-normal w-[140px] mt-2"
+                    className="text-grayInactive text-lg font-normal w-full mt-2"
                     {...register("openDay")}
                   />
                   {errors.openDay && (
@@ -201,7 +254,7 @@ export const RestaurantProfile = () => {
                   </label>
                   <Input
                     placeholder="Sunday"
-                    className="text-grayInactive text-lg font-normal w-[140px] mt-2"
+                    className="text-grayInactive text-lg font-normal w-full mt-2"
                     {...register("closeDay", {
                       required: true,
                     })}
@@ -214,14 +267,14 @@ export const RestaurantProfile = () => {
                 </div>
               </article>
 
-              <article className="flex items-center justify-between w-[300px]">
+              <article className="flex items-center gap-3 justify-between w-[27rem]">
                 <div className="">
                   <label className="text-grayHelp text-lg font-medium">
                     From
                   </label>
                   <Input
                     placeholder="9:00 AM"
-                    className="text-grayInactive text-lg font-normal w-[140px] mt-2"
+                    className="text-grayInactive text-lg font-normal mt-2"
                     {...register("openTime", {
                       required: true,
                     })}
@@ -239,7 +292,7 @@ export const RestaurantProfile = () => {
                   </label>
                   <Input
                     placeholder="9:00 AM"
-                    className="text-grayInactive text-lg font-normal w-[140px] mt-2"
+                    className="text-grayInactive text-lg font-normal mt-2"
                     {...register("closeTime", {
                       required: true,
                     })}
@@ -251,6 +304,12 @@ export const RestaurantProfile = () => {
                   )}
                 </div>
               </article>
+              <Button
+                type="submit"
+                className="w-1/2 !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
+              >
+                Submit
+              </Button>
             </section>
           </div>
         </form>
