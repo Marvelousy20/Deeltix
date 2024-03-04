@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RestaurantProfile } from "./restaurant";
 import { RestaurantAccount } from "./account";
 import { RestaurantPassword } from "./password";
+import { ProfileUpload } from "./picture-upload";
 
 export const ProfileTab = () => {
   return (
@@ -44,7 +45,8 @@ export const ProfileTab = () => {
             <RestaurantAccount />
           </TabsContent>
           <TabsContent value="restaurant">
-            <RestaurantProfile />
+            {/* <RestaurantProfile /> */}
+            <ProfileUpload />
           </TabsContent>
 
           <TabsContent value="password">
