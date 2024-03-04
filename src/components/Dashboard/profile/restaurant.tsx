@@ -306,7 +306,7 @@ export const RestaurantProfile = ({
               </article>
               <Button
                 type="submit"
-                className="w-1/2 !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
+                className="w-full !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
               >
                 Submit
               </Button>

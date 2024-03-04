@@ -54,7 +54,7 @@ export const RestaurantAccount = () => {
   };
   return (
     <div className="flex flex-col items-center justify-center">
-      <section className="border border-grayBottom rounded-[24px] p-12 w-fit">
+      <section className="border border-grayBottom rounded-[24px] p-9 w-full">
         <form onSubmit={handleSubmit(onSubmit)} className="">
           <div className="flex item-center justify-between pb-5">
             <h3 className="text-xl font-bold text-grayBlack2">

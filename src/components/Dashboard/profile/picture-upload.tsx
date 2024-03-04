@@ -108,7 +108,7 @@ export const ProfileUpload = () => {
 
           <div
             onClick={handleClick}
-            className="flex items-center  gap-2 cursor-pointer w-fit py-1 px-2 border border-grayoutline bg-grayoutline rounded-[40px]"
+            className="flex items-center gap-2 cursor-pointer w-fit py-1 px-2 border border-grayoutline bg-grayoutline rounded-[40px]"
           >
             <Camera size={16} />
             <p className="text-sm font-normal text-[#121212]">Upload</p>

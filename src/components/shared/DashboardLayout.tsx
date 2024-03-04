@@ -60,7 +60,7 @@ export const DashboardLayout = ({
               key={name}
               className={clsx(
                 link === pathName
-                  ? "text-[#574DFF] border outline-none border-[#636C71] rounded-[20px] bg-[#574DFF12]  text-base font-medium"
+                  ? "text-[#574DFF] outline-none border-[#636C71] rounded-[20px] bg-[#574DFF12]  text-base font-medium"
                   : "text-base font-medium text-white border-none bg-none "
               )}
             >
