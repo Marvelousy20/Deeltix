@@ -19,10 +19,11 @@ import { Button } from "@/components/ui/button";
 import { ProfileUpload } from "./picture-upload";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { states } from "./state";
 
 const formSchema = z.object({
   address: z.string().min(10),
-  state: z.string().min(5, {
+  state: z.string().min(2, {
     message: "Enter your state",
   }),
   country: z.string().min(5, {
@@ -120,7 +121,7 @@ export const RestaurantProfile = ({
             {/* address */}
             <div>
               <label className="text-grayHelp text-lg font-medium">
-                <div className="flex items-center justify-between w-[300px]">
+                <div className="flex items-center justify-between w-full">
                   <p>Address</p>
                   <div className="flex items-center text-[#574DFF] text-sm gap-1 cursor-pointer font-normal">
                     <MapPin size={16} />
@@ -156,16 +157,9 @@ export const RestaurantProfile = ({
                   />
                 </SelectTrigger>
                 <SelectContent className="text-grayInactive text-lg font-normal">
-                  {[
-                    { label: "am", value: "am" },
-                    { label: "pm", value: "pm" },
-                  ].map((state, _i) => (
-                    <SelectItem
-                      key={_i}
-                      className="rounded-xl"
-                      value={state.value}
-                    >
-                      {state.label}
+                  {states.map((state, _i) => (
+                    <SelectItem key={_i} className="rounded-xl" value={state}>
+                      {state}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -190,7 +184,7 @@ export const RestaurantProfile = ({
               >
                 <SelectTrigger>
                   <SelectValue
-                    placeholder="Select availability time"
+                    placeholder="Select your country"
                     className="text-grayInactive text-lg font-normal"
                   />
                 </SelectTrigger>
@@ -204,6 +198,9 @@ export const RestaurantProfile = ({
                       {country?.name?.common}
                     </SelectItem>
                   ))}
+                  {/* <SelectItem className="rounded-xl" value="Nigeria">
+                    Nigeria
+                  </SelectItem> */}
                 </SelectContent>
               </Select>
               <div className="text-red-500 text-sm font-normal pt-1">
@@ -217,7 +214,7 @@ export const RestaurantProfile = ({
               </label>
               <Input
                 type="email"
-                placeholder="cilantro@gmail.com"
+                placeholder="Enter your average price"
                 className="text-grayInactive text-lg font-normal mt-2"
                 {...register("averagePrice")}
               />

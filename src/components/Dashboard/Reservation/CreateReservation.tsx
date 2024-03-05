@@ -172,7 +172,9 @@ export default function CreateReservations() {
         {/* guest */}
 
         <div className="">
-          <label className="text-grayHelp text-lg font-medium">Guest</label>
+          <label className="text-grayHelp text-lg font-medium">
+            No of guest
+          </label>
           <Input
             placeholder="Enter number of guest"
             className="text-grayInactive text-lg font-normal mt-2"
@@ -187,7 +189,7 @@ export default function CreateReservations() {
 
         <div className="">
           <label className="text-grayHelp text-lg font-medium">
-            Restaurant email address
+            Guest email address
           </label>
           <Input
             type="email"
@@ -244,7 +246,7 @@ export default function CreateReservations() {
           variant="primary"
         >
           {isLoading ? (
-            <span className="flex items-center gap-1 text-white font-medium text-xl">
+            <span className="flex items-center gap-2 text-white font-medium text-xl">
               <span>Creating reservation</span> <Loader size="sm" />
             </span>
           ) : (
