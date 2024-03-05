@@ -34,29 +34,45 @@ export default function RestaurantDashboard() {
   };
 
   return (
-    <div className="pt-8 bg-[#FAFAFA]">
+    <div className="pt-8 bg-[#FAFAFA] relative">
       {/* Navbar */}
       <div className="px-4 md:px-8 lg:px-[6.25rem]">
-        <nav className="flex items-center justify-between px-8 py-4">
-          <Image src="/dashboard/dlogo.svg" alt="img" width="80" height="80" />
-          <div className="sm:hidden">
-            <Hamburger size={20} toggled={isOpen} toggle={setOpen} />
-          </div>
-
-          <ul className="md:flex items-center gap-x-7 hidden">
-            <li>
-              <Link href="/contact">Contact Team</Link>
-            </li>
-            <li className="font-medium">
-              <Link href="/restaurant-signin">Log In</Link>
-            </li>
-
-            <Link href="/restaurant-registration">
-              <div className="bg-primary text-white rounded-[40px] py-3 px-5 font-medium shadow-[0_4px_14px_0_rgb(0,0,0,20%)] hover:shadow-[0_6px_20px_rgba(93,93,93,23%)] transition duration-200 ease-linear">
-                Get Started
-              </div>
+        <nav className="mx-4 md:mx-8 lg:mx-[6.25rem] py-4 fixed top-8 left-0 right-0 bg-white px-8 rounded-[40px]">
+          <div className="flex items-center justify-between relative">
+            <Link href="/">
+              <Image
+                src="/dashboard/dlogo.svg"
+                alt="img"
+                width="80"
+                height="80"
+              />
             </Link>
-          </ul>
+            <div className="sm:hidden">
+              <Hamburger size={20} toggled={isOpen} toggle={setOpen} />
+            </div>
+
+            <ul
+              className={`md:flex items-center gap-x-7 ${
+                isOpen
+                  ? "absolute top-10 flex-col space-y-8 bg-white left-0 right-0 p-8"
+                  : "hidden"
+              }`}
+            >
+              <li className="font-medium" onClick={() => setOpen(false)}>
+                <Link href="/contact">Contact Team</Link>
+              </li>
+              <li className="font-medium" onClick={() => setOpen(false)}>
+                <Link href="/restaurant-signin">Log In</Link>
+              </li>
+              <li onClick={() => setOpen(false)}>
+                <Link href="/restaurant-registration">
+                  <div className="bg-primary text-white rounded-[40px] py-3 px-5 font-medium shadow-[0_4px_14px_0_rgb(0,0,0,20%)] hover:shadow-[0_6px_20px_rgba(93,93,93,23%)] transition duration-200 ease-linear">
+                    Get Started
+                  </div>
+                </Link>
+              </li>
+            </ul>
+          </div>
 
           {/* {isOpen ? (
             <ul className="md:flex items-center gap-x-7">
@@ -99,7 +115,7 @@ export default function RestaurantDashboard() {
 
         {/* Hero */}
 
-        <section className="flex justify-between flex-wrap gap-5 items-center mt-8 lg:mt-16">
+        <section className="flex justify-between flex-wrap gap-5 items-center mt-12 lg:mt-36">
           {/* Text */}
           <div className="px-10 lg:px-14 py-14 col-span-1 bg-white rounded-[40px]">
             <div className="max-w-[25rem]">
@@ -151,7 +167,7 @@ export default function RestaurantDashboard() {
           </h1>
         </div>
 
-        <div className="">
+        {/* <div className="">
           <div className="mt-[5.5rem] grid grid-cols-1 lg:grid-cols-5 gap-x-10">
             <div className="grid gap-y-4 lg:col-span-3">
               <div className="">
@@ -168,10 +184,10 @@ export default function RestaurantDashboard() {
 
                   <div className="flex justify-end mt-12">
                     <Image
-                      src="/dashboard/receipt.svg"
+                      src="/dashboard/integrated.png"
                       alt="receipt"
-                      width={545}
-                      height={800}
+                      width={713}
+                      height={533}
                     />
                   </div>
                 </div>
@@ -217,15 +233,15 @@ export default function RestaurantDashboard() {
 
               <div className="order-2">
                 <Image
-                  src="/dashboard/woman.svg"
+                  src="/dashboard/adaptability.png"
                   alt="woman"
                   width={503}
-                  height={500}
+                  height={759}
                 />
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="flex justify-between flex-wrap lg:flex-nowrap mt-4 gap-4">
           <div className="bg-white rounded-[20px] p-8 text-black w-full">

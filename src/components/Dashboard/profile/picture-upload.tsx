@@ -75,8 +75,8 @@ export const ProfileUpload = () => {
   }, [userfile]);
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <section className="border border-grayBottom rounded-[24px] p-9 w-fit flex flex-col gap-6">
+    <div className="flex flex-col items-center justify-center !overflow-x-hidden">
+      <section className="border border-grayBottom rounded-[24px] p-4 md:p-9 w-full flex flex-col gap-6">
         <div className="flex item-center justify-between">
           <h3 className="text-xl font-bold text-grayBlack2">
             Restaurant details
@@ -108,7 +108,7 @@ export const ProfileUpload = () => {
 
           <div
             onClick={handleClick}
-            className="flex items-center  gap-2 cursor-pointer w-fit py-1 px-2 border border-grayoutline bg-grayoutline rounded-[40px]"
+            className="flex items-center gap-2 cursor-pointer w-fit py-1 px-2 border border-grayoutline bg-grayoutline rounded-[40px]"
           >
             <Camera size={16} />
             <p className="text-sm font-normal text-[#121212]">Upload</p>

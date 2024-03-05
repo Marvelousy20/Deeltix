@@ -88,7 +88,7 @@ export const RestaurantProfile = ({
   //         "Content-Type": "application/json",
   //       },
   //     }),
-  //   queryKey: ["state"],
+  //   queryKey: ["state"]
   // });
 
   const { errors } = formState;
@@ -228,7 +228,7 @@ export const RestaurantProfile = ({
             <div className="h-[1px] w-full bg-[#D0D5DD]"></div>
 
             <section className="flex flex-col gap-6">
-              <article className="flex items-center gap-3 justify-between max-w-[27rem]">
+              <article className="flex items-center gap-3 justify-between lg:max-w-[27rem]">
                 <div className="">
                   <label className="text-grayHelp text-lg font-medium">
                     Open at
@@ -264,7 +264,7 @@ export const RestaurantProfile = ({
                 </div>
               </article>
 
-              <article className="flex items-center gap-3 justify-between w-[27rem]">
+              <article className="flex items-center gap-3 justify-between lg:max-w-[27rem]">
                 <div className="">
                   <label className="text-grayHelp text-lg font-medium">
                     From
@@ -303,7 +303,7 @@ export const RestaurantProfile = ({
               </article>
               <Button
                 type="submit"
-                className="w-1/2 !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
+                className="w-full !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
               >
                 Submit
               </Button>

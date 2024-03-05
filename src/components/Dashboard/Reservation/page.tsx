@@ -38,6 +38,8 @@ export default function Reservation() {
     select: (data) => data?.data?.data?.data,
   });
 
+  console.log(data);
+
   // past reservation
   const { data: pastReservation, isLoading: pastLoading } = useQuery({
     queryFn: async () => {

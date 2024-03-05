@@ -10,8 +10,12 @@ import { Button } from "@/components/ui/button";
 import { useDisclosure } from "@mantine/hooks";
 import UserDrawer from "@/components/Drawer";
 import Link from "next/link";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 export default function Home() {
+  const word1 = "Discover";
+  const word2 = "Restaurants";
+
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <main className="bg flex flex-col lg:block gap-10 lg:gap-0">
@@ -43,6 +47,7 @@ export default function Home() {
               type="search"
               placeholder="Search for a restaurant, cuisine e.t.c"
               className="mt-8 px-6 py-6"
+              icon="/searchArrow.png"
             />
           </div>
         </div>

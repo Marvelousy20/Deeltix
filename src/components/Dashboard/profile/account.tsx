@@ -53,43 +53,26 @@ export const RestaurantAccount = () => {
     reset();
   };
   return (
-    <section className="border border-grayBottom rounded-[24px] p-12 w-fit">
-      <form onSubmit={handleSubmit(onSubmit)} className="">
-        <div className="flex item-center justify-between pb-5">
-          <h3 className="text-xl font-bold text-grayBlack2">
-            Account settings
-          </h3>
-          <Button
-            type="submit"
-            className="w-fit !h-0 !py-4 !px-4 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
-          >
-            {isLoading ? (
-              <div className="flex items-center gap-2">
-                <p>Saving</p>
-                <Loader size="sm" />
-              </div>
-            ) : (
-              <p>Save</p>
-            )}
-          </Button>
-        </div>
-        <div className="flex flex-col gap-6">
-          <div>
-            <label className="text-grayHelp text-lg font-medium">
-              Full name
-            </label>
-            <Input
-              placeholder="Enter first name"
-              className="text-grayInactive text-lg font-normal mt-2 w-full"
-              {...register("fullName", {
-                required: true,
-              })}
-            />
-            {errors.fullName && (
-              <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.fullName?.message}
-              </div>
-            )}
+    <div className="flex flex-col items-center justify-center">
+      <section className="border border-grayBottom rounded-[24px] p-4 md:p-9 w-full">
+        <form onSubmit={handleSubmit(onSubmit)} className="">
+          <div className="flex item-center justify-between pb-5">
+            <h3 className="text-xl font-bold text-grayBlack2">
+              Account settings
+            </h3>
+            <Button
+              type="submit"
+              className="w-fit !h-0 !py-4 !px-4 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
+            >
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <p>Saving</p>
+                  <Loader size="sm" />
+                </div>
+              ) : (
+                <p>Save</p>
+              )}
+            </Button>
           </div>
 
           <div>
@@ -109,8 +92,8 @@ export const RestaurantAccount = () => {
               </div>
             )}
           </div>
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
+    </div>
   );
 };
