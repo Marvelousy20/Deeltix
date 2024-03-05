@@ -55,7 +55,7 @@ export default function CreateReservations() {
       specialRequest: "",
     },
   });
-  const [userdate, setUserDate] = useState<Date>();
+  const [userdate, setUserDate] = useState<Date | null>();
   const [timer, setTimer] = useState("");
   const [timeinitial, setTimeInitial] = useState("am");
   const queryClient = useQueryClient();
@@ -81,22 +81,27 @@ export default function CreateReservations() {
     console.log({ ...values, date, time });
     mutate({ ...values, date, time });
     reset();
+    setUserDate(null)
+    setTimer("")
   };
   return (
-    <section className="flex flex-col items-center justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+    <section className="flex flex-col items-center justify-center max-w-[27.5rem] mx-auto">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-6 w-full"
+      >
         <h3 className="text-xl font-bold text-grayBlack2 pt-8">
           Make a reservation
         </h3>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 max-w-[27rem]">
           <label className="text-grayHelp text-lg font-medium">Date</label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant={"outline"}
                 className={cn(
-                  "w-[280px] justify-start text-left font-normal",
+                  "w-full justify-start text-left font-normal",
                   !date && "text-muted-foreground"
                 )}
               >
@@ -117,7 +122,7 @@ export default function CreateReservations() {
 
         <div className="flex flex-col">
           <label className="text-grayHelp text-lg font-medium">Time</label>
-          <div className="flex items-center mt-2 h-12 rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+          <div className="flex justify-between pr-4 items-center mt-2 h-12 rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
             <div className="inner">
               <input
                 required
@@ -222,13 +227,13 @@ export default function CreateReservations() {
 
         <div>
           <label className="text-grayHelp text-lg font-medium">
-            Special request (optional)
+            Special requests (optional)
           </label>
           <Input
-            placeholder="cilantro@gmail.com"
+            placeholder="e.g a Table next to a window"
             className="text-grayInactive text-lg font-normal mt-2"
             {...register("specialRequest", {
-              required: true,
+              required: false,
             })}
           />
           {errors.specialRequest && (
@@ -240,13 +245,16 @@ export default function CreateReservations() {
         <Button
           disabled={isLoading}
           type="submit"
-          className=" w-[300px]"
+          className="relative w-full"
           variant="primary"
         >
           {isLoading ? (
-            <span className="flex items-center gap-1 text-white font-medium text-xl">
-              <span>Creating reservation</span> <Loader size="sm" />
-            </span>
+            <>
+              <span className="absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center">
+                <Loader size="sm" className="opacity-70" />
+              </span>
+              Creating reservation
+            </>
           ) : (
             <span className="text-white font-medium text-xl">
               Create reservation
