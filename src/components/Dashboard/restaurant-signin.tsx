@@ -163,14 +163,17 @@ export const RestaurantSignIn = () => {
 
             <Button
               type="submit"
-              className="md:w-[300px] fixed bottom-0 right-0 left-0 md:static mb-4 mx-5 md:mx-0 md:mb-0"
+              className="md:w-[300px] fixed bottom-0 right-0 left-0 md:relative mb-4 mx-5 md:mx-0 md:mb-0"
               variant="primary"
               disabled={isLoading || !isTyping}
             >
               {isLoading ? (
-                <span className="flex items-center gap-1 text-white font-medium text-xl">
-                  <span>Signing in</span> <Loader size="sm" />
-                </span>
+                <>
+                  <span className="absolute left-0 right-0 flex justify-center items-center gap-1 text-white font-medium text-xl">
+                    <Loader size="sm" className="opacity-70" />
+                  </span>
+                  Signing in
+                </>
               ) : (
                 <span
                   className={`font-medium text-xl ${

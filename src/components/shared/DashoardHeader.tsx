@@ -26,21 +26,21 @@ export const Header = () => {
   const [opened, { open, close }] = useDisclosure();
   return (
     <section className="flex flex-col lg:flex-row sticky top-0 z-[99] items-center gap-y-4 w-full justify-between py-4 px-4 md:px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
-      <div className="flex items-center order-2">
+      <div className="flex items-center">
         <Input
           type="search"
           placeholder="Search keywords"
           className=" px-6 py-6"
         />
 
-        <button
+        {/* <button
           onClick={handleLogout}
           className="bg-blue-500 p-3 text-white rounded-lg ml-4"
         >
           Logout
-        </button>
+        </button> */}
       </div>
-      <div className="flex items-center gap-6  place-self-end">
+      <div className="flex items-center gap-6 place-self-end">
         <div
           onClick={open}
           className="h-[30px] w-[30px] cursor-pointer bg-milky border rounded-full border-grayoutline flex items-center justify-center"
