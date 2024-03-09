@@ -16,10 +16,16 @@ import {
 import { Input } from "../../ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProfileUpload } from "./picture-upload";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { states } from "./state";
+import { useSearchParams } from "next/navigation";
+import { api } from "@/axios-config";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
+import { IUpdateRestaurantProfile } from "@/types/index";
+import { useUser } from "@/context/user";
+import { Loader } from "@mantine/core";
 
 const formSchema = z.object({
   address: z.string().min(10),
@@ -54,6 +60,10 @@ export const RestaurantProfile = ({
 }: {
   displayPicture: string;
 }) => {
+  const { restaurantId } = useUser();
+  const param = useSearchParams();
+  const newResult = param?.get("uploads");
+  const pictures = newResult?.split(",");
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
@@ -81,20 +91,33 @@ export const RestaurantProfile = ({
     queryKey: ["countries"],
   });
 
-  // const { data: state } = useQuery({
-  //   queryFn: async () =>
-  //     await axios.get("https://restcountries.com/v3.1/states", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }),
-  //   queryKey: ["state"]
-  // });
-
+  // const newSchema = formSchema.omit({ openDay: true, closeDay: true });
   const { errors } = formState;
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (data: IUpdateRestaurantProfile) =>
+      await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
+    mutationKey: ["update-restaurant-profile"],
+    onSuccess(data) {
+      toast.success("Profile updated successfully");
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    reset();
+    const openingDays = `${values.openDay} ${values.closeDay}`;
+    const openingHours = `${values.openTime} ${values.closeTime}`;
+    const { openDay, closeDay, openTime, closeTime, ...others } = values;
+    mutate({ ...others, openingDays, openingHours, displayPicture, pictures });
+
+    console.log("others :", {
+      ...others,
+      openingDays,
+      openingHours,
+      displayPicture,
+      pictures,
+    });
   };
   return (
     <div className="">
@@ -189,7 +212,7 @@ export const RestaurantProfile = ({
                   />
                 </SelectTrigger>
                 <SelectContent className="text-grayInactive text-lg font-normal">
-                  {data?.data?.map((country: any, _i: any) => (
+                  {/* {data?.data?.map((country: any, _i: any) => (
                     <SelectItem
                       key={_i}
                       className="rounded-xl"
@@ -197,10 +220,10 @@ export const RestaurantProfile = ({
                     >
                       {country?.name?.common}
                     </SelectItem>
-                  ))}
-                  {/* <SelectItem className="rounded-xl" value="Nigeria">
+                  ))} */}
+                  <SelectItem className="rounded-xl" value="Nigeria">
                     Nigeria
-                  </SelectItem> */}
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <div className="text-red-500 text-sm font-normal pt-1">
@@ -213,7 +236,7 @@ export const RestaurantProfile = ({
                 Average price
               </label>
               <Input
-                type="email"
+                type="number"
                 placeholder="Enter your average price"
                 className="text-grayInactive text-lg font-normal mt-2"
                 {...register("averagePrice")}
@@ -305,7 +328,14 @@ export const RestaurantProfile = ({
                 type="submit"
                 className="w-full !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
               >
-                Submit
+                {isLoading ? (
+                  <span className="flex items-center gap-2 text-white font-medium text-xl">
+                    <p>Submitting</p>
+                    <Loader size="sm" />
+                  </span>
+                ) : (
+                  <p className="text-white font-medium text-xl">Submit</p>
+                )}
               </Button>
             </section>
           </div>

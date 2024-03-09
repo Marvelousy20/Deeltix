@@ -23,7 +23,7 @@ export default function DetailPage() {
   const data = topRestaurentData.find(
     (item) => item.name === decodeURIComponent(id as string)
   );
-  console.log({ data });
+  console.log("info :", data);
   const chickenMenu = MenuData.filter((menu) => menu.category === "chicken");
   const pastriesMenu = MenuData.filter((menu) => menu.category === "pastries");
   const burgerMenu = MenuData.filter((menu) => menu.category === "burger");

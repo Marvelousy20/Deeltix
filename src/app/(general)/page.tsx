@@ -1,7 +1,5 @@
 "use client";
-// import Navbar from "@/components/Navbar";
 import { Input } from "@/components/ui/input";
-// import Food from "../../public/food.png";
 import Food from "../../../public/food.png";
 import Image from "next/image";
 import CarouselSlider from "@/components/carousel";

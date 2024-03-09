@@ -13,6 +13,7 @@ import { Loader } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { cookieStorage } from "@ibnlanre/portal";
 export const RestaurantForgotPassword = () => {
   const { push } = useRouter();
   const formSchema = z.object({
@@ -40,6 +41,7 @@ export const RestaurantForgotPassword = () => {
 
     onSuccess() {
       toast.success("Yuppy! Check your email for otp code");
+      cookieStorage.setItem("reset", getValues("email"));
       push("/restaurant-reset-password");
     },
     onError(error) {

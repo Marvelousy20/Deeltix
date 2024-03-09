@@ -75,22 +75,42 @@ export const RestaurantAccount = () => {
             </Button>
           </div>
 
-          <div>
-            <label className="text-grayHelp text-lg font-medium">
-              Phone number
-            </label>
-            <Input
-              placeholder="Enter phone number"
-              className="text-grayInactive text-lg font-normal mt-2 w-full"
-              {...register("phoneNumber", {
-                required: true,
-              })}
-            />
-            {errors.phoneNumber && (
-              <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.phoneNumber.message}
-              </div>
-            )}
+          <div className="flex flex-col gap-4">
+            <div>
+              <label className="text-grayHelp text-lg font-medium">
+                Full name
+              </label>
+              <Input
+                placeholder="Enter full name"
+                className="text-grayInactive text-lg font-normal mt-2 w-full"
+                {...register("fullName", {
+                  required: true,
+                })}
+              />
+              {errors.fullName && (
+                <div className="text-red-500 text-sm font-normal pt-1">
+                  {errors.fullName.message}
+                </div>
+              )}
+            </div>
+
+            <div>
+              <label className="text-grayHelp text-lg font-medium">
+                Phone number
+              </label>
+              <Input
+                placeholder="Enter phone number"
+                className="text-grayInactive text-lg font-normal mt-2 w-full"
+                {...register("phoneNumber", {
+                  required: true,
+                })}
+              />
+              {errors.phoneNumber && (
+                <div className="text-red-500 text-sm font-normal pt-1">
+                  {errors.phoneNumber.message}
+                </div>
+              )}
+            </div>
           </div>
         </form>
       </section>

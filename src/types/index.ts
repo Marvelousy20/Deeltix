@@ -258,3 +258,16 @@ export interface IPasswordUpdate {
   newPassword: string;
   confirmPassword: string;
 }
+
+// update restaurant profile
+export interface IUpdateRestaurantProfile {
+  address: string;
+  country: string;
+  state: string;
+  openingDays: string;
+  openingHours: string;
+  displayPicture: string;
+  averagePrice: string;
+  description: string;
+  pictures: Array<string> | undefined;
+}

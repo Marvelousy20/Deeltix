@@ -1,11 +1,18 @@
 "use client";
+import { ErrorType, handleError } from "@/lib/handle-error";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { DocumentUpload, GalleryEdit } from "iconsax-react";
 import { Trash2, X } from "lucide-react";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 export const MultipleUpload = () => {
   const [userfile, setUserFile] = useState<File[]>([]);
+  const [uploads, setUploads] = useState<string[]>([]);
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef.current) {
@@ -27,11 +34,52 @@ export const MultipleUpload = () => {
     setUserFile(imageDelete);
   };
 
-  //   const upload = () => {
-  //     if (userfile) {
-  //       console.log("file upload:", userfile);
-  //     }
-  //   };
+  const { mutate, isLoading, data } = useMutation({
+    mutationFn: async (data: FormData) =>
+      await axios.post(
+        `https://deeltix-nserver.onrender.com/api/utilities/upload`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      ),
+
+    mutationKey: ["picture-upload"],
+
+    onSuccess({ data }) {
+      console.log("new :", data?.data?.data?.urls);
+
+      toast.success("File uploaded successfully");
+      router.push(`/restaurant-profile?uploads=${data?.data?.data.urls}`);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
+  const multipleUpload = data?.data?.data?.data.urls;
+
+  console.log("my upload: ", multipleUpload);
+  const handleSubmit = () => {
+    try {
+      if (userfile) {
+        const formData = new FormData();
+        userfile.forEach((file) => {
+          formData.append("files", file);
+          mutate(formData);
+        });
+      }
+    } catch (error) {
+      console.error("Upload failed", error);
+    }
+  };
+
+  useEffect(() => {
+    handleSubmit();
+  }, [userfile]);
+
   return (
     <section className="flex flex-col">
       <div className="flex flex-col gap-4">
@@ -83,6 +131,7 @@ export const MultipleUpload = () => {
           )}
           <input
             type="file"
+            multiple
             accept="image/*"
             onChange={handleChange}
             ref={inputRef}

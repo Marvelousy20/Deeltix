@@ -5,7 +5,7 @@ export const topRestaurentData: IRestaurent[] = [
     img: "/restaurants/elysium.png",
     location: "Lekki",
     name: "Elysium Lagos",
-    price: 30000,
+    price: 70000,
     rating: 2,
   },
   {

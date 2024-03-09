@@ -19,8 +19,7 @@ export const Header = () => {
   }, []);
 
   const handleLogout = () => {
-    cookieStorage.removeItem("restaurant");
-    // cookieStorage.clear();
+    cookieStorage.clear();
     router.push("/");
   };
 

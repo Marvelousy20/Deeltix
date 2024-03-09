@@ -7,7 +7,6 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { RestaurantProfile } from "./restaurant";
-import { Button } from "@/components/ui/button";
 
 export const ProfileUpload = () => {
   const [userfile, setUserFile] = useState<File[]>([]);
