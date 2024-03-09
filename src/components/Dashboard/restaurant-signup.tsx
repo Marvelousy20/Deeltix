@@ -209,7 +209,7 @@ export const RestaurantSignUp = () => {
             </div>
 
             <div className="text-sm flex gap-1">
-              <input type="checkbox" id="scales" name="scales" />
+              <input type="checkbox" id="scales" name="scales" required />
               <label htmlFor="scales">
                 I agree to DeelTix&apos;s{" "}
                 <span className="text-blue-500">terms</span> and{" "}

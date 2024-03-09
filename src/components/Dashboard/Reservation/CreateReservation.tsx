@@ -81,8 +81,8 @@ export default function CreateReservations() {
     console.log({ ...values, date, time });
     mutate({ ...values, date, time });
     reset();
-    setUserDate(null)
-    setTimer("")
+    setUserDate(null);
+    setTimer("");
   };
   return (
     <section className="flex flex-col items-center justify-center max-w-[27.5rem] mx-auto">
@@ -177,7 +177,9 @@ export default function CreateReservations() {
         {/* guest */}
 
         <div className="">
-          <label className="text-grayHelp text-lg font-medium">Guest</label>
+          <label className="text-grayHelp text-lg font-medium">
+            No of guest
+          </label>
           <Input
             placeholder="Enter number of guest"
             className="text-grayInactive text-lg font-normal mt-2"
@@ -192,7 +194,7 @@ export default function CreateReservations() {
 
         <div className="">
           <label className="text-grayHelp text-lg font-medium">
-            Restaurant email address
+            Guest email address
           </label>
           <Input
             type="email"

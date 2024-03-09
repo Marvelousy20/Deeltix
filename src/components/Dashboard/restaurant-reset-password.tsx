@@ -20,6 +20,7 @@ import Image from "next/image";
 import { Eye, EyeSlash } from "iconsax-react";
 export const RestaurantResetPassword = () => {
   const [otp, setOtp] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
   const [eyeopen, setEyeOpen] = useState(false);
   const [type, setType] = useState("password");
 
@@ -36,6 +37,10 @@ export const RestaurantResetPassword = () => {
   const { push } = useRouter();
   const formSchema = z
     .object({
+      email: z.string().email({
+        message: "Enter your email address",
+      }),
+
       password: z.string().min(8),
       confirmPassword: z.string().min(8),
     })
@@ -49,6 +54,7 @@ export const RestaurantResetPassword = () => {
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      email: "",
       password: "",
       confirmPassword: "",
     },
@@ -76,7 +82,7 @@ export const RestaurantResetPassword = () => {
   }, [email]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate({ ...values, email, otp });
+    mutate({ ...values, otp });
   };
 
   // Resend password
@@ -98,7 +104,7 @@ export const RestaurantResetPassword = () => {
     },
   });
 
-  const resendEmail = cookieStorage.getItem("restaurantEmail");
+  const resendEmail = cookieStorage.getItem("reset");
   useMemo(() => {
     resendEmail;
   }, [resendEmail]);
@@ -159,9 +165,28 @@ export const RestaurantResetPassword = () => {
 
             <div className="">
               <label className="text-grayHelp text-lg font-medium">
+                Email address
+              </label>
+              <Input
+                placeholder="Enter your email address"
+                type="email"
+                className="text-grayInactive text-lg font-normal mt-2 w-full lg:w-[27rem] rounded-2xl"
+                {...register("email", {
+                  onChange: () => setIsTyping(true),
+                })}
+              />
+              {errors.email && (
+                <div className="text-red-500 text-sm font-normal pt-3">
+                  {errors.email?.message}
+                </div>
+              )}
+            </div>
+
+            <div className="">
+              <label className="text-grayHelp text-lg font-medium">
                 Password
               </label>
-              <div className=" items-center  mt-2 justify-between flex h-12 rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+              <div className=" items-center  mt-2 justify-between w-full lg:w-[27rem] flex h-12 rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                 <input
                   type={type}
                   placeholder="Enter your password"
@@ -194,11 +219,11 @@ export const RestaurantResetPassword = () => {
               <label className="text-grayHelp text-lg font-medium">
                 Confirm password
               </label>
-              <div className=" items-center  mt-2 justify-between flex h-12 rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+              <div className=" items-center  mt-2 justify-between flex h-12 rounded-2xl border w-full lg:w-[27rem] border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                 <input
                   type={type}
                   placeholder="Enter your password"
-                  className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                  className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg w-full lg:w-[27rem] font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
                   {...register("confirmPassword")}
                 />
 

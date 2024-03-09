@@ -32,9 +32,6 @@ export const RestaurantPassword = () => {
   const [eyeopen, setEyeOpen] = useState(false);
   const [type, setType] = useState("password");
 
-  //  const [neweyeopen, setNewEyeOpen] = useState(false);
-  // const [newtype, setNewType] = useState("password");
-
   function handleOpen() {
     setType("text");
     setEyeOpen(true);
