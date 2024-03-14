@@ -8,11 +8,20 @@ import { Button } from "@/components/ui/button";
 import { useDisclosure } from "@mantine/hooks";
 import UserDrawer from "@/components/Drawer";
 import Link from "next/link";
-import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { useQuery } from "@tanstack/react-query";
+import { RestaurantDetails } from "@/types";
+import { auth } from "@/axios-config";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   const word1 = "Discover";
   const word2 = "Restaurants";
+
+  const { data, isLoading } = useQuery({
+    queryFn: async () => await auth.get<RestaurantDetails>(`/api/restaurants`),
+    queryKey: ["restaurant-details"],
+    select: ({ data }) => data?.data,
+  });
 
   const [opened, { open, close }] = useDisclosure(false);
   return (
@@ -80,12 +89,25 @@ export default function Home() {
               />
             </div>
 
-            <div className="lg:mt-9 mt-0">
-              <CarouselSlider data={topRestaurentData} />
+            <div className="lg:mt-9 mt-0 flex items-center gap-3">
+              {isLoading ? (
+                Array(4)
+                  .fill("1234")
+                  .map((list) => (
+                    <div className="flex flex-col w-[350px] space-y-3">
+                      <Skeleton className="h-[250px] w-[350px] rounded-xl" />
+                      <div className="flex w-[350px] items-center justify-between">
+                        <Skeleton className="h-[10px] w-[100px] rounded-xl" />
+                        <Skeleton className="h-[10px] w-[100px] rounded-xl" />
+                      </div>
+                      <Skeleton className="h-[50px] w-full rounded-2xl" />
+                    </div>
+                  ))
+              ) : (
+                <CarouselSlider data={data} />
+              )}
             </div>
           </div>
-
-          {/* suggested location restaurants */}
           <div className="lg:mt-20 mt-0 flex flex-col gap-10 lg:gap-0">
             <div className="flex items-center gap-x-2">
               <h3 className="lg:text-4xl text-2xl font-bold lg:font-medium">
@@ -101,12 +123,11 @@ export default function Home() {
             </div>
 
             <div className="lg:mt-9 mt-0">
-              <CarouselSlider data={topRestaurentData} />
+              <CarouselSlider data={data} />
             </div>
           </div>
-
           {/* Handpicked restaurants */}
-          <div className="lg:mt-20 mt-0 flex flex-col gap-10 lg:gap-0">
+          {/* <div className="lg:mt-20 mt-0 flex flex-col gap-10 lg:gap-0">
             <div className="flex items-center gap-x-2">
               <h3 className="lg:text-4xl text-2xl lg:font-medium font-bold">
                 Handpicked restaurants for you
@@ -123,7 +144,7 @@ export default function Home() {
             <div className="lg:mt-9 mt-0">
               <CarouselSlider data={topRestaurentData} />
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="bg-milky rounded-[3rem] mt-16 lg:py-28 py-8 lg:flex space-y-8 lg:space-y-0 lg:px-20 px-8 items-center justify-between">
           <div className="lg:max-w-md w-full">

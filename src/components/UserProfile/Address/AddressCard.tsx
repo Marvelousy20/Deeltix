@@ -5,17 +5,30 @@ import Image from "next/image";
 import React, { useState } from "react";
 import UserAddressModal from "./AdressModal";
 import { Cards } from "./Card";
+import { AddressEmptyState } from "./EmptyState";
+import { useDisclosure } from "@mantine/hooks";
+import { useQuery } from "@tanstack/react-query";
+import { auth } from "@/axios-config";
+import { UserAddressDetails } from "@/types";
 
 export const AddressDetails = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
+  // const { data, isLoading } = useQuery({
+  //   queryFn: async () =>
+  //     await auth.get<UserAddressDetails>(`/api/user/profile/address`),
+  //   queryKey: ["fetch-user-address"],
+  //   select: ({ data }) => data?.data?.data,
+  // });
+
+  // console.log(data);
   return (
     <div className="bg-white  lg:pt-[56px] pt-6 w-full">
       <div className="flex flex-col space-y-6 w-[90%] mx-auto">
         <div className="flex items-center justify-between">
           <h3 className="lg:text-4xl text-2xl font-bold text-dark2">Address</h3>
           <Button
-            onClick={() => setShowModal(true)}
+            onClick={open}
             className="flex items-center lg:gap-2 gap-1 lg:py-3 py-2 lg:px-4 px-2 bg-card"
           >
             <Plus />{" "}
@@ -28,11 +41,7 @@ export const AddressDetails = () => {
           <Cards />
         </section>
       </div>
-      {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
-          <UserAddressModal />
-        </Modal>
-      )}
+      <UserAddressModal opened={opened} close={close} />
     </div>
   );
 };

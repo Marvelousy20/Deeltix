@@ -1,15 +1,11 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import UserPassword from "./Password";
-import { AddressEmptyState } from "./Address/EmptyState";
-import { AddressDetails } from "./Address/AddressCard";
-// import { CardDetails } from "./AtmCard";
 import UserDrawer from "../Drawer";
 import Image from "next/image";
-import { CardDetails } from "./Card";
-import { EditUserProfile } from "./EditProfile";
+import ReservationCard from "./card";
+import { UpcomingReservation } from "./upcoming-reservation";
 
-export const Profile = () => {
+export const UserReservations = () => {
   const completed = true;
   return (
     <div>
@@ -23,7 +19,7 @@ export const Profile = () => {
       <div className="bg-[#F7F7F7] lg:pt-32 pt-20">
         <div className="flex flex-col items-center lg:pt-20 pt-0">
           <h3 className=" text-[56px] font-medium text-grayBlack">
-            My Profile
+            My Reservation
           </h3>
 
           {/* Tab */}
@@ -35,42 +31,45 @@ export const Profile = () => {
                     value="edit-user"
                     className=" w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
                   >
-                    Edit profile
+                    All Reservation
                   </TabsTrigger>
                   <TabsTrigger
                     value="password"
                     className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
                   >
-                    Password
+                    Past reservation
                   </TabsTrigger>
                   <TabsTrigger
                     value="address"
                     className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
                   >
-                    Addresses
+                    Upcoming Reservation
                   </TabsTrigger>
                   <TabsTrigger
                     value="card"
                     className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
                   >
-                    Cards
+                    Single Reservation
                   </TabsTrigger>
                 </div>
               </TabsList>
             </div>
             <div className="">
               <TabsContent value="edit-user" className="w-full">
-                <EditUserProfile />
+                <UpcomingReservation />
               </TabsContent>
               <TabsContent value="password">
-                <UserPassword />
+                <p>password</p>
+                {/* <UserPassword /> */}
               </TabsContent>
               <TabsContent value="address">
+                <p>address</p>
                 {/* <AddressEmptyState /> */}
-                <AddressDetails />
+                {/* <AddressDetails /> */}
               </TabsContent>
               <TabsContent value="card">
-                <CardDetails />
+                <p>card</p>
+                {/* <CardDetails /> */}
               </TabsContent>
             </div>
           </Tabs>

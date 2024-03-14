@@ -96,8 +96,8 @@ export const ProfileUpload = () => {
                 <Image
                   key={idx}
                   src={URL.createObjectURL(item)}
-                  width={130}
-                  height={130}
+                  width={400}
+                  height={400}
                   alt="user upload"
                   className=" object-cover"
                 />

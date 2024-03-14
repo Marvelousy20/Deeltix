@@ -1,53 +1,64 @@
-import React from "react";
-import { Button } from "../ui/button";
-import InputField from "../ui/InputField";
-import Image from "next/image";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  label,
-  FormMessage,
-} from "@/components/ui/form";
+"use client";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
-import { useMutation } from "@tanstack/react-query";
-import { api } from "@/axios-config";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { api, auth } from "@/axios-config";
+import { Button } from "../ui/button";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
+import { useState } from "react";
+import { Loader } from "@mantine/core";
+import { IUpdateUserProfile } from "@/types";
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+export const EditUserProfile = () => {
+  const [isTyping, setIsTyping] = useState(false);
 
-  email: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  phone: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
+  const editProfileSchema = z.object({
+    name: z.string().min(2, {
+      message: "Username must be at least 2 characters.",
+    }),
 
-export default function EditUserProfile() {
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
-
-  const { mutate, isLoading } = useMutation({
-    mutationFn: async () => await api.patch(``),
+    phoneNumber: z.string().min(11, {
+      message: "Phone number must be 11 digit",
+    }),
+    dob: z.string().min(8, {
+      message: "DOB must not be less than 8 digit",
+    }),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
+    z.infer<typeof editProfileSchema>
+  >({
+    resolver: zodResolver(editProfileSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      phone: "",
+      name: "",
+      dob: "",
+      phoneNumber: "",
     },
   });
+
+  const { errors } = formState;
+  const queryClient = useQueryClient();
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (data: IUpdateUserProfile) =>
+      await auth.patch(`/api/user/profile`, data),
+    mutationKey: ["user-update"],
+    onSuccess() {
+      toast.success("Profile updated successfully");
+      queryClient.invalidateQueries([""]);
+      reset();
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
+  const onSubmit = (values: z.infer<typeof editProfileSchema>) => {
+    mutate(values);
+  };
+
   return (
     <div className="flex flex-col w-full h-full lg:pt-[56px] pt-6 bg-white">
       <section className="w-[90%] mx-auto">
@@ -55,120 +66,90 @@ export default function EditUserProfile() {
           Personal Details
         </h3>
         <div className="">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col w-full gap-10 border border-grayoutline rounded-[32px] p-8"
-            >
-              <div className="lg:flex  items-start space-y-8 lg:space-y-0 lg:justify-between">
-                <div className="flex flex-col lg:gap-10 gap-8">
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <label className="text-grayHelp text-lg font-medium">
-                          Full name
-                        </label>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter your phone number"
-                            {...field}
-                            className="text-grayInactive text-lg font-normal lg:w-[300px] w-full"
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col w-full gap-10 border border-grayoutline rounded-[32px] p-8"
+          >
+            <div className="lg:flex w-full items-start space-y-8 lg:space-y-0 lg:justify-between">
+              <div className="flex flex-col lg:gap-10 gap-8">
+                <div className="">
+                  <label className="text-grayHelp text-lg font-medium">
+                    Full name
+                  </label>
+                  <Input
+                    placeholder="Enter your full name"
+                    className="text-grayInactive lg:min-w-[27rem] w-full text-lg font-normal mt-2"
+                    {...register("name", {
+                      onChange: () => setIsTyping(true),
+                    })}
                   />
-
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <label className="text-grayHelp text-lg font-medium">
-                          Phone number
-                        </label>
-                        <FormControl>
-                          <Input
-                            type="phone"
-                            placeholder="Enter your phone number"
-                            {...field}
-                            className="text-grayInactive text-lg font-normal lg:w-[300px] w-full"
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  {errors.name && (
+                    <div className="text-red-500 text-sm font-normal pt-1">
+                      {errors.name?.message}
+                    </div>
+                  )}
                 </div>
 
-                <div className="flex flex-col lg:gap-10 gap-8">
-                  {/* email */}
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <label className="text-grayHelp text-lg font-medium">
-                          Email
-                        </label>
-                        <FormControl>
-                          <Input
-                            type="email"
-                            placeholder="Enter your email address"
-                            {...field}
-                            className="text-grayInactive text-lg font-normal lg:w-[300px] w-full"
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                <div className="">
+                  <label className="text-grayHelp text-lg font-medium">
+                    Phone number
+                  </label>
+                  <Input
+                    placeholder="Enter your phone number"
+                    type="number"
+                    className="text-grayInactive lg:min-w-[27rem] w-full text-lg font-normal mt-2"
+                    {...register("phoneNumber", {
+                      onChange: () => setIsTyping(true),
+                    })}
                   />
-
-                  {/* password */}
-
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <label className="text-grayHelp text-lg font-medium">
-                          Date of birth
-                        </label>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="Enter your password"
-                            {...field}
-                            className="text-grayInactive text-lg font-normal lg:w-[300px] w-full"
-                          />
-                        </FormControl>
-                        <FormDescription>
-                          Password must contain 8 characters long
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  {/* <p>Confirm booking</p> */}
+                  {errors.phoneNumber && (
+                    <div className="text-red-500 text-sm font-normal pt-1">
+                      {errors?.phoneNumber?.message}
+                    </div>
+                  )}
                 </div>
               </div>
-              <Button
-                type="submit"
-                className="bg-[#F0F3F8] py-2 rounded-[40px] text-xl font-bold text-[#D8D8D8] lg:w-[300px] w-full"
-              >
-                Save changes
-              </Button>
-            </form>
-          </Form>
+
+              <div className="flex flex-col lg:gap-10 gap-8 ">
+                <div className="flex flex-col">
+                  <label className="text-grayHelp text-lg font-medium">
+                    DOB
+                  </label>
+                  <Input
+                    placeholder="Enter your full name"
+                    className="text-grayInactive lg:min-w-[27rem] w-full text-lg font-normal mt-2"
+                    {...register("dob", {
+                      onChange: () => setIsTyping(true),
+                    })}
+                  />
+                  {errors.dob && (
+                    <div className="text-red-500 text-sm font-normal pt-1">
+                      {errors.dob?.message}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <Button
+              type="submit"
+              disabled={isLoading || !isTyping}
+              variant="primary"
+              className=" !py-5 !px-12 rounded-[40px] w-fit text-xl font-bold text-[#D8D8D8]"
+            >
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  Saving changes
+                  <span>
+                    <Loader size="sm" className="opacity-70" />
+                  </span>
+                </div>
+              ) : (
+                <span>Save changes</span>
+              )}
+            </Button>
+          </form>
         </div>
       </section>
     </div>
   );
-}
+};

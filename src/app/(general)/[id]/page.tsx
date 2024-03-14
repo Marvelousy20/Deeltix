@@ -16,14 +16,28 @@ import CarouselSlider from "@/components/carousel";
 import { Input } from "@/components/ui/input";
 import UserDrawer from "@/components/Drawer";
 import { Bookmark } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { auth } from "@/axios-config";
+import { useSearchParams } from "next/navigation";
+import { UserSingleRestaurant } from "@/types";
 
 export default function DetailPage() {
   const { id } = useParams();
+  const searchParam = useSearchParams();
+  const restaurantid = searchParam.get("restaurant");
 
-  const data = topRestaurentData.find(
+  const { data, isLoading } = useQuery({
+    queryFn: async () =>
+      await auth.get<UserSingleRestaurant>(`/api/restaurants/${restaurantid}`),
+    queryKey: ["single-restaurant"],
+    select: ({ data }) => data?.data?.data?.restaurant,
+  });
+
+  console.log("new :", data);
+
+  const datas = topRestaurentData.find(
     (item) => item.name === decodeURIComponent(id as string)
   );
-  console.log("info :", data);
   const chickenMenu = MenuData.filter((menu) => menu.category === "chicken");
   const pastriesMenu = MenuData.filter((menu) => menu.category === "pastries");
   const burgerMenu = MenuData.filter((menu) => menu.category === "burger");
@@ -63,15 +77,15 @@ export default function DetailPage() {
             </div>
           </div>
 
-          <div className=" mt-0 flex flex-col lg:justify-between justify-center space-y-6">
+          <div className=" mt-0 lg:justify-between lg:flex justify-center space-y-6">
             <div className="flex items-center gap-2">
               <Image src="/money.svg" alt="money" width={48} height={48} />
-              <p>&#8358;{formatPrice(data?.price)} average price</p>
+              <p>&#8358;{formatPrice(data?.averagePrice)} average price</p>
             </div>
 
             <div className="flex items-center gap-2">
               <Image src="/rating.svg" alt="rating" width={48} height={48} />
-              <p>{data?.rating} reviews</p>
+              <p>{datas?.rating} reviews</p>
             </div>
 
             <div className="flex items-center gap-2">
@@ -81,18 +95,18 @@ export default function DetailPage() {
                 width={48}
                 height={48}
               />
-              <p>{data?.location}</p>
+              <p>{data?.address}</p>
             </div>
 
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <Image
                 src="/delivery.svg"
                 alt="delivery"
                 width={48}
                 height={48}
               />
-              <p>{data?.location} delivery time</p>
-            </div>
+              <p>{data} delivery time</p>
+            </div> */}
           </div>
 
           <div className="lg:flex lg:gap-10 gap-0 space-y-5 lg:mt-16 mt-0">
@@ -181,15 +195,15 @@ export default function DetailPage() {
 
                 <div className="flex flex-col items-center">
                   <Rating />
-                  <Rating />
-                  <Rating />
+                  {/* <Rating />
+                  <Rating /> */}
                 </div>
               </div>
             </div>
 
             {/* Reservation on desktop */}
             <div className="lg:flex flex-col gap-20 border-l border-[#EDEDED] w-[30%] hidden">
-              <Reservation />
+              <Reservation restaurantId={data?.id} />
               <Cart />
             </div>
           </div>
@@ -217,14 +231,14 @@ export default function DetailPage() {
                 />
               </div>
 
-              <div className="lg:mt-9 mt-0">
+              {/* <div className="lg:mt-9 mt-0">
                 <CarouselSlider data={topRestaurentData} />
-              </div>
+              </div> */}
             </div>
           </div>
           {/* Reservation on mobile */}
           <div className="lg:hidden flex flex-col gap-20">
-            <Reservation />
+            <Reservation restaurantId={data?.id} />
             <Cart />
           </div>
         </div>
