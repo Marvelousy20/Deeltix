@@ -37,14 +37,14 @@ export default function Navbar() {
           <div className="pt-10 fixed w-full z-50 hidden lg:block">
             <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
               <div className="flex items-center gap-x-10">
-                <div className="flex items-center">
+                <Link href="/" className="flex items-center">
                   <Image
                     src="/dashboard/logo.svg"
                     alt="img"
                     width="80"
                     height="80"
                   />
-                </div>
+                </Link>
 
                 <Link
                   href="/restaurant-dashboard"
