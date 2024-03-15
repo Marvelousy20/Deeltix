@@ -17,6 +17,7 @@ import { Button } from "../button";
 import { Modal } from "@mantine/core";
 import ModalPassword from "./modal-password";
 import { Eye, EyeSlash } from "iconsax-react";
+import { usePathname } from "next/navigation";
 
 export default function ModalSignIn({
   opened,
@@ -41,6 +42,7 @@ export default function ModalSignIn({
   }
 
   const { push } = useRouter();
+  const pathName = usePathname();
   const formSchema = z.object({
     email: z.string().email({
       message: "Enter your email address",
@@ -63,18 +65,22 @@ export default function ModalSignIn({
 
   const { errors } = formState;
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isLoading, data } = useMutation({
     mutationFn: async (data: ISignIn) => {
       const response = await auth.post(`/api/auth/login`, data);
       const values = await response.data?.data?.data;
+      push(`${pathName}?active=${values?.user?.isActive}`);
       cookieStorage.setItem("user", JSON.stringify(values));
-      console.log(values?.token);
+      console.log(values);
+      console.log("true", values?.user?.isActive);
     },
     mutationKey: ["sign-in"],
 
-    onSuccess(data) {
+    onSuccess({}) {
       toast.success("Successfully logged in");
-      reset(), push("/get-started");
+      // push(`${pathName}?active=${data?.}`);
+      reset();
+      close();
     },
 
     onError(error) {

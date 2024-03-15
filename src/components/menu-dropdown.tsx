@@ -24,7 +24,7 @@ export const MenuDropDown = () => {
       name: "My reservations",
       icon: <Note1 size="16" color="#000000" />,
       chevron: <ChevronRight strokeWidth={1.5} size={18} color="black" />,
-      route: "/reservations",
+      route: "/user-reservation",
     },
     {
       name: "My bookmarks",

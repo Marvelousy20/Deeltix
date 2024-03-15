@@ -271,3 +271,139 @@ export interface IUpdateRestaurantProfile {
   description: string;
   pictures: Array<string> | undefined;
 }
+
+// update user pofile
+export interface IUpdateUserProfile {
+  phoneNumber: string;
+  name: string;
+  dob: string;
+}
+
+// update user address (post)
+export interface IUpdateUserAddress {
+  address: string;
+  country: string;
+  state: string;
+}
+
+// update user address (Get)
+export interface UserAddressDetails {
+  data: UserAddressData;
+  status: string;
+}
+
+export interface UserAddressData {
+  message: string;
+  data: UserAddressInfo;
+}
+
+export interface UserAddressInfo {
+  addresses: UserAddress[];
+  total: number;
+}
+
+export interface UserAddress {
+  address: string;
+  state: string;
+  country: string;
+  user: string;
+  default: boolean;
+  deleted: boolean;
+  createdAt: Date | undefined | string;
+  updatedAt: Date | undefined | string;
+  id: string;
+}
+
+// user reservation
+export interface IUserReservation {
+  time: string;
+  date: Date | undefined | string;
+  numberOfPeople: string;
+  specialRequest?: string;
+}
+
+// all restaurant
+export interface RestaurantDetails {
+  data: RestaurantData | undefined;
+  status?: string;
+}
+
+export interface RestaurantInfo {
+  data: RestaurantData;
+  message: string;
+}
+
+export interface RestaurantData {
+  // restaurants: Restaurant[];
+  data: NewRestaurant;
+  total: number;
+}
+
+export interface NewRestaurant {
+  restaurants: Restaurant[];
+}
+
+export interface Restaurant {
+  name: string;
+  // manager: RestaurantManager | string;
+  reservationCharge: boolean;
+  averageRating: number;
+  createdAt: Date | undefined | string;
+  updatedAt: Date | undefined | string;
+  address?: string;
+  averagePrice?: number;
+  country?: string;
+  description?: string;
+  displayPicture?: string;
+  openingDays?: string;
+  openingHours?: string;
+  state?: string;
+  id: string;
+  pictures?: string[];
+}
+
+// export interface RestaurantManager {
+//   email: string;
+//   fullName: string;
+//   id: string;
+// }
+
+// single restaurant
+export interface UserSingleRestaurant {
+  data: NewSingleData;
+  status: string;
+}
+
+export interface NewSingleData {
+  message: string;
+  data: SingleRestaurantData;
+}
+
+export interface SingleRestaurantData {
+  restaurant: SingleRestaurant;
+}
+
+export interface SingleRestaurant {
+  name: string;
+  // manager: Manager;
+  reservationCharge: boolean;
+  averageRating: number;
+  createdAt: Date | undefined | string;
+  updatedAt: Date | undefined | string;
+  address?: string;
+  averagePrice?: number;
+  country?: string;
+  description?: string;
+  displayPicture?: string;
+  openingDays?: string;
+  openingHours?: string;
+  pictures?: string[];
+  state?: string;
+  id: string;
+}
+
+// export interface Manager {
+//   email: string;
+//   fullName: string;
+//   id: string;
+// }

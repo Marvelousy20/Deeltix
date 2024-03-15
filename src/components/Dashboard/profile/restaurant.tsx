@@ -16,7 +16,7 @@ import {
 import { Input } from "../../ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { states } from "./state";
 import { useSearchParams } from "next/navigation";
@@ -55,11 +55,13 @@ const formSchema = z.object({
     message: "Enter your closing time",
   }),
 });
+
 export const RestaurantProfile = ({
   displayPicture,
 }: {
   displayPicture: string;
 }) => {
+  const query = useQueryClient();
   const { restaurantId } = useUser();
   const param = useSearchParams();
   const newResult = param?.get("uploads");
@@ -99,6 +101,8 @@ export const RestaurantProfile = ({
     mutationKey: ["update-restaurant-profile"],
     onSuccess(data) {
       toast.success("Profile updated successfully");
+      query.invalidateQueries(["restaurant-details"]);
+      reset();
     },
     onError(error) {
       handleError(error as ErrorType);

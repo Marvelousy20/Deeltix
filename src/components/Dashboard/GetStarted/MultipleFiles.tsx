@@ -103,7 +103,7 @@ export const MultipleUpload = () => {
 
         <div className="">
           {userfile.length === 0 ? (
-            <div className="w-[80px] h-[80px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"></div>
+            <div className="w-[100px] h-[100px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"></div>
           ) : (
             <div className="">
               <div className="flex items-center gap-4">
@@ -118,8 +118,8 @@ export const MultipleUpload = () => {
                     <div className="w-[80px] h-[80px] overflow-hidden flex items-center justify-center border border-white rounded-md">
                       <Image
                         src={URL.createObjectURL(image)}
-                        width={80}
-                        height={80}
+                        width={100}
+                        height={100}
                         alt="user upload"
                         className="w-full h-full object-cover overflow-hidden"
                       />
