@@ -36,7 +36,7 @@ export const MenuDropDown = () => {
       name: "Sign out",
       icon: <LogoutCurve size="16" color="#000000" />,
       chevron: <ChevronRight strokeWidth={1.5} size={18} color="black" />,
-      route: "/signout",
+      route: "/",
     },
   ];
   return (

@@ -1,14 +1,17 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { UserProvider } from "@/context/user/user";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <section>
-      <div className="hidden lg:flex">
-        <Navbar />
-      </div>
-      {children}
-      <Footer />
+      <UserProvider>
+        <div className="hidden lg:flex">
+          <Navbar />
+        </div>
+        {children}
+        <Footer />
+      </UserProvider>
     </section>
   );
 }

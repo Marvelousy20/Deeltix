@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import { Input } from "../../ui/input";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@/context/user";
+import { useUser } from "@/context/restaurant/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/axios-config";
 import { IProfileUpdate } from "@/types";

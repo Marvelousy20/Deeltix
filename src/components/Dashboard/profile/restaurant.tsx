@@ -24,7 +24,7 @@ import { api } from "@/axios-config";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { IUpdateRestaurantProfile } from "@/types/index";
-import { useUser } from "@/context/user";
+import { useUser } from "@/context/restaurant/user";
 import { Loader } from "@mantine/core";
 
 const formSchema = z.object({

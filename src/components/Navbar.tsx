@@ -14,6 +14,7 @@ import SuccessMessage from "./ui/modals/password-success";
 import ModalSignIn from "./ui/modals/sign-in";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useUser } from "@/context/user/user";
 
 export default function Navbar() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -28,9 +29,11 @@ export default function Navbar() {
 
   const navbarChange = searchParam.get("active");
   // let authorization = true;
+
+  const { isLoggedIn } = useUser();
   return (
     <header>
-      {!navbarChange ? (
+      {isLoggedIn ? (
         <LoggedInNavbar />
       ) : (
         <section>
