@@ -71,16 +71,17 @@ export default function ModalSignIn({
     mutationFn: async (data: ISignIn) => {
       const response = await auth.post(`/api/auth/login`, data);
       const values = await response.data?.data?.data;
-      push(`${pathName}?active=${values?.user?.isActive}`);
+      // push(`${pathName}?active=${values?.user?.isActive}`);
       cookieStorage.setItem("user", JSON.stringify(values));
       console.log(values);
-      console.log("true", values?.user?.isActive);
+      // console.log("true", values?.user?.isActive);
     },
     mutationKey: ["sign-in"],
 
     onSuccess({}) {
       toast.success("Successfully logged in");
       setIsLoggedIn(true);
+      alert("successfully logged in");
       // push(`${pathName}?active=${data?.}`);
       reset();
       close();

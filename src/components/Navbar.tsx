@@ -27,7 +27,7 @@ export default function Navbar() {
   const [resetpassword, setResetpassword] = useState(false);
   const searchParam = useSearchParams();
 
-  const navbarChange = searchParam.get("active");
+  // const navbarChange = searchParam.get("active");
   // let authorization = true;
 
   const { isLoggedIn } = useUser();
