@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { useUser } from "@/context/user";
+import { useUser } from "@/context/restaurant/user";
 
 export const Headings = ({
   user,

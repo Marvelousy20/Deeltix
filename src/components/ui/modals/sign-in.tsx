@@ -18,6 +18,7 @@ import { Modal } from "@mantine/core";
 import ModalPassword from "./modal-password";
 import { Eye, EyeSlash } from "iconsax-react";
 import { usePathname } from "next/navigation";
+import { useUser } from "@/context/user/user";
 
 export default function ModalSignIn({
   opened,
@@ -30,6 +31,7 @@ export default function ModalSignIn({
     useDisclosure(false);
   const [eyeopen, setEyeOpen] = useState(false);
   const [type, setType] = useState("password");
+  const { setIsLoggedIn } = useUser();
 
   function handleOpen() {
     setType("text");
@@ -78,6 +80,7 @@ export default function ModalSignIn({
 
     onSuccess({}) {
       toast.success("Successfully logged in");
+      setIsLoggedIn(true);
       // push(`${pathName}?active=${data?.}`);
       reset();
       close();

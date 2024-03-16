@@ -54,10 +54,10 @@ export const Dashboard = () => {
           {sales.map((item, _idx) => (
             <div
               key={_idx}
-              className="border border-[#0000001A] bg-[#F9F9F9]  p-6"
+              className="border border-[#0000001A] bg-[#F9F9F9] p-6"
             >
               <section className="flex flex-col">
-                <p className="text-sm font-normal text-grayInactive ">
+                <p className="text-sm font-normal text-grayInactive">
                   {item.sale}
                 </p>
                 <h3 className="font-medium pt-3 pb-2 text-3xl text-[#000000]">

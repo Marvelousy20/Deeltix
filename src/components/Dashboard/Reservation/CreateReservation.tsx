@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
-import { useUser } from "@/context/user";
+import { useUser } from "@/context/restaurant/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/axios-config";
 import { toast } from "react-toastify";

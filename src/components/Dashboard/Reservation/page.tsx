@@ -14,7 +14,7 @@ import {
 } from "./tables/upcomingReservations";
 import { useState } from "react";
 import Link from "next/link";
-import { useUser } from "@/context/user";
+import { useUser } from "@/context/restaurant/user";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/axios-config";
 import { UpcomingReservationDetails } from "@/types";

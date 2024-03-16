@@ -19,7 +19,7 @@ import { api } from "@/axios-config";
 import { IMenus } from "@/types";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
-import { useUser } from "@/context/user";
+import { useUser } from "@/context/restaurant/user";
 import { useQuery } from "@tanstack/react-query";
 import AddCategory from "../Menu/addCategory";
 import { useDisclosure } from "@mantine/hooks";

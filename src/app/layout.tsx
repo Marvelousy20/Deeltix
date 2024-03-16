@@ -4,7 +4,6 @@ import "./globals.css";
 import { QueryProvider } from "./query-provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { UserProvider } from "@/context/user";
 import localfont from "next/font/local";
 import path from "path";
 
@@ -26,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <QueryProvider>
         <body className={`${roman.variable} font-roman transact-scroll`}>
-          <UserProvider>{children}</UserProvider>
+          {children}
           <ToastContainer />
         </body>
       </QueryProvider>
