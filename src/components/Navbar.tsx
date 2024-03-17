@@ -30,7 +30,7 @@ export default function Navbar() {
   // let authorization = true;
   return (
     <header>
-      {!navbarChange ? (
+      {navbarChange ? (
         <LoggedInNavbar />
       ) : (
         <section>

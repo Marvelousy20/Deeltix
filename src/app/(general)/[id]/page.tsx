@@ -20,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import { auth } from "@/axios-config";
 import { useSearchParams } from "next/navigation";
 import { UserSingleRestaurant } from "@/types";
+import UserRating from "@/components/Rating/User-Rating";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -194,9 +195,8 @@ export default function DetailPage() {
                 </div>
 
                 <div className="flex flex-col items-center">
-                  <Rating />
-                  {/* <Rating />
-                  <Rating /> */}
+                  <UserRating restaurantId={restaurantid} />
+                  <Rating restaurantId={restaurantid} />
                 </div>
               </div>
             </div>
