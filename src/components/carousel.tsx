@@ -15,11 +15,6 @@ import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
 import { IRestaurent, RestaurantDetails } from "@/types";
-import { stringify } from "querystring";
-
-interface DataProps {
-  data: IRestaurent[];
-}
 
 export default function CarouselSlider({ data }: RestaurantDetails) {
   const router = useRouter();
@@ -75,8 +70,8 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
 
                         <div className="flex items-center">
                           <Star size={16} fill="#D4B200" stroke="#D4B200" />
-                          <p>3</p>
-                          {/* {d.rating} */}
+
+                          <p>{d?.averageRating}</p>
                         </div>
                       </div>
                     </div>

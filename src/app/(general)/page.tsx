@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import Food from "../../../public/food.png";
 import Image from "next/image";
 import CarouselSlider from "@/components/carousel";
-import { topRestaurentData } from "@/components/data/TopRestaurant";
 import { Button } from "@/components/ui/button";
 import { useDisclosure } from "@mantine/hooks";
 import UserDrawer from "@/components/Drawer";
@@ -14,9 +13,6 @@ import { auth } from "@/axios-config";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
-  const word1 = "Discover";
-  const word2 = "Restaurants";
-
   const { data, isLoading } = useQuery({
     queryFn: async () => await auth.get<RestaurantDetails>(`/api/restaurants`),
     queryKey: ["restaurant-details"],

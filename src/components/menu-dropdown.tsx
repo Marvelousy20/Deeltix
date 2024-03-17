@@ -5,8 +5,10 @@ import { ShoppingBag, Note1, LogoutCurve } from "iconsax-react";
 import clsx from "clsx";
 import { ILoggedinUser } from "@/types";
 import Link from "next/link";
+import { useUser } from "@/context/user/user";
 
 export const MenuDropDown = () => {
+  const { setIsLoggedIn } = useUser();
   const userDetails: ILoggedinUser[] = [
     {
       name: "My profile",
@@ -49,6 +51,7 @@ export const MenuDropDown = () => {
             </div>
 
             <div
+              onClick={() => (idx === 4 ? setIsLoggedIn(false) : null)}
               className={clsx(
                 idx === 4
                   ? "flex items-center justify-between w-[150px]  cursor-pointer py-2 px-1 hover:bg-gray hover:rounded-lg"

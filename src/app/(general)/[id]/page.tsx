@@ -86,7 +86,7 @@ export default function DetailPage() {
 
             <div className="flex items-center gap-2">
               <Image src="/rating.svg" alt="rating" width={48} height={48} />
-              <p>{datas?.rating} reviews</p>
+              <p>{data?.averageRating} reviews</p>
             </div>
 
             <div className="flex items-center gap-2">

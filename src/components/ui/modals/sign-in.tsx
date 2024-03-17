@@ -8,7 +8,6 @@ import { Loader } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { auth } from "@/axios-config";
 import { ISignIn } from "@/types";
-import { useRouter } from "next/navigation";
 import { cookieStorage } from "@ibnlanre/portal";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { useDisclosure } from "@mantine/hooks";
@@ -17,7 +16,6 @@ import { Button } from "../button";
 import { Modal } from "@mantine/core";
 import ModalPassword from "./modal-password";
 import { Eye, EyeSlash } from "iconsax-react";
-import { usePathname } from "next/navigation";
 import { useUser } from "@/context/user/user";
 
 export default function ModalSignIn({
@@ -43,8 +41,6 @@ export default function ModalSignIn({
     setEyeOpen(false);
   }
 
-  const { push } = useRouter();
-  const pathName = usePathname();
   const formSchema = z.object({
     email: z.string().email({
       message: "Enter your email address",
@@ -71,18 +67,15 @@ export default function ModalSignIn({
     mutationFn: async (data: ISignIn) => {
       const response = await auth.post(`/api/auth/login`, data);
       const values = await response.data?.data?.data;
-      // push(`${pathName}?active=${values?.user?.isActive}`);
       cookieStorage.setItem("user", JSON.stringify(values));
       console.log(values);
-      // console.log("true", values?.user?.isActive);
     },
     mutationKey: ["sign-in"],
 
-    onSuccess({}) {
+    onSuccess() {
       toast.success("Successfully logged in");
       setIsLoggedIn(true);
-      alert("successfully logged in");
-      // push(`${pathName}?active=${data?.}`);
+      toast.success("successfully logged in");
       reset();
       close();
     },

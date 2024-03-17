@@ -13,7 +13,6 @@ import { SignUp } from "./ui/modals/sign-up";
 import SuccessMessage from "./ui/modals/password-success";
 import ModalSignIn from "./ui/modals/sign-in";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useUser } from "@/context/user/user";
 
 export default function Navbar() {
@@ -25,10 +24,6 @@ export default function Navbar() {
   const [showModal, setShowModal] = useState(false);
   const [signUpModal, setsignUpModal] = useState(false);
   const [resetpassword, setResetpassword] = useState(false);
-  const searchParam = useSearchParams();
-
-  // const navbarChange = searchParam.get("active");
-  // let authorization = true;
 
   const { isLoggedIn } = useUser();
   return (
