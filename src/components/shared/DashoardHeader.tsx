@@ -3,7 +3,7 @@ import React from "react";
 import { Input } from "../ui/input";
 import { NotificationBing } from "iconsax-react";
 import { User } from "lucide-react";
-import { useUser } from "@/context/user";
+import { useUser } from "@/context/restaurant/user";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cookieStorage } from "@ibnlanre/portal";

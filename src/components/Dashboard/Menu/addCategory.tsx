@@ -12,7 +12,7 @@ import { Loader } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useUser } from "@/context/user";
+import { useUser } from "@/context/restaurant/user";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";

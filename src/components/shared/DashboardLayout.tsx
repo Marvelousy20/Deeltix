@@ -16,6 +16,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { clsx } from "@mantine/core";
 import { usePathname } from "next/navigation";
+import { UserProvider } from "@/context/restaurant/user";
 
 export const DashboardLayout = ({
   children,
@@ -73,8 +74,10 @@ export const DashboardLayout = ({
         </div>
       </div>
       <div className="h-full flex-1 overflow-y-auto transact-scroll">
-        <Header />
-        {children}
+        <UserProvider>
+          <Header />
+          {children}
+        </UserProvider>
       </div>
     </section>
   );

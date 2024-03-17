@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MenuDropDown } from "./menu-dropdown";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function LoggedInNavbar() {
   const [rotate, setRotate] = useState<boolean>(false);
@@ -16,14 +17,14 @@ export default function LoggedInNavbar() {
     <div>
       <div className="pt-10 fixed w-full z-50 hidden lg:block">
         <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
-          <div>
+          <Link href="/">
             <Image
               src="/dashboard/logo.svg"
               alt="img"
               width="160"
               height="100"
             />
-          </div>
+          </Link>
 
           {/* location */}
           <div className="flex gap-x-3 items-center">

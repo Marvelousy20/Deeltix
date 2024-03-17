@@ -7,7 +7,7 @@ import { guestColumns, guestData } from "./table-column";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/axios-config";
-import { useUser } from "@/context/user";
+import { useUser } from "@/context/restaurant/user";
 import { IAllGuestResponse } from "@/types";
 
 export interface IGuest {

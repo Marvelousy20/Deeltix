@@ -14,6 +14,7 @@ import SuccessMessage from "./ui/modals/password-success";
 import ModalSignIn from "./ui/modals/sign-in";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useUser } from "@/context/user/user";
 
 export default function Navbar() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -26,25 +27,27 @@ export default function Navbar() {
   const [resetpassword, setResetpassword] = useState(false);
   const searchParam = useSearchParams();
 
-  const navbarChange = searchParam.get("active");
+  // const navbarChange = searchParam.get("active");
   // let authorization = true;
+
+  const { isLoggedIn } = useUser();
   return (
     <header>
-      {navbarChange ? (
+      {isLoggedIn ? (
         <LoggedInNavbar />
       ) : (
         <section>
           <div className="pt-10 fixed w-full z-50 hidden lg:block">
             <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
               <div className="flex items-center gap-x-10">
-                <div className="flex items-center">
+                <Link href="/" className="flex items-center">
                   <Image
                     src="/dashboard/logo.svg"
                     alt="img"
                     width="80"
                     height="80"
                   />
-                </div>
+                </Link>
 
                 <Link
                   href="/restaurant-dashboard"
