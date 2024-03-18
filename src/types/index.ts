@@ -457,3 +457,46 @@ export interface UserReview {
 export interface ProfileReview {
   name: string;
 }
+
+// Bookmark
+export interface BookmarkDetails {
+  data: BookmarkInfo;
+  status: string;
+}
+
+export interface BookmarkInfo {
+  message: string;
+  data: BookmarkData;
+}
+
+export interface BookmarkData {
+  bookmarks: Bookmark[];
+  total: number;
+}
+
+export interface Bookmark {
+  user: string;
+  restaurant: RestaurantBookmark;
+  createdAt: Date | string | undefined;
+  updatedAt: Date | string | undefined;
+  id: string;
+}
+
+export interface RestaurantBookmark {
+  name: string;
+  manager: string;
+  reservationCharge: boolean;
+  averageRating: number;
+  createdAt: Date | string | undefined;
+  updatedAt: Date | string | undefined;
+  id: string;
+  address?: string;
+  averagePrice?: number;
+  country?: string;
+  description?: string;
+  displayPicture?: string;
+  openingDays?: string;
+  openingHours?: string;
+  pictures?: string[];
+  state?: string;
+}

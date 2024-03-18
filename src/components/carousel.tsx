@@ -68,10 +68,10 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
                           </p>
                         </div>
 
-                        <div className="flex items-center">
+                        <div className="flex items-center gap-2">
                           <Star size={16} fill="#D4B200" stroke="#D4B200" />
 
-                          <p>{d?.averageRating}</p>
+                          <p>{d?.averageRating}.0</p>
                         </div>
                       </div>
                     </div>
