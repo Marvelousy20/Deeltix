@@ -5,7 +5,6 @@ import { QueryProvider } from "./query-provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import localfont from "next/font/local";
-import path from "path";
 
 export const metadata: Metadata = {
   title: "Resturants near you",

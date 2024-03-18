@@ -407,3 +407,53 @@ export interface SingleRestaurant {
 //   fullName: string;
 //   id: string;
 // }
+
+// Rating
+export interface Rating {
+  rating: number;
+  feedback: string;
+}
+
+// user review
+export interface ReviewDetails {
+  data: ReviewInfo;
+  status: string;
+}
+
+export interface ReviewInfo {
+  message: string;
+  data: ReviewData;
+}
+
+export interface ReviewData {
+  reviews: Review[];
+  total: number;
+}
+
+export interface Review {
+  feedback: string;
+  rating: number;
+  likeCount: number;
+  user: UserReview;
+  restaurant: RestaurantReview;
+  createdAt: Date | undefined | string;
+  updatedAt: Date | undefined | string;
+  id: string;
+}
+
+export interface RestaurantReview {
+  name: string;
+  description?: string;
+  displayPicture?: string;
+  id: string;
+}
+
+export interface UserReview {
+  profile: ProfileReview;
+  email: string;
+  id: string;
+}
+
+export interface ProfileReview {
+  name: string;
+}

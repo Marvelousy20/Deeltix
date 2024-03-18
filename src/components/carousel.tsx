@@ -15,11 +15,6 @@ import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
 import { IRestaurent, RestaurantDetails } from "@/types";
-import { stringify } from "querystring";
-
-interface DataProps {
-  data: IRestaurent[];
-}
 
 export default function CarouselSlider({ data }: RestaurantDetails) {
   const router = useRouter();
@@ -42,12 +37,15 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
               <Card>
                 <CardContent>
                   <div className="relative">
-                    <Image
-                      src={d.displayPicture as string}
-                      alt={d.name}
-                      width={500}
-                      height={300}
-                    />
+                    <figure className="h-[250px] w-full">
+                      <Image
+                        src={d.displayPicture as string}
+                        alt={d.name}
+                        width={130}
+                        height={130}
+                        className="w-full h-full object-cover"
+                      />
+                    </figure>
                     {/* <h1 className="stroke absolute right-0 -bottom-8">
                       {index + 1}
                     </h1> */}
@@ -55,22 +53,26 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
                       <Bookmark size={20} className="cursor-pointer" />
                     </div>
                   </div>
-                  <div className="flex justify-between mt-4">
-                    <div>
-                      <h3 className="text-xl font-medium">{d.name}</h3>
-                      <h6>Avg Price: &#8358;{formatPrice(d.averagePrice)}</h6>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <MapPin size={16} />
-                        <p>{d.address}</p>
+                  <div className="flex justify-between mt-4 w-full">
+                    <div className="w-full flex flex-col gap-2">
+                      <div className="flex items-center justify-between w-full">
+                        <h3 className="text-xl font-medium">{d.name}</h3>
+                        <h6>Avg Price: &#8358;{formatPrice(d.averagePrice)}</h6>
                       </div>
 
-                      <div className="flex items-center justify-end">
-                        <Star size={16} fill="#D4B200" stroke="#D4B200" />
-                        <p>3</p>
-                        {/* {d.rating} */}
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-1">
+                          <MapPin size={14} />
+                          <p className="text-sm whitespace-nowrap">
+                            {d.address}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center">
+                          <Star size={16} fill="#D4B200" stroke="#D4B200" />
+
+                          <p>{d?.averageRating}</p>
+                        </div>
                       </div>
                     </div>
                   </div>

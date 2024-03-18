@@ -10,7 +10,7 @@ interface DataProps {
 
 export default function ReservationCard({ data }: DataProps) {
   return (
-    <div className="grid xl:grid-cols-3 max-w-4xl gap-6">
+    <div className="grid xl:grid-cols-3 max-w-4xl gap-6 bg-green-600 h-[40px] w-[50px]">
       {data.map((d, index) => (
         <div key={index} className="w-full">
           <div className="p-1">
