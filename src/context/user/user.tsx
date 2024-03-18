@@ -14,7 +14,7 @@ import { cookieStorage } from "@ibnlanre/portal";
 
 type UserProps = {
   restaurantId: number;
-  firstName: string;
+  firstName: string | null;
 };
 
 interface UserPropsContextPrps {

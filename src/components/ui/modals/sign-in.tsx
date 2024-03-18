@@ -69,7 +69,6 @@ export default function ModalSignIn({
 
     onSuccess() {
       toast.success("Successfully logged in");
-      toast.success("successfully logged in");
       reset();
       close();
     },

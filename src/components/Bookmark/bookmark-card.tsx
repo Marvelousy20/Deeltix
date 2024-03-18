@@ -1,22 +1,19 @@
 import React from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
+
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
 import { Bookmark, MapPin, Star } from "lucide-react";
 import { Button } from "../ui/button";
 import { formatPrice } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { auth } from "@/axios-config";
 import { BookmarkDetails } from "@/types";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
 
 export const BookmarkCard = () => {
+  const query = useQueryClient();
   const router = useRouter();
   function handleShowDetail(restaurantName: string, restaurantId: string) {
     router.push(`/${restaurantName}?restaurant=${restaurantId}`);
@@ -27,6 +24,19 @@ export const BookmarkCard = () => {
       await auth.get<BookmarkDetails>(`/api/restaurants/bookmarks/all`),
     queryKey: ["all-bookmark"],
     select: ({ data }) => data?.data?.data?.bookmarks,
+  });
+
+  const { mutate, isLoading: bookmarkLoading } = useMutation({
+    mutationFn: async (bookmarkId: string) =>
+      auth.delete(`/api/restaurants/bookmarks/${bookmarkId}`),
+    mutationKey: ["delete-bookmark"],
+    onSuccess() {
+      toast.success("Bookmark deleted successfully");
+      query.invalidateQueries(["all-bookmark"]);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
   });
   return (
     <div className="grid grid-cols-3 gap-4 w-full">
@@ -46,7 +56,12 @@ export const BookmarkCard = () => {
                 </figure>
 
                 <div className="h-[30px] w-[30px] rounded-full flex items-center justify-center bg-grayoutline absolute top-3 right-3">
-                  <Bookmark size={20} className="cursor-pointer" />
+                  <Bookmark
+                    size={20}
+                    color="#FF0000"
+                    className="cursor-pointer"
+                    onClick={() => mutate(d?.id)}
+                  />
                 </div>
               </div>
               <div className="flex justify-between mt-4 w-full">
