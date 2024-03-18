@@ -29,7 +29,7 @@ export default function ModalSignIn({
     useDisclosure(false);
   const [eyeopen, setEyeOpen] = useState(false);
   const [type, setType] = useState("password");
-  const { setIsLoggedIn } = useUser();
+  const { signIn } = useUser();
 
   function handleOpen() {
     setType("text");
@@ -64,17 +64,11 @@ export default function ModalSignIn({
   const { errors } = formState;
 
   const { mutate, isLoading, data } = useMutation({
-    mutationFn: async (data: ISignIn) => {
-      const response = await auth.post(`/api/auth/login`, data);
-      const values = await response.data?.data?.data;
-      cookieStorage.setItem("user", JSON.stringify(values));
-      console.log(values);
-    },
+    mutationFn: signIn,
     mutationKey: ["sign-in"],
 
     onSuccess() {
       toast.success("Successfully logged in");
-      setIsLoggedIn(true);
       toast.success("successfully logged in");
       reset();
       close();

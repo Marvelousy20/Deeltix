@@ -1,25 +1,55 @@
 "use client";
+import { auth } from "@/axios-config";
 import {
   useContext,
   createContext,
   useState,
   SetStateAction,
   Dispatch,
+  useEffect,
 } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { ISignIn } from "@/types";
+import { cookieStorage } from "@ibnlanre/portal";
 
-interface UserProps {
+type UserProps = {
+  restaurantId: number;
+  firstName: string;
+};
+
+interface UserPropsContextPrps {
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  signIn: (data: ISignIn) => Promise<void>;
 }
 
-const UserContext = createContext<UserProps | undefined>(undefined);
+const UserContext = createContext<UserPropsContextPrps | undefined>(undefined);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  console.log(isLoggedIn);
+
+  const signIn = async (data: ISignIn) => {
+    try {
+      const response = await auth.post(`/api/auth/login`, data);
+      const values = await response.data?.data?.data;
+      cookieStorage.setItem("user", JSON.stringify(values));
+      localStorage.setItem("isLoggedIn", "true");
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error("Error sigin in", error);
+    }
+  };
+
+  useEffect(() => {
+    // Check if the user is already logged in (e.g., by checking localStorage)
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    if (loggedIn) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, signIn }}>
       {children}
     </UserContext.Provider>
   );

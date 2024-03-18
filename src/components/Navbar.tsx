@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Modal from "@/components/ui/Modal";
@@ -26,6 +26,7 @@ export default function Navbar() {
   const [resetpassword, setResetpassword] = useState(false);
 
   const { isLoggedIn } = useUser();
+
   return (
     <header>
       {isLoggedIn ? (
