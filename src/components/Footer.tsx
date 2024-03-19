@@ -30,8 +30,7 @@ export default function Footer() {
             </ul>
 
             <div className="flex justify-center text-[#565D62] mt-10">
-              ©2023, by DeelTix LLC. DeelTix is a registered company, UK Co.
-              [14806326]
+              ©2023, by DeelTix LLC. DeelTix is a registered company
             </div>
           </div>
 
