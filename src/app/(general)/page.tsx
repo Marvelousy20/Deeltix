@@ -159,7 +159,7 @@ export default function Home() {
             <div className="flex justify-between items-center gap-3 lg:gap-6 mt-8 w-full">
               <Link
                 href="/restaurant-dashboard"
-                className="bg-dark lg:text-base text-sm font-normal text-white w-1/2 rounded-[2.5rem] h-12 px-4 items-center flex"
+                className="bg-dark lg:text-base text-sm font-normal text-white w-1/2 rounded-[2.5rem] h-12 px-4 items-center flex justify-center"
               >
                 Get started now
               </Link>
