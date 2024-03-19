@@ -74,7 +74,7 @@ export default function Home() {
           <div className="flex flex-col lg:gap-0 gap-10">
             <div className="flex items-center gap-x-2">
               <h3 className="lg:text-4xl text-2xl lg:font-medium font-bold">
-                Top 10 restaurants in Lekki
+                Top Restaurants for you
               </h3>
               <Image
                 src="/glowing_star.svg"
