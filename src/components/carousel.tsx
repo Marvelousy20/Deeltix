@@ -43,7 +43,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
                         alt={d.name}
                         width={130}
                         height={130}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-md"
                       />
                     </figure>
                     {/* <h1 className="stroke absolute right-0 -bottom-8">
