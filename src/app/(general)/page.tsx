@@ -21,7 +21,7 @@ export default function Home() {
 
   const [opened, { open, close }] = useDisclosure(false);
   return (
-    <main className="bg flex flex-col lg:block gap-10 lg:gap-0">
+    <main className="bg flex flex-col lg:block gap-10 lg:gap-0 overflow-hidden">
       <div className="bg-background lg:pt-32 pt-0">
         <div className="lg:hidden block">
           <div className="border-b-[1px] flex items-center px-6 justify-between max-h-[70px] border-[#E9E9E9] fixed inset-0 z-[9999] backdrop-blur-md bg-grayblack">
@@ -74,7 +74,7 @@ export default function Home() {
           <div className="flex flex-col lg:gap-0 gap-10">
             <div className="flex items-center gap-x-2">
               <h3 className="lg:text-4xl text-2xl lg:font-medium font-bold">
-                Top 10 restaurants in Lekki
+                Top Restaurants for you
               </h3>
               <Image
                 src="/glowing_star.svg"
@@ -159,7 +159,7 @@ export default function Home() {
             <div className="flex justify-between items-center gap-3 lg:gap-6 mt-8 w-full">
               <Link
                 href="/restaurant-dashboard"
-                className="bg-dark lg:text-base text-sm font-normal text-white w-1/2 rounded-[2.5rem] h-12 px-4 items-center flex"
+                className="bg-dark lg:text-base text-sm font-normal text-white w-1/2 rounded-[2.5rem] h-12 px-4 items-center flex justify-center"
               >
                 Get started now
               </Link>

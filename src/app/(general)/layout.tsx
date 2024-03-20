@@ -4,9 +4,9 @@ import { UserProvider } from "@/context/user/user";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <section>
+    <section className="overflow-y-hidden">
       <UserProvider>
-        <div className="hidden lg:flex">
+        <div className="hidden lg:block">
           <Navbar />
         </div>
         {children}
