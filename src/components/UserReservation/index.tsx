@@ -29,7 +29,7 @@ export const UserReservations = () => {
                 <div className="flex w-full justify-between items-center transition ease-in ">
                   <TabsTrigger
                     value="edit-user"
-                    className=" w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
+                    className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
                   >
                     All Reservation
                   </TabsTrigger>
