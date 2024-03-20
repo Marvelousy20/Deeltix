@@ -35,7 +35,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       cookieStorage.setItem("user", JSON.stringify(values));
       localStorage.setItem("isLoggedIn", "true");
       setIsLoggedIn(true);
-      console.log("SIGNIN", isLoggedIn);
     } catch (error) {
       console.error("Error sigin in", error);
     }
@@ -48,8 +47,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoggedIn(true);
     }
   }, []);
-
-  console.log("LAST", isLoggedIn);
 
   return (
     <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, signIn }}>
