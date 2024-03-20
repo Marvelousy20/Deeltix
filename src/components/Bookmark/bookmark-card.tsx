@@ -40,8 +40,8 @@ export const BookmarkCard = () => {
   });
   return (
     <div className="grid grid-cols-3 gap-4 w-full">
-      {data?.map((d, index) => (
-        <div className="p-1">
+      {data?.map((d, idx) => (
+        <div key={idx} className="p-1">
           <Card className=" w-full">
             <CardContent>
               <div className="relative">
