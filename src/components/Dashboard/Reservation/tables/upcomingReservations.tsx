@@ -1,9 +1,9 @@
 "use client";
-
-import { UpcomingReservation } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { MenuDetails } from "../../Menu/menu";
+import { ReservationStatus } from "@/types";
 
 type Test = {
   id: number;
@@ -61,7 +61,7 @@ export const upcomingReservationsData = [
   },
 ];
 
-export const upcomingReservationsColumn: ColumnDef<UpcomingReservation>[] = [
+export const upcomingReservationsColumn: ColumnDef<ReservationStatus>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",
@@ -121,8 +121,8 @@ export const upcomingReservationsColumn: ColumnDef<UpcomingReservation>[] = [
       return (
         <div>
           {/* onclick of this will console the user id based on the role you clicked */}
-          {/* <MenuDetails id={user.id} restaurantId={user.restaurant} /> */}
-          <MoreHorizontal onClick={() => console.log(user.id)} />
+          <MenuDetails id={user.id} restaurantId={user.restaurant} />
+          {/* <MoreHorizontal onClick={() => console.log(user.id)} /> */}
         </div>
       );
     },
