@@ -36,7 +36,7 @@ export const ReservationModal = ({
   return (
     <div>
       <Modal
-        // id={reservationId}
+        id={reservationId}
         opened={opened}
         onClose={close}
         centered
@@ -45,6 +45,7 @@ export const ReservationModal = ({
       >
         <div className="">
           <div className="w-full h-[2px] bg-grayoutline mb-5"></div>
+          <p>reservation {reservationId}</p>
           <Card className="w-full !bg-white !border-none">
             <CardContent className="">
               <div className="h-[250px] w-full ">

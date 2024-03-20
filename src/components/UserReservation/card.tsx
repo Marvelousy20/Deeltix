@@ -1,17 +1,21 @@
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
-import { PendingReservationDetails, ReservationData } from "@/types";
+import { ReservationStatus } from "@/types";
 import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
 import { useDisclosure } from "@mantine/hooks";
 import { ReservationModal } from "./reservation-modal";
 
-export default function ReservationCard({ data }: PendingReservationDetails) {
+export interface Reservation {
+  data: ReservationStatus[];
+}
+
+export default function ReservationCard({ data }: Reservation) {
   console.log("pending", data);
   const [opened, { open, close }] = useDisclosure();
   return (
     <section className="grid grid-cols-3 gap-3">
-      {data?.data?.reservations?.map((d, idx) => (
+      {data?.map((d, idx) => (
         <div className="p-1" key={idx}>
           <Card className="w-[300px]">
             <CardContent className="">
@@ -33,6 +37,7 @@ export default function ReservationCard({ data }: PendingReservationDetails) {
                 <div className="flex items-center space-x-2">
                   <p className="text-grayHelp text-base font-normal">
                     {/* {d?.date} */}
+                    reserve {d?.id}
                   </p>
                   <p className="text-grayHelp text-base font-normal">
                     {` at ${d?.time}`}
