@@ -29,7 +29,7 @@ export default function ModalSignIn({
     useDisclosure(false);
   const [eyeopen, setEyeOpen] = useState(false);
   const [type, setType] = useState("password");
-  const { signIn } = useUser();
+  const { signIn, setIsLoggedIn } = useUser();
 
   function handleOpen() {
     setType("text");
@@ -69,7 +69,8 @@ export default function ModalSignIn({
 
     onSuccess() {
       toast.success("Successfully logged in");
-      toast.success("successfully logged in");
+      localStorage.setItem("isLoggedIn", "true");
+      setIsLoggedIn(true);
       reset();
       close();
     },

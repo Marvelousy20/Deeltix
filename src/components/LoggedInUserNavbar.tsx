@@ -11,11 +11,12 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function LoggedInNavbar() {
-  const [rotate, setRotate] = useState<boolean>(false);
+  const [rotateDropdown, setRotateDropdown] = useState<boolean>(false);
+  const [rotateLocation, setRotateLocation] = useState<boolean>(false);
 
   return (
-    <div>
-      <div className="pt-10 fixed w-full z-50 hidden lg:block">
+    <div className="bg-red-500">
+      <div className="pt-10 fixed w-full z-50 hidden lg:block overflow-hidden">
         <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
           <Link href="/">
             <Image
@@ -33,14 +34,14 @@ export default function LoggedInNavbar() {
               <p className=" text-xl font-normal text-Gainsboro">
                 Lekki, Lagos
               </p>
-              <div>
+              <div className="overflow-hidden">
                 <DropdownMenu
                   onOpenChange={(open) => {
-                    open ? setRotate(true) : setRotate(false);
+                    open ? setRotateLocation(true) : setRotateLocation(false);
                   }}
                 >
                   <DropdownMenuTrigger className="!border-none !outline-none bg-transparent">
-                    {!rotate ? (
+                    {!rotateLocation ? (
                       <ChevronDown
                         size={20}
                         className="inline !outline-none !border-none"
@@ -68,11 +69,11 @@ export default function LoggedInNavbar() {
             <div>
               <DropdownMenu
                 onOpenChange={(open) => {
-                  open ? setRotate(true) : setRotate(false);
+                  open ? setRotateDropdown(true) : setRotateDropdown(false);
                 }}
               >
                 <DropdownMenuTrigger className="!border-none !outline-none bg-transparent">
-                  {!rotate ? (
+                  {!rotateDropdown ? (
                     <ChevronDown
                       size={20}
                       className="inline !border-none !outline-none"
@@ -84,6 +85,7 @@ export default function LoggedInNavbar() {
                     />
                   )}
                 </DropdownMenuTrigger>
+
                 <DropdownMenuContent className="rounded-xl border border-grayoutline mt-10">
                   <MenuDropDown />
                 </DropdownMenuContent>
@@ -102,11 +104,11 @@ export default function LoggedInNavbar() {
             <div>
               <DropdownMenu
                 onOpenChange={(open) => {
-                  open ? setRotate(true) : setRotate(false);
+                  open ? setRotateLocation(true) : setRotateLocation(false);
                 }}
               >
                 <DropdownMenuTrigger className="!border-none !outline-none bg-transparent">
-                  {!rotate ? (
+                  {!rotateLocation ? (
                     <ChevronDown
                       color="white"
                       size={20}
@@ -135,11 +137,11 @@ export default function LoggedInNavbar() {
           <div>
             <DropdownMenu
               onOpenChange={(open) => {
-                open ? setRotate(true) : setRotate(false);
+                open ? setRotateDropdown(true) : setRotateDropdown(false);
               }}
             >
               <DropdownMenuTrigger className="!border-none !outline-none bg-transparent">
-                {!rotate ? (
+                {!rotateDropdown ? (
                   <ChevronDown
                     color="white"
                     size={20}
