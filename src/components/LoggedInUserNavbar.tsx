@@ -9,6 +9,8 @@ import {
 import { MenuDropDown } from "./menu-dropdown";
 import { useState } from "react";
 import Link from "next/link";
+import { useUser } from "@/context/user/user";
+import { cookieStorage } from "@ibnlanre/portal";
 
 export default function LoggedInNavbar() {
   const [rotateDropdown, setRotateDropdown] = useState<boolean>(false);
@@ -64,6 +66,8 @@ export default function LoggedInNavbar() {
           {/* Profile */}
           <div className=" flex items-center space-x-4">
             <div className="h-[40px] w-[40px] flex items-center justify-center text-white text-xl font-normal rounded-full bg-indigo">
+              {/* {userName?.user?.profile?.name.slice(0, 1)}
+               */}
               A
             </div>
             <div>

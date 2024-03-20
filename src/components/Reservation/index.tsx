@@ -65,7 +65,11 @@ export default function CreateReservations({
     mutationKey: ["user-reservation"],
     onSuccess() {
       toast.success("Reservation created successfully");
-      // queryClient.invalidateQueries(["guestbook"]);
+      queryClient.invalidateQueries([
+        "pending-reservation",
+        "past-reservation",
+        "upcoming-reservation",
+      ]);
     },
     onError(error) {
       handleError(error as ErrorType);
