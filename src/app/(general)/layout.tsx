@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <section>
       <UserProvider>
-        <div className="hidden lg:flex">
+        <div className="hidden lg:block">
           <Navbar />
         </div>
         {children}
