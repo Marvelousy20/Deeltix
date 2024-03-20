@@ -49,7 +49,7 @@ export const MenuDropDown = () => {
     },
   ];
   return (
-    <div className=" bg-white flex flex-col space-y-2 p-3">
+    <div className=" bg-white flex flex-col space-y-2 p-3 overflow-hidden">
       {userDetails.map((items, idx) => (
         <Link href={items.route} key={idx}>
           <div className="flex items-center gap-3">

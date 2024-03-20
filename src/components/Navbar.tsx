@@ -29,7 +29,7 @@ export default function Navbar() {
   console.log(isLoggedIn);
 
   return (
-    <header>
+    <header className="overflow-hidden">
       {isLoggedIn ? (
         <LoggedInNavbar />
       ) : (
@@ -105,7 +105,6 @@ export default function Navbar() {
             </div>
           </nav>
         </section>
-        
       )}
     </header>
   );

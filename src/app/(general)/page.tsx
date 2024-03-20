@@ -21,7 +21,7 @@ export default function Home() {
 
   const [opened, { open, close }] = useDisclosure(false);
   return (
-    <main className="bg flex flex-col lg:block gap-10 lg:gap-0">
+    <main className="bg flex flex-col lg:block gap-10 lg:gap-0 overflow-hidden">
       <div className="bg-background lg:pt-32 pt-0">
         <div className="lg:hidden block">
           <div className="border-b-[1px] flex items-center px-6 justify-between max-h-[70px] border-[#E9E9E9] fixed inset-0 z-[9999] backdrop-blur-md bg-grayblack">
