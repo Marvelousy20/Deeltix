@@ -5,15 +5,24 @@ import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
 import { useDisclosure } from "@mantine/hooks";
 import { ReservationModal } from "./reservation-modal";
+import { useState } from "react";
 
 export interface Reservation {
   data: ReservationStatus[];
-  // data: SingleReservation[];
 }
 
 export default function ReservationCard({ data }: Reservation) {
   console.log("pending", data);
   const [opened, { open, close }] = useDisclosure();
+  const [openedReservationId, setOpenedReservationId] = useState<string | null>(
+    null
+  );
+
+  const handleCardClick = async (reservationId: string) => {
+    setOpenedReservationId(reservationId);
+    open();
+  };
+
   return (
     <section className="grid grid-cols-3 gap-3">
       {data?.map((d, idx) => (
@@ -47,7 +56,7 @@ export default function ReservationCard({ data }: Reservation) {
                 </div>
               </div>
               <Button
-                onClick={() => open()}
+                onClick={() => handleCardClick(d?.id)}
                 variant="card"
                 className="mt-5 text-base font-medium text-grayBlack"
               >
@@ -55,12 +64,16 @@ export default function ReservationCard({ data }: Reservation) {
               </Button>
             </CardContent>
           </Card>
-          <ReservationModal
-            // reservation={d}
-            opened={opened}
-            close={close}
-            reservationId={d?.id}
-          />
+          {openedReservationId === d.id && (
+            <ReservationModal
+              opened={opened}
+              close={() => {
+                close();
+                setOpenedReservationId(null);
+              }}
+              reservationId={d.id}
+            />
+          )}
         </div>
       ))}
     </section>
