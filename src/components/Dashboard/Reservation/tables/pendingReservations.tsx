@@ -1,7 +1,10 @@
 "use client";
 
+import { ReservationStatus } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import dayjs from "dayjs";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { ReservationDetails } from "../dropdown-details";
 
 type Test = {
   id: number;
@@ -59,23 +62,53 @@ export const pendingReservationData = [
   },
 ];
 
-export const pendingReservationsColumn: ColumnDef<Test>[] = [
+export const pendingReservationsColumn: ColumnDef<ReservationStatus>[] = [
+  {
+    accessorKey: "createdAt",
+    header: "Date",
+    cell: ({ row }) => {
+      const user = row?.original;
+      return <p>{dayjs(user?.createdAt).format("DD-MM-YYYY")}</p>;
+    },
+  },
   {
     accessorKey: "date",
-    header: "Date",
-  },
-  {
-    accessorKey: "reservedDate",
     header: "Reserved date",
+    cell: ({ row }) => {
+      const user = row?.original;
+
+      return (
+        <>
+          <p>{dayjs(user?.date).format("DD-MM-YYYY")}</p>
+          <p>{user.time}</p>
+        </>
+      );
+    },
   },
   {
-    accessorKey: "name",
+    accessorKey: "fullName",
     header: "Name",
   },
   {
-    accessorKey: "reservationCode",
+    accessorKey: "reference",
     header: "Reservation Code",
   },
+
+  {
+    accessorKey: "confirmationStatus",
+    header: "Confirm Status",
+    cell: ({ row }) => {
+      const user = row?.original;
+      return (
+        <>
+          <button className="text-[#574DFF] bg-[#F4F5FF] rounded-[40px] py-2 px-4">
+            {user?.confirmationStatus}
+          </button>
+        </>
+      );
+    },
+  },
+
   {
     id: "action",
     header: "Actions",
@@ -83,9 +116,10 @@ export const pendingReservationsColumn: ColumnDef<Test>[] = [
       const user = row.original;
       return (
         <div>
+          <ReservationDetails reservationId={user?.id} />
           {/* onclick of this will console the user id based on the role you clicked */}
           {/* <MenuDetails id={user.id} restaurantId={user.restaurant} /> */}
-          <MoreHorizontal onClick={() => console.log(user.id)} />
+          {/* <MoreHorizontal onClick={() => console.log(user.id)} /> */}
         </div>
       );
     },

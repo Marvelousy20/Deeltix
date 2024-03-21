@@ -2,27 +2,35 @@
 import Image from "next/image";
 import EmptyReservations from "./EmptyReservations";
 import { DataTable } from "@/components/Table/DataTable";
-import { pendingReservationData } from "./tables/pendingReservations";
 import { pendingReservationsColumn } from "./tables/pendingReservations";
-import {
-  pastReservationsData,
-  pastReservationsColumn,
-} from "./tables/pastReservations";
-import {
-  upcomingReservationsColumn,
-  upcomingReservationsData,
-} from "./tables/upcomingReservations";
-import { useState } from "react";
+import { pastReservationsColumn } from "./tables/pastReservations";
+import { upcomingReservationsColumn } from "./tables/upcomingReservations";
 import Link from "next/link";
 import { useUser } from "@/context/restaurant/user";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/axios-config";
-import { UpcomingReservationDetails } from "@/types";
+import { ReservationStat, UpcomingReservationDetails } from "@/types";
 
 const reservations = [{ id: 1 }];
 
 export default function Reservation() {
   const { restaurantId } = useUser();
+
+  // reservation stat
+  const { data: stat, isLoading: statloading } = useQuery({
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      return await api.get<ReservationStat>(
+        `/api/reservations/${restaurantId}/stats`
+      );
+    },
+    queryKey: ["reservation-stat", "stat"],
+    enabled: !!restaurantId,
+    select: (data) => data?.data?.data?.data,
+  });
+
   //  upcoming reservation
   const { data, isLoading } = useQuery({
     queryFn: async () => {
@@ -51,6 +59,21 @@ export default function Reservation() {
       );
     },
     queryKey: ["past-reservation", "past"],
+    enabled: !!restaurantId,
+    select: (data) => data?.data?.data?.data,
+  });
+
+  // Pending reservation
+  const { data: pendingReservation, isLoading: pendingLoading } = useQuery({
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      return await api.get<UpcomingReservationDetails>(
+        `/api/reservations/${restaurantId}/manager/all?confirmationStatus=In-review`
+      );
+    },
+    queryKey: ["pending-reservation", "pending"],
     enabled: !!restaurantId,
     select: (data) => data?.data?.data?.data,
   });
@@ -85,8 +108,10 @@ export default function Reservation() {
       <section className="grid grid-cols-3 mt-4">
         <div className="flex justify-between border border-[#EAECF0] col-span-1 lg:p-10">
           <div>
-            <h2>Total Reservations </h2>
-            <p className="text-xl lg:text-3xl mt-4 font-bold">550</p>
+            <h2>Total Reservations</h2>
+            <p className="text-xl lg:text-3xl mt-4 font-bold">
+              {stat?.totalReservations}
+            </p>
           </div>
 
           <div>
@@ -102,7 +127,9 @@ export default function Reservation() {
         <div className="flex justify-between border border-[#EAECF0] col-span-1 lg:p-10">
           <div>
             <h2>All time seated guests</h2>
-            <p className="text-xl lg:text-3xl mt-4 font-bold">425</p>
+            <p className="text-xl lg:text-3xl mt-4 font-bold">
+              {stat?.totalGuests}
+            </p>
           </div>
 
           <div>
@@ -118,7 +145,9 @@ export default function Reservation() {
         <div className="flex justify-between border border-[#EAECF0] col-span-1 lg:p-10">
           <div>
             <h2>Upcoming Reservation</h2>
-            <p className="text-xl lg:text-3xl mt-4 font-bold">5</p>
+            <p className="text-xl lg:text-3xl mt-4 font-bold">
+              {stat?.totalUpcomingReservations}
+            </p>
           </div>
 
           <div>
@@ -141,7 +170,7 @@ export default function Reservation() {
               <div className="border-[2px] border-[#F7F7F7] rounded-[10px] w-full">
                 <DataTable
                   columns={pendingReservationsColumn}
-                  data={pendingReservationData}
+                  data={pendingReservation?.reservations ?? []}
                 />
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
-import { ReservationStatus } from "@/types";
+import { ReservationStatus, SingleReservation } from "@/types";
 import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
 import { useDisclosure } from "@mantine/hooks";
@@ -8,6 +8,7 @@ import { ReservationModal } from "./reservation-modal";
 
 export interface Reservation {
   data: ReservationStatus[];
+  // data: SingleReservation[];
 }
 
 export default function ReservationCard({ data }: Reservation) {
@@ -36,8 +37,8 @@ export default function ReservationCard({ data }: Reservation) {
                 </div>
                 <div className="flex items-center space-x-2">
                   <p className="text-grayHelp text-base font-normal">
-                    {/* {d?.date} */}
-                    reserve {d?.id}
+                    {d?.date.toString()}
+                    {/* reserve {d?.id} */}
                   </p>
                   <p className="text-grayHelp text-base font-normal">
                     {` at ${d?.time}`}
@@ -55,6 +56,7 @@ export default function ReservationCard({ data }: Reservation) {
             </CardContent>
           </Card>
           <ReservationModal
+            // reservation={d}
             opened={opened}
             close={close}
             reservationId={d?.id}

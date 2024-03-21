@@ -100,7 +100,7 @@ export const upcomingReservationsColumn: ColumnDef<ReservationStatus>[] = [
 
   {
     accessorKey: "confirmationStatus",
-    header: "Confirm Reservation",
+    header: "Confirm Status",
     cell: ({ row }) => {
       const user = row?.original;
       return (
@@ -121,8 +121,8 @@ export const upcomingReservationsColumn: ColumnDef<ReservationStatus>[] = [
       return (
         <div>
           {/* onclick of this will console the user id based on the role you clicked */}
-          <MenuDetails id={user.id} restaurantId={user.restaurant} />
-          {/* <MoreHorizontal onClick={() => console.log(user.id)} /> */}
+          {/* <MenuDetails id={user.id} restaurantId={user.restaurant} /> */}
+          <MoreHorizontal onClick={() => console.log(user.id)} />
         </div>
       );
     },

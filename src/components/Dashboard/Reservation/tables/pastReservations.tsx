@@ -72,6 +72,16 @@ export const pastReservationsColumn: ColumnDef<ReservationStatus>[] = [
   {
     accessorKey: "date",
     header: "Reserved date",
+    cell: ({ row }) => {
+      const user = row?.original;
+
+      return (
+        <>
+          <p>{dayjs(user?.date).format("DD-MM-YYYY")}</p>
+          <p>{user.time}</p>
+        </>
+      );
+    },
   },
   {
     accessorKey: "fullName",

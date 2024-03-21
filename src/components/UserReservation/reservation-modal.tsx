@@ -6,17 +6,19 @@ import Image from "next/image";
 import { ArrowRight2 } from "iconsax-react";
 import { useQuery } from "@tanstack/react-query";
 import { auth } from "@/axios-config";
-import { SingleReservationDetails } from "@/types";
+import { SingleReservation, SingleReservationDetails } from "@/types";
 import { useRouter } from "next/navigation";
 
 export const ReservationModal = ({
   opened,
   close,
   reservationId,
-}: {
+}: //   reservation,
+{
   opened: any;
   close: () => void;
   reservationId: string;
+  //   reservation: SingleReservation;
 }) => {
   const { push } = useRouter();
 
@@ -33,6 +35,9 @@ export const ReservationModal = ({
     enabled: !!reservationId,
     select: ({ data }) => data?.data?.data?.reservation,
   });
+  if (isLoading) {
+    return <p>isLoading</p>;
+  }
   return (
     <div>
       <Modal
@@ -45,7 +50,6 @@ export const ReservationModal = ({
       >
         <div className="">
           <div className="w-full h-[2px] bg-grayoutline mb-5"></div>
-          <p>reservation {reservationId}</p>
           <Card className="w-full !bg-white !border-none">
             <CardContent className="">
               <div className="h-[250px] w-full ">

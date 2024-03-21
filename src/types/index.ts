@@ -175,6 +175,23 @@ export interface Guest {
   email: string;
 }
 
+//reservation stat
+export interface ReservationStat {
+  data: StatData;
+  status: string;
+}
+
+export interface StatData {
+  message: string;
+  data: ReservationStatData;
+}
+
+export interface ReservationStatData {
+  totalReservations: number;
+  totalUpcomingReservations: number;
+  totalGuests: number;
+}
+
 // upcoming reservation
 export interface UpcomingReservationDetails {
   data: ReservationData;
