@@ -3,6 +3,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserDrawer from "../Drawer";
 import Image from "next/image";
 import { PendingReservation } from "./pending-reservation";
+import { UpcomingReservation } from "./upcoming-reservation";
+import { PastReservation } from "./past-reservation";
 
 export const UserReservations = () => {
   const completed = true;
@@ -36,22 +38,16 @@ export const UserReservations = () => {
                     Pending Reservation
                   </TabsTrigger>
                   <TabsTrigger
-                    value="password"
+                    value="upcoming-reservation"
+                    className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
+                  >
+                    Upcoming reservation
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="past-reservation"
                     className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
                   >
                     Past reservation
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="address"
-                    className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
-                  >
-                    Upcoming Reservation
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="card"
-                    className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
-                  >
-                    Single Reservation
                   </TabsTrigger>
                 </div>
               </TabsList>
@@ -60,18 +56,11 @@ export const UserReservations = () => {
               <TabsContent value="pending-reservation" className="w-full">
                 <PendingReservation />
               </TabsContent>
-              <TabsContent value="password">
-                <p>password</p>
-                {/* <UserPassword /> */}
+              <TabsContent value="upcoming-reservation">
+                <UpcomingReservation />
               </TabsContent>
-              <TabsContent value="address">
-                <p>address</p>
-                {/* <AddressEmptyState /> */}
-                {/* <AddressDetails /> */}
-              </TabsContent>
-              <TabsContent value="card">
-                <p>card</p>
-                {/* <CardDetails /> */}
+              <TabsContent value="past-reservation">
+                <PastReservation />
               </TabsContent>
             </div>
           </Tabs>

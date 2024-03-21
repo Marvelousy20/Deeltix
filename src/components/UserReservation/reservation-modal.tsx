@@ -50,9 +50,9 @@ export const ReservationModal = ({
       >
         <div className="">
           <div className="w-full h-[2px] bg-grayoutline mb-5"></div>
-          <Card className="w-full !bg-white !border-none">
+          <Card className="w-full h-full !bg-white !border-none">
             <CardContent className="">
-              <div className="h-[250px] w-full ">
+              <div className="h-[200px] w-full ">
                 <Image
                   src={data?.restaurant?.displayPicture as string}
                   alt="menu"
@@ -67,9 +67,9 @@ export const ReservationModal = ({
                     {data?.restaurant?.name}
                   </h3>
 
-                  <p className="font-normal text-base text-grayHelp">
+                  {/* <p className="font-normal text-base text-grayHelp">
                     Order 1236779
-                  </p>
+                  </p> */}
                 </div>
                 <div className="flex items-center space-x-2 border-b-2 border-grayoutline py-2 ">
                   <p className="text-grayHelp text-base font-normal">{`${data?.date} at ${data?.time}`}</p>

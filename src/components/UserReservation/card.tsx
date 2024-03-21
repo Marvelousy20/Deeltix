@@ -47,7 +47,6 @@ export default function ReservationCard({ data }: Reservation) {
                 <div className="flex items-center space-x-2">
                   <p className="text-grayHelp text-base font-normal">
                     {d?.date.toString()}
-                    {/* reserve {d?.id} */}
                   </p>
                   <p className="text-grayHelp text-base font-normal">
                     {` at ${d?.time}`}
