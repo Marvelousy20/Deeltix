@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { MenuDetails } from "../../Menu/menu";
 import { ReservationStatus } from "@/types";
+import { UpcomingDetails } from "../upcoming-dropdown-details";
 
 type Test = {
   id: number;
@@ -120,9 +121,19 @@ export const upcomingReservationsColumn: ColumnDef<ReservationStatus>[] = [
       const user = row.original;
       return (
         <div>
+          <UpcomingDetails
+            reservationId={user?.id}
+            user={user?.user?.profile?.name as string}
+            email={user?.user?.email as string}
+            number={user?.user?.profile?.phoneNumber as string}
+            date={user?.date.toString()}
+            time={user?.time}
+            guest={user?.numberOfPeople as number}
+            request={user?.specialRequest}
+          />
           {/* onclick of this will console the user id based on the role you clicked */}
           {/* <MenuDetails id={user.id} restaurantId={user.restaurant} /> */}
-          <MoreHorizontal onClick={() => console.log(user.id)} />
+          {/* <MoreHorizontal onClick={() => console.log(user.id)} /> */}
         </div>
       );
     },
