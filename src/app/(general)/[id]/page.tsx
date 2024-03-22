@@ -16,17 +16,21 @@ import CarouselSlider from "@/components/carousel";
 import { Input } from "@/components/ui/input";
 import UserDrawer from "@/components/Drawer";
 import { Bookmark } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { auth } from "@/axios-config";
 import { useSearchParams } from "next/navigation";
 import { UserSingleRestaurant } from "@/types";
 import UserRating from "@/components/Rating/User-Rating";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
 
 export default function DetailPage() {
   const { id } = useParams();
   const searchParam = useSearchParams();
+  const [bookmark, setBookmark] = useState(false);
   const restaurantid = searchParam.get("restaurant");
-
+  const query = useQueryClient();
   const { data, isLoading } = useQuery({
     queryFn: async () =>
       await auth.get<UserSingleRestaurant>(`/api/restaurants/${restaurantid}`),
@@ -34,8 +38,20 @@ export default function DetailPage() {
     select: ({ data }) => data?.data?.data?.restaurant,
   });
 
-  console.log("new :", data);
-
+  // request for bookmark
+  const { mutate, isLoading: bookmarkLoading } = useMutation({
+    mutationFn: async () =>
+      await auth.patch(`/api/restaurants/${restaurantid}/bookmark`),
+    mutationKey: ["bookmark"],
+    onSuccess() {
+      toast.success("Restaurant has been bookmarked");
+      setBookmark(true);
+      query.invalidateQueries(["all-bookmark"]);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
   const datas = topRestaurentData.find(
     (item) => item.name === decodeURIComponent(id as string)
   );
@@ -74,7 +90,17 @@ export default function DetailPage() {
             <h2 className="text-4xl text-grayBlack font-bold">{data?.name}</h2>
 
             <div className="h-[40px] w-[40px] rounded-full border-[2px] border-grayoutline flex items-center justify-center">
-              <Bookmark size={25} color="#2C2929" className=" " />
+              <Bookmark
+                onClick={() => mutate()}
+                size={25}
+                color={bookmark ? "#FF0000" : "#2C2929"}
+                className="cursor-pointer"
+                // className={
+                //   bookmark
+                //     ? "text-[#FF0000] cursor-pointer "
+                //     : "text-[#2C2929] cursor-pointer"
+                // }
+              />
             </div>
           </div>
 

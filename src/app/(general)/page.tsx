@@ -88,14 +88,14 @@ export default function Home() {
             <div className="lg:mt-9 mt-0 flex items-center gap-3">
               {isLoading ? (
                 Array(4)
-                  .fill("1234")
+                  .fill("123")
                   .map((list, index) => (
                     <div
                       className="flex flex-col w-[350px] space-y-3"
                       key={index}
                     >
-                      <Skeleton className="h-[250px] w-[350px] rounded-xl" />
-                      <div className="flex w-[350px] items-center justify-between">
+                      <Skeleton className="h-[250px] w-[250px] rounded-xl" />
+                      <div className="flex w-[250px] items-center justify-between">
                         <Skeleton className="h-[10px] w-[100px] rounded-xl" />
                         <Skeleton className="h-[10px] w-[100px] rounded-xl" />
                       </div>

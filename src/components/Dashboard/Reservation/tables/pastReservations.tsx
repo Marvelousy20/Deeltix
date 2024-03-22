@@ -1,6 +1,6 @@
 "use client";
 
-import { UpcomingReservation } from "@/types";
+import { ReservationStatus } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import dayjs from "dayjs";
 
@@ -60,7 +60,7 @@ export const pastReservationsData = [
   },
 ];
 
-export const pastReservationsColumn: ColumnDef<UpcomingReservation>[] = [
+export const pastReservationsColumn: ColumnDef<ReservationStatus>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",
@@ -72,6 +72,16 @@ export const pastReservationsColumn: ColumnDef<UpcomingReservation>[] = [
   {
     accessorKey: "date",
     header: "Reserved date",
+    cell: ({ row }) => {
+      const user = row?.original;
+
+      return (
+        <>
+          <p>{dayjs(user?.date).format("DD-MM-YYYY")}</p>
+          <p>{user.time}</p>
+        </>
+      );
+    },
   },
   {
     accessorKey: "fullName",

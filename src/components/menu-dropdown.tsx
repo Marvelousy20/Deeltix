@@ -39,7 +39,7 @@ export const MenuDropDown = () => {
       name: "My bookmarks",
       icon: <Bookmark strokeWidth={1} size={16} color="black" />,
       chevron: <ChevronRight strokeWidth={1.5} size={18} color="black" />,
-      route: "/bookmarks",
+      route: "/bookmark",
     },
     {
       name: "Sign out",

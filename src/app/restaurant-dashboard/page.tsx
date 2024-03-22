@@ -34,10 +34,10 @@ export default function RestaurantDashboard() {
   };
 
   return (
-    <div className="pt-8 bg-[#FAFAFA] relative">
+    <div className="pt-8  bg-[#FAFAFA] relative">
       {/* Navbar */}
       <div className="px-4 md:px-8 lg:px-[6.25rem]">
-        <nav className="mx-4 md:mx-8 lg:mx-[6.25rem] py-4 fixed top-8 left-0 right-0 bg-white px-8 rounded-[40px]">
+        <nav className="mx-4 md:mx-8 lg:mx-[6.25rem] py-4 fixed top-8 left-0 right-0 backdrop-blur-md bg-white/85 px-8 rounded-[40px]">
           <div className="flex items-center justify-between relative">
             <Link href="/">
               <Image

@@ -44,6 +44,10 @@ function ModalResetPassword({
   const { push } = useRouter();
   const formSchema = z
     .object({
+      email: z.string().email({
+        message: "Enter your email address",
+      }),
+
       password: z.string().min(8),
       confirmPassword: z.string().min(8),
     })
@@ -57,6 +61,7 @@ function ModalResetPassword({
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      email: "",
       password: "",
       confirmPassword: "",
     },
@@ -82,8 +87,8 @@ function ModalResetPassword({
   });
   const email = cookieStorage.getItem("email");
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values, email, otp);
-    mutate({ ...values, email, otp });
+    console.log(values, otp);
+    mutate({ ...values, otp });
   };
 
   return (
@@ -128,6 +133,23 @@ function ModalResetPassword({
                     <input {...props} style={{ width: "3.3rem" }} />
                   )}
                 />
+              </div>
+
+              <div className="">
+                <label className="text-grayHelp text-lg font-medium">
+                  Email address
+                </label>
+                <Input
+                  placeholder="Enter your email address"
+                  type="email"
+                  className="text-grayInactive text-lg font-normal mt-2 w-full lg:w-[27rem] rounded-2xl"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <div className="text-red-500 text-sm font-normal pt-3">
+                    {errors.email?.message}
+                  </div>
+                )}
               </div>
 
               <div className="">

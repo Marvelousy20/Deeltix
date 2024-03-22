@@ -1,9 +1,9 @@
 "use client";
-
-import { UpcomingReservation } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { MenuDetails } from "../../Menu/menu";
+import { ReservationStatus } from "@/types";
 
 type Test = {
   id: number;
@@ -61,7 +61,7 @@ export const upcomingReservationsData = [
   },
 ];
 
-export const upcomingReservationsColumn: ColumnDef<UpcomingReservation>[] = [
+export const upcomingReservationsColumn: ColumnDef<ReservationStatus>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",
@@ -100,7 +100,7 @@ export const upcomingReservationsColumn: ColumnDef<UpcomingReservation>[] = [
 
   {
     accessorKey: "confirmationStatus",
-    header: "Confirm Reservation",
+    header: "Confirm Status",
     cell: ({ row }) => {
       const user = row?.original;
       return (

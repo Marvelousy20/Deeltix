@@ -1,9 +1,12 @@
 import Image from "next/image";
 import { Flag, Star, ThumbsUp } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { auth } from "@/axios-config";
 import { ReviewDetails } from "@/types";
 import dayjs from "dayjs";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
 
 const review = [
   {
@@ -30,11 +33,50 @@ export default function Rating({
   const { data, isLoading } = useQuery({
     queryFn: async () =>
       await auth.get<ReviewDetails>(
-        `/api/restaurants/${restaurantId}/reviews/user/all`
+        `/api/restaurants/${restaurantId}/reviews/all`
       ),
     queryKey: ["user-review"],
     select: ({ data }) => data?.data?.data?.reviews,
   });
+
+  // Request to know if a user has liked a review or not
+  const confirmation = async (reviewId: string) => {
+    try {
+      const response = await auth.get(
+        `/api/restaurants/${restaurantId}/reviews/${reviewId}/like/status`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching", error);
+      throw error;
+    }
+  };
+
+  // const { data: likeConfirmation } = useQuery({
+  //   queryFn: async () => await confirmation(),
+  //   await auth.get(
+  //     `/api/restaurants/${restaurantId}/reviews/${reviewId}/like/status`
+  //   ),
+  //   queryKey: ["confirmation"],
+  // });
+
+  // Request for like and unlike
+  const [liked, setIsliked] = useState<Boolean>(false);
+  const { mutate, isLoading: likeLoading } = useMutation({
+    mutationFn: async (reviewId: string) =>
+      await auth.patch(
+        `/api/restaurants/${restaurantId}/reviews/${reviewId}/like`
+      ),
+    mutationKey: ["like-review"],
+    onSuccess() {
+      toast.success("You liked this review");
+      setIsliked(true);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
   return (
     <section className="w-fit md:w-full">
       {data?.map((review, idx) => (
@@ -73,8 +115,18 @@ export default function Rating({
 
             <div className="flex gap-10">
               <div className="flex items-center gap-2 border-r pr-6">
-                <ThumbsUp className="cursor-pointer" />
-                <span>Like</span>
+                <ThumbsUp
+                  onClick={() => {
+                    // confirmation(review?.id);
+                    mutate(review?.id);
+                  }}
+                  className={`${
+                    liked ? "text-blue-500" : "white"
+                  } cursor-pointer`}
+                />
+                <span className={`${liked ? "text-blue-500" : "white"}`}>
+                  Like
+                </span>
               </div>
 
               <div className="flex items-center gap-2">

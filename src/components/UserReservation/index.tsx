@@ -2,8 +2,9 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserDrawer from "../Drawer";
 import Image from "next/image";
-import ReservationCard from "./card";
+import { PendingReservation } from "./pending-reservation";
 import { UpcomingReservation } from "./upcoming-reservation";
+import { PastReservation } from "./past-reservation";
 
 export const UserReservations = () => {
   const completed = true;
@@ -23,53 +24,43 @@ export const UserReservations = () => {
           </h3>
 
           {/* Tab */}
-          <Tabs defaultValue="edit-user" className="w-full h-full pt-6">
+          <Tabs
+            defaultValue="pending-reservation"
+            className="w-full h-full pt-6"
+          >
             <div className="w-fit flex mx-auto">
               <TabsList className="w-full py-3 flex rounded-[56px] border border-grayoutline bg-card items-center justify-between">
                 <div className="flex w-full justify-between items-center transition ease-in ">
                   <TabsTrigger
-                    value="edit-user"
+                    value="pending-reservation"
                     className=" w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
                   >
-                    All Reservation
+                    Pending Reservation
                   </TabsTrigger>
                   <TabsTrigger
-                    value="password"
+                    value="upcoming-reservation"
+                    className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
+                  >
+                    Upcoming reservation
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="past-reservation"
                     className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
                   >
                     Past reservation
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="address"
-                    className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
-                  >
-                    Upcoming Reservation
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="card"
-                    className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
-                  >
-                    Single Reservation
                   </TabsTrigger>
                 </div>
               </TabsList>
             </div>
             <div className="">
-              <TabsContent value="edit-user" className="w-full">
+              <TabsContent value="pending-reservation" className="w-full">
+                <PendingReservation />
+              </TabsContent>
+              <TabsContent value="upcoming-reservation">
                 <UpcomingReservation />
               </TabsContent>
-              <TabsContent value="password">
-                <p>password</p>
-                {/* <UserPassword /> */}
-              </TabsContent>
-              <TabsContent value="address">
-                <p>address</p>
-                {/* <AddressEmptyState /> */}
-                {/* <AddressDetails /> */}
-              </TabsContent>
-              <TabsContent value="card">
-                <p>card</p>
-                {/* <CardDetails /> */}
+              <TabsContent value="past-reservation">
+                <PastReservation />
               </TabsContent>
             </div>
           </Tabs>

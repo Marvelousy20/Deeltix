@@ -175,23 +175,40 @@ export interface Guest {
   email: string;
 }
 
-// upcoming reservation
-export interface UpcomingReservationDetails {
-  data: UpcomingData;
+//reservation stat
+export interface ReservationStat {
+  data: StatData;
   status: string;
 }
 
-export interface UpcomingData {
+export interface StatData {
+  message: string;
+  data: ReservationStatData;
+}
+
+export interface ReservationStatData {
+  totalReservations: number;
+  totalUpcomingReservations: number;
+  totalGuests: number;
+}
+
+// upcoming reservation
+export interface UpcomingReservationDetails {
+  data: ReservationData;
+  status: string;
+}
+
+export interface ReservationData {
   message: string;
   data: DataData;
 }
 
 export interface DataData {
-  reservations: UpcomingReservation[];
+  reservations: ReservationStatus[];
   total: number;
 }
 
-export interface UpcomingReservation {
+export interface ReservationStatus {
   date: Date;
   time: string;
   dateAndTime: Date;
@@ -208,7 +225,7 @@ export interface UpcomingReservation {
   createdAt: Date | undefined | string;
   updatedAt: Date | undefined | string;
   id: string;
-  user?: UpcomingUser;
+  user?: ReservationUser;
   fullName?: string;
   phoneNumber?: string;
 }
@@ -232,13 +249,13 @@ export interface UpcomingRestaurant {
   pictures?: string[];
 }
 
-export interface UpcomingUser {
-  profile: UpcomingProfile;
+export interface ReservationUser {
+  profile: ReservationProfile;
   email: string;
   id: string;
 }
 
-export interface UpcomingProfile {
+export interface ReservationProfile {
   name: string;
   phoneNumber: string;
   profilePicture?: string;
@@ -456,4 +473,185 @@ export interface UserReview {
 
 export interface ProfileReview {
   name: string;
+}
+
+// Bookmark
+export interface BookmarkDetails {
+  data: BookmarkInfo;
+  status: string;
+}
+
+export interface BookmarkInfo {
+  message: string;
+  data: BookmarkData;
+}
+
+export interface BookmarkData {
+  bookmarks: Bookmark[];
+  total: number;
+}
+
+export interface Bookmark {
+  user: string;
+  restaurant: RestaurantBookmark;
+  createdAt: Date | string | undefined;
+  updatedAt: Date | string | undefined;
+  id: string;
+}
+
+export interface RestaurantBookmark {
+  name: string;
+  manager: string;
+  reservationCharge: boolean;
+  averageRating: number;
+  createdAt: Date | string | undefined;
+  updatedAt: Date | string | undefined;
+  id: string;
+  address?: string;
+  averagePrice?: number;
+  country?: string;
+  description?: string;
+  displayPicture?: string;
+  openingDays?: string;
+  openingHours?: string;
+  pictures?: string[];
+  state?: string;
+}
+
+// Pending Reservation
+export interface PendingReservationDetails {
+  data: ReservationData;
+  status: string;
+}
+
+export interface ReservationData {
+  message: string;
+  data: DataData;
+}
+
+export interface DataData {
+  // data: NewPendingReservation;
+  total: number;
+
+  reservations: ReservationStatus[];
+}
+
+// export interface NewPendingReservation {
+//   reservation: ReservationStatus[];
+// }
+
+export interface ReservationStatus {
+  date: Date;
+  time: string;
+  dateAndTime: Date;
+  numberOfPeople: number;
+  user?: ReservationUser;
+  fullName?: string;
+  email: string;
+  phoneNumber?: string;
+  specialRequest: string;
+  confirmationStatus: string;
+  reference: string;
+  restaurant: ReservationRestaurant;
+  paymentRequired: boolean;
+  paymentStatus: string;
+  createdAt: Date | string | undefined;
+  updatedAt: Date | string | undefined;
+  id: string;
+}
+
+export interface ReservationRestaurant {
+  name: string;
+  manager: string;
+  reservationCharge: boolean;
+  averageRating: number;
+  createdAt: Date | undefined | string;
+  updatedAt: Date | undefined | string;
+  address?: string;
+  averagePrice?: number;
+  country?: string;
+  description?: string;
+  displayPicture?: string;
+  openingDays?: string;
+  openingHours?: string;
+  state?: string;
+  id: string;
+  pictures?: string[];
+}
+
+export interface ReservationUser {
+  profile: ReservationProfile;
+  email: string;
+  id: string;
+}
+
+export interface ReservationProfile {
+  name: string;
+  phoneNumber: string;
+  dob?: string;
+}
+
+// Single reservation
+export interface SingleReservationDetails {
+  data: SingleReservationInfo;
+  status: string;
+}
+
+export interface SingleReservationInfo {
+  message: string;
+  data: SingleData;
+}
+
+export interface SingleData {
+  reservation: SingleReservation;
+}
+
+export interface SingleReservation {
+  date: Date;
+  time: string;
+  dateAndTime: Date;
+  numberOfPeople: number;
+  user: SingleUser;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  specialRequest: string;
+  confirmationStatus: string;
+  reference: string;
+  restaurant: SingleRestaurant;
+  paymentRequired: boolean;
+  paymentStatus: string;
+  createdAt: Date;
+  updatedAt: Date;
+  id: string;
+}
+
+export interface SingleRestaurant {
+  name: string;
+  manager: string;
+  reservationCharge: boolean;
+  averageRating: number;
+  createdAt: Date | string | undefined;
+  updatedAt: Date | string | undefined;
+  address?: string;
+  averagePrice?: number;
+  country?: string;
+  description?: string;
+  displayPicture?: string;
+  openingDays?: string;
+  openingHours?: string;
+  state?: string;
+  id: string;
+}
+
+export interface SingleUser {
+  profile: SingleProfile;
+  email: string;
+  id: string;
+}
+
+export interface SingleProfile {
+  name: string;
+  phoneNumber: string;
+  dob: string;
 }
