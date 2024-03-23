@@ -62,10 +62,6 @@ export const UpcomingDetails = ({
             <MoreHorizontal />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="rounded-xl border border-grayoutline mt-10">
-            {/* <ReservationDropDown
-              onAccept={() => mutate({ status: "Accepted" })}
-              onReject={""}
-            /> */}
             <UpcomingDropDown
               reservationId={reservationId}
               user={user}

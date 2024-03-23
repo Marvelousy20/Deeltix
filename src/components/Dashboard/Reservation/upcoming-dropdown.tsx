@@ -1,9 +1,10 @@
 "use client";
-import { Edit2, SearchStatus1, Trash } from "iconsax-react";
+import { Edit2, SearchStatus1 } from "iconsax-react";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { ReminderNotification } from "./reminder-modal";
 import { useDisclosure } from "@mantine/hooks";
+import { Mail } from "lucide-react";
 
 export const UpcomingDropDown = ({
   reservationId,
@@ -27,7 +28,7 @@ export const UpcomingDropDown = ({
   const { push } = useRouter();
   const [opened, { open, close }] = useDisclosure();
   return (
-    <section className=" p-[20px] flex flex-col">
+    <section className=" p-[15px] flex flex-col">
       <div className="flex cursor-pointer items-center gap-3 border-b border-[#E7EAF1] pb-[12px]">
         <div className="h-[30px] w-[30px] flex items-center justify-center rounded-full border border-[#E7EAF1]">
           <SearchStatus1 size={20} />
@@ -42,7 +43,7 @@ export const UpcomingDropDown = ({
       </div>
       <div className="flex cursor-pointer items-center gap-3 pt-[12px]">
         <div className="h-[30px] w-[30px] flex items-center justify-center rounded-full border border-[#E7EAF1]">
-          <Trash size="20" onClick={open} />
+          <Mail size={20} onClick={open} />
         </div>
         <p className="text-base font-medium text-[#2C2929]">Send reminder</p>
       </div>

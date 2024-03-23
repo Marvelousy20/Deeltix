@@ -30,6 +30,8 @@ import { ErrorType, handleError } from "@/lib/handle-error";
 import { Loader } from "@mantine/core";
 import dayjs from "dayjs";
 import { IUserReservation, RestaurantDetails } from "@/types";
+import { useDisclosure } from "@mantine/hooks";
+import { ConfirmReservation } from "./confirm-reservation";
 export default function CreateReservations({
   restaurantId,
 }: {
@@ -42,10 +44,16 @@ export default function CreateReservations({
 
     specialRequest: z.string().optional(),
   });
-
-  const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
-    z.infer<typeof reservationSchema>
-  >({
+  const [opened, { open, close }] = useDisclosure();
+  const {
+    handleSubmit,
+    register,
+    formState,
+    reset,
+    watch,
+    setValue,
+    getValues,
+  } = useForm<z.infer<typeof reservationSchema>>({
     resolver: zodResolver(reservationSchema),
     defaultValues: {
       numberOfPeople: "",
@@ -57,14 +65,20 @@ export default function CreateReservations({
   const [timeinitial, setTimeInitial] = useState("am");
   const queryClient = useQueryClient();
   const { errors } = formState;
-
+  const clearField = () => {
+    close();
+    reset();
+    setUserDate(null);
+    setTimer("");
+  };
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: IUserReservation) =>
       await auth.post(`/api/reservations/${restaurantId}`, data),
 
     mutationKey: ["user-reservation"],
     onSuccess() {
-      toast.success("Reservation created successfully");
+      open();
+
       queryClient.invalidateQueries([
         "pending-reservation",
         "past-reservation",
@@ -75,15 +89,16 @@ export default function CreateReservations({
       handleError(error as ErrorType);
     },
   });
-
+  const confirmDate = dayjs(userdate).format("YYYY-MM-DD");
+  const confirmTime = `${timer} ${timeinitial}`;
   const onSubmit = (values: z.infer<typeof reservationSchema>) => {
     const date = dayjs(userdate).format("YYYY-MM-DD");
     const time = `${timer} ${timeinitial}`;
     console.log({ ...values, date, time });
     mutate({ ...values, date, time });
-    reset();
-    setUserDate(null);
-    setTimer("");
+    // reset();
+    // setUserDate(null);
+    // setTimer("");
   };
   return (
     <section className="flex flex-col items-center justify-center max-w-[27.5rem] mx-auto">
@@ -149,7 +164,7 @@ export default function CreateReservations({
         {/* guest */}
 
         <div className="">
-          <label className="text-grayHelp text-lg font-medium">
+          <label onClick={open} className="text-grayHelp text-lg font-medium">
             No of guest
           </label>
           <Input
@@ -202,6 +217,14 @@ export default function CreateReservations({
           )}
         </Button>
       </form>
+      <ConfirmReservation
+        clearField={clearField}
+        opened={opened}
+        close={close}
+        date={confirmDate}
+        time={confirmTime}
+        guest={getValues("numberOfPeople")}
+      />
     </section>
   );
 }
