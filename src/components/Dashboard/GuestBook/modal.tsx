@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Modal } from "@mantine/core";
+import { Input } from "@/components/ui/input";
 export const GuestUpdate = ({
   opened,
   close,

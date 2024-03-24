@@ -14,6 +14,8 @@ export const MenuDropDown = () => {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("isLoggedIn");
+    localStorage.clear();
+    cookieStorage.clear();
   };
 
   const userDetails: ILoggedinUser[] = [
