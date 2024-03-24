@@ -81,7 +81,14 @@ export const ReminderNotification = ({
   };
 
   return (
-    <Modal opened={opened} onClose={close} centered title="Receipt" size="40%">
+    <Modal
+      opened={opened}
+      onClose={close}
+      centered
+      title="Receipt"
+      size="40%"
+      className="!z-[1000] !bg-red-500"
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
         className=" flex items-center justify-center py-4"

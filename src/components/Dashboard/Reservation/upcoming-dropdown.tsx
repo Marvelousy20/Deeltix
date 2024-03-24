@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ReminderNotification } from "./reminder-modal";
 import { useDisclosure } from "@mantine/hooks";
 import { Mail } from "lucide-react";
+import { ModalEvent } from "../GuestBook/event";
 
 export const UpcomingDropDown = ({
   reservationId,
