@@ -101,16 +101,16 @@ export default function CreateReservations({
     // setTimer("");
   };
   return (
-    <section className="flex flex-col items-center justify-center max-w-[27.5rem] mx-auto">
+    <section className="flex flex-col w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-6 w-full"
+        className="flex pl-5 flex-col gap-6"
       >
         <h3 className="text-xl font-bold text-grayBlack2 pt-8">
           Make a reservation
         </h3>
 
-        <div className="flex flex-col gap-2 max-w-[27rem]">
+        <div className="flex flex-col gap-2 w-full lg:min-w-[27rem]">
           <label className="text-grayHelp text-lg font-medium">Date</label>
           <Popover>
             <PopoverTrigger asChild>
@@ -136,7 +136,7 @@ export default function CreateReservations({
           </Popover>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col lg:min-w-[27.5rem] w-full">
           <label className="text-grayHelp text-lg font-medium">Time</label>
           <div className="flex justify-between pr-4 items-center mt-2 h-12 rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
             <div className="inner">
@@ -163,7 +163,7 @@ export default function CreateReservations({
         </div>
         {/* guest */}
 
-        <div className="">
+        <div className="w-full lg:min-w-[27.5rem]">
           <label onClick={open} className="text-grayHelp text-lg font-medium">
             No of guest
           </label>
@@ -180,7 +180,7 @@ export default function CreateReservations({
           )}
         </div>
 
-        <div>
+        <div className="w-full lg:min-w-[27.5rem]">
           <label className="text-grayHelp text-lg font-medium">
             Special requests (optional)
           </label>

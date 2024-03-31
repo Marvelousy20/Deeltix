@@ -1,16 +1,25 @@
 "use client";
+import { useProduct } from "@/context/restaurant/product";
+import { ProductProvider } from "@/context/restaurant/product";
+import { ErrorType, handleError } from "@/lib/handle-error";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { DocumentUpload, GalleryEdit } from "iconsax-react";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import Router from "next/router";
+import React, { createContext, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
-interface ProductProps {
-  fileName: string | null;
-  onFileNameChange: (newFileName: string | null) => void;
-}
+export const Product = () => {
+  interface product {
+    urls: string[];
+    fetchProduct: () => void;
+  }
 
-export const Product = ({ fileName, onFileNameChange }: ProductProps) => {
-  const [userfile, setUserFile] = useState<File | null>(null);
+  const productContext = createContext<product | undefined>(undefined);
+  const { url, setUrl } = useProduct();
+  const [userfile, setUserFile] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef.current) {
@@ -19,30 +28,69 @@ export const Product = ({ fileName, onFileNameChange }: ProductProps) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files;
     if (file) {
-      setUserFile(file);
-      onFileNameChange(file.name);
+      setUserFile(Array.from(file));
     }
   };
 
   const handleDelete = () => {
-    setUserFile(null);
+    setUserFile([]);
     if (inputRef.current) {
       inputRef.current.value === "";
     }
   };
 
-  const upload = () => {
-    if (userfile) {
-      // console.log("file upload:", userfile);
+  const { mutate, isLoading, data } = useMutation({
+    mutationFn: async (data: FormData) =>
+      await axios.post(
+        `https://deeltix-nserver-1.onrender.com/api/utilities/upload`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      ),
+
+    mutationKey: ["menu-upload"],
+
+    onSuccess({ data }) {
+      console.log("menu upload :", data?.data?.data?.urls[0]);
+      setUrl(data?.data?.data?.urls[0]);
+      toast.success("File uploaded successfully");
+      // Router.push(`/get-started/menu?menu=${data?.data?.data.urls[0]}`);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
+  console.log("urls", url);
+
+  const handleSubmit = () => {
+    try {
+      if (userfile) {
+        const formData = new FormData();
+        userfile.forEach((file) => {
+          formData.append("files", file);
+          mutate(formData);
+        });
+      }
+    } catch (error) {
+      console.error("Upload failed", error);
     }
   };
+
+  useEffect(() => {
+    handleSubmit();
+  }, [userfile]);
+
   return (
     <div>
       <h3 className="font-bold text-xl text-grayBlack2 pb-8">Product Image</h3>
       <div className="flex flex-col gap-3">
-        {!userfile ? (
+        {!userfile.length ? (
           <div className="w-[220px] overflow-hidden flex items-center justify-center h-[220px] border border-spacing-2 border-dashed border-[#574DFF] rounded-[40px]">
             <div
               onClick={handleClick}
@@ -54,17 +102,20 @@ export const Product = ({ fileName, onFileNameChange }: ProductProps) => {
           </div>
         ) : (
           <div className="w-[220px] overflow-hidden flex items-center justify-center h-[220px] border border-white rounded-[40px]">
-            <Image
-              src={URL.createObjectURL(userfile)}
-              width={220}
-              height={220}
-              alt="user upload"
-              className="w-full h-full object-cover"
-            />
+            {userfile.map((item, idx) => (
+              <Image
+                key={idx}
+                src={URL.createObjectURL(item)}
+                width={400}
+                height={400}
+                alt="user upload"
+                className=" object-cover w-full"
+              />
+            ))}
           </div>
         )}
 
-        {userfile && (
+        {userfile.length ? (
           <section className="border border-[#EAECF0] p-3 rounded-2xl w-[220px] flex items-center justify-between">
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-1">
@@ -75,13 +126,13 @@ export const Product = ({ fileName, onFileNameChange }: ProductProps) => {
                   alt="upload logo"
                 />
                 <div className=" text-base font-normal text-grayBlack2">
-                  {userfile?.name.slice(0, 10)}
+                  {userfile?.map((item) => item?.name.slice(0, 10))}
                 </div>
               </div>
 
               <div className="text-base font-normal text-grayBlack2">
                 {" "}
-                {userfile?.size}
+                {userfile?.map((item) => item?.size)}
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -99,7 +150,7 @@ export const Product = ({ fileName, onFileNameChange }: ProductProps) => {
               </span>
             </div>
           </section>
-        )}
+        ) : null}
         <input
           type="file"
           accept="image/*"

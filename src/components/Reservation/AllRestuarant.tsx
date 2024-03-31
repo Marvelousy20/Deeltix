@@ -10,17 +10,17 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import { MapPin, Star } from "lucide-react";
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-
-import { IRestaurent } from "@/types";
+import {
+  RestaurantPictures,
+  SingleRestaurant,
+  UserSingleRestaurant,
+} from "@/types";
 
 interface DataProps {
-  data: IRestaurent[];
+  data: SingleRestaurant | undefined;
 }
 
-export default function AllRestaurants() {
+export default function AllRestaurants({ data }: DataProps) {
   const allRestaurant = [
     {
       img: "/restaurants/elysium.png",
@@ -57,18 +57,18 @@ export default function AllRestaurants() {
         className="w-full mx-auto relative"
       >
         <CarouselContent className="flex gap-3">
-          {allRestaurant.map((d, index) => (
+          {data?.pictures?.map((photos, index) => (
             <CarouselItem
               key={index}
               className="md:basis-1/2 lg:basis-1/4 bg-transparent"
             >
               <div className="w-[300px] h-[200px]">
                 <Image
-                  src={d.img}
+                  src={photos}
                   width={400}
                   height={400}
                   alt="All restaurant"
-                  className="w-full h-full"
+                  className="w-full h-full rounded-lg"
                 />
               </div>
             </CarouselItem>

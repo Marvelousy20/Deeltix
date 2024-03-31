@@ -83,7 +83,7 @@ export interface IMenus {
   description: string;
   category: string;
   price: string;
-  image: string | null;
+  image: string[] | null;
 }
 
 //user sign data
@@ -284,6 +284,7 @@ export interface IUpdateRestaurantProfile {
   openingDays: string;
   openingHours: string;
   displayPicture: string;
+  banner: string[];
   averagePrice: string;
   description: string;
   pictures: Array<string> | undefined;
@@ -415,15 +416,14 @@ export interface SingleRestaurant {
   openingDays?: string;
   openingHours?: string;
   pictures?: string[];
+  banner?: string;
   state?: string;
   id: string;
 }
 
-// export interface Manager {
-//   email: string;
-//   fullName: string;
-//   id: string;
-// }
+export interface RestaurantPictures {
+  pictures?: string[];
+}
 
 // Rating
 export interface Rating {
@@ -654,4 +654,65 @@ export interface SingleProfile {
   name: string;
   phoneNumber: string;
   dob: string;
+}
+
+// restaurant menu
+export interface MenuDetails {
+  data: MenuData;
+  status: string;
+}
+
+export interface MenuData {
+  message: string;
+  data: DataData;
+}
+
+export interface DataData {
+  menu: RestaurantMenu[];
+  total: number;
+}
+
+export interface RestaurantMenu {
+  name: string;
+  description: string;
+  price: number;
+  available: boolean;
+  image: string;
+  category: MenuCategory;
+  restaurant: string;
+  deleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  id: string;
+}
+
+export interface MenuCategory {
+  name: string;
+  available: boolean;
+  id: string;
+}
+
+// Restaurant categories
+export interface MenuCategoryDetails {
+  data: MenuCategoryInfo;
+  status: string;
+}
+
+export interface MenuCategoryInfo {
+  message: string;
+  data: MenuCategoryData;
+}
+
+export interface MenuCategoryData {
+  menuCategories: MenuCategory[];
+  total: number;
+}
+
+export interface MenuCategory {
+  name: string;
+  available: boolean;
+  restaurant: string;
+  createdAt: Date;
+  updatedAt: Date;
+  id: string;
 }

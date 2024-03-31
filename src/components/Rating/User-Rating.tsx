@@ -61,7 +61,7 @@ export default function UserRating({
   };
 
   return (
-    <section className="w-fit md:w-full">
+    <section className="w-full md:w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mt-8 border rounded-[1.25rem]  lg:p-6 p-4"

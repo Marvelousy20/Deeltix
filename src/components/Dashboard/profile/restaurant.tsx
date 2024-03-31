@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
+import { ProductProvider, useProduct } from "@/context/restaurant/product";
 
 import {
   Select,
@@ -62,6 +63,7 @@ export const RestaurantProfile = ({
   displayPicture: string;
 }) => {
   const query = useQueryClient();
+  const { banner } = useProduct();
   const { restaurantId } = useUser();
   const param = useSearchParams();
   const newResult = param?.get("uploads");
@@ -113,7 +115,14 @@ export const RestaurantProfile = ({
     const openingDays = `${values.openDay} ${values.closeDay}`;
     const openingHours = `${values.openTime} ${values.closeTime}`;
     const { openDay, closeDay, openTime, closeTime, ...others } = values;
-    mutate({ ...others, openingDays, openingHours, displayPicture, pictures });
+    mutate({
+      ...others,
+      openingDays,
+      openingHours,
+      displayPicture,
+      pictures,
+      banner,
+    });
 
     console.log("others :", {
       ...others,

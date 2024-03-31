@@ -34,7 +34,7 @@ export const ProfileUpload = () => {
   const { mutate, isLoading, data } = useMutation({
     mutationFn: async (data: FormData) =>
       await axios.post(
-        `https://deeltix-nserver.onrender.com/api/utilities/upload`,
+        `https://deeltix-nserver-1.onrender.com/api/utilities/upload`,
         data,
         {
           headers: {
@@ -54,7 +54,6 @@ export const ProfileUpload = () => {
   });
 
   const restaurantUpload = data?.data?.data?.data?.urls[0];
-  // console.log("upload-image: ", data?.data?.data?.data?.urls[0]);
   const handleSubmit = () => {
     try {
       if (userfile) {

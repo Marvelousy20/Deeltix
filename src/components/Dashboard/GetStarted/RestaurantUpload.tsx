@@ -1,12 +1,18 @@
 "use client";
 import { DocumentUpload, GalleryEdit } from "iconsax-react";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MultipleUpload } from "./MultipleFiles";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
+import { ProductProvider, useProduct } from "@/context/restaurant/product";
 
 export const RestaurantBackground = () => {
-  const [userfile, setUserFile] = useState<File | null>(null);
+  const [userfile, setUserFile] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { banner, setBanner } = useProduct();
   const handleClick = () => {
     if (inputRef.current) {
       inputRef.current.click();
@@ -14,14 +20,15 @@ export const RestaurantBackground = () => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setUserFile(file);
+    const files = event.target.files;
+    if (files) {
+      const selectedFile = Array.from(files);
+      setUserFile([...userfile, ...selectedFile]);
     }
   };
 
   const handleDelete = () => {
-    setUserFile(null);
+    setUserFile([]);
     if (inputRef.current) {
       inputRef.current.value === "";
     }
@@ -32,6 +39,49 @@ export const RestaurantBackground = () => {
       console.log("file upload:", userfile);
     }
   };
+
+  const { mutate, isLoading, data } = useMutation({
+    mutationFn: async (data: FormData) =>
+      await axios.post(
+        `https://deeltix-nserver-1.onrender.com/api/utilities/upload`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      ),
+
+    mutationKey: ["picture-upload"],
+
+    onSuccess({ data }) {
+      setBanner(data?.data?.data?.urls[0]);
+      toast.success("File uploaded successfully");
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
+  const handleSubmit = () => {
+    try {
+      if (userfile) {
+        const formData = new FormData();
+        userfile.forEach((file) => {
+          formData.append("files", file);
+          mutate(formData);
+        });
+      }
+    } catch (error) {
+      console.error("Upload failed", error);
+    }
+  };
+
+  useEffect(() => {
+    handleSubmit();
+  }, [userfile]);
+
+  console.log("banner", banner);
   return (
     <section className="flex flex-col gap-[48px]">
       <div className="flex flex-col gap-4">
@@ -58,18 +108,25 @@ export const RestaurantBackground = () => {
           </section>
         </div>
         <div className="flex flex-col gap-3">
-          {!userfile ? (
+          {userfile.length === 0 ? (
             <div className="w-[600px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"></div>
           ) : (
-            <div className="w-[600px] h-[200px] overflow-hidden flex items-center justify-center border border-white rounded-sm">
-              <Image
-                src={URL.createObjectURL(userfile)}
-                width={600}
-                height={200}
-                alt="user upload"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <section>
+              {userfile.map((image, _idx) => (
+                <div
+                  key={_idx}
+                  className="w-full h-[200px] overflow-hidden flex items-center justify-center border border-white rounded-sm"
+                >
+                  <Image
+                    src={URL.createObjectURL(image)}
+                    width={600}
+                    height={200}
+                    alt="user upload"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </section>
           )}
           <input
             type="file"

@@ -62,7 +62,7 @@ export const RestaurantSignIn = () => {
       );
       const restuarantToken = response?.data?.data?.data?.token;
       cookieStorage.setItem("restaurant", JSON.stringify(restuarantToken));
-      console.log("allValues: ", response?.data?.data);
+      console.log("restoken: ", response?.data?.data?.data?.token);
       // const allValues = response?.data?.data?.data?.token;
       // console.log(allValues);
     },
