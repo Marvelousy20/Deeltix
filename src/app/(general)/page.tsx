@@ -73,7 +73,7 @@ export default function Home() {
         <div className="flex gap-10 lg:gap-0 flex-col">
           <div className="flex flex-col lg:gap-0 gap-10">
             <div className="flex items-center gap-x-2">
-              <h3 className="lg:text-4xl text-2xl lg:font-medium font-bold">
+              <h3 className="lg:text-4xl text-2xl lg:font-medium font-bold pb-5">
                 Top Restaurants for you
               </h3>
               <Image
