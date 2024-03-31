@@ -2,16 +2,12 @@
 
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import { topRestaurentData } from "@/components/data/TopRestaurant";
 import { formatPrice } from "@/lib/utils";
 import Overview from "@/components/Overview";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MenuData } from "@/components/Menu/All/data";
 import Reservation from "@/components/Reservation";
 import Rating from "@/components/Rating";
-import { Cart } from "@/components/Reservation/AddToCart";
 import AllRestaurants from "@/components/Reservation/AllRestuarant";
-import CarouselSlider from "@/components/carousel";
 import { Input } from "@/components/ui/input";
 import UserDrawer from "@/components/Drawer";
 import { Bookmark } from "lucide-react";
@@ -106,7 +102,7 @@ export default function DetailPage() {
         <div className="mt-16 lg:mt-0 w-full lg:h-[500px]">
           <Image
             src={data?.banner as string}
-            alt="img"
+            alt="restaurant-banner"
             width={1800}
             height={1400}
             objectFit="cover"
