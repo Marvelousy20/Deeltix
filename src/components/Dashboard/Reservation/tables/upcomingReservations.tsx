@@ -120,7 +120,7 @@ export const upcomingReservationsColumn: ColumnDef<ReservationStatus>[] = [
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <div className="z-[999]">
+        <div className="z-[]">
           <UpcomingDetails
             reservationId={user?.id}
             user={user?.user?.profile?.name as string}

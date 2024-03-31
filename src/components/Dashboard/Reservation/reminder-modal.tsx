@@ -87,7 +87,9 @@ export const ReminderNotification = ({
       centered
       title="Receipt"
       size="40%"
-      className="!z-[1000] !bg-red-500"
+      className="!bg-red-500"
+      color="#000"
+      zIndex={100}
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
