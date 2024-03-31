@@ -228,13 +228,19 @@ export default function DetailPage() {
                       <MenuCard data={menu?.data?.data?.data.menu} />
                     )}
                   </TabsContent>
-                  {category?.data?.data?.data?.menuCategories.map((item) => {
-                    return (
-                      <TabsContent value={item?.name} className="w-full">
-                        <MenuCard data={categorymenu?.data?.data?.menu} />
-                      </TabsContent>
-                    );
-                  })}
+                  {category?.data?.data?.data?.menuCategories.map(
+                    (item, index) => {
+                      return (
+                        <TabsContent
+                          value={item?.name}
+                          className="w-full"
+                          key={index}
+                        >
+                          <MenuCard data={categorymenu?.data?.data?.menu} />
+                        </TabsContent>
+                      );
+                    }
+                  )}
                 </Tabs>
               </div>
 
