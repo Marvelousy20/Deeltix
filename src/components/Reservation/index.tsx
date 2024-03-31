@@ -30,6 +30,8 @@ import { ErrorType, handleError } from "@/lib/handle-error";
 import { Loader } from "@mantine/core";
 import dayjs from "dayjs";
 import { IUserReservation, RestaurantDetails } from "@/types";
+import { useDisclosure } from "@mantine/hooks";
+import { ConfirmReservation } from "./confirm-reservation";
 export default function CreateReservations({
   restaurantId,
 }: {
@@ -42,10 +44,16 @@ export default function CreateReservations({
 
     specialRequest: z.string().optional(),
   });
-
-  const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
-    z.infer<typeof reservationSchema>
-  >({
+  const [opened, { open, close }] = useDisclosure();
+  const {
+    handleSubmit,
+    register,
+    formState,
+    reset,
+    watch,
+    setValue,
+    getValues,
+  } = useForm<z.infer<typeof reservationSchema>>({
     resolver: zodResolver(reservationSchema),
     defaultValues: {
       numberOfPeople: "",
@@ -57,14 +65,20 @@ export default function CreateReservations({
   const [timeinitial, setTimeInitial] = useState("am");
   const queryClient = useQueryClient();
   const { errors } = formState;
-
+  const clearField = () => {
+    close();
+    reset();
+    setUserDate(null);
+    setTimer("");
+  };
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: IUserReservation) =>
       await auth.post(`/api/reservations/${restaurantId}`, data),
 
     mutationKey: ["user-reservation"],
     onSuccess() {
-      toast.success("Reservation created successfully");
+      open();
+
       queryClient.invalidateQueries([
         "pending-reservation",
         "past-reservation",
@@ -75,27 +89,28 @@ export default function CreateReservations({
       handleError(error as ErrorType);
     },
   });
-
+  const confirmDate = dayjs(userdate).format("YYYY-MM-DD");
+  const confirmTime = `${timer} ${timeinitial}`;
   const onSubmit = (values: z.infer<typeof reservationSchema>) => {
     const date = dayjs(userdate).format("YYYY-MM-DD");
     const time = `${timer} ${timeinitial}`;
     console.log({ ...values, date, time });
     mutate({ ...values, date, time });
-    reset();
-    setUserDate(null);
-    setTimer("");
+    // reset();
+    // setUserDate(null);
+    // setTimer("");
   };
   return (
-    <section className="flex flex-col items-center justify-center max-w-[27.5rem] mx-auto">
+    <section className="flex flex-col w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-6 w-full"
+        className="flex pl-5 flex-col gap-6"
       >
         <h3 className="text-xl font-bold text-grayBlack2 pt-8">
           Make a reservation
         </h3>
 
-        <div className="flex flex-col gap-2 max-w-[27rem]">
+        <div className="flex flex-col gap-2 w-full lg:min-w-[27rem]">
           <label className="text-grayHelp text-lg font-medium">Date</label>
           <Popover>
             <PopoverTrigger asChild>
@@ -121,7 +136,7 @@ export default function CreateReservations({
           </Popover>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col lg:min-w-[27.5rem] w-full">
           <label className="text-grayHelp text-lg font-medium">Time</label>
           <div className="flex justify-between pr-4 items-center mt-2 h-12 rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
             <div className="inner">
@@ -148,8 +163,8 @@ export default function CreateReservations({
         </div>
         {/* guest */}
 
-        <div className="">
-          <label className="text-grayHelp text-lg font-medium">
+        <div className="w-full lg:min-w-[27.5rem]">
+          <label onClick={open} className="text-grayHelp text-lg font-medium">
             No of guest
           </label>
           <Input
@@ -165,7 +180,7 @@ export default function CreateReservations({
           )}
         </div>
 
-        <div>
+        <div className="w-full lg:min-w-[27.5rem]">
           <label className="text-grayHelp text-lg font-medium">
             Special requests (optional)
           </label>
@@ -202,6 +217,14 @@ export default function CreateReservations({
           )}
         </Button>
       </form>
+      <ConfirmReservation
+        clearField={clearField}
+        opened={opened}
+        close={close}
+        date={confirmDate}
+        time={confirmTime}
+        guest={getValues("numberOfPeople")}
+      />
     </section>
   );
 }

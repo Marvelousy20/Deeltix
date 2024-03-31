@@ -18,20 +18,6 @@ export interface IMenu {
   icon: React.ReactNode;
 }
 
-// type MenuType = {
-//   available: boolean;
-//   category: { name: string; available: boolean; id: string };
-//   createdAt: string;
-//   deleted: boolean;
-//   description: string;
-//   id: string;
-//   image: string;
-//   name: string;
-//   price: number;
-//   restaurant: string;
-//   updatedAt: string;
-// };
-
 export const CustomerMenu = () => {
   const { restaurantId } = useUser();
   const [menu, setMenu] = useState<MenuType[]>([]);

@@ -14,7 +14,7 @@ import { MapPin, Star, Bookmark } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
-import { IRestaurent, RestaurantDetails } from "@/types";
+import { RestaurantDetails } from "@/types";
 
 export default function CarouselSlider({ data }: RestaurantDetails) {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
       }}
       className="w-full mx-auto relative"
     >
-      <CarouselContent className="h-[340px] lg:h-fit w-full ">
+      <CarouselContent className="h-full lg:h-fit w-full ">
         {data?.data?.restaurants?.map((d, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
             <div className="p-1">

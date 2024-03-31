@@ -6,7 +6,6 @@ import { topRestaurentData } from "@/components/data/TopRestaurant";
 import { formatPrice } from "@/lib/utils";
 import Overview from "@/components/Overview";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Menu from "@/components/Menu/All/Menu";
 import { MenuData } from "@/components/Menu/All/data";
 import Reservation from "@/components/Reservation";
 import Rating from "@/components/Rating";
@@ -19,11 +18,17 @@ import { Bookmark } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { auth } from "@/axios-config";
 import { useSearchParams } from "next/navigation";
-import { UserSingleRestaurant } from "@/types";
+import {
+  MenuCategoryDetails,
+  MenuDetails,
+  UserSingleRestaurant,
+} from "@/types";
 import UserRating from "@/components/Rating/User-Rating";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
+import MenuCard from "@/components/Menu/MenuCard";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -31,11 +36,41 @@ export default function DetailPage() {
   const [bookmark, setBookmark] = useState(false);
   const restaurantid = searchParam.get("restaurant");
   const query = useQueryClient();
+  const [categorymenu, setCategoryMenu] = useState<MenuDetails | null>(null);
   const { data, isLoading } = useQuery({
     queryFn: async () =>
       await auth.get<UserSingleRestaurant>(`/api/restaurants/${restaurantid}`),
     queryKey: ["single-restaurant"],
     select: ({ data }) => data?.data?.data?.restaurant,
+  });
+  console.log("single-restaurant:", data);
+  // request to get restaurant menu
+  const { data: menu, isLoading: menuLoading } = useQuery({
+    queryFn: async () =>
+      await auth.get<MenuDetails>(`/api/restaurants/${restaurantid}/menu`),
+    queryKey: ["all-menu"],
+  });
+
+  // request to get restaurant category menu
+  const fetchData = async (categoryid: string) => {
+    try {
+      const categoryMenu = await auth.get<MenuDetails>(
+        `/api/restaurants/${restaurantid}/menu?category=${categoryid}`
+      );
+      setCategoryMenu(categoryMenu.data);
+    } catch (error: any) {
+      throw new Error(error.response.data.message || error.message);
+    }
+  };
+
+  // request to get restaurant categories list
+
+  const { data: category, isLoading: categoryLoading } = useQuery({
+    queryFn: async () =>
+      await auth.get<MenuCategoryDetails>(
+        `/api/restaurants/${restaurantid}/menu/categories`
+      ),
+    queryKey: ["menu-category"],
   });
 
   // request for bookmark
@@ -52,12 +87,6 @@ export default function DetailPage() {
       handleError(error as ErrorType);
     },
   });
-  const datas = topRestaurentData.find(
-    (item) => item.name === decodeURIComponent(id as string)
-  );
-  const chickenMenu = MenuData.filter((menu) => menu.category === "chicken");
-  const pastriesMenu = MenuData.filter((menu) => menu.category === "pastries");
-  const burgerMenu = MenuData.filter((menu) => menu.category === "burger");
 
   return (
     <div className="w-full">
@@ -74,9 +103,9 @@ export default function DetailPage() {
             <UserDrawer />
           </div>
         </div>
-        <div className="mt-16 lg:mt-0">
+        <div className="mt-16 lg:mt-0 w-full lg:h-[500px]">
           <Image
-            src="/bg.svg"
+            src={data?.banner as string}
             alt="img"
             width={1800}
             height={1400}
@@ -95,11 +124,6 @@ export default function DetailPage() {
                 size={25}
                 color={bookmark ? "#FF0000" : "#2C2929"}
                 className="cursor-pointer"
-                // className={
-                //   bookmark
-                //     ? "text-[#FF0000] cursor-pointer "
-                //     : "text-[#2C2929] cursor-pointer"
-                // }
               />
             </div>
           </div>
@@ -138,7 +162,7 @@ export default function DetailPage() {
 
           <div className="lg:flex lg:gap-10 gap-0 space-y-5 lg:mt-16 mt-0">
             {/* Tabs component */}
-            <div className="col-span-4 lg:w-[70%] w-full">
+            <div className="col-span-4 lg:w-[60%] w-full">
               <Tabs defaultValue="overview" className="max-w-4xl">
                 <TabsList className="lg:grid lg:grid-cols-4 w-full flex items-center justify-between">
                   <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -148,7 +172,12 @@ export default function DetailPage() {
                 </TabsList>
 
                 <TabsContent value="overview">
-                  <Overview />
+                  {/* <h3>{data?.description}</h3> */}
+                  <Overview
+                    description={data?.description as string}
+                    days={data?.openingDays as string}
+                    time={data?.openingHours as string}
+                  />
                 </TabsContent>
                 <TabsContent value="menu">This is the menu page</TabsContent>
                 <TabsContent value="photos">
@@ -167,7 +196,7 @@ export default function DetailPage() {
               </div>
 
               <div className="flex flex-col gap-5 items-center justify-center lg:hidden">
-                <h1 className="text-3xl font-bold">Menu</h1>
+                <h1 className="text-3xl font-bold text-s">Menu</h1>
                 <div className="w-full">
                   <Input placeholder="Search store menu" className="w-full" />
                 </div>
@@ -175,38 +204,43 @@ export default function DetailPage() {
 
               <div className="mt-6 w-full">
                 <Tabs defaultValue="all" className="lg:max-w-4xl w-full">
-                  <TabsList className="grid lg:grid-cols-7 grid-cols-4 data-[state=active]:!text-blue-500 mb-8">
+                  <TabsList className="grid lg:grid-cols-7 grid-cols-3 justify-items-start data-[state=active]:!text-blue-500 mb-8">
                     <TabsTrigger value="all">All</TabsTrigger>
-                    <TabsTrigger value="chicken">Chicken</TabsTrigger>
-                    <TabsTrigger value="pastries">Pastries</TabsTrigger>
-                    <TabsTrigger value="burger">Burger</TabsTrigger>
-                    <TabsTrigger value="deserts">Deserts</TabsTrigger>
-                    <TabsTrigger value="hotdog">Hotdog</TabsTrigger>
-                    <TabsTrigger value="salads">Salads</TabsTrigger>
+
+                    {category?.data?.data?.data?.menuCategories?.map((item) => (
+                      <div key={item?.id}>
+                        <TabsTrigger
+                          value={item?.name}
+                          onClick={() => fetchData(item?.id)}
+                        >
+                          {item?.name}
+                        </TabsTrigger>
+                      </div>
+                    ))}
                   </TabsList>
 
                   <TabsContent value="all" className="w-full">
-                    <Menu data={MenuData} />
+                    {menuLoading ? (
+                      <div className="flex flex-col space-y-3 max-w-[200px]">
+                        <Skeleton className="h-[200px] w-[200px] rounded-xl" />
+                      </div>
+                    ) : (
+                      <MenuCard data={menu?.data?.data?.data.menu} />
+                    )}
                   </TabsContent>
-                  <TabsContent value="chicken">
-                    <Menu data={chickenMenu} />
-                  </TabsContent>
-
-                  <TabsContent value="pastries">
-                    <Menu data={pastriesMenu} />
-                  </TabsContent>
-                  <TabsContent value="burger">
-                    <Menu data={burgerMenu} />
-                  </TabsContent>
-                  <TabsContent value="deserts">
-                    <Menu data={chickenMenu} />
-                  </TabsContent>
-                  <TabsContent value="hotdog">
-                    <Menu data={chickenMenu} />
-                  </TabsContent>
-                  <TabsContent value="salads">
-                    <Menu data={burgerMenu} />
-                  </TabsContent>
+                  {category?.data?.data?.data?.menuCategories.map(
+                    (item, index) => {
+                      return (
+                        <TabsContent
+                          value={item?.name}
+                          className="w-full"
+                          key={index}
+                        >
+                          <MenuCard data={categorymenu?.data?.data?.menu} />
+                        </TabsContent>
+                      );
+                    }
+                  )}
                 </Tabs>
               </div>
 
@@ -228,22 +262,22 @@ export default function DetailPage() {
             </div>
 
             {/* Reservation on desktop */}
-            <div className="lg:flex flex-col gap-20 border-l border-[#EDEDED] w-[30%] hidden">
+            <div className="lg:flex flex-col gap-20 border-l border-[#EDEDED] w-[40%] mx-auto hidden">
               <Reservation restaurantId={data?.id} />
-              <Cart />
+              {/* <Cart /> */}
             </div>
           </div>
 
           <div className=" flex flex-col gap-6">
             <div className="flex flex-col gap-8 lg:gap-0">
               <p className=" text-2xl font-bold text-grayBlack">Photos</p>
-              <div className="lg:mt-9 mt-0">
-                <AllRestaurants />
+              <div className="lg:mt-9 mt-5">
+                <AllRestaurants data={data} />
               </div>
             </div>
 
             {/* Restaurant around lekki */}
-            <div className="lg:mt-20 mt-0 flex flex-col gap-10 lg:gap-0">
+            {/* <div className="lg:mt-20 mt-0 flex flex-col gap-10 lg:gap-0">
               <div className="flex items-center gap-x-2">
                 <h3 className="lg:text-4xl text-2xl font-bold lg:font-medium">
                   Restaurants around Lekki
@@ -257,15 +291,15 @@ export default function DetailPage() {
                 />
               </div>
 
-              {/* <div className="lg:mt-9 mt-0">
+              <div className="lg:mt-9 mt-0">
                 <CarouselSlider data={topRestaurentData} />
-              </div> */}
-            </div>
+              </div>
+            </div> */}
           </div>
           {/* Reservation on mobile */}
           <div className="lg:hidden flex flex-col gap-20">
             <Reservation restaurantId={data?.id} />
-            <Cart />
+            {/* <Cart /> */}
           </div>
         </div>
       </div>

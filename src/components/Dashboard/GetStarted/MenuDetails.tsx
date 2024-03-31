@@ -23,6 +23,7 @@ import { useUser } from "@/context/restaurant/user";
 import { useQuery } from "@tanstack/react-query";
 import AddCategory from "../Menu/addCategory";
 import { useDisclosure } from "@mantine/hooks";
+import { useProduct } from "@/context/restaurant/product";
 
 type categoryType = {
   id: string;
@@ -31,14 +32,9 @@ type categoryType = {
 
 export const MenuUpload = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const [fileName, setFileName] = useState<string | null>(null);
   const [categories, setCategories] = useState<categoryType[] | null>(null);
   const { restaurantId } = useUser();
-  const handleFileNameChange = (newFileName: string | null) => {
-    setFileName(newFileName);
-  };
-
-  // console.log(restaurantId);
+  const { url, setUrl } = useProduct();
   const formSchema = z.object({
     name: z.string().min(2, {
       message: "Enter food name",
@@ -74,6 +70,8 @@ export const MenuUpload = () => {
     mutationKey: ["menu, restuarant"],
     onSuccess() {
       toast.success("Yuppy! Menu added successfully.");
+      reset();
+      setUrl([]);
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -81,10 +79,8 @@ export const MenuUpload = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const data = { ...values, image: fileName };
+    const data = { ...values, image: url };
     mutate(data);
-
-    reset();
   };
 
   const fetchCategory = async () => {
@@ -228,10 +224,7 @@ export const MenuUpload = () => {
 
             {/*  file upload */}
             <div>
-              <Product
-                fileName={fileName}
-                onFileNameChange={handleFileNameChange}
-              />
+              <Product />
             </div>
 
             <Button

@@ -61,7 +61,7 @@ export default function UserRating({
   };
 
   return (
-    <section className="w-fit md:w-full">
+    <section className="w-full md:w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mt-8 border rounded-[1.25rem]  lg:p-6 p-4"
@@ -108,13 +108,7 @@ export default function UserRating({
             placeholder="Please enter a review here..."
             className="text-grayInactive text-lg font-normal mt-2 lg:min-w-[27rem] w-full"
           />
-          {/* <Input
-            placeholder="Please enter a review here..."
-            className="text-grayInactive text-lg font-normal mt-2"
-            {...register("specialRequest", {
-              required: false,
-            })}
-          /> */}
+
           {errors.feedback && (
             <div className="text-red-500 text-sm font-normal pt-1">
               {errors.feedback?.message}
