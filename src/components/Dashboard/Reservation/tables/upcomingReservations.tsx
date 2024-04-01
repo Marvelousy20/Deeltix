@@ -131,9 +131,6 @@ export const upcomingReservationsColumn: ColumnDef<ReservationStatus>[] = [
             guest={user?.numberOfPeople as number}
             request={user?.specialRequest}
           />
-          {/* onclick of this will console the user id based on the role you clicked */}
-          {/* <MenuDetails id={user.id} restaurantId={user.restaurant} /> */}
-          {/* <MoreHorizontal onClick={() => console.log(user.id)} /> */}
         </div>
       );
     },

@@ -68,8 +68,8 @@ export default function Navbar() {
               </div>
             </section>
             {/* <SuccessMessage opened={success} close={successClose} /> */}
-            <ModalSignIn opened={signin} close={signinClose} />
-            <SignUp opened={opened} close={close} />
+            {/* <ModalSignIn opened={signin} close={signinClose} />
+            <SignUp opened={opened} close={close} /> */}
           </div>
 
           {/* mobile nav */}
@@ -88,22 +88,17 @@ export default function Navbar() {
             <div>Lekki</div>
 
             <div className="flex flex-col space-y-4">
-              <Button
-                size="sm"
-                variant="primary"
-                onClick={() => setsignUpModal(true)}
-              >
+              <Button size="sm" variant="primary" onClick={signinOpen}>
                 Sign in
               </Button>
-              <Button
-                size="sm"
-                variant="primary"
-                onClick={() => setShowModal(true)}
-              >
+
+              <Button size="sm" variant="primary" onClick={open}>
                 Create Account
               </Button>
             </div>
           </nav>
+          <ModalSignIn opened={signin} close={signinClose} />
+          <SignUp opened={opened} close={close} />
         </section>
       )}
     </header>

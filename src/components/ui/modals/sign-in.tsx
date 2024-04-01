@@ -91,11 +91,13 @@ export default function ModalSignIn({
         onClose={close}
         centered
         withCloseButton={false}
-        size="70%"
+        size="100%"
       >
         <div className="flex w-full bg-white rounded-lg">
-          <div className="w-1/2 p-10">
-            <h1 className="text-3xl font-bold pb-6">Sign in to your account</h1>
+          <div className="lg:w-1/2 w-full lg:p-10 p-0">
+            <h1 className="lg:text-3xl text-2xl font-bold pb-6">
+              Sign in to your account
+            </h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-6"
@@ -107,7 +109,7 @@ export default function ModalSignIn({
                 <Input
                   placeholder="Enter your email address"
                   type="email"
-                  className="text-grayInactive text-lg font-normal mt-2"
+                  className="text-grayInactive w-full lg:min-w-[27rem] text-lg font-normal mt-2"
                   {...register("email")}
                 />
                 {errors.email && (
@@ -117,17 +119,17 @@ export default function ModalSignIn({
                 )}
               </div>
 
-              <div className="">
+              <div className="w-full lg:max-w-[27rem]">
                 <label className="text-grayHelp text-lg font-medium">
                   Password
                 </label>
 
                 {/* input */}
-                <div className=" items-center  mt-2 justify-between flex h-12 w-full rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+                <div className=" items-center mt-2 justify-between flex h-12  rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                   <input
                     type={type}
                     placeholder="Enter your password"
-                    className="w-[300px] h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                    className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
                     {...register("password")}
                   />
 
@@ -146,12 +148,6 @@ export default function ModalSignIn({
                   )}
                 </div>
 
-                {/* <Input
-                  type="password"
-                  placeholder="Enter your password"
-                  className="text-grayInactive text-lg font-normal mt-2"
-                  {...register("password")}
-                /> */}
                 {errors.password && (
                   <div className="text-red-500 max-w-[400px] text-sm font-normal pt-3">
                     {errors.password?.message}
@@ -176,7 +172,7 @@ export default function ModalSignIn({
 
               <Button
                 type="submit"
-                className=" w-[300px]"
+                className=" lg:w-[300px] w-full"
                 variant="primary"
                 disabled={isLoading}
               >
@@ -192,7 +188,8 @@ export default function ModalSignIn({
               </Button>
             </form>
           </div>
-          <div className="rounded-r-lg w-1/2 bg-[url('/signup-rest.png')] bg-cover bg-no-repeat bg-center"></div>
+
+          <div className="rounded-r-lg hidden lg:block w-1/2 bg-[url('/signup-rest.png')] bg-cover bg-no-repeat bg-center"></div>
         </div>
       </Modal>
       <ModalPassword opened={forgotpasswordOpen} close={forgotpasswordClose} />
