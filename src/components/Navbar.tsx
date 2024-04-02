@@ -11,6 +11,7 @@ import ModalPassword from "./ui/modals/modal-password";
 import { useDisclosure } from "@mantine/hooks";
 import { SignUp } from "./ui/modals/sign-up";
 import SuccessMessage from "./ui/modals/password-success";
+import MobileModalSignIn from "./ui/modals/new-signin";
 import ModalSignIn from "./ui/modals/sign-in";
 import Link from "next/link";
 import { useUser } from "@/context/user/user";
@@ -28,13 +29,19 @@ export default function Navbar() {
   const { isLoggedIn } = useUser();
   console.log(isLoggedIn);
 
+  const [isOpened, setIsOpened] = useState(false);
+
+  const openModal = () => {
+    setIsOpened(true);
+  };
+
   return (
     <header className="overflow-hidden">
       {isLoggedIn ? (
         <LoggedInNavbar />
       ) : (
         <section>
-          <div className="pt-10 fixed w-full z-50 hidden lg:block">
+          <div className="pt-10 fixed w-full hidden lg:block">
             <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
               <div className="flex items-center gap-x-10">
                 <Link href="/" className="flex items-center">
@@ -88,7 +95,7 @@ export default function Navbar() {
             <div>Lekki</div>
 
             <div className="flex flex-col space-y-4">
-              <Button size="sm" variant="primary" onClick={signinOpen}>
+              <Button size="sm" variant="primary" onClick={openModal}>
                 Sign in
               </Button>
 
@@ -97,7 +104,10 @@ export default function Navbar() {
               </Button>
             </div>
           </nav>
-          <ModalSignIn opened={signin} close={signinClose} />
+          <div>
+            <ModalSignIn opened={signin} close={signinClose} />
+            <MobileModalSignIn isOpened={isOpened} setIsOpened={setIsOpened} />
+          </div>
           <SignUp opened={opened} close={close} />
         </section>
       )}
