@@ -8,6 +8,7 @@ import Hero from "../../../public/dashboard/dash.png";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Turn as Hamburger } from "hamburger-react";
+import RestaurantDashBoardNavbar from "@/components/RestaurantDashboardNavbar";
 
 const cards = [
   {
@@ -37,81 +38,7 @@ export default function RestaurantDashboard() {
     <div className="pt-8  bg-[#FAFAFA] relative">
       {/* Navbar */}
       <div className="px-4 md:px-8 lg:px-[3.5rem] xl:px-[6.25rem]">
-        <nav className="mx-4 md:mx-8 lg:mx-[3.5rem] xl:mx-[6.25rem] py-4 fixed top-8 left-0 right-0 backdrop-blur-md bg-white/85 px-8 rounded-[40px]">
-          <div className="flex items-center justify-between relative">
-            <Link href="/">
-              <Image
-                src="/dashboard/dlogo.svg"
-                alt="img"
-                width="80"
-                height="80"
-              />
-            </Link>
-            <div className="md:hidden">
-              <Hamburger size={20} toggled={isOpen} toggle={setOpen} />
-            </div>
-
-            <ul
-              className={`md:flex items-center gap-x-7 ${
-                isOpen
-                  ? "absolute top-10 flex-col space-y-8 bg-white left-0 right-0 p-8"
-                  : "hidden"
-              }`}
-            >
-              <li className="font-medium" onClick={() => setOpen(false)}>
-                <Link href="/contact">Contact Team</Link>
-              </li>
-              <li className="font-medium" onClick={() => setOpen(false)}>
-                <Link href="/restaurant-signin">Log In</Link>
-              </li>
-              <li onClick={() => setOpen(false)}>
-                <Link href="/restaurant-registration">
-                  <div className="bg-primary text-white rounded-[40px] py-3 px-5 font-medium shadow-[0_4px_14px_0_rgb(0,0,0,20%)] hover:shadow-[0_6px_20px_rgba(93,93,93,23%)] transition duration-200 ease-linear">
-                    Get Started
-                  </div>
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* {isOpen ? (
-            <ul className="md:flex items-center gap-x-7">
-              <li>
-                <Link href="/contact">Contact Team</Link>
-              </li>
-              <li className="font-medium">
-                <Link href="/restaurant-signin">Log In</Link>
-              </li>
-
-              <Button
-                borderRadius="40px"
-                className="bg-primary text-white border-neutral-200 font-medium"
-              >
-                <Link href="/restaurant-registration">
-                  <li>Get Started</li>
-                </Link>
-              </Button>
-            </ul>
-          ) : (
-            <ul className="md:flex items-center gap-x-7">
-              <li>
-                <Link href="/contact">Contact Team</Link>
-              </li>
-              <li className="font-medium">
-                <Link href="/restaurant-signin">Log In</Link>
-              </li>
-
-              <Button
-                borderRadius="40px"
-                className="bg-primary text-white border-neutral-200 font-medium"
-              >
-                <Link href="/restaurant-registration">
-                  <li>Get Started</li>
-                </Link>
-              </Button>
-            </ul>
-          )} */}
-        </nav>
+        <RestaurantDashBoardNavbar />
 
         {/* Hero */}
 
