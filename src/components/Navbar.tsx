@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useUser } from "@/context/user/user";
 import { useRouter } from "next/navigation";
 import ModalPassword from "./ui/modals/modal-password";
+import { useState } from "react";
 
 export default function Navbar({
   signinOpen,
@@ -23,6 +24,12 @@ export default function Navbar({
   const { push } = useRouter();
   const { isLoggedIn } = useUser();
   console.log(isLoggedIn);
+
+  const [isOpened, setIsOpened] = useState(false);
+
+  const openModal = () => {
+    setIsOpened(true);
+  };
 
   return (
     <>
