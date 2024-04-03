@@ -94,7 +94,7 @@ export const NotificationDrawer = ({
     >
       <div className=" flex flex-col gap-6 p-5">
         {data?.map((items, idx) => (
-          <section className="flex flex-col gap-2">
+          <section key={idx} className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-xl text-[#2C2929]">
                 Notifications
@@ -108,7 +108,7 @@ export const NotificationDrawer = ({
             </div>
             <div className="flex flex-col gap-4">
               {/* {data?.map((items, idx) => ( */}
-              <div key={idx} className="flex gap-3 items-start">
+              <div className="flex gap-3 items-start">
                 <div className="">
                   <Reserve color="#565D62" />
                 </div>
