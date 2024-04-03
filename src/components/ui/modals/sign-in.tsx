@@ -15,7 +15,7 @@ import { Input } from "../input";
 import { Button } from "../button";
 import { Modal } from "@mantine/core";
 import ModalPassword from "./modal-password";
-import { Eye, EyeSlash } from "iconsax-react";
+import { Eye, EyeSlash, TrendUp } from "iconsax-react";
 import { useUser } from "@/context/user/user";
 
 export default function ModalSignIn({
@@ -91,7 +91,10 @@ export default function ModalSignIn({
         onClose={close}
         centered
         withCloseButton={false}
-        size="100%"
+        size="70%"
+        style={{
+          zIndex: "auto",
+        }}
       >
         <div className="flex w-full bg-white rounded-lg">
           <div className="lg:w-1/2 w-full lg:p-10 p-0">
@@ -102,7 +105,7 @@ export default function ModalSignIn({
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-6"
             >
-              <div className="">
+              <div className="w-full lg:max-w-[27rem]">
                 <label className="text-grayHelp text-lg font-medium">
                   Email address
                 </label>
@@ -129,7 +132,7 @@ export default function ModalSignIn({
                   <input
                     type={type}
                     placeholder="Enter your password"
-                    className="h-12 px-3 w-full outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                    className="h-12 px-3 outline-none w-full  rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
                     {...register("password")}
                   />
 
@@ -160,8 +163,8 @@ export default function ModalSignIn({
                   Can’t remember your password?{" "}
                   <span
                     onClick={() => {
-                      close();
                       open();
+                      close();
                     }}
                     className="text-[#574DFF] cursor-pointer"
                   >

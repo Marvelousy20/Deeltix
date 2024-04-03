@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { RestaurantDetails } from "@/types";
 import { auth } from "@/axios-config";
 import { Skeleton } from "@/components/ui/skeleton";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   const { data, isLoading } = useQuery({
@@ -24,13 +25,15 @@ export default function Home() {
     <main className="bg flex flex-col lg:block gap-10 lg:gap-0 overflow-hidden">
       <div className="bg-background lg:pt-32 pt-0">
         <div className="lg:hidden block">
-          <div className="border-b-[1px] flex items-center px-6 justify-between max-h-[70px] border-[#E9E9E9] fixed inset-0 z-[9999] backdrop-blur-md bg-grayblack">
-            <Image
-              src="/dashboard/logo.svg"
-              alt="img"
-              width="120"
-              height="120"
-            />
+          <div className="border-b-[1px] flex items-center px-6 justify-between max-h-[70px] border-[#E9E9E9] bg-grayblack fixed inset-0 z-[9999] backdrop-blur-md ">
+            <figure>
+              <Image
+                src="/dashboard/logo.svg"
+                alt="img"
+                width="120"
+                height="120"
+              />
+            </figure>
             <UserDrawer />
           </div>
         </div>
@@ -87,14 +90,17 @@ export default function Home() {
 
             <div className="lg:mt-9 mt-0 flex items-center gap-3">
               {isLoading ? (
-                <div className="flex flex-col lg:w-[350px] w-full space-y-3">
-                  <Skeleton className="h-[250px] w-full lg:w-[250px] rounded-xl" />
-                  <div className="flex w-full lg:w-[250px] items-center justify-between">
-                    <Skeleton className="h-[10px] w-full lg:w-[100px] rounded-xl" />
-                    <Skeleton className="h-[10px] w-full lg:w-[100px] rounded-xl" />
-                  </div>
-                  <Skeleton className="h-[50px] w-full rounded-2xl" />
-                </div>
+                // <section className="">
+                //   <div className="flex flex-col lg:w-[350px] w-full space-y-3">
+                //     <Skeleton className="h-[250px]  rounded-xl" />
+                //     <div className="flex w-full lg:w-[250px] items-center justify-between">
+                //       <Skeleton className="h-[10px] w-full lg:w-[100px] rounded-xl" />
+                //       <Skeleton className="h-[10px] w-full lg:w-[100px] rounded-xl" />
+                //     </div>
+                //     <Skeleton className="h-[50px] w-full lg:w-[250px]  rounded-2xl" />
+                //   </div>
+                // </section>
+                <p>Loading...</p>
               ) : (
                 <CarouselSlider data={data} />
               )}

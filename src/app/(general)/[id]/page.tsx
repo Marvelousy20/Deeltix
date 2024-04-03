@@ -25,6 +25,8 @@ import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import MenuCard from "@/components/Menu/MenuCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import { clsx } from "@mantine/core";
+import Link from "next/link";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -32,6 +34,14 @@ export default function DetailPage() {
   const [bookmark, setBookmark] = useState(false);
   const restaurantid = searchParam.get("restaurant");
   const query = useQueryClient();
+  const [scroll, setScroll] = useState<number | null>(null);
+
+  const handleScroll = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    const menu = document.getElementById("menuList") as HTMLElement;
+    menu.scrollIntoView({ behavior: "smooth" });
+  };
+
   const [categorymenu, setCategoryMenu] = useState<MenuDetails | null>(null);
   const { data, isLoading } = useQuery({
     queryFn: async () =>
@@ -159,31 +169,44 @@ export default function DetailPage() {
           <div className="lg:flex lg:gap-10 gap-0 space-y-5 lg:mt-16 mt-0">
             {/* Tabs component */}
             <div className="col-span-4 lg:w-[60%] w-full">
-              <Tabs defaultValue="overview" className="max-w-4xl">
-                <TabsList className="lg:grid lg:grid-cols-4 w-full flex items-center justify-between">
-                  <TabsTrigger value="overview">Overview</TabsTrigger>
-                  <TabsTrigger value="menu">Menu</TabsTrigger>
-                  <TabsTrigger value="photos">Photos</TabsTrigger>
-                  <TabsTrigger value="reviews">Reviews</TabsTrigger>
-                </TabsList>
+              <section className="grid grid-cols-4 mb-8">
+                {["Overview", "Menu", "Photos", "Review"].map((items, idx) => (
+                  <Link
+                    href={
+                      idx === 0
+                        ? "#overview"
+                        : idx === 1
+                        ? "#menuList"
+                        : idx === 2
+                        ? "#photos"
+                        : "#review"
+                    }
+                    key={idx}
+                    onClick={() => {
+                      setScroll(idx);
+                      handleScroll;
+                    }}
+                  >
+                    <p
+                      className={clsx(
+                        scroll === idx
+                          ? "border-b-[2px] border-b-black pb-2 px-4 cursor-pointer w-fit"
+                          : " cursor-pointer px-4"
+                      )}
+                    >
+                      {items}
+                    </p>
+                  </Link>
+                ))}
+              </section>
 
-                <TabsContent value="overview">
-                  {/* <h3>{data?.description}</h3> */}
-                  <Overview
-                    description={data?.description as string}
-                    days={data?.openingDays as string}
-                    time={data?.openingHours as string}
-                  />
-                </TabsContent>
-                <TabsContent value="menu">This is the menu page</TabsContent>
-                <TabsContent value="photos">
-                  This is the photos page
-                </TabsContent>
-                <TabsContent value="reviews">
-                  This is the reviews page
-                </TabsContent>
-              </Tabs>
-
+              <section id="overview">
+                <Overview
+                  description={data?.description as string}
+                  days={data?.openingDays as string}
+                  time={data?.openingHours as string}
+                />
+              </section>
               <div className="lg:grid grid-cols-6 hidden">
                 <h1 className="text-3xl font-bold col-span-2">Menu</h1>
                 <div className="col-span-4 w-full">
@@ -198,7 +221,7 @@ export default function DetailPage() {
                 </div>
               </div>
 
-              <div className="mt-6 w-full">
+              <div id="menuList" className="mt-6 w-full">
                 <Tabs defaultValue="all" className="lg:max-w-4xl w-full">
                   <TabsList className="grid lg:grid-cols-7 grid-cols-3 justify-items-start data-[state=active]:!text-blue-500 mb-8">
                     <TabsTrigger value="all">All</TabsTrigger>
@@ -240,7 +263,7 @@ export default function DetailPage() {
                 </Tabs>
               </div>
 
-              <div className="lg:mt-20 mt-10">
+              <div id="review" className="lg:mt-20 mt-10">
                 <div className="flex flex-col gap-2 items-center lg:items-start justify-center lg:justify-normal">
                   <h1 className="lg:text-[2rem] text-xl font-bold">
                     Ratings & Reviews
@@ -264,7 +287,7 @@ export default function DetailPage() {
             </div>
           </div>
 
-          <div className=" flex flex-col gap-6">
+          <div id="photos" className=" flex flex-col gap-6">
             <div className="flex flex-col gap-8 lg:gap-0">
               <p className=" text-2xl font-bold text-grayBlack">Photos</p>
               <div className="lg:mt-9 mt-5">

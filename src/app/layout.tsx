@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import localfont from "next/font/local";
 import { ProductProvider } from "@/context/restaurant/product";
+import { UserProvider } from "@/context/user/user";
 
 export const metadata: Metadata = {
   title: "Resturants near you",
@@ -25,10 +26,12 @@ export default function RootLayout({
     <html lang="en">
       <QueryProvider>
         <ProductProvider>
-          <body className={`${roman.variable} font-roman transact-scroll`}>
-            {children}
-            <ToastContainer />
-          </body>
+          <UserProvider>
+            <body className={`${roman.variable} font-roman transact-scroll`}>
+              {children}
+              <ToastContainer />
+            </body>
+          </UserProvider>
         </ProductProvider>
       </QueryProvider>
     </html>

@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <section className="overflow-y-hidden">
       <UserProvider>
         <div className="hidden lg:block">
-          <Navbar />
+          <Navbar signinOpen={""} open={""} />
         </div>
         {children}
         <Footer />

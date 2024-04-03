@@ -71,7 +71,7 @@ function ModalPassword({ opened, close }: { opened: any; close: () => void }) {
         size="70%"
       >
         <div className="flex w-full bg-white rounded-lg gap-5">
-          <div className="w-1/2 p-10">
+          <div className="lg:w-1/2 w-full lg:p-10 p-0">
             <div
               onClick={close}
               className="mb-6 cursor-pointer flex gap-1 text-lg text-[#565D62] items-center"
@@ -118,7 +118,7 @@ function ModalPassword({ opened, close }: { opened: any; close: () => void }) {
               </Button>
             </form>
           </div>
-          <div className="rounded-r-lg w-full bg-[url('/signup-rest.png')] bg-cover bg-no-repeat"></div>
+          <div className="rounded-r-lg w-full lg:block hidden bg-[url('/signup-rest.png')] bg-cover bg-no-repeat"></div>
           {/* <ModalPassword opened={opened} close={close} /> */}
         </div>
         {/* <ForgetPassword /> */}
