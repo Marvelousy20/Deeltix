@@ -18,7 +18,7 @@ export default function LoggedInNavbar() {
   const [rotateLocation, setRotateLocation] = useState<boolean>(false);
 
   return (
-    <div className="bg-red-500">
+    <div className="">
       <div className="pt-10 fixed w-full z-50 hidden lg:block overflow-hidden">
         <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
           <Link href="/">
@@ -100,7 +100,7 @@ export default function LoggedInNavbar() {
 
       {/* mobile navbar */}
       <section className="flex flex-col gap-6 lg:hidden">
-        <div className="flex gap-x-3 items-center">
+        {/* <div className="flex gap-x-3 items-center">
           <MapPin size={16} color="white" />
           <div className="flex gap-x-2 items-center">
             <p className=" text-xl font-normal text-Gainsboro">Lekki, Lagos</p>
@@ -131,9 +131,9 @@ export default function LoggedInNavbar() {
               </DropdownMenu>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className=" flex items-center space-x-4">
+        {/* <div className=" flex items-center space-x-4">
           <div className="h-[40px] w-[40px] flex items-center justify-center text-white text-xl font-normal rounded-full bg-indigo">
             A
           </div>
@@ -158,6 +158,38 @@ export default function LoggedInNavbar() {
                   />
                 )}
               </DropdownMenuTrigger>
+              <DropdownMenuContent className="rounded-xl border border-grayoutline mt-10">
+                <MenuDropDown />
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div> */}
+        <div className=" flex items-center space-x-4">
+          <div className="h-[40px] w-[40px] flex items-center justify-center text-white text-xl font-normal rounded-full bg-indigo">
+            {userValue?.user?.profile?.name.slice(0, 1)}
+          </div>
+          <div>
+            <DropdownMenu
+              onOpenChange={(open) => {
+                open ? setRotateDropdown(true) : setRotateDropdown(false);
+              }}
+            >
+              <DropdownMenuTrigger className="!border-none !outline-none bg-transparent">
+                {!rotateDropdown ? (
+                  <ChevronDown
+                    size={20}
+                    color="white"
+                    className="inline !border-none !outline-none"
+                  />
+                ) : (
+                  <ChevronUp
+                    color="white"
+                    size={20}
+                    className="inline !border-none !outline-none"
+                  />
+                )}
+              </DropdownMenuTrigger>
+
               <DropdownMenuContent className="rounded-xl border border-grayoutline mt-10">
                 <MenuDropDown />
               </DropdownMenuContent>

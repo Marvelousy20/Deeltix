@@ -716,3 +716,37 @@ export interface MenuCategory {
   updatedAt: Date;
   id: string;
 }
+
+// Restaurant Notification
+export interface NotificationDetails {
+  data: NotificationData;
+  status: string;
+}
+
+export interface NotificationData {
+  message: string;
+  data: NotificationList;
+}
+
+export interface NotificationList {
+  notifications: Notification[];
+  total: number;
+}
+
+export interface Notification {
+  message: string;
+  restaurantManager: RestaurantManagerNotification;
+  userType: string;
+  sourceType: string;
+  sourceId: string;
+  isRead: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  id: string;
+}
+
+export interface RestaurantManagerNotification {
+  email: string;
+  fullName: string;
+  id: string;
+}

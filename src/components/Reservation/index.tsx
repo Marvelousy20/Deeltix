@@ -96,9 +96,6 @@ export default function CreateReservations({
     const time = `${timer} ${timeinitial}`;
     console.log({ ...values, date, time });
     mutate({ ...values, date, time });
-    // reset();
-    // setUserDate(null);
-    // setTimer("");
   };
   return (
     <section className="flex flex-col w-full">
@@ -110,7 +107,7 @@ export default function CreateReservations({
           Make a reservation
         </h3>
 
-        <div className="flex flex-col gap-2 w-full lg:min-w-[27rem]">
+        <div className="flex flex-col gap-2 w-full lg:max-w-[27rem]">
           <label className="text-grayHelp text-lg font-medium">Date</label>
           <Popover>
             <PopoverTrigger asChild>
@@ -136,9 +133,9 @@ export default function CreateReservations({
           </Popover>
         </div>
 
-        <div className="flex flex-col lg:min-w-[27.5rem] w-full">
+        <div className="flex flex-col">
           <label className="text-grayHelp text-lg font-medium">Time</label>
-          <div className="flex justify-between pr-4 items-center mt-2 h-12 rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+          <div className="flex lg:max-w-[27.5rem] w-full justify-between pr-4 items-center mt-2 h-12 rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
             <div className="inner">
               <input
                 required
@@ -163,7 +160,7 @@ export default function CreateReservations({
         </div>
         {/* guest */}
 
-        <div className="w-full lg:min-w-[27.5rem]">
+        <div className="w-full lg:max-w-[27.5rem]">
           <label onClick={open} className="text-grayHelp text-lg font-medium">
             No of guest
           </label>
@@ -180,7 +177,7 @@ export default function CreateReservations({
           )}
         </div>
 
-        <div className="w-full lg:min-w-[27.5rem]">
+        <div className="w-full lg:max-w-[27.5rem]">
           <label className="text-grayHelp text-lg font-medium">
             Special requests (optional)
           </label>

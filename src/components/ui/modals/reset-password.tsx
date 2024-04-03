@@ -94,7 +94,7 @@ function ModalResetPassword({
   return (
     <>
       <Modal
-        className="bg-blue-500"
+        className=""
         opened={opened}
         onClose={close}
         centered

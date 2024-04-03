@@ -83,7 +83,7 @@ export default function Rating({
         <div key={idx} className="mt-8 border rounded-[1.25rem]  lg:p-6 p-4">
           <div className="flex flex-row justify-between items-center md:flex-row">
             {/* Profile part */}
-            <div className="flex items-center gap-4">
+            <div className="flex lg:items-center item-start gap-4">
               <div className="lg:h-12 lg:w-12 h-12 w-12 rounded-full bg-background flex justify-center items-center text-[1.5rem]">
                 {review?.user?.profile?.name.slice(0, 1)}
               </div>
