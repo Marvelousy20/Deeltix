@@ -36,8 +36,8 @@ export default function RestaurantDashboard() {
   return (
     <div className="pt-8  bg-[#FAFAFA] relative">
       {/* Navbar */}
-      <div className="px-4 md:px-8 lg:px-[6.25rem]">
-        <nav className="mx-4 md:mx-8 lg:mx-[6.25rem] py-4 fixed top-8 left-0 right-0 backdrop-blur-md bg-white/85 px-8 rounded-[40px]">
+      <div className="px-4 md:px-8 lg:px-[3.5rem] xl:px-[6.25rem]">
+        <nav className="mx-4 md:mx-8 lg:mx-[3.5rem] xl:mx-[6.25rem] py-4 fixed top-8 left-0 right-0 backdrop-blur-md bg-white/85 px-8 rounded-[40px]">
           <div className="flex items-center justify-between relative">
             <Link href="/">
               <Image
@@ -47,7 +47,7 @@ export default function RestaurantDashboard() {
                 height="80"
               />
             </Link>
-            <div className="sm:hidden">
+            <div className="md:hidden">
               <Hamburger size={20} toggled={isOpen} toggle={setOpen} />
             </div>
 
@@ -146,12 +146,22 @@ export default function RestaurantDashboard() {
               </Link>
             </div>
           </div>
-          <div>
+          <div className="xl:block hidden">
             <Image
               src={Hero}
               alt="hero"
-              width={608}
+              width={558}
               height={584}
+              priority
+              placeholder="blur"
+            />
+          </div>
+          <div className="block xl:hidden">
+            <Image
+              src={Hero}
+              alt="hero"
+              width={400}
+              height={404}
               priority
               placeholder="blur"
             />
@@ -159,7 +169,7 @@ export default function RestaurantDashboard() {
         </section>
       </div>
       {/* Section black*/}
-      <section className="mt-20 lg:mt-36 bg-black text-white py-20 lg:py-40 px-3 lg:px-[4rem]">
+      <section className="mt-20 lg:mt-36 bg-black text-white py-20 lg:py-40 px-3 lg:px-[4rem] 2xl:px-[6.25rem]">
         <div>
           <h1 className="text-[2rem] lg:text-[3.5rem] font-medium text-center">
             <span className="text-[#667085]">Seamless Reservations, </span>
@@ -244,7 +254,7 @@ export default function RestaurantDashboard() {
         </div> */}
 
         <div className="flex justify-between flex-wrap lg:flex-nowrap mt-4 gap-4">
-          <div className="bg-white rounded-[20px] p-8 text-black w-full">
+          <div className="bg-white rounded-[20px] p-8 text-black w-ful">
             <h3 className="text-2xl font-medium">Effortless Reservations</h3>
 
             <p className="max-w-lg mt-4">
@@ -252,9 +262,17 @@ export default function RestaurantDashboard() {
               tables hassle-free
             </p>
 
-            <div className="bg-[#1D2939] h-80 w-full mt-8 rounded-[40px]"></div>
+            <div className="w-full mt-8 rounded-[40px]">
+              <Image
+                src="/dashboard/p1.png"
+                alt="img1"
+                width={540}
+                height={340}
+              />
+            </div>
           </div>
-          <div className="bg-white rounded-[20px] p-8 text-black w-full">
+
+          <div className="bg-white rounded-[20px] p-8 text-black">
             <h3 className="text-2xl font-medium">
               In-house and online waitlist
             </h3>
@@ -263,12 +281,19 @@ export default function RestaurantDashboard() {
               Don&apos;t turn guests away! Use waitlist to fill empty seats and
               cancellations with people eager to dine with you.
             </p>
-            <div className="bg-[#1D2939] h-80 w-full mt-8 rounded-[40px]"></div>
+            <div className="w-full mt-8 rounded-[40px]">
+              <Image
+                src="/dashboard/p2.png"
+                alt="img1"
+                width={540}
+                height={340}
+              />
+            </div>
           </div>
         </div>
       </section>
       {/* Section */}
-      <section className="py-20 lg:pt-52 flex items-center flex-wrap lg:flex-nowrap px-3 lg:px-[6.25rem] gap-x-6 lg:pb-28">
+      <section className="py-20 lg:pt-52 flex items-center flex-wrap lg:flex-nowrap px-3 lg:px-[3.5rem] xl:px-[6.25rem] gap-x-6 lg:pb-28">
         <div ref={ref} className="order-2">
           <motion.div
             initial="hidden"
@@ -324,8 +349,19 @@ export default function RestaurantDashboard() {
           </motion.div>
         </div>
 
-        <div className="order-1 lg:order-3">
-          <div className="bg-[#1D2939] h-[577px] w-[23rem] lg:w-[610px] mt-8 rounded-[40px]"></div>
+        <div className="order-1 lg:order-3 w-full lg:w-auto">
+          <div className="bg-[#1D2939] py-6 lg:py-10 w-full lg:w-[610px] mt-8 rounded-[40px] flex justify-center items-center">
+            <div>
+              <Image
+                src="/dashboard/computer.png"
+                alt="computer"
+                width={470}
+                height={473}
+                layout="responsive"
+                sizes="(max-width: 768px) 100vw, 470px"
+              />
+            </div>
+          </div>
         </div>
       </section>
       {/* Last section */}
