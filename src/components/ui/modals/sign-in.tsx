@@ -109,7 +109,7 @@ export default function ModalSignIn({
                 <Input
                   placeholder="Enter your email address"
                   type="email"
-                  className="text-grayInactive w-full lg:min-w-[27rem] text-lg font-normal mt-2"
+                  className="text-grayInactive w-full lg:max-w-[27rem] text-lg font-normal mt-2"
                   {...register("email")}
                 />
                 {errors.email && (
@@ -125,11 +125,11 @@ export default function ModalSignIn({
                 </label>
 
                 {/* input */}
-                <div className=" items-center mt-2 justify-between flex h-12  rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+                <div className="items-center mt-2 w-full lg:max-w-[27rem justify-between flex h-12  rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                   <input
                     type={type}
                     placeholder="Enter your password"
-                    className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                    className="h-12 px-3 w-full outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
                     {...register("password")}
                   />
 

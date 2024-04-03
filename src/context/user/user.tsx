@@ -11,6 +11,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { ISignIn } from "@/types";
 import { cookieStorage } from "@ibnlanre/portal";
+import { toast } from "react-toastify";
 
 type UserProps = {
   restaurantId: number;
@@ -28,16 +29,36 @@ const UserContext = createContext<UserPropsContextPrps | undefined>(undefined);
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
+  // const signIn = async (data: ISignIn) => {
+  //   try {
+  //     const response = await auth.post(`api/auth/login`, data);
+  //     // Check if the response status is 200 to indicate success
+  //     if (response.status === 200) {
+  //       const values = response.data?.data?.data;
+  //       cookieStorage.setItem("user", JSON.stringify(values));
+  //       localStorage.setItem("isLoggedIn", "true");
+  //       setIsLoggedIn(true); // Only call this if the request is successful
+  //       console.log("VALUES", values);
+  //       console.log("RESPONSE", response);
+  //       return values; // Return the values to indicate success
+  //     } else {
+  //       // Throw an error for unsuccessful login attempts
+  //       throw new Error(
+  //         `Login attempt failed with status code: ${response.status}`
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error signing in", error);
+  //     // Rethrow the error to be caught by the useMutation hook
+  //     throw error;
+  //   }
+  // };
+
   const signIn = async (data: ISignIn) => {
-    try {
-      const response = await auth.post(`/api/auth/login`, data);
-      const values = await response.data?.data?.data;
-      cookieStorage.setItem("user", JSON.stringify(values));
-      localStorage.setItem("isLoggedIn", "true");
-      setIsLoggedIn(true);
-    } catch (error) {
-      console.error("Error sigin in", error);
-    }
+    const response = await auth.post("api/auth/login", data);
+    const values = response?.data?.data?.data;
+    console.log(values);
+    cookieStorage.setItem("user", JSON.stringify(values));
   };
 
   useEffect(() => {
