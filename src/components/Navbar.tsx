@@ -85,7 +85,7 @@ export default function Navbar({
               </div>
 
               {/* location */}
-              <div>Lekki</div>
+              {/* <div>Lekki</div> */}
 
               <div className="flex flex-col space-y-4">
                 <Button
