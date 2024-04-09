@@ -20,11 +20,6 @@ export const Header = () => {
     fetchUser();
   }, []);
 
-  const handleLogout = () => {
-    cookieStorage.clear();
-    router.push("/");
-  };
-
   const [opened, { open, close }] = useDisclosure();
 
   return (
