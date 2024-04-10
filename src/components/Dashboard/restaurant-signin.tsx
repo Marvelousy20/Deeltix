@@ -168,12 +168,13 @@ export const RestaurantSignIn = () => {
               disabled={isLoading || !isTyping}
             >
               {isLoading ? (
-                <>
-                  <span className="absolute left-0 right-0 flex justify-center items-center gap-1 text-white font-medium text-xl">
+                <div className="flex items-center gap-2">
+                  <p className="text-white font-medium text-xl">Signing in</p>
+
+                  <span className=" ">
                     <Loader size="sm" className="opacity-70" />
                   </span>
-                  Signing in
-                </>
+                </div>
               ) : (
                 <span
                   className={`font-medium text-xl ${

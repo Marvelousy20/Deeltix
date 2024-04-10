@@ -38,11 +38,11 @@ export const DashboardLayout = ({
     { name: "Reservation", link: "/reservation", icon: <Wine size={18} /> },
     { name: "Menu", link: "/menu", icon: <Reserve size="18" /> },
     { name: "Guest Book", link: "/guest-book", icon: <People size="18" /> },
-    {
-      name: "Wallet",
-      link: "/wallet",
-      icon: <Wallet3 size="18" />,
-    },
+    // {
+    //   name: "Wallet",
+    //   link: "/wallet",
+    //   icon: <Wallet3 size="18" />,
+    // },
     {
       name: "Profile",
       link: "/restaurant-profile",

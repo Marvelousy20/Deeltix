@@ -29,10 +29,26 @@ export const ReservationDetails = ({
     mutationKey: ["accept-reservation", "accept"],
     onSuccess() {
       toast.success("Accepted");
-      queryClient.invalidateQueries([
-        "pending-reservation",
-        "upcoming-reservation",
-      ]);
+      queryClient.invalidateQueries(["pending-reservation"]);
+      queryClient.invalidateQueries(["upcoming-reservation"]);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
+  // Reject reservation
+  const { mutate: rejectMutate, isLoading: rejectLoading } = useMutation({
+    mutationFn: async (data: any) =>
+      await api.patch(
+        `/api/reservations/${restaurantId}/confirm/${reservationId}`,
+        data
+      ),
+    mutationKey: ["reject-reservation", "reject"],
+    onSuccess() {
+      toast.success("Rejected");
+      queryClient.invalidateQueries(["pending-reservation"]);
+      queryClient.invalidateQueries(["upcoming-reservation"]);
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -48,7 +64,7 @@ export const ReservationDetails = ({
           <DropdownMenuContent className="rounded-xl border border-grayoutline mt-10">
             <ReservationDropDown
               onAccept={() => mutate({ status: "Accepted" })}
-              onReject={""}
+              onReject={() => rejectMutate({ status: "Rejected" })}
             />
           </DropdownMenuContent>
         </DropdownMenu>

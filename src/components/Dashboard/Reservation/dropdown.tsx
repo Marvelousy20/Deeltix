@@ -12,12 +12,16 @@ export const ReservationDropDown = ({
 }) => {
   const { push } = useRouter();
   return (
-    <section className=" p-[15px] flex flex-col gap-3">
+    <section className=" p-[10px] flex flex-col gap-3">
       <div onClick={onAccept} className="cursor-pointer">
-        <p className="text-base font-medium text-[#2C2929]">Accept</p>
+        <p className="text-base font-medium text-[#2C2929] hover:bg-grayoutline p-2 hover:border hover:border-grayoutline hover:rounded-lg">
+          Accept
+        </p>
       </div>
       <div onClick={onReject} className=" cursor-pointer">
-        <p className="text-base font-medium text-[#2C2929]">Reject</p>
+        <p className="text-base font-medium text-[#2C2929]  hover:bg-grayoutline p-2 hover:border hover:border-grayoutline hover:rounded-lg">
+          Reject
+        </p>
       </div>
     </section>
   );
