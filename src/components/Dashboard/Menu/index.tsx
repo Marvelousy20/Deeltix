@@ -21,9 +21,9 @@ export interface IMenu {
 export const CustomerMenu = () => {
   const { restaurantId } = useUser();
   const [menu, setMenu] = useState<MenuType[]>([]);
-  const { data: totalGuest, isLoading: guestLoading } = useQuery({
+  const { data: totalMenu, isLoading: guestLoading } = useQuery({
     queryFn: async () =>
-      await api.get(`/api/reservations/${restaurantId}/guests/all`),
+      await api.get(`/api/restaurants/${restaurantId}/menu-stats`),
     queryKey: ["all-guest"],
     enabled: !!restaurantId,
   });
@@ -51,15 +51,15 @@ export const CustomerMenu = () => {
 
   const list: IMenu[] = [
     {
-      headings: "Total Guest",
+      headings: "totalMenu",
       number: "40",
       icon: <Reserve color="#574DFF" />,
     },
-    // {
-    //   headings: "Total Guest",
-    //   number: "40",
-    //   icon: <FolderOpen color="#574DFF" />,
-    // },
+    {
+      headings: "totalMenuCategories",
+      number: "40",
+      icon: <FolderOpen color="#574DFF" />,
+    },
   ];
 
   console.log(menu);
@@ -90,7 +90,11 @@ export const CustomerMenu = () => {
                   {item.headings}
                 </p>
                 <h3 className="font-bold text-3xl text-[#2C2929]">
-                  {totalGuest?.data?.data?.data?.total}
+                  {_idx === 0
+                    ? totalMenu?.data?.data?.data?.totalMenu
+                    : _idx === 1
+                    ? totalMenu?.data?.data?.data?.totalMenuCategories
+                    : null}
                 </h3>
               </div>
               <div className="h-[50px] w-[50px] rounded-full flex items-center justify-center bg-[#574DFF1A]">

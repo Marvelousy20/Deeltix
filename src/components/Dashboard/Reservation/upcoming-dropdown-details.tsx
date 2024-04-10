@@ -6,12 +6,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "@/axios-config";
-import { ReservationDropDown } from "./dropdown";
-import { useUser } from "@/context/restaurant/user";
-import { toast } from "react-toastify";
-import { ErrorType, handleError } from "@/lib/handle-error";
 import { UpcomingDropDown } from "./upcoming-dropdown";
 
 export const UpcomingDetails = ({
