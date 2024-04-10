@@ -21,6 +21,12 @@ export interface IMenu {
 export const CustomerMenu = () => {
   const { restaurantId } = useUser();
   const [menu, setMenu] = useState<MenuType[]>([]);
+  const { data: totalMenu, isLoading: guestLoading } = useQuery({
+    queryFn: async () =>
+      await api.get(`/api/restaurants/${restaurantId}/menu-stats`),
+    queryKey: ["all-guest"],
+    enabled: !!restaurantId,
+  });
 
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["menu"],
@@ -45,12 +51,12 @@ export const CustomerMenu = () => {
 
   const list: IMenu[] = [
     {
-      headings: "Total Guest",
+      headings: "Total menu",
       number: "40",
       icon: <Reserve color="#574DFF" />,
     },
     {
-      headings: "Total Guest",
+      headings: "Total menu categories",
       number: "40",
       icon: <FolderOpen color="#574DFF" />,
     },
@@ -66,15 +72,13 @@ export const CustomerMenu = () => {
             Upload and edit new meals
           </p>
         </div>
-        <div className="flex items-center gap-2 py-3 px-4 bg-[#574DFF] rounded-[40px]">
+        <Link
+          href="/get-started/menu"
+          className="flex items-center gap-2 py-3 px-4 bg-[#574DFF] rounded-[40px]"
+        >
           <PlusCircle color="#F0F3F8" />
-          <Link
-            href="/get-started/menu"
-            className="text-[#F0F3F8] text-sm font-medium"
-          >
-            new item
-          </Link>
-        </div>
+          <p className="text-[#F0F3F8] text-sm font-medium">new item</p>
+        </Link>
       </section>
 
       <section className="grid grid-cols-2 py-8">
@@ -86,7 +90,11 @@ export const CustomerMenu = () => {
                   {item.headings}
                 </p>
                 <h3 className="font-bold text-3xl text-[#2C2929]">
-                  {item.number}
+                  {_idx === 0
+                    ? totalMenu?.data?.data?.data?.totalMenu
+                    : _idx === 1
+                    ? totalMenu?.data?.data?.data?.totalMenuCategories
+                    : null}
                 </h3>
               </div>
               <div className="h-[50px] w-[50px] rounded-full flex items-center justify-center bg-[#574DFF1A]">

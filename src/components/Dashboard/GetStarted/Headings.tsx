@@ -15,13 +15,13 @@ export const Headings = ({
   return (
     <div className="flex items-center lg:gap-4 px-4 lg:px-0">
       <div>
-        <Image
+        {/* <Image
           src="/dashboard/restaurant.svg"
           width={50}
           height={50}
           alt="Restaurant logo"
           className="lg:block hidden"
-        />
+        /> */}
       </div>
       <div className="flex flex-col gap-2">
         <h3 className="text-comment md:text-xl font-bold flex items-center gap-2">

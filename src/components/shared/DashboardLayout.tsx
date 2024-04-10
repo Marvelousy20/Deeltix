@@ -4,6 +4,7 @@ import { Header } from "./DashoardHeader";
 import {
   Category,
   Home2,
+  LogoutCurve,
   People,
   Profile,
   Reserve,
@@ -17,12 +18,19 @@ import Image from "next/image";
 import { clsx } from "@mantine/core";
 import { usePathname } from "next/navigation";
 import { UserProvider } from "@/context/restaurant/user";
+import { cookieStorage } from "@ibnlanre/portal";
+import { useRouter } from "next/navigation";
 
 export const DashboardLayout = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
+  const { push } = useRouter();
+  const handleLogout = () => {
+    cookieStorage.clear();
+    push("/");
+  };
   const sideBar: Isidebar[] = [
     { name: "Get started", link: "/get-started", icon: <Category size="18" /> },
 
@@ -30,15 +38,20 @@ export const DashboardLayout = ({
     { name: "Reservation", link: "/reservation", icon: <Wine size={18} /> },
     { name: "Menu", link: "/menu", icon: <Reserve size="18" /> },
     { name: "Guest Book", link: "/guest-book", icon: <People size="18" /> },
-    {
-      name: "Wallet",
-      link: "/wallet",
-      icon: <Wallet3 size="18" />,
-    },
+    // {
+    //   name: "Wallet",
+    //   link: "/wallet",
+    //   icon: <Wallet3 size="18" />,
+    // },
     {
       name: "Profile",
       link: "/restaurant-profile",
       icon: <Profile size="18" />,
+    },
+    {
+      name: "Log out",
+      link: "/",
+      icon: <LogoutCurve size="18" />,
     },
   ];
   const pathName = usePathname();
@@ -55,10 +68,11 @@ export const DashboardLayout = ({
           />
         </figure>
         <div className="flex flex-col gap-5">
-          {sideBar.map(({ name, link, icon }) => (
+          {sideBar.map(({ name, link, icon }, idx) => (
             <Link
+              onClick={idx === 7 ? handleLogout : undefined}
               href={link}
-              key={name}
+              key={idx}
               className={clsx(
                 link === pathName
                   ? "text-[#574DFF] outline-none border-[#636C71] rounded-[20px] bg-[#574DFF12]  text-base font-medium"

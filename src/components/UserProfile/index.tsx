@@ -49,12 +49,12 @@ export const Profile = () => {
                   >
                     Addresses
                   </TabsTrigger>
-                  <TabsTrigger
+                  {/* <TabsTrigger
                     value="card"
                     className="w-1/2 rounded-[56px] data-[state=active]:bg-grayBlack2 data-[state=active]:text-input text-grayInactive"
                   >
                     Cards
-                  </TabsTrigger>
+                  </TabsTrigger> */}
                 </div>
               </TabsList>
             </div>
@@ -69,9 +69,9 @@ export const Profile = () => {
                 {/* <AddressEmptyState /> */}
                 <AddressDetails />
               </TabsContent>
-              <TabsContent value="card">
+              {/* <TabsContent value="card">
                 <CardDetails />
-              </TabsContent>
+              </TabsContent> */}
             </div>
           </Tabs>
         </div>

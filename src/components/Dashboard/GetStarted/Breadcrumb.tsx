@@ -8,11 +8,13 @@ export const Breadcrumbs = ({
   firstText,
   action,
   link,
+  savelink,
 }: {
   breadcrumb: string;
   firstText: string;
   action: string;
   link?: string;
+  savelink?: string;
 }) => {
   return (
     <section className="flex items-center justify-between">
@@ -25,12 +27,16 @@ export const Breadcrumbs = ({
         <ArrowRight2 size="16" />
         <p className="text-base font-medium text-comment">{breadcrumb}</p>
       </div>
-      <Button
-        type="submit"
-        className=" text-card font-medium text-sm bg-primary lg:py-5 px-6 rounded-[40px] h-0 py-4"
-      >
-        {action}
-      </Button>
+      {savelink && (
+        <Link href={savelink}>
+          <Button
+            type="submit"
+            className=" text-card font-medium text-sm bg-primary lg:py-5 px-6 rounded-[40px] h-0 py-4"
+          >
+            {action}
+          </Button>
+        </Link>
+      )}
     </section>
   );
 };

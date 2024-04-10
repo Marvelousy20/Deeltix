@@ -25,12 +25,12 @@ export const MenuDropDown = () => {
       chevron: <ChevronRight strokeWidth={1.5} size={18} color="black" />,
       route: "/profile",
     },
-    {
-      name: "My orders",
-      icon: <ShoppingBag size="16" color="#000000" />,
-      chevron: <ChevronRight strokeWidth={1.5} size={18} color="black" />,
-      route: "/orders",
-    },
+    // {
+    //   name: "My orders",
+    //   icon: <ShoppingBag size="16" color="#000000" />,
+    //   chevron: <ChevronRight strokeWidth={1.5} size={18} color="black" />,
+    //   route: "/orders",
+    // },
     {
       name: "My reservations",
       icon: <Note1 size="16" color="#000000" />,
