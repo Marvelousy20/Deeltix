@@ -116,7 +116,7 @@ export const EditUserProfile = () => {
                     DOB
                   </label>
                   <Input
-                    placeholder="Enter your full name"
+                    placeholder="Enter your DOB"
                     className="text-grayInactive lg:min-w-[27rem] w-full text-lg font-normal mt-2"
                     {...register("dob", {
                       onChange: () => setIsTyping(true),
@@ -129,6 +129,23 @@ export const EditUserProfile = () => {
                   )}
                 </div>
               </div>
+
+              {/* <div className="w-full lg:max-w-[27rem]">
+                <label className="text-grayHelp text-lg font-medium">
+                  Email address
+                </label>
+                <Input
+                  placeholder="Enter your email address"
+                  type="email"
+                  className="text-grayInactive text-lg font-normal mt-2"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <div className="text-red-500 text-sm font-normal pt-3">
+                    {errors.email?.message}
+                  </div>
+                )}
+              </div> */}
             </div>
             <Button
               type="submit"
