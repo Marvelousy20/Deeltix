@@ -118,10 +118,15 @@ export const NotificationDrawer = ({
                     <h3 className=" text-base font-medium text-grayBlack">
                       {items?.message}
                     </h3>
-                    <section className="flex items-center gap-3">
-                      <p className="font-normal text-sm text-grayInactive">
-                        {dayjs(items?.createdAt).format("DD-MM-YYYY")}
-                      </p>
+                    <section className="flex items-start gap-3">
+                      <div className="flex flex-col gap-2">
+                        <p className="font-normal text-sm text-grayInactive">
+                          {dayjs(items?.createdAt).format("DD-MM-YYYY")}
+                        </p>
+                        <p className="font-normal text-sm text-grayInactive">
+                          {dayjs(items?.createdAt).format("hh:mm a")}
+                        </p>
+                      </div>
                       <div className="flex items-center gap-1">
                         <Dot color="#636C71" />
                         <p className="font-normal text-sm text-grayInactive">

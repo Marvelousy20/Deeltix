@@ -51,12 +51,12 @@ export const CustomerMenu = () => {
 
   const list: IMenu[] = [
     {
-      headings: "totalMenu",
+      headings: "Total menu",
       number: "40",
       icon: <Reserve color="#574DFF" />,
     },
     {
-      headings: "totalMenuCategories",
+      headings: "Total menu categories",
       number: "40",
       icon: <FolderOpen color="#574DFF" />,
     },
