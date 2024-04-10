@@ -122,6 +122,7 @@ export const upcomingReservationsColumn: ColumnDef<ReservationStatus>[] = [
       return (
         <div className="z-[]">
           <UpcomingDetails
+            status={user?.confirmationStatus as string}
             reservationId={user?.id}
             user={user?.user?.profile?.name as string}
             email={user?.user?.email as string}

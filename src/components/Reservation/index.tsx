@@ -78,12 +78,7 @@ export default function CreateReservations({
     mutationKey: ["user-reservation"],
     onSuccess() {
       open();
-
-      queryClient.invalidateQueries([
-        "pending-reservation",
-        "past-reservation",
-        "upcoming-reservation",
-      ]);
+      queryClient.invalidateQueries(["pending-reservation"]);
     },
     onError(error) {
       handleError(error as ErrorType);

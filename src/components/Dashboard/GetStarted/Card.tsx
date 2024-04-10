@@ -7,19 +7,21 @@ export const Cards = () => {
   const list = [
     {
       title: "Restaurant Overview",
-      details: "A quick bio about Cilantroand it’s offerings",
+      details:
+        "Give an overview about the delights of your restaurant and menu",
       icon: "/dashboard/overview.svg",
       link: "/get-started/overview",
     },
     {
       title: "Add first menu",
-      details: "Delicious meals you want customersto check out ",
+      details: "Display available meals along with their respective prices.",
       icon: "/dashboard/menu.svg",
       link: "/get-started/menu",
     },
     {
       title: "Add photos",
-      details: "Inviting and exquiste picturesto catch customer’s attention",
+      details:
+        "Share captivating images to display your restaurant’s charm and attract customers.",
       icon: "/dashboard/upload.svg",
       link: "/get-started/photos",
     },
