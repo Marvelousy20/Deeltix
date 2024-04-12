@@ -8,10 +8,8 @@ import {
   Dispatch,
   useEffect,
 } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { ISignIn } from "@/types";
 import { cookieStorage } from "@ibnlanre/portal";
-import { toast } from "react-toastify";
 
 type UserProps = {
   restaurantId: number;

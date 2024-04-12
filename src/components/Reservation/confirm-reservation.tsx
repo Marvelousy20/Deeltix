@@ -19,33 +19,29 @@ export const ConfirmReservation = ({
   clearField: () => void;
 }) => {
   return (
-    <Modal
-      opened={opened}
-      onClose={close}
-      centered
-      withCloseButton={false}
-      size="40%"
-    >
-      <div className="w-full h-[2px] bg-[#E7EAF1] my-6"></div>
-      <section className="flex flex-col py-5 max-w-[300px] items-center justify-center mx-auto gap-4">
-        <Image
-          src="/confirmed.svg"
-          width={60}
-          height={60}
-          alt="confirmation logo"
-        />
-        <h3 className="font-bold text-2xl text-[#2C2929]">
-          Reservation confirmed!
-        </h3>
+    <Modal opened={opened} onClose={close} centered withCloseButton={false}>
+      <div className="lg-w-[40%] w-full">
+        <div className="w-full h-[2px] bg-[#E7EAF1] my-6"></div>
+        <section className="flex flex-col py-5 max-w-[300px] items-center justify-center mx-auto gap-4">
+          <Image
+            src="/confirmed.svg"
+            width={60}
+            height={60}
+            alt="confirmation logo"
+          />
+          <h3 className="font-bold text-2xl text-[#2C2929]">
+            Reservation confirmed!
+          </h3>
 
-        <h2>{`${date} at ${time}, ${guest} guests.`}</h2>
-        <Button
-          className="bg-[#2C2929] text-white w-full  text-center"
-          onClick={clearField}
-        >
-          Okay
-        </Button>
-      </section>
+          <h2>{`${date} at ${time}, ${guest} guests.`}</h2>
+          <Button
+            className="bg-[#2C2929] text-white w-full  text-center"
+            onClick={clearField}
+          >
+            Okay
+          </Button>
+        </section>
+      </div>
     </Modal>
   );
 };
