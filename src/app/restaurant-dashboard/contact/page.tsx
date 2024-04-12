@@ -5,13 +5,13 @@ import Image from "next/image";
 
 export default function Contact() {
   return (
-    <div className="relative mt-28 lg:mt-36 px-8 bg-[#FAFAFA]">
+    <div className="relative mt-28 lg:mt-36 bg-[#FAFAFA]">
       <div className="text-center max-w-[50rem] mx-auto">
         <h1 className="text-[2.75rem] md:text-[3.2rem] lg:text-[4rem] font-medium text-[#121212]">
           Contact Us
         </h1>
 
-        <div className="max-w-[36rem] mx-auto">
+        <div className="max-w-[36rem] mx-auto px-8">
           <p className="text-lg lg:leading-[29.1px]">
             Do you have questions on how to streamline your operations, enhance
             guest experience, and maximize your revenue effortlessly. We are
@@ -58,7 +58,7 @@ export default function Contact() {
         </div>
 
         {/* Get in Touch */}
-        <div className="mt-28 lg:mt-40">
+        <div className="mt-28 lg:mt-40 px-8">
           <div className="mt-20">
             <h1 className="text-[#121212] text-[2.375rem] text-center font-medium">
               Get in Touch
@@ -105,9 +105,11 @@ export default function Contact() {
             Send
           </Button>
         </div>
+      </div>
 
-        {/* Ready to Transform */}
-        <div className="mt-32 bg-white py-12 lg:py-[5.6rem]">
+      {/* Ready to Transform */}
+      <div className="mt-32 bg-white py-12 lg:py-[5.6rem] text-center px-8">
+        <div className="max-w-[50rem] mx-auto">
           <h1 className="text-[#2C2929] text-3xl lg:text-5xl">
             Ready to Transform Your Restaurant?
           </h1>
@@ -129,7 +131,11 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="flex justify-between px-5 md:px-8 lg:px-24 py-8">
+      <div className="px-5 md:px-8 lg:px-24">
+        <hr className="bg-opacity-30 opacity-5" />
+      </div>
+
+      <div className="flex justify-between px-5 md:px-8 lg:px-24 py-8 bg-white">
         <div>
           <Link href="/restaurant-dashboard">
             <Image
