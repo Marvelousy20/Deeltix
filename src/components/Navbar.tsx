@@ -59,7 +59,7 @@ export default function Navbar({
                 </div>
 
                 {/* location */}
-                <div className="cursor-pointer">Lekki</div>
+                {/* <div className="cursor-pointer">Lekki</div> */}
 
                 {/* Profile */}
                 <div className="space-x-4">
