@@ -105,8 +105,8 @@ export default function RestaurantDashboard() {
         </div>
 
         <div className="">
-          <div className="mt-[5.5rem] grid grid-cols-1 lg:grid-cols-5 gap-x-10">
-            <div className="grid gap-y-4 lg:col-span-3">
+          <div className="mt-[5.5rem] grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-4 xl:grid-cols-5 gap-x-10">
+            <div className="grid gap-y-4 lg:col-span-2 xl:col-span-3">
               <div className="">
                 <div className="bg-[#574DFF] rounded-[20px] px-6 lg:px-8 pt-8 xl:pt-12">
                   <h3 className="text-2xl font-medium">
@@ -149,7 +149,7 @@ export default function RestaurantDashboard() {
               </div>
             </div>
 
-            <div className="grid gap-y-4 lg:col-span-2 justify-self-end">
+            <div className="grid gap-y-4 lg:col-span-2 xl:col-span-2 justify-self-end">
               <div className="bg-[#FEFEFE] rounded-[20px] px-6 lg:px-8 pt-8 lg:pt-12 lg:pb-8 text-black lg:w-[503px] hidden lg:block">
                 <h3 className="text-2xl font-medium">Adaptability</h3>
 
@@ -180,7 +180,7 @@ export default function RestaurantDashboard() {
           </div>
         </div>
 
-        <div className="flex justify-between flex-wrap lg:flex-nowrap mt-4 gap-4">
+        <div className="flex justify-between flex-wrap md:flex-nowrap mt-4 gap-4">
           <div className="bg-white rounded-[20px] p-8 text-black w-ful">
             <h3 className="text-2xl font-medium">Effortless Reservations</h3>
 
