@@ -88,7 +88,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="lg:mt-9 mt-0 flex items-center gap-3">
+            <div className="lg:mt-9 mt-0 flex items-center justify-center gap-3">
               {isLoading ? (
                 // <section className="">
                 //   <div className="flex flex-col lg:w-[350px] w-full space-y-3">
