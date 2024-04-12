@@ -104,7 +104,7 @@ export default function RestaurantDashboard() {
           </h1>
         </div>
 
-        {/* <div className="">
+        <div className="">
           <div className="mt-[5.5rem] grid grid-cols-1 lg:grid-cols-5 gap-x-10">
             <div className="grid gap-y-4 lg:col-span-3">
               <div className="">
@@ -121,7 +121,7 @@ export default function RestaurantDashboard() {
 
                   <div className="flex justify-end mt-12">
                     <Image
-                      src="/dashboard/integrated.png"
+                      src="/dashboard/receipt.svg"
                       alt="receipt"
                       width={713}
                       height={533}
@@ -139,7 +139,7 @@ export default function RestaurantDashboard() {
                 </p>
               </div>
 
-              <div className="bg-[#101828] rounded-[20px] px-6 lg:px-8 pt-8 lg:pt-12 h-[26rem] lg:flex flex-col justify-center hidden">
+              <div className="bg-[#101828] rounded-[20px] px-6 lg:px-8 pt-8 lg:pt-12 h-[23rem] lg:flex flex-col justify-center hidden">
                 <h3 className="text-2xl font-medium">Real-time Analytics</h3>
 
                 <p>
@@ -170,7 +170,7 @@ export default function RestaurantDashboard() {
 
               <div className="order-2">
                 <Image
-                  src="/dashboard/adaptability.png"
+                  src="/dashboard/woman.svg"
                   alt="woman"
                   width={503}
                   height={759}
@@ -178,7 +178,7 @@ export default function RestaurantDashboard() {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
 
         <div className="flex justify-between flex-wrap lg:flex-nowrap mt-4 gap-4">
           <div className="bg-white rounded-[20px] p-8 text-black w-ful">
