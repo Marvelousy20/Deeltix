@@ -33,85 +33,83 @@ export default function Navbar({
 
   return (
     <>
-      <header className="overflow-hidden">
-        {isLoggedIn ? (
-          <LoggedInNavbar />
-        ) : (
-          <section className="">
-            <div className="pt-10 fixed w-full hidden lg:block z-[999]">
-              <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
-                <div className="flex items-center gap-x-10">
-                  <Link href="/" className="flex items-center">
-                    <Image
-                      src="/dashboard/logo.svg"
-                      alt="img"
-                      width="80"
-                      height="80"
-                    />
-                  </Link>
+      {isLoggedIn ? (
+        <LoggedInNavbar />
+      ) : (
+        <section className="">
+          <div className="pt-10 fixed w-full z-50 hidden lg:block overflow-hidden">
+            <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
+              <div className="flex items-center gap-x-10">
+                <Link href="/" className="flex items-center">
+                  <Image
+                    src="/dashboard/logo.svg"
+                    alt="img"
+                    width="80"
+                    height="80"
+                  />
+                </Link>
 
-                  <Link
-                    href="/restaurant-dashboard"
-                    className="font-bold text-xl hover:text-primary transition-all ease-in duration-500"
-                  >
-                    For business
-                  </Link>
-                </div>
-
-                {/* location */}
-                <div className="cursor-pointer">Lekki</div>
-
-                {/* Profile */}
-                <div className="space-x-4">
-                  <Button onClick={loginOpen}>Sign in</Button>
-
-                  <Button variant="primary" onClick={signup}>
-                    Create Account
-                  </Button>
-                </div>
-              </section>
-            </div>
-
-            {/* mobile nav */}
-
-            <nav className=" flex lg:hidden flex-col  items-start gap-6 text-white">
-              <div className="">
                 <Link
                   href="/restaurant-dashboard"
-                  className="font-bold text-xl transition-all ease-in-out duration-200"
+                  className="font-bold text-xl hover:text-primary transition-all ease-in duration-500"
                 >
                   For business
                 </Link>
               </div>
 
               {/* location */}
-              {/* <div>Lekki</div> */}
+              <div className="cursor-pointer">Lekki</div>
 
-              <div className="flex flex-col space-y-4">
-                <Button
-                  className="lg:hidden block"
-                  size="sm"
-                  variant="primary"
-                  // onClick={signinOpen}
-                  onClick={() => push("/user-signin")}
-                >
-                  Sign in
-                </Button>
+              {/* Profile */}
+              <div className="space-x-4">
+                <Button onClick={loginOpen}>Sign in</Button>
 
-                <Button
-                  size="sm"
-                  variant="primary"
-                  onClick={() => push("/user-signup")}
-                >
+                <Button variant="primary" onClick={signup}>
                   Create Account
                 </Button>
               </div>
-              <ModalSignIn opened={login} close={loginClose} />
-              <SignUp opened={opened} close={close} />
-            </nav>
-          </section>
-        )}
-      </header>
+            </section>
+          </div>
+
+          {/* mobile nav */}
+
+          <nav className=" flex lg:hidden flex-col  items-start gap-6 text-white">
+            <div className="">
+              <Link
+                href="/restaurant-dashboard"
+                className="font-bold text-xl transition-all ease-in-out duration-200"
+              >
+                For business
+              </Link>
+            </div>
+
+            {/* location */}
+            {/* <div>Lekki</div> */}
+
+            <div className="flex flex-col space-y-4">
+              <Button
+                className="lg:hidden block"
+                size="sm"
+                variant="primary"
+                // onClick={signinOpen}
+                onClick={() => push("/user-signin")}
+              >
+                Sign in
+              </Button>
+
+              <Button
+                size="sm"
+                variant="primary"
+                onClick={() => push("/user-signup")}
+              >
+                Create Account
+              </Button>
+            </div>
+            <ModalSignIn opened={login} close={loginClose} />
+            <SignUp opened={opened} close={close} />
+          </nav>
+        </section>
+      )}
     </>
   );
 }
