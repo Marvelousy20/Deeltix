@@ -12,6 +12,7 @@ import { RestaurantDetails } from "@/types";
 import { auth } from "@/axios-config";
 import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/Navbar";
+import { SignUp } from "@/components/ui/modals/sign-up";
 
 export default function Home() {
   const { data, isLoading } = useQuery({
@@ -89,21 +90,7 @@ export default function Home() {
             </div>
 
             <div className="lg:mt-9 mt-0 flex items-center justify-center gap-3">
-              {isLoading ? (
-                // <section className="">
-                //   <div className="flex flex-col lg:w-[350px] w-full space-y-3">
-                //     <Skeleton className="h-[250px]  rounded-xl" />
-                //     <div className="flex w-full lg:w-[250px] items-center justify-between">
-                //       <Skeleton className="h-[10px] w-full lg:w-[100px] rounded-xl" />
-                //       <Skeleton className="h-[10px] w-full lg:w-[100px] rounded-xl" />
-                //     </div>
-                //     <Skeleton className="h-[50px] w-full lg:w-[250px]  rounded-2xl" />
-                //   </div>
-                // </section>
-                <p>Loading...</p>
-              ) : (
-                <CarouselSlider data={data} />
-              )}
+              {isLoading ? <p>Loading...</p> : <CarouselSlider data={data} />}
             </div>
           </div>
           {/* <div className="lg:mt-20 mt-0 flex flex-col gap-10 lg:gap-0">
@@ -168,12 +155,13 @@ export default function Home() {
             </div>
 
             <div className="pt-10">
-              <span className="lg:text-2xl text-xl lg:font-medium font-bold text-center">
+              <p className="lg:text-2xl text-xl lg:font-medium font-bold text-center">
                 Wanna discover places?
-                <a href="" className="underline underline-offset-4">
+                <span onClick={open} className="underline cursor-pointer">
                   Join Deeltix
-                </a>
-              </span>
+                </span>
+              </p>
+              <SignUp opened={opened} close={close} />
             </div>
           </div>
           <div className="justify-self-end">
