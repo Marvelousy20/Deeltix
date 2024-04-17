@@ -32,7 +32,7 @@ export default function Navbar({
   };
 
   return (
-    <>
+    <div>
       {isLoggedIn ? (
         <LoggedInNavbar />
       ) : (
@@ -110,6 +110,6 @@ export default function Navbar({
           </nav>
         </section>
       )}
-    </>
+    </div>
   );
 }
