@@ -34,7 +34,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
     // <CarouselContent className="h-full lg:h-fit w-full ">
     // {data?.data?.restaurants?.map((d, index) => (
     // <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-    <div>
+    <div className='flex flex-col justify-center items-center'>
       <div className="p-1 grid lg:grid-cols-3 grid-cols-1 gap-3">
         {data?.data?.restaurants?.map((d, index) => (
           <Card key={index}>
@@ -88,7 +88,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
           </Card>
         ))}
       </div>
-      <div className="text-white font-bold flex items-center justify-center rounded hover:bg-opacity-70 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-opacity-70">
+      <div className="text-white font-bold flex items-center justify-center rounded hover:bg-opacity-70 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-opacity-70 mt-5">
         <Link href={'/restaurants'} className="bg-primary p-5 rounded-full">
           More Restaurants
         </Link>
