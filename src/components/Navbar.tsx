@@ -37,8 +37,8 @@ export default function Navbar({
         {isLoggedIn ? (
           <LoggedInNavbar />
         ) : (
-          <section>
-            <div className="pt-10 fixed w-full hidden lg:block">
+          <section className="">
+            <div className="pt-10 fixed w-full hidden lg:block z-[999]">
               <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
                 <div className="flex items-center gap-x-10">
                   <Link href="/" className="flex items-center">
