@@ -33,6 +33,7 @@ export default function Navbar({
 
   return (
     <>
+
       {isLoggedIn ? (
         <LoggedInNavbar />
       ) : (
@@ -48,6 +49,47 @@ export default function Navbar({
                     height="80"
                   />
                 </Link>
+
+      <header className="overflow-hidden">
+        {isLoggedIn ? (
+          <LoggedInNavbar />
+        ) : (
+          <section className="">
+            <div className="pt-10 fixed w-full hidden lg:block z-[999]">
+              <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
+                <div className="flex items-center gap-x-10">
+                  <Link href="/" className="flex items-center">
+                    <Image
+                      src="/dashboard/logo.svg"
+                      alt="img"
+                      width="80"
+                      height="80"
+                    />
+                  </Link>
+
+                  <Link
+                    href="/restaurant-dashboard"
+                    className="font-bold text-xl hover:text-primary transition-all ease-in duration-500"
+                  >
+                    For business
+                  </Link>
+                </div>
+
+                {/* location */}
+                {/* <div className="cursor-pointer">Lekki</div> */}
+
+                {/* Profile */}
+                <div className="space-x-4">
+                  <Button onClick={loginOpen}>Sign in</Button>
+
+                  <Button variant="primary" onClick={signup}>
+                    Create Account
+                  </Button>
+                </div>
+              </section>
+            </div>
+
+            {/* mobile nav */}
 
                 <Link
                   href="/restaurant-dashboard"

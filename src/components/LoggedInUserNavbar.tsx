@@ -31,7 +31,7 @@ export default function LoggedInNavbar() {
           </Link>
 
           {/* location */}
-          <div className="flex gap-x-3 items-center">
+          {/* <div className="flex gap-x-3 items-center">
             <MapPin size={16} />
             <div className="flex gap-x-2 items-center">
               <p className=" text-xl font-normal text-Gainsboro">
@@ -62,7 +62,7 @@ export default function LoggedInNavbar() {
                 </DropdownMenu>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Profile */}
           <div className=" flex items-center space-x-4">
