@@ -12,10 +12,11 @@ export const MenuDropDown = () => {
   const { setIsLoggedIn } = useUser();
 
   const handleSignOut = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
+    console.log('logging out')
     localStorage.clear();
     cookieStorage.clear();
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
   };
 
   const userDetails: ILoggedinUser[] = [
@@ -60,9 +61,9 @@ export const MenuDropDown = () => {
             </div>
 
             <div
-              onClick={() => (idx === 4 ? handleSignOut() : null)}
+              onClick={() => (items.name === 'Sign out' ? handleSignOut() : null)}
               className={clsx(
-                idx === 4
+                items.name === 'Sign out'
                   ? "flex items-center justify-between w-[150px]  cursor-pointer py-2 px-1 hover:bg-gray hover:rounded-lg"
                   : "flex items-center justify-between border-b border-grayoutline w-[150px] max-w-[150px] py-2 px-1 cursor-pointer hover:bg-gray hover:rounded-lg"
               )}
