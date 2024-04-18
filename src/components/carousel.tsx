@@ -39,8 +39,8 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
         {data?.data?.restaurants?.map((d, index) => (
           <Card key={index}>
             <CardContent>
-              <div className="">
-                <figure className="h-[250px] w-full">
+              <div className="relative">
+                <figure className="h-[250px] w-full z-[999]">
                   <Image
                     src={d.displayPicture as string}
                     alt={d.name}
@@ -66,7 +66,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-1">
                       <MapPin size={14} />
-                      <p className="text-sm whitespace-nowrap">{d.address}</p>
+                      <p className="text-sm">{d.address}</p>
                     </div>
 
                     <div className="flex items-center gap-2">

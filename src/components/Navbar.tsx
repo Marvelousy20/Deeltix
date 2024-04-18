@@ -32,13 +32,13 @@ export default function Navbar({
   };
 
   return (
-    <>
+    <div className="!z-[100000000000000] relative">
       <header className="overflow-hidden">
         {isLoggedIn ? (
           <LoggedInNavbar />
         ) : (
-          <section>
-            <div className="pt-10 fixed w-full hidden lg:block">
+          <section className="relative">
+            <div className="pt-10 fixed top-0 w-full hidden lg:block">
               <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
                 <div className="flex items-center gap-x-10">
                   <Link href="/" className="flex items-center">
@@ -59,7 +59,7 @@ export default function Navbar({
                 </div>
 
                 {/* location */}
-                <div className="cursor-pointer">Lekki</div>
+                {/* <div className="cursor-pointer">Lekki</div> */}
 
                 {/* Profile */}
                 <div className="space-x-4">
@@ -112,6 +112,6 @@ export default function Navbar({
           </section>
         )}
       </header>
-    </>
+    </div>
   );
 }
