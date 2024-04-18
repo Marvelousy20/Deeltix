@@ -14,7 +14,7 @@ export interface IWallet {
 export const walletData = [
   {
     id: 1,
-    date: "21st Jan, 2023",
+  date: "21st Jan, 2023",
     recipient: "Olivia Martins",
     type: "Withdraw",
     amount: "₦10,000.00",

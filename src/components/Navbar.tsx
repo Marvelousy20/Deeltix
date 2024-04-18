@@ -32,13 +32,13 @@ export default function Navbar({
   };
 
   return (
-    <div>
+    <div className="!z-[100000000000000] relative">
       <header className="overflow-hidden">
         {isLoggedIn ? (
           <LoggedInNavbar />
         ) : (
-          <section className="">
-            <div className="pt-10 fixed w-full hidden lg:block">
+          <section className="relative">
+            <div className="pt-10 fixed top-0 w-full hidden lg:block">
               <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
                 <div className="flex items-center gap-x-10">
                   <Link href="/" className="flex items-center">
