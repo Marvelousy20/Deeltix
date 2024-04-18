@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { formatPrice } from '@/lib/utils';
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { formatPrice } from "@/lib/utils";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from './ui/carousel';
-import { MapPin, Star, Bookmark } from 'lucide-react';
-import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
+} from "./ui/carousel";
+import { MapPin, Star, Bookmark } from "lucide-react";
+import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
 
-import { RestaurantDetails } from '@/types';
-import Link from 'next/link';
+import { RestaurantDetails } from "@/types";
+import Link from "next/link";
 
 export default function CarouselSlider({ data }: RestaurantDetails) {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
   function handleShowDetail(restaurantName: string, restaurantId: string) {
     router.push(`/${restaurantName}?restaurant=${restaurantId}`);
   }
-  console.log('carousel', data);
+  console.log("carousel", data);
   return (
     // <Carousel
     //   opts={{
@@ -39,7 +39,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
         {data?.data?.restaurants?.map((d, index) => (
           <Card key={index}>
             <CardContent>
-              <div className="relative">
+              <div className="">
                 <figure className="h-[250px] w-full">
                   <Image
                     src={d.displayPicture as string}
@@ -89,7 +89,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
         ))}
       </div>
       <div className="text-white font-bold flex items-center justify-center rounded hover:bg-opacity-70 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-opacity-70">
-        <Link href={'/restaurants'} className="bg-primary p-5 rounded-full">
+        <Link href={"/restaurants"} className="bg-primary p-5 rounded-full">
           More Restaurants
         </Link>
       </div>
