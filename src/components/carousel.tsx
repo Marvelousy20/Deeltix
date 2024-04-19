@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { formatPrice } from '@/lib/utils';
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { formatPrice } from "@/lib/utils";
 import {
   Carousel,
   CarouselContent,
@@ -62,7 +62,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
           <Card key={index}>
             <CardContent>
               <div className="relative">
-                <figure className="h-[250px] w-full">
+                <figure className="h-[250px] w-full z-[999]">
                   <Image
                     src={d.displayPicture as string}
                     alt={d.name}
