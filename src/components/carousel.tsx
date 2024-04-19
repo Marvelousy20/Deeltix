@@ -9,21 +9,43 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./ui/carousel";
-import { MapPin, Star, Bookmark } from "lucide-react";
-import { Button } from "./ui/button";
-import { Card, CardContent } from "./ui/card";
-
-import { RestaurantDetails } from "@/types";
-import Link from "next/link";
+} from './ui/carousel';
+import { MapPin, Star, Bookmark } from 'lucide-react';
+import { Button } from './ui/button';
+import { Card, CardContent } from './ui/card';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { RestaurantDetails } from '@/types';
+import Link from 'next/link';
+import { useState } from 'react';
+import { auth } from '@/axios-config';
+import { toast } from 'react-toastify';
+import { ErrorType, handleError } from '@/lib/handle-error';
 
 export default function CarouselSlider({ data }: RestaurantDetails) {
   const router = useRouter();
+  const query = useQueryClient();
+  // const [bookmark, setBookmark] = useState(false);
 
   function handleShowDetail(restaurantName: string, restaurantId: string) {
     router.push(`/${restaurantName}?restaurant=${restaurantId}`);
   }
-  console.log("carousel", data);
+  console.log('carousel', data);
+
+  // request for bookmark
+  const { mutate, isLoading: bookmarkLoading } = useMutation({
+    mutationFn: async (restaurantid: string) =>
+      await auth.patch(`/api/restaurants/${restaurantid}/bookmark`),
+    mutationKey: ['bookmark'],
+    onSuccess() {
+      toast.success('Restaurant has been bookmarked');
+      // setBookmark(true);
+      query.invalidateQueries(['all-bookmark']);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
   return (
     // <Carousel
     //   opts={{
@@ -34,7 +56,7 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
     // <CarouselContent className="h-full lg:h-fit w-full ">
     // {data?.data?.restaurants?.map((d, index) => (
     // <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-    <div>
+    <div className="flex flex-col justify-center items-center">
       <div className="p-1 grid lg:grid-cols-3 grid-cols-1 gap-3">
         {data?.data?.restaurants?.map((d, index) => (
           <Card key={index}>
@@ -53,7 +75,13 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
                       {index + 1}
                     </h1> */}
                 <div className="h-[30px] w-[30px] rounded-full flex items-center justify-center bg-grayoutline absolute top-3 right-3">
-                  <Bookmark size={20} className="cursor-pointer" />
+                  {/* <Bookmark size={20} className="cursor-pointer" /> */}
+                  <Bookmark
+                    onClick={() => mutate(d.id)}
+                    size={20}
+                    color={'#2C2929'}
+                    className="cursor-pointer"
+                  />
                 </div>
               </div>
               <div className="flex justify-between mt-4 w-full">
@@ -88,8 +116,8 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
           </Card>
         ))}
       </div>
-      <div className="text-white font-bold flex items-center justify-center rounded hover:bg-opacity-70 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-opacity-70">
-        <Link href={"/restaurants"} className="bg-primary p-5 rounded-full">
+      <div className="text-white font-bold flex items-center justify-center rounded hover:bg-opacity-70 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-opacity-70 mt-5">
+        <Link href={'/restaurants'} className="bg-primary p-5 rounded-full">
           More Restaurants
         </Link>
       </div>
