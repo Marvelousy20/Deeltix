@@ -5,7 +5,7 @@ import { RestaurantForm } from "./form";
 
 export const Overview = () => {
   return (
-    <div className="p-8 flex flex-col gap-[48px]">
+    <div className="p-8 gap-[48px]">
       <Breadcrumbs
         firstText="Get Started"
         breadcrumb={"Restaurant overview"}

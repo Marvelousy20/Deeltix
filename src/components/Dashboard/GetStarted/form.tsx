@@ -69,14 +69,17 @@ export const RestaurantForm = () => {
     reset();
   };
   return (
-    <div className="flex flex-col items-center justify-center">
-      <section className="border border-grayBottom rounded-[24px] p-[64px] w-fit hide">
+    <div className="max-w-2xl mx-auto">
+      <section className="border border-grayBottom rounded-[24px] p-[64px] w-full">
         <h3 className="text-xl font-bold text-grayBlack2 pb-8">
           Restaurant Overview
         </h3>
         {/* <Form {...form}> */}
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-          <div className="">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-6 w-full"
+        >
+          <div className="w-full">
             <label className="text-grayHelp text-lg font-medium">
               Restaurant email address
             </label>
@@ -84,6 +87,7 @@ export const RestaurantForm = () => {
               type="email"
               placeholder="cilantro@gmail.com"
               className="text-grayInactive text-lg font-normal mt-2"
+              customMaxWidth="w-full"
               {...register("emailAddress")}
             />
             {errors.emailAddress && (

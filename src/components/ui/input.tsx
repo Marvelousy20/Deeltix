@@ -4,16 +4,21 @@ import { cn } from "@/lib/utils";
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: string;
+  customMaxWidth?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, icon, ...props }, ref) => {
+  ({ className, type, icon, customMaxWidth, ...props }, ref) => {
     return (
-      <div className="w-full relative lg:max-w-[27rem] flex justify-center">
+      <div
+        className={`w-full relative flex justify-center ${
+          customMaxWidth || "lg:max-w-[27rem]"
+        }`}
+      >
         <input
           type={type}
           className={cn(
-            "flex h-12 w-full lg:max-w-[27rem] rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300",
+            "flex h-12 w-full rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300",
             className
           )}
           ref={ref}
