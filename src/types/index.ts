@@ -289,6 +289,19 @@ export interface IUpdateRestaurantProfile {
   description: string;
   pictures: Array<string> | undefined;
 }
+// update restaurant overview 
+export interface IUpdateRestaurantOverview {
+  address: string;
+  emailAddress: string;
+  description: string;
+  zipCode: string;
+  state: string;
+  phoneNumber: string;
+  openingDay: string;
+  closingDay: string;
+  openingHour: string;
+  closingHour: string;
+}
 
 // update user pofile
 export interface IUpdateUserProfile {

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
-
+import { useUser } from "@/context/restaurant/user";
 import {
   Select,
   SelectContent,
@@ -12,10 +12,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { states, weekDays } from "../profile/state";
 import { Input } from "../../ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { IUpdateRestaurantOverview } from "@/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/axios-config";
+import { toast } from "react-toastify";
+import { ErrorType, handleError } from "@/lib/handle-error";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   emailAddress: z.string().email(),
@@ -23,49 +29,68 @@ const formSchema = z.object({
   state: z.string().min(5, {
     message: "Select a value",
   }),
-  code: z.string().min(5, {
+  zipCode: z.string().min(5, {
     message: "Code must be at least 5 characters",
   }),
-  number: z.string().min(11, {
+  phoneNumber: z.string().min(11, {
     message: "Number must be at least 11 character longer",
   }),
-  bio: z.string().min(10, {
+  description: z.string().min(10, {
     message: "provide information about your restaurant",
   }),
-  openDay: z.string().min(6, {
+  openingDay: z.string().min(6, {
     message: "Enter your opening day",
   }),
-  closeDay: z.string().min(6, {
+  closingDay: z.string().min(6, {
     message: "Enter your closing day",
   }),
-  openTime: z.string().min(2, {
+  openingHour: z.string().min(2, {
     message: "Enter your opening time",
   }),
-  closeTime: z.string().min(2, {
+  closingHour: z.string().min(2, {
     message: "Enter your closing time",
   }),
 });
 export const RestaurantForm = () => {
+  const router = useRouter();
+  const { fetchUser, restuarantName, managerName, restaurantId } = useUser();
+  const query = useQueryClient();
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      emailAddress: "",
       address: "",
+      emailAddress: "",
+      description: "",
+      zipCode: "",
       state: "",
-      code: "",
-      number: "",
-      bio: "",
-      openDay: "",
-      closeDay: "",
-      openTime: "",
-      closeTime: "",
+      phoneNumber: "",
+      openingDay: "",
+      closingDay: "",
+      openingHour: "",
+      closingHour: "",
     },
   });
   const { errors } = formState;
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (data: IUpdateRestaurantOverview) =>
+      // console.log(`/api/restaurants/profile/${restaurantId}`),
+      await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
+    mutationKey: ["update-restaurant-profile"],
+    onSuccess(data) {
+      toast.success("Profile updated successfully");
+      query.invalidateQueries(["restaurant-details"]);
+      reset();
+      router.push("/get-started/menu");
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    mutate(values);
     reset();
   };
   return (
@@ -85,7 +110,7 @@ export const RestaurantForm = () => {
             </label>
             <Input
               type="email"
-              placeholder="cilantro@gmail.com"
+              placeholder="email"
               className="text-grayInactive text-lg font-normal mt-2"
               customMaxWidth="w-full"
               {...register("emailAddress")}
@@ -101,17 +126,18 @@ export const RestaurantForm = () => {
           <div>
             <label className="text-grayHelp text-lg font-medium">
               <div className="flex items-center justify-between w-[300px]">
-                <p>Address</p>
-                <div className="flex items-center text-[#574DFF] text-sm gap-1 cursor-pointer font-normal">
+                <p>{"Restaurant's Address"}</p>
+                {/* <div className="flex items-center text-[#574DFF] text-sm gap-1 cursor-pointer font-normal">
                   <MapPin size={16} />
                   <p className="text-sm font-normal">use current location</p>
-                </div>
+                </div> */}
               </div>
             </label>
             <Input
-              placeholder="Lekki Phase 1, Lekki, Lagos, Nigeria"
+              placeholder="Full address"
               className="text-grayInactive text-lg font-normal mt-2"
               {...register("address")}
+              customMaxWidth="w-full"
             />
             <div className="text-red-500 text-sm font-normal pt-1">
               {errors.address?.message}
@@ -119,39 +145,34 @@ export const RestaurantForm = () => {
           </div>
 
           {/* select input */}
-          <div>
+          <div className="w-full">
             <label className="text-grayHelp text-lg font-medium">State</label>
 
-            <Select
-              onValueChange={(value) =>
-                setValue("state", value, {
-                  shouldValidate: true,
-                })
-              }
-              defaultValue={watch().state}
-            >
-              <SelectTrigger>
-                <SelectValue
-                  placeholder="Select your state"
-                  className="text-grayInactive text-lg font-normal"
-                />
-              </SelectTrigger>
-              <SelectContent className="text-grayInactive text-lg font-normal">
-                {[
-                  { label: "Lagos", value: "lagos" },
-                  { label: "Delta", value: "delta" },
-                  { label: "Oyo", value: "oyo" },
-                ].map((state, _i) => (
-                  <SelectItem
-                    key={_i}
-                    className="rounded-xl"
-                    value={state.value}
-                  >
-                    {state.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="w-full">
+              <Select
+                onValueChange={(value) =>
+                  setValue("state", value, {
+                    shouldValidate: true,
+                  })
+                }
+                defaultValue={watch().state}
+              >
+                <SelectTrigger className="w-full" customMaxWidth="w-full">
+                  <SelectValue
+                    placeholder="Select your state"
+                    className="text-grayInactive text-lg font-normal"
+                  />
+                </SelectTrigger>
+                <SelectContent className="text-grayInactive text-lg font-normal w-full">
+                  {states.map((state, _i) => (
+                    <SelectItem key={_i} className="rounded-xl" value={state}>
+                      {state}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="text-red-500 text-sm font-normal pt-1">
               {errors.state?.message}
             </div>
@@ -162,15 +183,16 @@ export const RestaurantForm = () => {
               Zip code
             </label>
             <Input
-              placeholder="cilantro@gmail.com"
+              placeholder="00000"
               className="text-grayInactive text-lg font-normal mt-2"
-              {...register("code", {
+              customMaxWidth="w-full"
+              {...register("zipCode", {
                 required: true,
               })}
             />
-            {errors.code && (
+            {errors.zipCode && (
               <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.code?.message}
+                {errors.zipCode?.message}
               </div>
             )}
           </div>
@@ -180,45 +202,47 @@ export const RestaurantForm = () => {
               Phone number
             </label>
             <Input
-              placeholder="cilantro@gmail.com"
+              placeholder="+2348100000000"
               className="text-grayInactive text-lg font-normal mt-2"
-              {...register("number", {
+              customMaxWidth="w-full"
+              {...register("phoneNumber", {
                 required: true,
               })}
             />
-            {errors.number && (
+            {errors.phoneNumber && (
               <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.number?.message}
+                {errors.phoneNumber?.message}
               </div>
             )}
           </div>
 
-          <div className="h-[1px] w-[300px] bg-[#D0D5DD]"></div>
+          <div className="h-[1px] w-full bg-[#D0D5DD]"></div>
 
           <div>
             <label className="text-grayHelp text-lg font-medium">Bio</label>
             <Textarea
               placeholder="Tell us a little bit about yourself"
-              className="resize-none  mt-2"
-              {...register("bio")}
+              className="resize-none mt-2"
+              customMaxWidth="w-full"
+              {...register("description")}
             />
             <p className="pt-3">
-              NB: Be very expressive with your offeringss 😉
+              NB: Be very expressive with your offerings 😉
             </p>
-            {errors.bio && (
+            {errors.description && (
               <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.bio?.message}
+                {errors.description?.message}
               </div>
             )}
           </div>
 
           <section className="flex flex-col gap-6">
-            <article className="flex items-center justify-between w-[300px]">
-              <div className="">
+            <article className="flex items-center justify-between w-full gap-5">
+              <div className="w-full">
                 <label className="text-grayHelp text-lg font-medium">
                   Open at
                 </label>
-                <Input
+                {/* <Input
                   placeholder="Monday"
                   className="text-grayInactive text-lg font-normal !w-[140px] mt-2"
                   {...register("openDay")}
@@ -227,65 +251,112 @@ export const RestaurantForm = () => {
                   <div className="text-red-500 text-sm font-normal pt-1">
                     {errors.openDay?.message}
                   </div>
-                )}
+                )} */}
+                <Select
+                  onValueChange={(value) =>
+                    setValue("openingDay", value, {
+                      shouldValidate: true,
+                    })
+                  }
+                  defaultValue={watch().state}
+                >
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder="Open"
+                      className="text-grayInactive text-lg font-normal"
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="text-grayInactive text-lg font-normal">
+                    {weekDays.map((day, _i) => (
+                      <SelectItem key={_i} className="rounded-xl" value={day}>
+                        {day}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
-              <div className="">
+              <div className="w-full">
                 <label className="text-grayHelp text-lg font-medium">
                   Close from
                 </label>
-                <Input
+                {/* <Input
                   placeholder="Sunday"
                   className="text-grayInactive text-lg font-normal !w-[140px] mt-2"
                   {...register("closeDay", {
                     required: true,
                   })}
-                />
-                {errors.closeDay && (
+                /> */}
+                <Select
+                  onValueChange={(value) =>
+                    setValue("closingDay", value, {
+                      shouldValidate: true,
+                    })
+                  }
+                  defaultValue={watch().state}
+                >
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder="Close"
+                      className="text-grayInactive text-lg font-normal"
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="text-grayInactive text-lg font-normal">
+                    {weekDays.map((day, _i) => (
+                      <SelectItem key={_i} className="rounded-xl" value={day}>
+                        {day}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                {errors.closingDay && (
                   <div className="text-red-500 text-sm font-normal pt-1">
-                    {errors.closeDay?.message}
+                    {errors.closingDay?.message}
                   </div>
                 )}
               </div>
             </article>
 
-            <article className="flex items-center justify-between !w-[300px]">
-              <div className="">
+            <article className="flex items-center justify-between w-full gap-5">
+              <div className="w-full">
                 <label className="text-grayHelp text-lg font-medium">
                   From
                 </label>
                 <Input
                   placeholder="9:00 AM"
-                  className="text-grayInactive text-lg font-normal !w-[140px] mt-2"
-                  {...register("openTime", {
+                  className="text-grayInactive text-lg font-normal mt-2"
+                  customMaxWidth="w-full"
+                  {...register("openingHour", {
                     required: true,
                   })}
                 />
-                {errors.openTime && (
+                {errors.openingHour && (
                   <div className="text-red-500 text-sm font-normal pt-1">
-                    {errors.openTime?.message}
+                    {errors.openingHour?.message}
                   </div>
                 )}
               </div>
 
-              <div className="">
+              <div className="w-full">
                 <label className="text-grayHelp text-lg font-medium">To</label>
                 <Input
                   placeholder="9:00 AM"
-                  className="text-grayInactive text-lg font-normal !w-[140px] mt-2"
-                  {...register("closeTime", {
+                  className="text-grayInactive text-lg font-normal mt-2"
+                  customMaxWidth="w-full"
+                  {...register("closingHour", {
                     required: true,
                   })}
                 />
-                {errors.closeTime && (
+                {errors.closingHour && (
                   <div className="text-red-500 text-sm font-normal pt-1">
-                    {errors.closeTime?.message}
+                    {errors.closingHour?.message}
                   </div>
                 )}
               </div>
             </article>
           </section>
-          <Button type="submit" className="text-green-500 p-6">
+          <Button type="submit" className="bg-blue-500 text-white p-6">
             submit
           </Button>
         </form>
