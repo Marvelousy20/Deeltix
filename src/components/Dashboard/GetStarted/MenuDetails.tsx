@@ -24,6 +24,7 @@ import { useQuery } from "@tanstack/react-query";
 import AddCategory from "../Menu/addCategory";
 import { useDisclosure } from "@mantine/hooks";
 import { useProduct } from "@/context/restaurant/product";
+import { useRouter } from "next/navigation";
 
 type categoryType = {
   id: string;
@@ -33,6 +34,7 @@ type categoryType = {
 export const MenuUpload = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [categories, setCategories] = useState<categoryType[] | null>(null);
+  const router = useRouter()
   const { restaurantId } = useUser();
   const { url, setUrl } = useProduct();
   const formSchema = z.object({
@@ -70,6 +72,7 @@ export const MenuUpload = () => {
     mutationKey: ["menu, restuarant"],
     onSuccess() {
       toast.success("Yuppy! Menu added successfully.");
+      router.push('/menu')
       reset();
       setUrl([]);
     },
