@@ -284,7 +284,6 @@ export interface IUpdateRestaurantProfile {
   openingDays: string;
   openingHours: string;
   displayPicture: string;
-  banner: string[];
   averagePrice: string;
   description: string;
 }

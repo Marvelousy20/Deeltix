@@ -8,11 +8,17 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { ProductProvider, useProduct } from "@/context/restaurant/product";
-
+import { api } from "@/axios-config";
+import { useUser } from "@/context/restaurant/user";
+import { Button } from "@/components/ui/button";
+interface IBackground {
+  banner: string[];
+}
 export const RestaurantBackground = () => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const { banner, setBanner } = useProduct();
+  const [background, setBackground] = useState([]);
   const handleClick = () => {
     if (inputRef.current) {
       inputRef.current.click();
@@ -42,7 +48,8 @@ export const RestaurantBackground = () => {
 
   const { mutate, isLoading, data } = useMutation({
     mutationFn: async (data: FormData) =>
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/utilities/upload`,
+      await axios.post(
+        `https://deeltix-nserver.onrender.com/api/utilities/upload`,
         data,
         {
           headers: {
@@ -55,6 +62,7 @@ export const RestaurantBackground = () => {
 
     onSuccess({ data }) {
       setBanner(data?.data?.data?.urls[0]);
+      setBackground(data?.data?.data?.urls[0]);
       toast.success("File uploaded successfully");
     },
     onError(error) {
@@ -81,6 +89,23 @@ export const RestaurantBackground = () => {
   }, [userfile]);
 
   console.log("banner", banner);
+
+  // Uploading background image
+  const { restaurantId } = useUser();
+
+  const { mutate: resbackground, isLoading: loadbackground } = useMutation({
+    mutationFn: async (data: IBackground) =>
+      await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
+    mutationKey: ["background"],
+    onSuccess() {
+      toast.success("Restaurant background uploaded successfully");
+      setUserFile([]);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
   return (
     <section className="flex flex-col gap-[48px]">
       <div className="flex flex-col gap-4">
@@ -97,12 +122,20 @@ export const RestaurantBackground = () => {
                 First thing customers will see
               </p>
             </div>
-            <div
-              onClick={handleClick}
-              className="flex items-center justify-center gap-2 cursor-pointer w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
-            >
-              <DocumentUpload color="#574DFF" size="16" />
-              <p className="text-sm font-medium text-[#574DFF]">Upload</p>
+            <div className="flex items-center gap-2">
+              <div
+                onClick={handleClick}
+                className="flex items-center justify-center gap-2 cursor-pointer w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
+              >
+                <DocumentUpload color="#574DFF" size="16" />
+                <p className="text-sm font-medium text-[#574DFF]">Upload</p>
+              </div>
+              <Button
+                onClick={() => resbackground({ banner: background })}
+                className="text-sm font-medium text-[#574DFF] w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
+              >
+                Submit
+              </Button>
             </div>
           </section>
         </div>
