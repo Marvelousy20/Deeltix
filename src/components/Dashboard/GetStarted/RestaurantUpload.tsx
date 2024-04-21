@@ -48,8 +48,7 @@ export const RestaurantBackground = () => {
 
   const { mutate, isLoading, data } = useMutation({
     mutationFn: async (data: FormData) =>
-      await axios.post(
-        `https://deeltix-nserver.onrender.com/api/utilities/upload`,
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/utilities/upload`,
         data,
         {
           headers: {
