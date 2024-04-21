@@ -120,14 +120,6 @@ export const RestaurantProfile = ({
       openingDays,
       openingHours,
       displayPicture,
-      banner,
-    });
-
-    console.log("others :", {
-      ...others,
-      openingDays,
-      openingHours,
-      displayPicture,
     });
   };
   return (
