@@ -287,9 +287,8 @@ export interface IUpdateRestaurantProfile {
   banner: string[];
   averagePrice: string;
   description: string;
-  pictures: Array<string> | undefined;
 }
-// update restaurant overview 
+// update restaurant overview
 export interface IUpdateRestaurantOverview {
   address: string;
   emailAddress: string;

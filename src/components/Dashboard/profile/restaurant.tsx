@@ -120,7 +120,6 @@ export const RestaurantProfile = ({
       openingDays,
       openingHours,
       displayPicture,
-      pictures,
       banner,
     });
 
@@ -129,7 +128,6 @@ export const RestaurantProfile = ({
       openingDays,
       openingHours,
       displayPicture,
-      pictures,
     });
   };
   return (

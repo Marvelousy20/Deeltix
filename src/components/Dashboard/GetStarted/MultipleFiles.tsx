@@ -1,4 +1,7 @@
 "use client";
+import { api } from "@/axios-config";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/restaurant/user";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -12,6 +15,7 @@ import { toast } from "react-toastify";
 export const MultipleUpload = () => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const [uploads, setUploads] = useState<string[]>([]);
+  const [multiple, setMultiple] = useState([]);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -37,7 +41,7 @@ export const MultipleUpload = () => {
   const { mutate, isLoading, data } = useMutation({
     mutationFn: async (data: FormData) =>
       await axios.post(
-        `https://deeltix-nserver-1.onrender.com/api/utilities/upload`,
+        `https://deeltix-nserver.onrender.com/api/utilities/upload`,
         data,
         {
           headers: {
@@ -50,18 +54,17 @@ export const MultipleUpload = () => {
 
     onSuccess({ data }) {
       console.log("new :", data?.data?.data?.urls);
-
+      setMultiple(data?.data?.data?.urls);
       toast.success("File uploaded successfully");
-      router.push(`/restaurant-profile?uploads=${data?.data?.data.urls}`);
+      // router.push(`/restaurant-profile?uploads=${data?.data?.data.urls}`);
     },
     onError(error) {
       handleError(error as ErrorType);
     },
   });
 
-  const multipleUpload = data?.data?.data?.data.urls;
+  console.log("testing:", multiple);
 
-  console.log("my upload: ", multipleUpload);
   const handleSubmit = () => {
     try {
       if (userfile) {
@@ -80,6 +83,25 @@ export const MultipleUpload = () => {
     handleSubmit();
   }, [userfile]);
 
+  const { restaurantId } = useUser();
+
+  // uploading restaurant profile
+  interface IRestaurant {
+    pictures: Array<string> | undefined;
+  }
+  const { mutate: resprofile, isLoading: profile } = useMutation({
+    mutationFn: async (data: IRestaurant) =>
+      await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
+    mutationKey: ["multiple"],
+    onSuccess() {
+      toast.success("Restaurant images uploaded successfully");
+      setUserFile([]);
+    },
+    onError(error) {
+      handleError(error as ErrorType);
+    },
+  });
+
   return (
     <section className="flex flex-col">
       <div className="flex flex-col gap-4">
@@ -92,12 +114,20 @@ export const MultipleUpload = () => {
               (Scenery, parking lots, bar and the likes)
             </p>
           </div>
-          <div
-            onClick={handleClick}
-            className="flex items-center justify-center gap-2 cursor-pointer w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
-          >
-            <DocumentUpload color="#574DFF" size="16" />
-            <p className="text-sm font-medium text-[#574DFF]">Upload</p>
+          <div className="flex items-center gap-2">
+            <div
+              onClick={handleClick}
+              className="flex items-center justify-center gap-2 cursor-pointer w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
+            >
+              <DocumentUpload color="#574DFF" size="16" />
+              <p className="text-sm font-medium text-[#574DFF]">Upload</p>
+            </div>
+            <Button
+              onClick={() => resprofile({ pictures: multiple })}
+              className="text-sm font-medium text-[#574DFF] w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
+            >
+              Submit
+            </Button>
           </div>
         </section>
 
