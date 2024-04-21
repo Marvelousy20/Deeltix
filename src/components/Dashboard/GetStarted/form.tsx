@@ -89,7 +89,6 @@ export const RestaurantForm = () => {
     },
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     mutate(values);
     reset();
   };
@@ -240,7 +239,7 @@ export const RestaurantForm = () => {
             <article className="flex items-center justify-between w-full gap-5">
               <div className="w-full">
                 <label className="text-grayHelp text-lg font-medium">
-                  Open at
+                  Open
                 </label>
                 {/* <Input
                   placeholder="Monday"
@@ -278,7 +277,7 @@ export const RestaurantForm = () => {
 
               <div className="w-full">
                 <label className="text-grayHelp text-lg font-medium">
-                  Close from
+                  Close
                 </label>
                 {/* <Input
                   placeholder="Sunday"
