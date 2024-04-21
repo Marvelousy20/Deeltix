@@ -290,6 +290,8 @@ export interface IUpdateRestaurantProfile {
 // update restaurant overview
 export interface IUpdateRestaurantOverview {
   address: string;
+  averagePrice: string;
+  country: string;
   emailAddress: string;
   description: string;
   zipCode: string;

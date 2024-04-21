@@ -53,17 +53,13 @@ export const MultipleUpload = () => {
     mutationKey: ["picture-upload"],
 
     onSuccess({ data }) {
-      console.log("new :", data?.data?.data?.urls);
       setMultiple(data?.data?.data?.urls);
       toast.success("File uploaded successfully");
-      // router.push(`/restaurant-profile?uploads=${data?.data?.data.urls}`);
     },
     onError(error) {
       handleError(error as ErrorType);
     },
   });
-
-  console.log("testing:", multiple);
 
   const handleSubmit = () => {
     try {
