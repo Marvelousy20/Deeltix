@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.Toastify {
+    position: relative;
+    background: red;
+} 
+
+.Toastify__toast-container {
+    z-index: 10000000000000000000000 !important;
+}

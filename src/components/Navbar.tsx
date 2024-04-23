@@ -32,7 +32,7 @@ export default function Navbar({
   };
 
   return (
-    <div className="!z-[100000000000000] relative">
+    <div className="!z-[1000] relative">
       <header className="overflow-hidden">
         {isLoggedIn ? (
           <LoggedInNavbar />

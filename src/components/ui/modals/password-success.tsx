@@ -30,7 +30,7 @@ export default function SuccessMessage({
         withCloseButton={false}
         size="40%"
         style={{
-          zIndex: "1000000000000000000000",
+          zIndex: "2000",
           position: "relative",
         }}
       >

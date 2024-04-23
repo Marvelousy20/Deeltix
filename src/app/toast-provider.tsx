@@ -10,7 +10,12 @@ export default function ToastProvider({ children }: ToastProviderProps) {
   return (
     <>
       {children}
-      <ToastContainer />
+      <ToastContainer
+        style={{
+          zIndex: "10000000000000000000000",
+          position: "relative",
+        }}
+      />
     </>
   );
 }
