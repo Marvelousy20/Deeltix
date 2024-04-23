@@ -29,6 +29,10 @@ export default function SuccessMessage({
         centered
         withCloseButton={false}
         size="40%"
+        style={{
+          zIndex: "1000000000000000000000",
+          position: "relative",
+        }}
       >
         <section>
           <div className="flex flex-col gap-6 p-[32px]  items-center justify-center">
