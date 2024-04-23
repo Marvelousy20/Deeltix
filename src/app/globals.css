@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+a:hover {
+    opacity: 70%;
+    transition-property: all;
+    transition-timing-function: ease-in;
+    transition-duration: 500ms;
+}
+
+button:hover {
+    transition-property: all;
+    transition-timing-function: ease-in;
+    transition-duration: 500ms;
+}

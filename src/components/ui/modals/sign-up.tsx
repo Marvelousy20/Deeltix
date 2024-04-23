@@ -99,7 +99,7 @@ export const SignUp = ({
         centered
         withCloseButton={false}
         style={{
-          zIndex: "1000000000000000000000",
+          zIndex: "2000",
           position: "relative",
         }}
         size="70%"

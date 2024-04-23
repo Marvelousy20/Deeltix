@@ -68,11 +68,11 @@ export default function ModalSignIn({
     mutationKey: ["sign-in"],
 
     onSuccess() {
-      toast.success("Successfully logged in");
       localStorage.setItem("isLoggedIn", "true");
       setIsLoggedIn(true);
       reset();
       close();
+      toast.success("Successfully logged in");
     },
 
     onError(error) {
@@ -93,7 +93,7 @@ export default function ModalSignIn({
         withCloseButton={false}
         size="70%"
         style={{
-          zIndex: "1000000000000000000000",
+          zIndex: "2000",
           position: "relative",
         }}
       >

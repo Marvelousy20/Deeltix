@@ -81,7 +81,7 @@ export const VerifyEmail = ({
         withCloseButton={false}
         size="70%"
         style={{
-          zIndex: "1000000000000000000000",
+          zIndex: "2000",
           position: "relative",
         }}
       >

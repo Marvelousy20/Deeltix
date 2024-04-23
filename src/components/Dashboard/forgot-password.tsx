@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { cookieStorage } from "@ibnlanre/portal";
+
+import { TextGenerateEffect } from "../ui/text-generate-effect";
 export const RestaurantForgotPassword = () => {
   const { push } = useRouter();
   const formSchema = z.object({
@@ -53,6 +55,8 @@ export const RestaurantForgotPassword = () => {
     mutate(values);
     console.log(values);
   };
+
+  const words = "Elevate your Restaurant Experience";
 
   return (
     <section className="h-screen">
@@ -112,7 +116,7 @@ export const RestaurantForgotPassword = () => {
         <div className="bg-primary text-white hidden md:flex flex-col h-full justify-center items-center w-1/2">
           <div className="max-w-sm lg:max-w-[26.75rem]">
             <h1 className="font-bold md:text-4xl lg:text-7xl md:!leading-[50px] lg:!leading-[90px]">
-              Elevate your Restaurant Experience
+              <TextGenerateEffect words={words} />
             </h1>
             <p className="text-lg leading-7 mt-6 lg:mt-8">
               Streamline your operations, enhance guest experience, and maximize
