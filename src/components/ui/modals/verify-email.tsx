@@ -80,6 +80,10 @@ export const VerifyEmail = ({
         centered
         withCloseButton={false}
         size="70%"
+        style={{
+          zIndex: "1000000000000000000000",
+          position: "relative",
+        }}
       >
         <section className="flex w-full bg-white rounded-lg">
           <div className="w-1/2 p-10">

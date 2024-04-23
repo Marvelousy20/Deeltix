@@ -85,7 +85,7 @@ export default function ModalSignIn({
   };
 
   return (
-    <section>
+    <section className="">
       <Modal
         opened={opened}
         onClose={close}
@@ -93,7 +93,8 @@ export default function ModalSignIn({
         withCloseButton={false}
         size="70%"
         style={{
-          zIndex: "auto",
+          zIndex: "1000000000000000000000",
+          position: "relative",
         }}
       >
         <div className="flex w-full bg-white rounded-lg">

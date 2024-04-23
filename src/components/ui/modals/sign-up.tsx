@@ -98,6 +98,10 @@ export const SignUp = ({
         onClose={close}
         centered
         withCloseButton={false}
+        style={{
+          zIndex: "1000000000000000000000",
+          position: "relative",
+        }}
         size="70%"
       >
         <div className="flex w-full bg-white rounded-lg">
