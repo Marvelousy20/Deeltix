@@ -3,11 +3,15 @@
 @tailwind utilities;
 
 
-.Toastify {
-    position: relative;
-    background: red;
-} 
+a:hover {
+    opacity: 70%;
+    transition-property: all;
+    transition-timing-function: ease-in;
+    transition-duration: 500ms;
+}
 
-.Toastify__toast-container {
-    z-index: 10000000000000000000000 !important;
+button:hover {
+    transition-property: all;
+    transition-timing-function: ease-in;
+    transition-duration: 500ms;
 }
