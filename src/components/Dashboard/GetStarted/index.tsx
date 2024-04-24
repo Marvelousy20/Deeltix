@@ -9,7 +9,7 @@ export const GettingStarted = () => {
       <Headings
         user={"Welcome Cilantro"}
         detail={
-          "Welcome aboard! Let’s get started by setting up your dashboard."
+          "Welcome onboard! Let’s get started by setting up your dashboard."
         }
       />
       <div className="px-4 lg:px-0">

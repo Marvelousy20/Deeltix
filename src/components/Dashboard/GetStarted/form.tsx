@@ -26,10 +26,10 @@ import { useRouter } from 'next/navigation';
 const formSchema = z.object({
   emailAddress: z.string().email(),
   address: z.string().min(10),
-  state: z.string().min(5, {
+  state: z.string().min(2, {
     message: 'Select a value',
   }),
-  country: z.string().min(5, {
+  country: z.string().min(2, {
     message: 'Select a value',
   }),
   zipCode: z.string().min(5, {
@@ -272,7 +272,7 @@ export const RestaurantForm = () => {
             )}
           </div>
 
-          <div className="h-[1px] w-full bg-[#D0D5DD]"></div>
+          {/* <div className="h-[1px] w-full bg-[#D0D5DD]"></div> */}
 
           <div>
             <label className="text-grayHelp text-lg font-medium">Bio</label>
