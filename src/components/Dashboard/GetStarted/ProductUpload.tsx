@@ -3,20 +3,20 @@ import { useProduct } from "@/context/restaurant/product";
 import { ProductProvider } from "@/context/restaurant/product";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosProgressEvent } from "axios";
 import { DocumentUpload, GalleryEdit } from "iconsax-react";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import Router from "next/router";
 import React, { createContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-
+import { Progress } from "@/components/ui/progress";
 export const Product = () => {
   interface product {
     urls: string[];
     fetchProduct: () => void;
   }
-
+  const [progress, setProgress] = useState({ pc: 0 });
   const productContext = createContext<product | undefined>(undefined);
   const { url, setUrl } = useProduct();
   const [userfile, setUserFile] = useState<File[]>([]);
@@ -50,6 +50,15 @@ export const Product = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          onUploadProgress: (progressEvent?: AxiosProgressEvent) => {
+            const uploadProgress = progressEvent?.progress;
+            if (uploadProgress !== undefined) {
+              // Use progress here
+              setProgress((prevState) => {
+                return { ...prevState, pc: uploadProgress * 100 };
+              });
+            }
+          },
         }
       ),
 
@@ -58,7 +67,7 @@ export const Product = () => {
     onSuccess({ data }) {
       console.log("menu upload :", data?.data?.data?.urls[0]);
       setUrl(data?.data?.data?.urls[0]);
-      toast.success("File uploaded successfully");
+      // toast.success("File uploaded successfully");
       // Router.push(`/get-started/menu?menu=${data?.data?.data.urls[0]}`);
     },
     onError(error) {
@@ -89,6 +98,24 @@ export const Product = () => {
   return (
     <div>
       <h3 className="font-bold text-xl text-grayBlack2 pb-8">Product Image</h3>
+      <div className="flex items-center gap-2">
+        {userfile.length === 0 ? (
+          ""
+        ) : (
+          <Progress
+            max={100}
+            value={progress.pc}
+            indicatorColor="bg-[#574DFF]"
+            className="bg-[#EAECF0]"
+          />
+        )}
+
+        {userfile.length === 0 ? (
+          ""
+        ) : (
+          <p className="text-[#574DFF]">{progress.pc.toFixed(0)}%</p>
+        )}
+      </div>
       <div className="flex flex-col gap-3">
         {!userfile.length ? (
           <div className="w-[220px] overflow-hidden flex items-center justify-center h-[220px] border border-spacing-2 border-dashed border-[#574DFF] rounded-[40px]">
