@@ -100,6 +100,10 @@ function ModalResetPassword({
         centered
         withCloseButton={false}
         size="70%"
+        style={{
+          zIndex: "2000",
+          position: "relative",
+        }}
       >
         <div className="flex w-full bg-white rounded-lg gap-5">
           <div className="w-1/2 p-10">

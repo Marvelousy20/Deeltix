@@ -69,6 +69,10 @@ function ModalPassword({ opened, close }: { opened: any; close: () => void }) {
         centered
         withCloseButton={false}
         size="70%"
+        style={{
+          zIndex: "2000",
+          position: "relative",
+        }}
       >
         <div className="flex w-full bg-white rounded-lg gap-5">
           <div className="lg:w-1/2 w-full lg:p-10 p-0">

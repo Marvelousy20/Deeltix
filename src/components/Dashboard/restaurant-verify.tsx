@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { cookieStorage } from "@ibnlanre/portal";
 import { Button } from "../ui/button";
+import { TextGenerateEffect } from "../ui/text-generate-effect";
 
 export const RestaurantVerifyPage = () => {
   const { push } = useRouter();
@@ -65,6 +66,8 @@ export const RestaurantVerifyPage = () => {
     mutate({ email: email, otp: otp });
     console.log("email result: ", { email, otp });
   };
+
+  const words = "Elevate your Restaurant Experience";
   return (
     <div className="h-screen">
       <section className="md:flex w-full h-full bg-white rounded-lg p-5 md:p-0">
@@ -137,7 +140,7 @@ export const RestaurantVerifyPage = () => {
         <div className="bg-primary text-white hidden md:flex flex-col h-full justify-center items-center w-1/2">
           <div className="max-w-sm lg:max-w-[26.75rem]">
             <h1 className="font-bold md:text-4xl lg:text-7xl md:!leading-[50px] lg:!leading-[90px]">
-              Elevate your Restaurant Experience
+              <TextGenerateEffect words={words} />
             </h1>
             <p className="text-lg leading-7 mt-6 lg:mt-8">
               Streamline your operations, enhance guest experience, and maximize

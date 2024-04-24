@@ -1,54 +1,60 @@
-"use client";
-import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Textarea } from "@/components/ui/textarea";
-import { useUser } from "@/context/restaurant/user";
+'use client';
+import React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Textarea } from '@/components/ui/textarea';
+import { useUser } from '@/context/restaurant/user';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { states, weekDays } from "../profile/state";
-import { Input } from "../../ui/input";
-import { MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { IUpdateRestaurantOverview } from "@/types";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api } from "@/axios-config";
-import { toast } from "react-toastify";
-import { ErrorType, handleError } from "@/lib/handle-error";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/select';
+import { states, weekDays } from '../profile/state';
+import { Input } from '../../ui/input';
+import { MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { IUpdateRestaurantOverview } from '@/types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/axios-config';
+import { toast } from 'react-toastify';
+import { ErrorType, handleError } from '@/lib/handle-error';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   emailAddress: z.string().email(),
   address: z.string().min(10),
   state: z.string().min(5, {
-    message: "Select a value",
+    message: 'Select a value',
+  }),
+  country: z.string().min(5, {
+    message: 'Select a value',
   }),
   zipCode: z.string().min(5, {
-    message: "Code must be at least 5 characters",
+    message: 'Code must be at least 5 characters',
+  }),
+  averagePrice: z.string().min(3, {
+    message: 'Number must be at least 11 character longer',
   }),
   phoneNumber: z.string().min(11, {
-    message: "Number must be at least 11 character longer",
+    message: 'Number must be at least 11 character longer',
   }),
   description: z.string().min(10, {
-    message: "provide information about your restaurant",
+    message: 'provide information about your restaurant',
   }),
   openingDay: z.string().min(6, {
-    message: "Enter your opening day",
+    message: 'Enter your opening day',
   }),
   closingDay: z.string().min(6, {
-    message: "Enter your closing day",
+    message: 'Enter your closing day',
   }),
   openingHour: z.string().min(2, {
-    message: "Enter your opening time",
+    message: 'Enter your opening time',
   }),
   closingHour: z.string().min(2, {
-    message: "Enter your closing time",
+    message: 'Enter your closing time',
   }),
 });
 export const RestaurantForm = () => {
@@ -60,16 +66,18 @@ export const RestaurantForm = () => {
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      address: "",
-      emailAddress: "",
-      description: "",
-      zipCode: "",
-      state: "",
-      phoneNumber: "",
-      openingDay: "",
-      closingDay: "",
-      openingHour: "",
-      closingHour: "",
+      address: '',
+      emailAddress: '',
+      description: '',
+      averagePrice: '',
+      zipCode: '',
+      state: '',
+      country: '',
+      phoneNumber: '',
+      openingDay: '',
+      closingDay: '',
+      openingHour: '',
+      closingHour: '',
     },
   });
   const { errors } = formState;
@@ -77,12 +85,12 @@ export const RestaurantForm = () => {
     mutationFn: async (data: IUpdateRestaurantOverview) =>
       // console.log(`/api/restaurants/profile/${restaurantId}`),
       await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
-    mutationKey: ["update-restaurant-profile"],
+    mutationKey: ['update-restaurant-profile'],
     onSuccess(data) {
-      toast.success("Profile updated successfully");
-      query.invalidateQueries(["restaurant-details"]);
+      toast.success('Profile updated successfully');
+      query.invalidateQueries(['restaurant-details']);
       reset();
-      router.push("/get-started/menu");
+      router.push('/get-started/menu');
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -112,7 +120,7 @@ export const RestaurantForm = () => {
               placeholder="email"
               className="text-grayInactive text-lg font-normal mt-2"
               customMaxWidth="w-full"
-              {...register("emailAddress")}
+              {...register('emailAddress')}
             />
             {errors.emailAddress && (
               <div className="text-red-500 text-sm font-normal pt-1">
@@ -135,7 +143,7 @@ export const RestaurantForm = () => {
             <Input
               placeholder="Full address"
               className="text-grayInactive text-lg font-normal mt-2"
-              {...register("address")}
+              {...register('address')}
               customMaxWidth="w-full"
             />
             <div className="text-red-500 text-sm font-normal pt-1">
@@ -143,14 +151,14 @@ export const RestaurantForm = () => {
             </div>
           </div>
 
-          {/* select input */}
+          {/* select State */}
           <div className="w-full">
             <label className="text-grayHelp text-lg font-medium">State</label>
 
             <div className="w-full">
               <Select
                 onValueChange={(value) =>
-                  setValue("state", value, {
+                  setValue('state', value, {
                     shouldValidate: true,
                   })
                 }
@@ -177,6 +185,36 @@ export const RestaurantForm = () => {
             </div>
           </div>
 
+          {/* select country */}
+          <div className="w-full">
+            <label className="text-grayHelp text-lg font-medium">Country</label>
+
+            <div className="w-full">
+              <Select
+                onValueChange={(value) =>
+                  setValue('country', value, {
+                    shouldValidate: true,
+                  })
+                }
+                defaultValue={watch().country}
+              >
+                <SelectTrigger className="w-full" customMaxWidth="w-full">
+                  <SelectValue
+                    placeholder="Select your country"
+                    className="text-grayInactive text-lg font-normal"
+                  />
+                </SelectTrigger>
+                <SelectContent className="text-grayInactive text-lg font-normal w-full">
+                  {['Nigeria'].map((country, _i) => (
+                    <SelectItem key={_i} className="rounded-xl" value={country}>
+                      {country}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
           <div>
             <label className="text-grayHelp text-lg font-medium">
               Zip code
@@ -185,7 +223,7 @@ export const RestaurantForm = () => {
               placeholder="00000"
               className="text-grayInactive text-lg font-normal mt-2"
               customMaxWidth="w-full"
-              {...register("zipCode", {
+              {...register('zipCode', {
                 required: true,
               })}
             />
@@ -196,6 +234,25 @@ export const RestaurantForm = () => {
             )}
           </div>
 
+          {/* Average price input*/}
+          <div>
+            <label className="text-grayHelp text-lg font-medium">
+              Average Price(Naira)
+            </label>
+            <Input
+              placeholder="5000"
+              className="text-grayInactive text-lg font-normal mt-2"
+              customMaxWidth="w-full"
+              {...register('averagePrice', {
+                required: true,
+              })}
+            />
+            {errors.averagePrice && (
+              <div className="text-red-500 text-sm font-normal pt-1">
+                {errors.averagePrice?.message}
+              </div>
+            )}
+          </div>
           <div>
             <label className="text-grayHelp text-lg font-medium">
               Phone number
@@ -204,7 +261,7 @@ export const RestaurantForm = () => {
               placeholder="+2348100000000"
               className="text-grayInactive text-lg font-normal mt-2"
               customMaxWidth="w-full"
-              {...register("phoneNumber", {
+              {...register('phoneNumber', {
                 required: true,
               })}
             />
@@ -223,7 +280,7 @@ export const RestaurantForm = () => {
               placeholder="Tell us a little bit about yourself"
               className="resize-none mt-2"
               customMaxWidth="w-full"
-              {...register("description")}
+              {...register('description')}
             />
             <p className="pt-3">
               NB: Be very expressive with your offerings 😉
@@ -253,7 +310,7 @@ export const RestaurantForm = () => {
                 )} */}
                 <Select
                   onValueChange={(value) =>
-                    setValue("openingDay", value, {
+                    setValue('openingDay', value, {
                       shouldValidate: true,
                     })
                   }
@@ -288,7 +345,7 @@ export const RestaurantForm = () => {
                 /> */}
                 <Select
                   onValueChange={(value) =>
-                    setValue("closingDay", value, {
+                    setValue('closingDay', value, {
                       shouldValidate: true,
                     })
                   }
@@ -326,7 +383,7 @@ export const RestaurantForm = () => {
                   placeholder="9:00 AM"
                   className="text-grayInactive text-lg font-normal mt-2"
                   customMaxWidth="w-full"
-                  {...register("openingHour", {
+                  {...register('openingHour', {
                     required: true,
                   })}
                 />
@@ -343,7 +400,7 @@ export const RestaurantForm = () => {
                   placeholder="9:00 AM"
                   className="text-grayInactive text-lg font-normal mt-2"
                   customMaxWidth="w-full"
-                  {...register("closingHour", {
+                  {...register('closingHour', {
                     required: true,
                   })}
                 />
