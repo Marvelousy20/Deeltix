@@ -4,18 +4,21 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/restaurant/user";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosProgressEvent } from "axios";
 import { DocumentUpload, GalleryEdit } from "iconsax-react";
 import { Trash2, X } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import { Progress } from "@/components/ui/progress";
 import { toast } from "react-toastify";
+import { Loader } from "@mantine/core";
 
 export const MultipleUpload = () => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const [uploads, setUploads] = useState<string[]>([]);
   const [multiple, setMultiple] = useState([]);
+  const [progress, setProgress] = useState({ pc: 0 });
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -47,6 +50,15 @@ export const MultipleUpload = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          onUploadProgress: (progressEvent?: AxiosProgressEvent) => {
+            const uploadProgress = progressEvent?.progress;
+            if (uploadProgress !== undefined) {
+              // Use progress here
+              setProgress((prevState) => {
+                return { ...prevState, pc: uploadProgress * 100 };
+              });
+            }
+          },
         }
       ),
 
@@ -54,7 +66,8 @@ export const MultipleUpload = () => {
 
     onSuccess({ data }) {
       setMultiple(data?.data?.data?.urls);
-      toast.success("File uploaded successfully");
+      // toast.success("File uploaded successfully");
+      // router.push(`/restaurant-profile?uploads=${data?.data?.data.urls}`);
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -85,7 +98,7 @@ export const MultipleUpload = () => {
   interface IRestaurant {
     pictures: Array<string> | undefined;
   }
-  const { mutate: resprofile, isLoading: profile } = useMutation({
+  const { mutate: resprofile, isLoading: profileLoading } = useMutation({
     mutationFn: async (data: IRestaurant) =>
       await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
     mutationKey: ["multiple"],
@@ -103,6 +116,25 @@ export const MultipleUpload = () => {
       <div className="flex flex-col gap-4">
         <section className="flex items-center justify-between">
           <div className="flex flex-col gap-[2px]">
+            <div className="flex items-center gap-2">
+              {userfile.length === 0 ? (
+                ""
+              ) : (
+                <Progress
+                  max={100}
+                  value={progress.pc}
+                  indicatorColor="bg-[#574DFF]"
+                  className="bg-[#EAECF0]"
+                />
+              )}
+
+              {userfile.length === 0 ? (
+                ""
+              ) : (
+                <p className="text-[#574DFF]">{progress.pc.toFixed(0)}%</p>
+              )}
+            </div>
+
             <h4 className="font-medium text-base text-grayHelp">
               Other photos
             </h4>
@@ -122,7 +154,7 @@ export const MultipleUpload = () => {
               onClick={() => resprofile({ pictures: multiple })}
               className="text-sm font-medium text-[#574DFF] w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
             >
-              Submit
+              {profileLoading ? <Loader size={25} /> : <p> Submit</p>}
             </Button>
           </div>
         </section>
