@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/restaurant/user";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosProgressEvent } from "axios";
 import { DocumentUpload, GalleryEdit } from "iconsax-react";
 import { Trash2, X } from "lucide-react";
 import Image from "next/image";
