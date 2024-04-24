@@ -1,15 +1,17 @@
 "use client";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosProgressEvent } from "axios";
 import { Camera } from "iconsax-react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { RestaurantProfile } from "./restaurant";
+import { Progress } from "@/components/ui/progress";
 
 export const ProfileUpload = () => {
   const [userfile, setUserFile] = useState<File[]>([]);
+  const [progress, setProgress] = useState({ pc: 0 });
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef.current) {
@@ -40,13 +42,22 @@ export const ProfileUpload = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          onUploadProgress: (progressEvent?: AxiosProgressEvent) => {
+            const uploadProgress = progressEvent?.progress;
+            if (uploadProgress !== undefined) {
+              // Use progress here
+              setProgress((prevState) => {
+                return { ...prevState, pc: uploadProgress * 100 };
+              });
+            }
+          },
         }
       ),
 
     mutationKey: ["picture-upload"],
 
     onSuccess() {
-      toast.success("File uploaded successfully");
+      // toast.success("File uploaded successfully");
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -75,10 +86,28 @@ export const ProfileUpload = () => {
   return (
     <div className="flex flex-col items-center justify-center !overflow-x-hidden">
       <section className="border border-grayBottom rounded-[24px] p-4 md:p-9 w-full flex flex-col gap-6">
-        <div className="flex item-center justify-between">
+        <div className="flex flex-col item-center justify-between">
           <h3 className="text-xl font-bold text-grayBlack2">
             Restaurant details
           </h3>
+          <div className="flex items-center gap-2">
+            {userfile.length === 0 ? (
+              ""
+            ) : (
+              <Progress
+                max={100}
+                value={progress.pc}
+                indicatorColor="bg-[#574DFF]"
+                className="bg-[#EAECF0]"
+              />
+            )}
+
+            {userfile.length === 0 ? (
+              ""
+            ) : (
+              <p className="text-[#574DFF]">{progress.pc.toFixed(0)}%</p>
+            )}
+          </div>
         </div>
         <div className=" flex items-center gap-4 w-fit h-fit">
           {!userfile.length ? (
