@@ -16,7 +16,7 @@ export const ModalEvent = ({
 
   return (
     <div>
-      <MoreHorizontal onClick={open} className=" cursor-pointer" />;
+      <MoreHorizontal onClick={open} className=" cursor-pointer" />
       <GuestUpdate
         opened={opened}
         close={close}
