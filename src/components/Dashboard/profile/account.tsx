@@ -22,14 +22,15 @@ const formSchema = z.object({
     message: "Number must be at least 11 character longer",
   }),
 });
-export const RestaurantAccount = () => {
+export const RestaurantAccount = ({user}:any) => {
+  const manager = user.data.data.manager
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: "",
-      phoneNumber: "",
+      fullName: manager.fullName,
+      phoneNumber: manager.phoneNumber,
     },
   });
   const { errors } = formState;

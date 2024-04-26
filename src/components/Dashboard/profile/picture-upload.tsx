@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { RestaurantProfile } from "./restaurant";
 import { Progress } from "@/components/ui/progress";
 
-export const ProfileUpload = () => {
+export const ProfileUpload = ({user}:any) => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const [progress, setProgress] = useState({ pc: 0 });
   const inputRef = useRef<HTMLInputElement>(null);
@@ -86,7 +86,7 @@ export const ProfileUpload = () => {
   return (
     <div className="flex flex-col items-center justify-center !overflow-x-hidden">
       <section className="border border-grayBottom rounded-[24px] p-4 md:p-9 w-full flex flex-col gap-6">
-        <div className="flex flex-col item-center justify-between">
+        {/* <div className="flex flex-col item-center justify-between">
           <h3 className="text-xl font-bold text-grayBlack2">
             Restaurant details
           </h3>
@@ -148,8 +148,8 @@ export const ProfileUpload = () => {
             ref={inputRef}
             className="hidden"
           />
-        </div>
-        <RestaurantProfile displayPicture={restaurantUpload} />
+        </div> */}
+        <RestaurantProfile displayPicture={restaurantUpload} user={user}/>
       </section>
     </div>
   );
