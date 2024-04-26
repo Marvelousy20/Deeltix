@@ -159,7 +159,7 @@ export const DpUpload = () => {
               {userfile.map((image, _idx) => (
                 <div
                   key={_idx}
-                  className="w-full h-[200px] overflow-hidden flex items-center justify-center border border-white rounded-sm"
+                  className="w-[400px] h-[200px] overflow-hidden flex items-center justify-center border border-white rounded-sm"
                 >
                   <Image
                     src={URL.createObjectURL(image)}

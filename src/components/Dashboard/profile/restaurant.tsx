@@ -33,35 +33,40 @@ const formSchema = z.object({
   state: z.string().min(2, {
     message: "Enter your state",
   }),
+  name: z.string().min(2, {
+    message: "Enter rrestaurant's name",
+  }),
   country: z.string().min(5, {
     message: "Enter your state",
   }),
-  averagePrice: z.string().min(5, {
+  averagePrice: z.string().min(3, {
     message: "Enter price",
   }),
 
   description: z.string().min(10, {
     message: "provide information about your restaurant",
   }),
-  openDay: z.string().min(6, {
+  openingDay: z.string().min(6, {
     message: "Enter your opening day",
   }),
-  closeDay: z.string().min(6, {
+  closingDay: z.string().min(6, {
     message: "Enter your closing day",
   }),
-  openTime: z.string().min(2, {
+  openingHour: z.string().min(2, {
     message: "Enter your opening time",
   }),
-  closeTime: z.string().min(2, {
+  closingHour: z.string().min(2, {
     message: "Enter your closing time",
   }),
 });
 
 export const RestaurantProfile = ({
-  displayPicture,
+  displayPicture, user
 }: {
   displayPicture: string;
+  user: any
 }) => {
+  const restaurant = user.data.data.restaurant
   const query = useQueryClient();
   const { banner } = useProduct();
   const { restaurantId } = useUser();
@@ -73,34 +78,35 @@ export const RestaurantProfile = ({
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      address: "",
-      state: "",
-      country: "",
-      averagePrice: "",
-      description: "",
-      openDay: "",
-      closeDay: "",
-      openTime: "",
-      closeTime: "",
+      name: restaurant.name,
+      address: restaurant.address,
+      state: restaurant.state,
+      country: restaurant.country,
+      averagePrice: restaurant.averagePrice.toString(),
+      description: restaurant.description,
+      openingDay: restaurant.openingDay,
+      closingDay: restaurant.closingDay,
+      openingHour: restaurant.openingHour,
+      closingHour: restaurant.closingHour,
     },
   });
   // country
-  const { data } = useQuery({
-    queryFn: async () =>
-      await axios.get("https://restcountries.com/v3.1/all", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }),
-    queryKey: ["countries"],
-  });
+  // const { data } = useQuery({
+  //   queryFn: async () =>
+  //     await axios.get("https://restcountries.com/v3.1/all", {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }),
+  //   queryKey: ["countries"],
+  // });
 
-  // const newSchema = formSchema.omit({ openDay: true, closeDay: true });
+  // IUpdateRestaurantProfile
   const { errors } = formState;
   const { mutate, isLoading } = useMutation({
-    mutationFn: async (data: IUpdateRestaurantProfile) =>
+    mutationFn: async (data: any) =>
       await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
-    mutationKey: ["update-restaurant-profile"],
+    mutationKey: ["restaurant-profile", "user"],
     onSuccess(data) {
       toast.success("Profile updated successfully");
       query.invalidateQueries(["restaurant-details"]);
@@ -112,21 +118,38 @@ export const RestaurantProfile = ({
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const openingDays = `${values.openDay} ${values.closeDay}`;
-    const openingHours = `${values.openTime} ${values.closeTime}`;
-    const { openDay, closeDay, openTime, closeTime, ...others } = values;
-    mutate({
-      ...others,
-      openingDays,
-      openingHours,
-      displayPicture,
-    });
+    // const openingDays = `${values.openingDay} ${values.closingDay}`;
+    // const openingHours = `${values.openingHour} ${values.closingHour}`;
+    // const { openingDay, closingDay, openingHour, closingHour, ...others } = values;
+    mutate(
+      // ...others,
+      // openingDays,
+      // openingHours,
+      // displayPicture,
+      values
+    );
   };
   return (
     <div className="">
       <section className="">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="flex flex-col gap-6">
+            {/* restaurant Name */}
+            <div>
+              <label className="text-grayHelp text-lg font-medium">
+                <div className="flex items-center justify-between w-full">
+                  <p>Name</p>
+                </div>
+              </label>
+              <Input
+                placeholder="Deluxe Kitchen"
+                className="text-grayInactive text-lg font-normal mt-2"
+                {...register("name")}
+              />
+              <div className="text-red-500 text-sm font-normal pt-1">
+                {errors.name?.message}
+              </div>
+            </div>
             <div>
               <label className="text-grayHelp text-lg font-medium">Bio</label>
               <Textarea
@@ -239,7 +262,7 @@ export const RestaurantProfile = ({
                 Average price
               </label>
               <Input
-                type="number"
+                // type="number"
                 placeholder="Enter your average price"
                 className="text-grayInactive text-lg font-normal mt-2"
                 {...register("averagePrice")}
@@ -262,11 +285,11 @@ export const RestaurantProfile = ({
                   <Input
                     placeholder="Monday"
                     className="text-grayInactive text-lg font-normal w-full mt-2"
-                    {...register("openDay")}
+                    {...register("openingDay")}
                   />
-                  {errors.openDay && (
+                  {errors.openingDay && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.openDay?.message}
+                      {errors.openingDay?.message}
                     </div>
                   )}
                 </div>
@@ -278,13 +301,13 @@ export const RestaurantProfile = ({
                   <Input
                     placeholder="Sunday"
                     className="text-grayInactive text-lg font-normal w-full mt-2"
-                    {...register("closeDay", {
+                    {...register("closingDay", {
                       required: true,
                     })}
                   />
-                  {errors.closeDay && (
+                  {errors.closingDay && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.closeDay?.message}
+                      {errors.closingDay?.message}
                     </div>
                   )}
                 </div>
@@ -298,13 +321,13 @@ export const RestaurantProfile = ({
                   <Input
                     placeholder="9:00 AM"
                     className="text-grayInactive text-lg font-normal mt-2"
-                    {...register("openTime", {
+                    {...register("openingHour", {
                       required: true,
                     })}
                   />
-                  {errors.openTime && (
+                  {errors.openingHour && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.openTime?.message}
+                      {errors.openingHour?.message}
                     </div>
                   )}
                 </div>
@@ -316,13 +339,13 @@ export const RestaurantProfile = ({
                   <Input
                     placeholder="9:00 AM"
                     className="text-grayInactive text-lg font-normal mt-2"
-                    {...register("closeTime", {
+                    {...register("closingHour", {
                       required: true,
                     })}
                   />
-                  {errors.closeTime && (
+                  {errors.closingHour && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.closeTime?.message}
+                      {errors.closingHour?.message}
                     </div>
                   )}
                 </div>

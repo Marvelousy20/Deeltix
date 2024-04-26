@@ -1,12 +1,16 @@
 "use client";
-import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RestaurantProfile } from "./restaurant";
 import { RestaurantAccount } from "./account";
 import { RestaurantPassword } from "./password";
 import { ProfileUpload } from "./picture-upload";
+import { useUser } from "@/context/restaurant/user";
 
 export const ProfileTab = () => {
+  const {user} = useUser()
+  if (!user){
+    return <div>loading</div>
+  }
   return (
     <section className="max-w-lg lg:min-w-[32.5rem]">
       <div className="flex flex-col gap-2">
@@ -39,11 +43,11 @@ export const ProfileTab = () => {
         </TabsList>
 
         <TabsContent value="account">
-          <RestaurantAccount />
+          <RestaurantAccount user={user}/>
         </TabsContent>
 
         <TabsContent value="restaurant">
-          <ProfileUpload />
+          <ProfileUpload user={user}/>
         </TabsContent>
 
         <TabsContent value="password">
