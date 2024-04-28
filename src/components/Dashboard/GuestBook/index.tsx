@@ -40,11 +40,11 @@ export const Guests = () => {
       number: "520",
       icon: <People color="#574DFF" />,
     },
-    {
-      headings: "Total Guest",
-      number: "2,100",
-      icon: <People color="#574DFF" />,
-    },
+    // {
+    //   headings: "Total Guest",
+    //   number: "2,100",
+    //   icon: <People color="#574DFF" />,
+    // },
   ];
   return (
     <div className="p-[32px]">
@@ -57,7 +57,7 @@ export const Guests = () => {
         </div>
         <div className="flex items-center gap-2 py-3 px-4 bg-[#574DFF] rounded-[40px]">
           <PlusCircle color="#F0F3F8" />
-          <p className="text-[#F0F3F8] text-sm font-medium">new item</p>
+          <p className="text-[#F0F3F8] text-sm font-medium">new guest</p>
         </div>
       </section>
 
