@@ -13,13 +13,13 @@ export interface IStat {
 export const Dashboard = () => {
   const sales = [
     {
-      sale: "Gross sales",
+      sale: "Total revenue",
       amount: "540,432.50",
       percentage: "10% from yesterday",
       arrow: <ArrowUpRight color="#1DA533" />,
     },
     {
-      sale: "Total revenue",
+      sale: "Page view",
       amount: "30,647.00",
       percentage: "10% from yesterday",
       arrow: <ArrowDownRight color="#F71616" />,
@@ -44,7 +44,7 @@ export const Dashboard = () => {
           user={"Olivia"}
           detail={"Here’s the update with Cilantro 🥙"}
         />
-        <div className="w-fit text-sm font-normal text-white  bg-[#121212] rounded-[20px] py-2 px-3">
+        <div className="w-fit text-sm font-normal cursor-pointer text-white  bg-[#121212] rounded-[20px] py-2 px-3">
           Download sales report
         </div>
       </section>
