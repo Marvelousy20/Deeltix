@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { Headings } from "../GetStarted/Headings";
 import { DashboardReservation } from "./UpcomingReservation";
@@ -5,35 +6,69 @@ import { Guest } from "./RecentGuest";
 import { DataTable } from "@/components/Table/DataTable";
 import { transactionColumns, transactionData } from "./TransactionTable";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { useUser } from "@/context/restaurant/user";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/axios-config";
+import AreaChartComponent from "./Chart";
 
-export interface IStat {
-  title: string;
-  data: string;
-}
 export const Dashboard = () => {
+  const { restaurantId, restuarantName } = useUser();
+
+  // daily stat
+  const { data: daily_stat, isLoading: daily_statloading } = useQuery({
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      // return await api.get<ReservationStat>(
+      return await api.get(
+        `/api/restaurants/${restaurantId}/daily-stats`
+      );
+    },
+    queryKey: ["daily-stat", "stat"],
+    enabled: !!restaurantId,
+    select: (data) => data?.data?.data?.data,
+  });
+
+  // weekly stat
+  const { data: weekly_stat, isLoading: weekly_statloading } = useQuery({
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      // return await api.get<ReservationStat>(
+      return await api.get(
+        `/api/reservations/${restaurantId}/chart/weekly`
+      );
+    },
+    queryKey: ["weekly-stat", "stat"],
+    enabled: !!restaurantId,
+    select: (data) => data?.data?.data?.data,
+  });
+
   const sales = [
     {
       sale: "Total revenue",
-      amount: "540,432.50",
-      percentage: "10% from yesterday",
-      arrow: <ArrowUpRight color="#1DA533" />,
-    },
-    {
-      sale: "Page view",
-      amount: "30,647.00",
+      amount: daily_stat? `${daily_stat?.stats.totalRevenue}` : '0',
       percentage: "10% from yesterday",
       arrow: <ArrowDownRight color="#F71616" />,
     },
+    {
+      sale: "Page view",
+      amount: daily_stat? `${daily_stat?.stats.pageViews}` : '0',
+      percentage: "10% from yesterday",
+      arrow: <ArrowUpRight color="#1DA533" />,
+    },
   ];
-
+  
   const user = [
     {
       type: "Reservation",
-      amount: "500",
+      amount: daily_stat? `${daily_stat?.stats.totalReservationCount}` : '0',
     },
     {
       type: "Customer",
-      amount: "50",
+      amount: daily_stat? `${daily_stat?.stats.upcomingReservations}` : '0',
     },
   ];
 
@@ -42,7 +77,8 @@ export const Dashboard = () => {
       <section className="flex items-center justify-between">
         <Headings
           user={"Olivia"}
-          detail={"Here’s the update with Cilantro 🥙"}
+          detail={`Here s the update with ${restuarantName} 🥙`}
+          // detail={`Here’s the update with `}
         />
         <div className="w-fit text-sm font-normal cursor-pointer text-white  bg-[#121212] rounded-[20px] py-2 px-3">
           Download sales report
@@ -93,7 +129,9 @@ export const Dashboard = () => {
         </section>
       </div>
 
-      <div className="h-[350px] w-full border border-grayBottom rounded-[20px] p-[24px]"></div>
+      <div className="h-[350px] w-full border border-grayBottom rounded-[20px] p-[24px]">
+        <AreaChartComponent stats={weekly_stat?.output}/>
+      </div>
 
       <section className="grid grid-cols-2 gap-8">
         <DashboardReservation />
