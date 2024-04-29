@@ -5,6 +5,7 @@ import { Guest } from "./RecentGuest";
 import { DataTable } from "@/components/Table/DataTable";
 import { transactionColumns, transactionData } from "./TransactionTable";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import AreaChartComponent from "../Chart";
 
 export interface IStat {
   title: string;
@@ -93,7 +94,9 @@ export const Dashboard = () => {
         </section>
       </div>
 
-      <div className="h-[350px] w-full border border-grayBottom rounded-[20px] p-[24px]"></div>
+      <div className="h-[350px] w-full border border-grayBottom rounded-[20px] p-[24px]">
+        <AreaChartComponent />
+      </div>
 
       <section className="grid grid-cols-2 gap-8">
         <DashboardReservation />
