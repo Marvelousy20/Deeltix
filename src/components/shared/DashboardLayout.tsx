@@ -61,7 +61,7 @@ export const DashboardLayout = ({
     },
     {
       name: "Log out",
-      link: "/",
+      link: "/restaurant-dashboard",
       icon: <LogoutCurve size="18" />,
     },
   ];
