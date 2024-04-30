@@ -83,14 +83,14 @@ export const AddNewGuest = ({
         <DialogContent>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-6 justify-center items-center"
           >
-            <div className="">
+            <div className="lg:max-w-[27rem] w-full">
               <label className="text-grayHelp text-lg font-medium">
                 Full name
               </label>
               <Input
-                placeholder="Enter your full name"
+                placeholder="Enter customer full name"
                 className="text-grayInactive text-lg font-normal mt-2"
                 {...register("fullName")}
               />
@@ -101,12 +101,12 @@ export const AddNewGuest = ({
               )}
             </div>
 
-            <div className="">
+            <div className="lg:max-w-[27rem] w-full">
               <label className="text-grayHelp text-lg font-medium">
                 Phone number
               </label>
               <Input
-                placeholder="Enter your phone number"
+                placeholder="Enter customer phone number"
                 className="text-grayInactive text-lg font-normal mt-2"
                 {...register("phoneNumber")}
               />
@@ -117,12 +117,12 @@ export const AddNewGuest = ({
               )}
             </div>
 
-            <div className="">
+            <div className="lg:max-w-[27rem] w-full">
               <label className="text-grayHelp text-lg font-medium">
                 Email address
               </label>
               <Input
-                placeholder="Enter your email address"
+                placeholder="Enter customer email address"
                 type="email"
                 className="text-grayInactive text-lg font-normal mt-2"
                 {...register("email")}
@@ -133,7 +133,11 @@ export const AddNewGuest = ({
                 </div>
               )}
             </div>
-            <Button type="submit" className=" w-[300px]" variant="primary">
+            <Button
+              type="submit"
+              className="lg:max-w-[27rem] w-full"
+              variant="primary"
+            >
               {isLoading ? (
                 <span className="flex items-center gap-1 text-white font-medium text-xl">
                   <span>Adding guest</span> <Loader size="sm" />
