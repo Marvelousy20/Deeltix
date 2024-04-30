@@ -11,7 +11,7 @@ import {
   Wallet,
   Wallet3,
 } from "iconsax-react";
-import { Wine } from "lucide-react";
+import { Sidebar, Wine } from "lucide-react";
 import { Isidebar } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,6 +20,8 @@ import { usePathname } from "next/navigation";
 import { UserProvider } from "@/context/restaurant/user";
 import { cookieStorage } from "@ibnlanre/portal";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/axios-config";
 
 export const DashboardLayout = ({
   children,
@@ -31,6 +33,15 @@ export const DashboardLayout = ({
     cookieStorage.clear();
     push("/");
   };
+
+  const { data, isLoading } = useQuery({
+    queryFn: async () =>
+      await api.get(`/api/restaurant-manager/show-get-started`),
+
+    queryKey: ["show"],
+  });
+  console.log("get:", data?.data?.data?.data?.showGetStartedPage);
+
   const sideBar: Isidebar[] = [
     { name: "Get started", link: "/get-started", icon: <Category size="18" /> },
 
@@ -68,7 +79,42 @@ export const DashboardLayout = ({
           />
         </figure>
         <div className="flex flex-col gap-5">
-          {sideBar.map(({ name, link, icon }, idx) => (
+          {data?.data?.data?.data?.showGetStartedPage
+            ? sideBar.map(({ name, link, icon }, idx) => (
+                <Link
+                  onClick={idx === 7 ? handleLogout : undefined}
+                  href={link}
+                  key={idx}
+                  className={clsx(
+                    link === pathName
+                      ? "text-[#574DFF] outline-none border-[#636C71] rounded-[20px] bg-[#574DFF12]  text-base font-medium"
+                      : "text-base font-medium text-white border-none bg-none "
+                  )}
+                >
+                  <div className="flex items-center gap-4 py-[8px] px-[10px]">
+                    <span>{icon}</span>
+                    <span>{name}</span>
+                  </div>
+                </Link>
+              ))
+            : sideBar.slice(1).map(({ name, link, icon }, idx) => (
+                <Link
+                  onClick={idx === 7 ? handleLogout : undefined}
+                  href={link}
+                  key={idx}
+                  className={clsx(
+                    link === pathName
+                      ? "text-[#574DFF] outline-none border-[#636C71] rounded-[20px] bg-[#574DFF12]  text-base font-medium"
+                      : "text-base font-medium text-white border-none bg-none "
+                  )}
+                >
+                  <div className="flex items-center gap-4 py-[8px] px-[10px]">
+                    <span>{icon}</span>
+                    <span>{name}</span>
+                  </div>
+                </Link>
+              ))}
+          {/* {sideBar.map(({ name, link, icon }, idx) => (
             <Link
               onClick={idx === 7 ? handleLogout : undefined}
               href={link}
@@ -84,7 +130,7 @@ export const DashboardLayout = ({
                 <span>{name}</span>
               </div>
             </Link>
-          ))}
+          ))} */}
         </div>
       </div>
       <div className="h-full flex-1 overflow-y-auto transact-scroll">

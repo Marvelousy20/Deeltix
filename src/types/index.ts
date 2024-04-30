@@ -175,6 +175,11 @@ export interface Guest {
   email: string;
 }
 
+export interface AddGuest {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+}
 //reservation stat
 export interface ReservationStat {
   data: StatData;
