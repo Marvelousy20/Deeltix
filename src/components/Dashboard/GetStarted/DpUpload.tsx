@@ -17,7 +17,7 @@ import { Loader } from "@mantine/core";
 interface IDp {
     displayPicture: string[];
 }
-export const DpUpload = () => {
+export const DpUpload = ({displayPic}: any) => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [dp, setDp] = useState([]);
@@ -153,7 +153,9 @@ export const DpUpload = () => {
         </div>
         <div className="flex flex-col gap-3">
           {userfile.length === 0 ? (
-            <div className="w-[400px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"></div>
+            <div className="w-[400px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm">
+              <Image src={`${displayPic}`} width={400} height={200} alt="display-picture"/>
+            </div>
           ) : (
             <section>
               {userfile.map((image, _idx) => (

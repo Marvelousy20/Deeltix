@@ -5,6 +5,7 @@ import { RestaurantAccount } from "./account";
 import { RestaurantPassword } from "./password";
 import { ProfileUpload } from "./picture-upload";
 import { useUser } from "@/context/restaurant/user";
+import Gallery from "./gallery";
 
 export const ProfileTab = () => {
   const {user} = useUser()
@@ -40,6 +41,12 @@ export const ProfileTab = () => {
           >
             Password
           </TabsTrigger>
+          <TabsTrigger
+            value="gallery"
+            className=" data-[state=active]:bg-[#F7F7F7]  py-3 px-5 data-[state=active]:rounded-[8px] data-[state=active]:border-none text-[#565D62] data-[state=active]:text-[#2C2929]"
+          >
+            Gallery
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="account">
@@ -52,6 +59,10 @@ export const ProfileTab = () => {
 
         <TabsContent value="password">
           <RestaurantPassword />
+        </TabsContent>
+
+        <TabsContent value="gallery">
+          <Gallery user={user}/>
         </TabsContent>
       </Tabs>
     </section>

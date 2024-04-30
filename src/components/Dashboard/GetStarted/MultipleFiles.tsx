@@ -14,7 +14,7 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "react-toastify";
 import { Loader } from "@mantine/core";
 
-export const MultipleUpload = () => {
+export const MultipleUpload = ({otherPics}: any) => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const [uploads, setUploads] = useState<string[]>([]);
   const [multiple, setMultiple] = useState([]);
@@ -161,7 +161,13 @@ export const MultipleUpload = () => {
 
         <div className="">
           {userfile.length === 0 ? (
-            <div className="w-[100px] h-[100px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"></div>
+            <div className="overflow-hidden flex gap-2 items-center justify-center">
+              {otherPics.map((pic:string, idx:number) => (
+                <div key={idx} className="w-[100px] h-[100px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm">
+                  <Image src={`${pic}`}  width={100} height={100} alt="other-pic"/>
+                </div>
+              ))}
+            </div>
           ) : (
             <div className="">
               <div className="flex items-center gap-4">

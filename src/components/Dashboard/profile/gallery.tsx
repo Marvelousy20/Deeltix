@@ -1,8 +1,9 @@
+
 "use client";
 import { DocumentUpload, GalleryEdit } from "iconsax-react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-import { MultipleUpload } from "./MultipleFiles";
+// import { MultipleUpload } from "./MultipleFiles";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosProgressEvent } from "axios";
 import { toast } from "react-toastify";
@@ -14,12 +15,18 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
 import { Loader } from "@mantine/core";
-import { DpUpload } from "./DpUpload";
+import { DpUpload } from "../GetStarted/DpUpload";
+import { MultipleUpload } from "../GetStarted/MultipleFiles";
+// import { DpUpload } from "./DpUpload";
 interface IBackground {
   banner: string[];
 }
-export const RestaurantBackground = () => {
-  const [userfile, setUserFile] = useState<File[]>([]);
+
+export default function Gallery({user}: any) {
+    const displayPic: string = user.data.data.restaurant.displayPicture;
+    const bannerPic:string = user.data.data.restaurant.banner;
+    const otherPics:string[] = user.data.data.restaurant.pictures;
+    const [userfile, setUserFile] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const { banner, setBanner } = useProduct();
   const [background, setBackground] = useState([]);
@@ -102,8 +109,6 @@ export const RestaurantBackground = () => {
     handleSubmit();
   }, [userfile]);
 
-  console.log("banner", banner);
-
   // Uploading background image
   const { restaurantId } = useUser();
 
@@ -119,96 +124,91 @@ export const RestaurantBackground = () => {
       handleError(error as ErrorType);
     },
   });
-
   return (
     <section className="flex flex-col gap-[48px]">
       <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-5">
-          <h3 className="font-bold text-xl text-grayBlack2">
-            Restaurant photos
-          </h3>
+        <h3 className="font-bold text-xl text-grayBlack2">Restaurant photos</h3>
 
-          <div className="flex items-center gap-2">
-            {userfile.length === 0 ? (
-              ""
-            ) : (
-              <Progress
-                max={100}
-                value={progress.pc}
-                indicatorColor="bg-[#574DFF]"
-                className="bg-[#EAECF0]"
-              />
-            )}
-
-            {userfile.length === 0 ? (
-              ""
-            ) : (
-              <p className="text-[#574DFF]">{progress.pc.toFixed(0)}%</p>
-            )}
-          </div>
-
-          <section className="flex items-center justify-between">
-            <div className="flex flex-col gap-[2px]">
-              <h4 className="font-medium text-base text-grayHelp">
-                Background photo
-              </h4>
-              <p className="text-sm font-normal text-[#98A2B3]">
-              Header image for your restaurant page. 1280x720px aspect ratio
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <div
-                onClick={handleClick}
-                className="flex items-center justify-center gap-2 cursor-pointer w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
-              >
-                <DocumentUpload color="#574DFF" size="16" />
-                <p className="text-sm font-medium text-[#574DFF]">Upload</p>
-              </div>
-              <Button
-                onClick={() => resbackground({ banner: background })}
-                className="text-sm font-medium text-[#574DFF] w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
-              >
-                {loadbackground ? <Loader size={25} /> : <p> Submit</p>}
-              </Button>
-            </div>
-          </section>
-        </div>
-        <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
           {userfile.length === 0 ? (
-            <div className="w-[600px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"></div>
+            ''
           ) : (
-            <section>
-              {userfile.map((image, _idx) => (
-                <div
-                  key={_idx}
-                  className="w-full h-[200px] overflow-hidden flex items-center justify-center border border-white rounded-sm"
-                >
-                  <Image
-                    src={URL.createObjectURL(image)}
-                    width={600}
-                    height={200}
-                    alt="user upload"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-            </section>
+            <Progress
+              max={100}
+              value={progress.pc}
+              indicatorColor="bg-[#574DFF]"
+              className="bg-[#EAECF0]"
+            />
           )}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleChange}
-            ref={inputRef}
-            className="hidden"
-          />
-        </div>
-      </div>
-      
 
+          {userfile.length === 0 ? (
+            ''
+          ) : (
+            <p className="text-[#574DFF]">{progress.pc.toFixed(0)}%</p>
+          )}
+        </div>
+        <section className="flex items-center justify-between">
+          <div className="flex flex-col gap-[2px]">
+            <h4 className="font-medium text-base text-grayHelp">
+              Background photo
+            </h4>
+            <p className="text-sm font-normal text-[#98A2B3]">
+              Header image for your restaurant page. 1280x720px aspect ratio
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <div
+              onClick={handleClick}
+              className="flex items-center justify-center gap-2 cursor-pointer w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
+            >
+              <DocumentUpload color="#574DFF" size="16" />
+              <p className="text-sm font-medium text-[#574DFF]">Upload</p>
+            </div>
+            <Button
+              onClick={() => resbackground({ banner: background })}
+              className="text-sm font-medium text-[#574DFF] w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
+            >
+              {loadbackground ? <Loader size={25} /> : <p> Submit</p>}
+            </Button>
+          </div>
+        </section>
+      </div>
+      <div className="flex flex-col gap-3">
+        {userfile.length === 0 ? (
+          <div className="w-[600px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm">
+            {/* image will be here */}
+            <Image src={`${bannerPic}`} width={600} height={200} alt="display-picture"/>
+          </div>
+        ) : (
+          <section>
+            {userfile.map((image, _idx) => (
+              <div
+                key={_idx}
+                className="w-full h-[200px] overflow-hidden flex items-center justify-center border border-white rounded-sm"
+              >
+                <Image
+                  src={URL.createObjectURL(image)}
+                  width={600}
+                  height={200}
+                  alt="user upload"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </section>
+        )}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleChange}
+          ref={inputRef}
+          className="hidden"
+        />
+      </div>
       {/* display Picture uploader */}
-      <DpUpload />
+      <DpUpload displayPic={displayPic}/>
       {/* multiple upload */}
-      <MultipleUpload />
+      <MultipleUpload otherPics={otherPics}/>
     </section>
   );
-};
+}
