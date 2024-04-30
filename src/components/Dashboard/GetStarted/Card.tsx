@@ -2,8 +2,18 @@
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/axios-config";
 
-export const Cards = ({sectionComp}: any) => {
+export const Cards = () => {
+  const { data, isLoading } = useQuery({
+    queryFn: async () =>
+      await api.get(`/api/restaurant-manager/show-get-started`),
+
+    queryKey: ["show"],
+  });
+
+  console.log("testing:", data?.data?.data?.data?.restaurantOverviewCompleted);
   const list = [
     {
       title: "Restaurant Overview",
@@ -11,37 +21,49 @@ export const Cards = ({sectionComp}: any) => {
         "Give an overview about the delights of your restaurant and menu",
       icon: "/dashboard/overview.svg",
       link: "/get-started/overview",
-      isComplete:  sectionComp.restaurantOverviewCompleted
     },
     {
       title: "Add first menu",
       details: "Display available meals along with their respective prices.",
       icon: "/dashboard/menu.svg",
       link: "/get-started/menu",
-      isComplete:  sectionComp.firstMenuCompleted
     },
     {
       title: "Add photos",
       details:
-      "Share captivating images to display your restaurant’s charm and attract customers.",
+        "Share captivating images to display your restaurant’s charm and attract customers.",
       icon: "/dashboard/upload.svg",
       link: "/get-started/photos",
-      isComplete:  sectionComp.photosCompleted
     },
   ];
   const { push } = useRouter();
   return (
     <div className="">
       <div className="grid lg:grid-cols-3 gap-5  ">
-        {list.map(({ title, details, icon, link, isComplete }) => (
+        {list.map(({ title, details, icon, link }, idx) => (
           <div
             onClick={() => push(link)}
-            key={title}
+            key={idx}
             className="flex flex-col gap-4 py-[40px] px-8 bg-[#F9FAFB] rounded-2xl border border-grayHeader cursor-pointer"
           >
             <div className="flex items-center justify-between">
               <Image src={icon} width={24} height={24} alt="restaurants" />
-              <p className={`${isComplete ? 'text-green-700 bg-green-100 p-2 text-xs rounded-full' : 'text-red-700 bg-red-100 p-2 text-xs rounded-full'}`}>{isComplete? 'Completed': 'Incomplete'}</p>
+
+              <p className="text-green-400 bg-[#ECFDF3] w-fit py-1 px-2 rounded-[16px]">
+                {idx === 0
+                  ? data?.data?.data?.data?.restaurantOverviewCompleted
+                    ? "Completed"
+                    : "Incomplete"
+                  : idx === 1
+                  ? data?.data?.data?.data?.firstMenuCompleted
+                    ? "Completed"
+                    : "Incomplete"
+                  : idx === 2
+                  ? data?.data?.data?.data?.photosCompleted
+                    ? "Completed"
+                    : "Incomplete"
+                  : ""}
+              </p>
             </div>
             <h3 className="font-bold text-comment text-xl">{title}</h3>
             <p className="font-normal text-base text-grayInactive">{details}</p>

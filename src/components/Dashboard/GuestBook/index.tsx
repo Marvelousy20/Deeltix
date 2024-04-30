@@ -2,13 +2,14 @@
 import { DataTable } from "@/components/Table/DataTable";
 import { People } from "iconsax-react";
 import { PlusCircle } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { guestColumns, guestData } from "./table-column";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/axios-config";
 import { useUser } from "@/context/restaurant/user";
 import { IAllGuestResponse } from "@/types";
+import { AddNewGuest } from "./add-guest";
 
 export interface IGuest {
   headings: string;
@@ -16,6 +17,7 @@ export interface IGuest {
   icon: React.ReactNode;
 }
 export const Guests = () => {
+  const [addguest, setAddGuest] = useState<boolean>(false);
   const { restaurantId } = useUser();
 
   const { data, isLoading } = useQuery({
@@ -55,7 +57,10 @@ export const Guests = () => {
             A list of all seated guest
           </p>
         </div>
-        <div className="flex items-center gap-2 py-3 px-4 bg-[#574DFF] rounded-[40px]">
+        <div
+          onClick={() => setAddGuest(true)}
+          className="flex items-center cursor-pointer gap-2 py-3 px-4 bg-[#574DFF] rounded-[40px]"
+        >
           <PlusCircle color="#F0F3F8" />
           <p className="text-[#F0F3F8] text-sm font-medium">new guest</p>
         </div>
@@ -91,6 +96,8 @@ export const Guests = () => {
           <DataTable columns={guestColumns} data={data?.guests ?? []} />
         </div>
       </section>
+
+      <AddNewGuest addguest={addguest} setAddGuest={setAddGuest} />
     </div>
   );
 };
