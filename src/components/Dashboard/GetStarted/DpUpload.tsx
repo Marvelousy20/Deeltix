@@ -14,15 +14,13 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
 import { Loader } from "@mantine/core";
-import { DpUpload } from "./DpUpload";
-interface IBackground {
-  banner: string[];
+interface IDp {
+    displayPicture: string[];
 }
-export const RestaurantBackground = () => {
+export const DpUpload = () => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { banner, setBanner } = useProduct();
-  const [background, setBackground] = useState([]);
+  const [dp, setDp] = useState([]);
   const [progress, setProgress] = useState({ pc: 0 });
   const handleClick = () => {
     if (inputRef.current) {
@@ -35,19 +33,6 @@ export const RestaurantBackground = () => {
     if (files) {
       const selectedFile = Array.from(files);
       setUserFile([...userfile, ...selectedFile]);
-    }
-  };
-
-  const handleDelete = () => {
-    setUserFile([]);
-    if (inputRef.current) {
-      inputRef.current.value === "";
-    }
-  };
-
-  const upload = () => {
-    if (userfile) {
-      console.log("file upload:", userfile);
     }
   };
 
@@ -75,9 +60,7 @@ export const RestaurantBackground = () => {
     mutationKey: ["picture-upload"],
 
     onSuccess({ data }) {
-      setBanner(data?.data?.data?.urls[0]);
-      setBackground(data?.data?.data?.urls[0]);
-      // toast.success("File uploaded successfully");
+      setDp(data?.data?.data?.urls[0]);
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -102,13 +85,11 @@ export const RestaurantBackground = () => {
     handleSubmit();
   }, [userfile]);
 
-  console.log("banner", banner);
-
   // Uploading background image
   const { restaurantId } = useUser();
 
-  const { mutate: resbackground, isLoading: loadbackground } = useMutation({
-    mutationFn: async (data: IBackground) =>
+  const { mutate: resDp, isLoading: loadbackground } = useMutation({
+    mutationFn: async (data: IDp) =>
       await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
     mutationKey: ["background"],
     onSuccess() {
@@ -124,9 +105,6 @@ export const RestaurantBackground = () => {
     <section className="flex flex-col gap-[48px]">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-5">
-          <h3 className="font-bold text-xl text-grayBlack2">
-            Restaurant photos
-          </h3>
 
           <div className="flex items-center gap-2">
             {userfile.length === 0 ? (
@@ -150,10 +128,10 @@ export const RestaurantBackground = () => {
           <section className="flex items-center justify-between">
             <div className="flex flex-col gap-[2px]">
               <h4 className="font-medium text-base text-grayHelp">
-                Background photo
+                Card Photo
               </h4>
               <p className="text-sm font-normal text-[#98A2B3]">
-              Header image for your restaurant page. 1280x720px aspect ratio
+              This image will compel potential customers to review your page <br/> and menu. 960x720px aspect ratio
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -165,7 +143,7 @@ export const RestaurantBackground = () => {
                 <p className="text-sm font-medium text-[#574DFF]">Upload</p>
               </div>
               <Button
-                onClick={() => resbackground({ banner: background })}
+                onClick={() => resDp({ displayPicture: dp })}
                 className="text-sm font-medium text-[#574DFF] w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
               >
                 {loadbackground ? <Loader size={25} /> : <p> Submit</p>}
@@ -175,13 +153,13 @@ export const RestaurantBackground = () => {
         </div>
         <div className="flex flex-col gap-3">
           {userfile.length === 0 ? (
-            <div className="w-[600px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"></div>
+            <div className="w-[400px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"></div>
           ) : (
             <section>
               {userfile.map((image, _idx) => (
                 <div
                   key={_idx}
-                  className="w-full h-[200px] overflow-hidden flex items-center justify-center border border-white rounded-sm"
+                  className="w-[400px] h-[200px] overflow-hidden flex items-center justify-center border border-white rounded-sm"
                 >
                   <Image
                     src={URL.createObjectURL(image)}
@@ -203,11 +181,6 @@ export const RestaurantBackground = () => {
           />
         </div>
       </div>
-
-      {/* display Picture uploader */}
-      <DpUpload />
-      {/* multiple upload */}
-      <MultipleUpload />
     </section>
   );
 };

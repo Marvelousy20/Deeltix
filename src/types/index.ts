@@ -185,6 +185,11 @@ export interface ReservationStat {
   data: StatData;
   status: string;
 }
+//reservation stat
+export interface DailyStat {
+  data: StatData;
+  status: string;
+}
 
 export interface StatData {
   message: string;
