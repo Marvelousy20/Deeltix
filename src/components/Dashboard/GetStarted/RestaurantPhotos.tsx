@@ -2,7 +2,6 @@
 import React from "react";
 import { Breadcrumbs } from "./Breadcrumb";
 import { RestaurantBackground } from "./RestaurantUpload";
-import { MultipleUpload } from "./MultipleFiles";
 
 export const MainPhotos = () => {
   return (

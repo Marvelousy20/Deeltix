@@ -1,25 +1,23 @@
-"use client";
-import { api } from "@/axios-config";
-import { Button } from "@/components/ui/button";
-import { useUser } from "@/context/restaurant/user";
-import { ErrorType, handleError } from "@/lib/handle-error";
-import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosProgressEvent } from "axios";
-import { DocumentUpload, GalleryEdit } from "iconsax-react";
-import { Trash2, X } from "lucide-react";
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
-import { Progress } from "@/components/ui/progress";
-import { toast } from "react-toastify";
-import { Loader } from "@mantine/core";
+'use client';
+import { api } from '@/axios-config';
+import { Button } from '@/components/ui/button';
+import { useUser } from '@/context/restaurant/user';
+import { ErrorType, handleError } from '@/lib/handle-error';
+import { useMutation } from '@tanstack/react-query';
+import axios, { AxiosProgressEvent } from 'axios';
+import { DocumentUpload, GalleryEdit } from 'iconsax-react';
+import { Trash2, X } from 'lucide-react';
+import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
+import { Progress } from '@/components/ui/progress';
+import { toast } from 'react-toastify';
+import { Loader } from '@mantine/core';
 
-export const MultipleUpload = ({otherPics}: any) => {
+export const MultipleUpload = ({ otherPics }: any) => {
   const [userfile, setUserFile] = useState<File[]>([]);
-  const [uploads, setUploads] = useState<string[]>([]);
   const [multiple, setMultiple] = useState([]);
   const [progress, setProgress] = useState({ pc: 0 });
-  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef.current) {
@@ -48,7 +46,7 @@ export const MultipleUpload = ({otherPics}: any) => {
         data,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
           onUploadProgress: (progressEvent?: AxiosProgressEvent) => {
             const uploadProgress = progressEvent?.progress;
@@ -62,12 +60,11 @@ export const MultipleUpload = ({otherPics}: any) => {
         }
       ),
 
-    mutationKey: ["picture-upload"],
+    mutationKey: ['picture-upload'],
 
     onSuccess({ data }) {
       setMultiple(data?.data?.data?.urls);
-      // toast.success("File uploaded successfully");
-      // router.push(`/restaurant-profile?uploads=${data?.data?.data.urls}`);
+      toast.success("File uploaded successfully");
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -79,12 +76,12 @@ export const MultipleUpload = ({otherPics}: any) => {
       if (userfile) {
         const formData = new FormData();
         userfile.forEach((file) => {
-          formData.append("files", file);
+          formData.append('files', file);
           mutate(formData);
         });
       }
     } catch (error) {
-      console.error("Upload failed", error);
+      console.error('Upload failed', error);
     }
   };
 
@@ -101,9 +98,9 @@ export const MultipleUpload = ({otherPics}: any) => {
   const { mutate: resprofile, isLoading: profileLoading } = useMutation({
     mutationFn: async (data: IRestaurant) =>
       await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
-    mutationKey: ["multiple"],
+    mutationKey: ['multiple'],
     onSuccess() {
-      toast.success("Restaurant images uploaded successfully");
+      toast.success('Restaurant images uploaded successfully');
       setUserFile([]);
     },
     onError(error) {
@@ -118,7 +115,7 @@ export const MultipleUpload = ({otherPics}: any) => {
           <div className="flex flex-col gap-[2px]">
             <div className="flex items-center gap-2">
               {userfile.length === 0 ? (
-                ""
+                ''
               ) : (
                 <Progress
                   max={100}
@@ -129,7 +126,7 @@ export const MultipleUpload = ({otherPics}: any) => {
               )}
 
               {userfile.length === 0 ? (
-                ""
+                ''
               ) : (
                 <p className="text-[#574DFF]">{progress.pc.toFixed(0)}%</p>
               )}
@@ -162,11 +159,19 @@ export const MultipleUpload = ({otherPics}: any) => {
         <div className="">
           {userfile.length === 0 ? (
             <div className="overflow-hidden flex gap-2 items-center justify-center">
-              {otherPics.map((pic:string, idx:number) => (
-                <div key={idx} className="w-[100px] h-[100px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm">
-                  <Image src={`${pic}`}  width={100} height={100} alt="other-pic"/>
+              {otherPics?.length > 0 ? otherPics.map((pic: any, idx: React.Key | null | undefined) => (
+                <div
+                  key={idx}
+                  className="w-[100px] h-[100px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"
+                >
+                  <Image
+                    src={`${pic}`}
+                    width={100}
+                    height={100}
+                    alt="other-pic"
+                  />
                 </div>
-              ))}
+              )): ''}
             </div>
           ) : (
             <div className="">
