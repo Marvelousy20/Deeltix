@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "react-toastify";
 import { Loader } from "@mantine/core";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { api } from "@/axios-config";
 import { ISignIn, UserProfile } from "@/types";
 import { useRouter } from "next/navigation";
@@ -55,6 +55,13 @@ export const RestaurantSignIn = () => {
 
   const { errors } = formState;
 
+  const { data: display } = useQuery({
+    queryFn: async () =>
+      await api.get(`/api/restaurant-manager/show-get-started`),
+
+    queryKey: ["show"],
+  });
+
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: ISignIn) => {
       const response = await api.post<UserProfile>(
@@ -71,7 +78,10 @@ export const RestaurantSignIn = () => {
 
     onSuccess(data) {
       toast.success("Successfully logged in");
-      reset(), push("/get-started");
+      reset(),
+        display?.data?.data?.data?.showGetStartedPage
+          ? push("/get-started")
+          : push("/dashboard");
     },
 
     onError(error) {
@@ -83,6 +93,7 @@ export const RestaurantSignIn = () => {
     mutate(values);
   };
 
+  console.log("route:", display?.data?.data?.data?.showGetStartedPage);
   const words = "Elevate your Restaurant Experience";
 
   return (
