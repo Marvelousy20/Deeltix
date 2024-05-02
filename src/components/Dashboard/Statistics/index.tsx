@@ -1,15 +1,15 @@
-'use client'
-import React from "react";
-import { Headings } from "../GetStarted/Headings";
-import { DashboardReservation } from "./UpcomingReservation";
-import { Guest } from "./RecentGuest";
-import { DataTable } from "@/components/Table/DataTable";
-import { transactionColumns, transactionData } from "./TransactionTable";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
-import { useUser } from "@/context/restaurant/user";
-import { useQuery } from "@tanstack/react-query";
-import { api } from "@/axios-config";
-import AreaChartComponent from "./Chart";
+'use client';
+import React from 'react';
+import { Headings } from '../GetStarted/Headings';
+import { DashboardReservation } from './UpcomingReservation';
+import { Guest } from './RecentGuest';
+import { DataTable } from '@/components/Table/DataTable';
+import { transactionColumns, transactionData } from './TransactionTable';
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import { useUser } from '@/context/restaurant/user';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '@/axios-config';
+import AreaChartComponent from './Chart';
 
 export const Dashboard = () => {
   const { restaurantId, restuarantName } = useUser();
@@ -21,11 +21,9 @@ export const Dashboard = () => {
         return;
       }
       // return await api.get<ReservationStat>(
-      return await api.get(
-        `/api/restaurants/${restaurantId}/daily-stats`
-      );
+      return await api.get(`/api/restaurants/${restaurantId}/daily-stats`);
     },
-    queryKey: ["daily-stat", "stat"],
+    queryKey: ['daily-stat', 'stat'],
     enabled: !!restaurantId,
     select: (data) => data?.data?.data?.data,
   });
@@ -37,38 +35,36 @@ export const Dashboard = () => {
         return;
       }
       // return await api.get<ReservationStat>(
-      return await api.get(
-        `/api/reservations/${restaurantId}/chart/weekly`
-      );
+      return await api.get(`/api/reservations/${restaurantId}/chart/weekly`);
     },
-    queryKey: ["weekly-stat", "stat"],
+    queryKey: ['weekly-stat', 'stat'],
     enabled: !!restaurantId,
     select: (data) => data?.data?.data?.data,
   });
 
   const sales = [
     {
-      sale: "Total revenue",
-      amount: daily_stat? `${daily_stat?.stats.totalRevenue}` : '0',
-      percentage: "10% from yesterday",
+      sale: 'Total revenue',
+      amount: daily_stat ? `${daily_stat?.stats.totalRevenue}` : '0',
+      percentage: '10% from yesterday',
       arrow: <ArrowDownRight color="#F71616" />,
     },
     {
-      sale: "Page view",
-      amount: daily_stat? `${daily_stat?.stats.pageViews}` : '0',
-      percentage: "10% from yesterday",
+      sale: 'Page view',
+      amount: daily_stat ? `${daily_stat?.stats.pageViews}` : '0',
+      percentage: '10% from yesterday',
       arrow: <ArrowUpRight color="#1DA533" />,
     },
   ];
-  
+
   const user = [
     {
-      type: "Reservation",
-      amount: daily_stat? `${daily_stat?.stats.totalReservationCount}` : '0',
+      type: 'Reservation',
+      amount: daily_stat ? `${daily_stat?.stats.totalReservationCount}` : '0',
     },
     {
-      type: "Customer",
-      amount: daily_stat? `${daily_stat?.stats.upcomingReservations}` : '0',
+      type: 'Customer',
+      amount: daily_stat ? `${daily_stat?.stats.upcomingReservations}` : '0',
     },
   ];
 
@@ -76,7 +72,7 @@ export const Dashboard = () => {
     <div className="p-8 flex flex-col gap-8">
       <section className="flex items-center justify-between">
         <Headings
-          user={"Olivia"}
+          user={'Olivia'}
           detail={`Here s the update with ${restuarantName} 🥙`}
           // detail={`Here’s the update with `}
         />
@@ -130,10 +126,10 @@ export const Dashboard = () => {
       </div>
 
       <div className="h-[350px] w-full border border-grayBottom rounded-[20px] p-[24px]">
-        <AreaChartComponent stats={weekly_stat?.output}/>
+        <AreaChartComponent stats={weekly_stat?.output} />
       </div>
 
-      <section className="grid grid-cols-2 gap-8">
+      {/* <section className="grid grid-cols-2 gap-8">
         <DashboardReservation />
         <div className="border-[2px] border-[#F7F7F7] rounded-[24px] w-full">
           <div className="flex items-center justify-between py-[20px] px-[18px]">
@@ -144,7 +140,7 @@ export const Dashboard = () => {
           </div>
           <DataTable columns={transactionColumns} data={transactionData} />
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

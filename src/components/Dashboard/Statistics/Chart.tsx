@@ -38,7 +38,6 @@ const AreaChartComponent: React.FC<Props> = ({ stats }) => {
           dataKey="count"
           stroke="#2563eb"
           fill="#3b82f6"
-          stackId="1"
         />
       </AreaChart>
     </ResponsiveContainer>
