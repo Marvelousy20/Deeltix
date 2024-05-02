@@ -77,11 +77,11 @@ export const RestaurantSignIn = () => {
     mutationKey: ["restaurant-sign-in"],
 
     onSuccess(data) {
+      display?.data?.data?.data?.showGetStartedPage
+        ? push("/get-started")
+        : push("/dashboard");
       toast.success("Successfully logged in");
-      reset(),
-        display?.data?.data?.data?.showGetStartedPage
-          ? push("/get-started")
-          : push("/dashboard");
+      reset()
     },
 
     onError(error) {

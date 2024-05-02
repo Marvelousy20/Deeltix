@@ -13,7 +13,6 @@ export const Cards = () => {
     queryKey: ["show"],
   });
 
-  console.log("testing:", data?.data?.data?.data?.restaurantOverviewCompleted);
   const list = [
     {
       title: "Restaurant Overview",
@@ -21,26 +20,32 @@ export const Cards = () => {
         "Give an overview about the delights of your restaurant and menu",
       icon: "/dashboard/overview.svg",
       link: "/get-started/overview",
+      completed: data?.data?.data?.data?.restaurantOverviewCompleted? "Completed" : "Incomplete",
+      done: data?.data?.data?.data?.restaurantOverviewCompleted
     },
     {
       title: "Add first menu",
       details: "Display available meals along with their respective prices.",
       icon: "/dashboard/menu.svg",
       link: "/get-started/menu",
+      completed: data?.data?.data?.data?.firstMenuCompleted? "Completed" : "Incomplete",
+      done: data?.data?.data?.data?.firstMenuCompleted
     },
     {
       title: "Add photos",
       details:
-        "Share captivating images to display your restaurant’s charm and attract customers.",
+      "Share captivating images to display your restaurant’s charm and attract customers.",
       icon: "/dashboard/upload.svg",
       link: "/get-started/photos",
+      completed: data?.data?.data?.data?.photosCompleted? "Completed" : "Incomplete",
+      done: data?.data?.data?.data?.photosCompleted
     },
   ];
   const { push } = useRouter();
   return (
     <div className="">
       <div className="grid lg:grid-cols-3 gap-5  ">
-        {list.map(({ title, details, icon, link }, idx) => (
+        {list.map(({ title, details, icon, link, completed, done }, idx) => (
           <div
             onClick={() => push(link)}
             key={idx}
@@ -49,20 +54,8 @@ export const Cards = () => {
             <div className="flex items-center justify-between">
               <Image src={icon} width={24} height={24} alt="restaurants" />
 
-              <p className="text-green-400 bg-[#ECFDF3] w-fit py-1 px-2 rounded-[16px]">
-                {idx === 0
-                  ? data?.data?.data?.data?.restaurantOverviewCompleted
-                    ? "Completed"
-                    : "Incomplete"
-                  : idx === 1
-                  ? data?.data?.data?.data?.firstMenuCompleted
-                    ? "Completed"
-                    : "Incomplete"
-                  : idx === 2
-                  ? data?.data?.data?.data?.photosCompleted
-                    ? "Completed"
-                    : "Incomplete"
-                  : ""}
+              <p className={`${done ? 'text-green-400 bg-[#ECFDF3]': 'text-red-400 bg-[#fdecec]'} w-fit py-1 px-2 rounded-[16px]`}>
+                {completed}
               </p>
             </div>
             <h3 className="font-bold text-comment text-xl">{title}</h3>
