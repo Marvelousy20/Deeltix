@@ -70,9 +70,6 @@ export const RestaurantSignIn = () => {
       );
       const restuarantToken = response?.data?.data?.data?.token;
       cookieStorage.setItem("restaurant", JSON.stringify(restuarantToken));
-      console.log("restoken: ", response?.data?.data?.data?.token);
-      // const allValues = response?.data?.data?.data?.token;
-      // console.log(allValues);
     },
     mutationKey: ["restaurant-sign-in"],
 
@@ -93,7 +90,6 @@ export const RestaurantSignIn = () => {
     mutate(values);
   };
 
-  console.log("route:", display?.data?.data?.data?.showGetStartedPage);
   const words = "Elevate your Restaurant Experience";
 
   return (
