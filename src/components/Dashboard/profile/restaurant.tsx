@@ -61,12 +61,13 @@ const formSchema = z.object({
 });
 
 export const RestaurantProfile = ({
-  displayPicture, user
+  displayPicture,
+  user,
 }: {
   displayPicture: string;
-  user: any
+  user: any;
 }) => {
-  const restaurant = user.data.data.restaurant
+  const restaurant = user.data.data.restaurant;
   const query = useQueryClient();
   const { banner } = useProduct();
   const { restaurantId } = useUser();
