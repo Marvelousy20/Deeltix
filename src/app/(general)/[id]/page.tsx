@@ -27,6 +27,7 @@ import MenuCard from "@/components/Menu/MenuCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { clsx } from "@mantine/core";
 import Link from "next/link";
+import Map from "@/components/Map";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -320,6 +321,8 @@ export default function DetailPage() {
             <Reservation restaurantId={data?.id} />
             {/* <Cart /> */}
           </div>
+          {/* location google map */}
+          {/* <Map /> */}
         </div>
       </div>
     </div>

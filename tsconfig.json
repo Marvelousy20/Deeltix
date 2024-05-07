@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     "src/app/get-started",
     "src/app/get-started/menu"
-  ],
+, "src/components/Map.jsx", "src/components/Map.jsx"  ],
   "exclude": ["node_modules"]
 }
