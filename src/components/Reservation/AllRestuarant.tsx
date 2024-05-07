@@ -15,12 +15,17 @@ import {
   SingleRestaurant,
   UserSingleRestaurant,
 } from "@/types";
+import ImageViewer from 'react-simple-image-viewer';
+import { useCallback, useState } from "react";
+
 
 interface DataProps {
   data: SingleRestaurant | undefined;
 }
 
 export default function AllRestaurants({ data }: DataProps) {
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
   const allRestaurant = [
     {
       img: "/restaurants/elysium.png",
@@ -47,10 +52,20 @@ export default function AllRestaurants({ data }: DataProps) {
       img: "/restaurants/upscalequarters.png",
     },
   ];
+  const openImageViewer = useCallback((index: number) => {
+    setCurrentImage(index);
+    setIsViewerOpen(true);
+  }, []);
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
+
 
   return (
     <div>
-      <Carousel
+      {/* <Carousel
         opts={{
           align: "start",
         }}
@@ -76,7 +91,35 @@ export default function AllRestaurants({ data }: DataProps) {
         </CarouselContent>
         <CarouselPrevious className="hidden lg:block" />
         <CarouselNext className="hidden lg:block" />
-      </Carousel>
-    </div>
+      </Carousel> */}
+       <div className="flex gap-4 w-full h-[300px] overflow-scroll">
+      {data?.pictures?.map((src, index) => (
+        <Image
+          src={ src }
+          onClick={ () => openImageViewer(index) }
+          width={400}
+          height={400}
+          key={ index }
+          // style={{ margin: '2px' }}
+          className="rounded-lg"
+          alt="other-image"
+        />
+      ))}
+       </div>
+
+      {isViewerOpen && (
+        <ImageViewer
+          src={ data?.pictures || [] }
+          backgroundStyle={{
+            backgroundColor: "rgba(0,0,0,0.9)",
+            zIndex: 1000
+          }}
+          currentIndex={ currentImage }
+          disableScroll={ false }
+          closeOnClickOutside={ true }
+          onClose={ closeImageViewer }
+        />
+      )}
+      </div>
   );
 }
