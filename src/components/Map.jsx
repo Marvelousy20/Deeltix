@@ -13,7 +13,7 @@ const center = {
 
 const Map = () => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyC9JcMlVYDB5uxpprPgLjPI25jhTDOpUG0',
+    googleMapsApiKey: 'API_KEY',
     libraries,
   });
 
