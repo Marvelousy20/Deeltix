@@ -62,7 +62,6 @@ export const VerifyEmail = ({
   const handleReverify = (e: FormEvent) => {
     e.preventDefault();
     resendPin({ email: email });
-    console.log(resendPin({ email: email }));
   };
 
   const onSubmit = (e: FormEvent) => {
