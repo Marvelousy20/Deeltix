@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { date, z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductProvider, useProduct } from "@/context/restaurant/product";
-
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
 import {
   Select,
   SelectContent,
@@ -19,7 +21,7 @@ import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { states } from "./state";
+import { states, weekDays } from "./state";
 import { useSearchParams } from "next/navigation";
 import { api } from "@/axios-config";
 import { toast } from "react-toastify";
@@ -55,6 +57,7 @@ const formSchema = z.object({
   openingHour: z.string().min(2, {
     message: "Enter your opening time",
   }),
+
   closingHour: z.string().min(2, {
     message: "Enter your closing time",
   }),
@@ -68,6 +71,15 @@ export const RestaurantProfile = ({
   user: any;
 }) => {
   const restaurant = user.data.data.restaurant;
+  const [openTime, setOpenTime] = useState<string>(restaurant.openingHour);
+  const handleChangeOpen = (value: any) => {
+    setOpenTime(value);
+  };
+  const [closeTime, setCloseTime] = useState<string>(restaurant.closingHour);
+  const handleChangeClose = (value: any) => {
+    setCloseTime(value);
+  };
+
   const query = useQueryClient();
   const { banner } = useProduct();
   const { restaurantId } = useUser();
@@ -119,16 +131,13 @@ export const RestaurantProfile = ({
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // const openingDays = `${values.openingDay} ${values.closingDay}`;
-    // const openingHours = `${values.openingHour} ${values.closingHour}`;
-    // const { openingDay, closingDay, openingHour, closingHour, ...others } = values;
-    mutate(
-      // ...others,
-      // openingDays,
-      // openingHours,
-      // displayPicture,
-      values
-    );
+    const { openingHour, closingHour, ...others } = values;
+    mutate({ ...others, openingHour: openTime, closingHour: closeTime });
+    console.log("restesting:", {
+      ...others,
+      openingHour: openTime,
+      closingHour: closeTime,
+    });
   };
   return (
     <div className="">
@@ -263,7 +272,6 @@ export const RestaurantProfile = ({
                 Average price
               </label>
               <Input
-                // type="number"
                 placeholder="Enter your average price"
                 className="text-grayInactive text-lg font-normal mt-2"
                 {...register("averagePrice")}
@@ -278,16 +286,38 @@ export const RestaurantProfile = ({
             <div className="h-[1px] w-full bg-[#D0D5DD]"></div>
 
             <section className="flex flex-col gap-6">
-              <article className="flex items-center gap-3 justify-between lg:max-w-[27rem]">
-                <div className="">
+              <article className="flex items-center gap-3 lg:max-w-[27rem]">
+                <div className="w-full">
                   <label className="text-grayHelp text-lg font-medium">
                     Open at
                   </label>
-                  <Input
-                    placeholder="Monday"
-                    className="text-grayInactive text-lg font-normal w-full mt-2"
-                    {...register("openingDay")}
-                  />
+
+                  <Select
+                    onValueChange={(value) =>
+                      setValue("openingDay", value, {
+                        shouldValidate: true,
+                      })
+                    }
+                    defaultValue={watch().openingDay}
+                  >
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder="Select opening days"
+                        className="text-grayInactive text-lg font-normal"
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="text-grayInactive text-lg font-normal">
+                      {weekDays.map((week, _i) => (
+                        <SelectItem
+                          key={_i}
+                          className="rounded-xl"
+                          value={week}
+                        >
+                          {week}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   {errors.openingDay && (
                     <div className="text-red-500 text-sm font-normal pt-1">
                       {errors.openingDay?.message}
@@ -295,17 +325,37 @@ export const RestaurantProfile = ({
                   )}
                 </div>
 
-                <div className="">
+                <div className="w-full">
                   <label className="text-grayHelp text-lg font-medium">
                     Close from
                   </label>
-                  <Input
-                    placeholder="Sunday"
-                    className="text-grayInactive text-lg font-normal w-full mt-2"
-                    {...register("closingDay", {
-                      required: true,
-                    })}
-                  />
+
+                  <Select
+                    onValueChange={(value) =>
+                      setValue("closingDay", value, {
+                        shouldValidate: true,
+                      })
+                    }
+                    defaultValue={watch().closingDay}
+                  >
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder="Select opening days"
+                        className="text-grayInactive text-lg font-normal"
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="text-grayInactive text-lg font-normal">
+                      {weekDays.map((week, _i) => (
+                        <SelectItem
+                          key={_i}
+                          className="rounded-xl"
+                          value={week}
+                        >
+                          {week}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   {errors.closingDay && (
                     <div className="text-red-500 text-sm font-normal pt-1">
                       {errors.closingDay?.message}
@@ -314,18 +364,32 @@ export const RestaurantProfile = ({
                 </div>
               </article>
 
-              <article className="flex items-center gap-3 justify-between lg:max-w-[27rem]">
-                <div className="">
+              <article className="flex items-center gap-3 lg:max-w-[27rem]">
+                <div className="w-full">
                   <label className="text-grayHelp text-lg font-medium">
                     From
                   </label>
-                  <Input
+                  {/* <Input
                     placeholder="9:00 AM"
                     className="text-grayInactive text-lg font-normal mt-2"
                     {...register("openingHour", {
                       required: true,
                     })}
-                  />
+                  /> */}
+                  <div className="flex w-full mt-2 rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300">
+                    <TimePicker
+                      required
+                      {...register("openingHour")}
+                      onChange={handleChangeOpen}
+                      value={openTime}
+                      amPmAriaLabel="Select AM/PM"
+                      clockAriaLabel="Toggle clock"
+                      clearIcon={null}
+                      shouldCloseClock={() => true}
+                      disableClock={false}
+                      clockIcon={null}
+                    />
+                  </div>
                   {errors.openingHour && (
                     <div className="text-red-500 text-sm font-normal pt-1">
                       {errors.openingHour?.message}
@@ -333,17 +397,31 @@ export const RestaurantProfile = ({
                   )}
                 </div>
 
-                <div className="">
+                <div className="w-full">
                   <label className="text-grayHelp text-lg font-medium">
                     To
                   </label>
-                  <Input
+                  <div className="flex mt-2 w-full rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300">
+                    <TimePicker
+                      required
+                      {...register("closingHour")}
+                      onChange={handleChangeClose}
+                      value={closeTime}
+                      amPmAriaLabel="Select AM/PM"
+                      clockAriaLabel="Toggle clock"
+                      clearIcon={null}
+                      shouldCloseClock={() => true}
+                      disableClock={false}
+                      clockIcon={null}
+                    />
+                  </div>
+                  {/* <Input
                     placeholder="9:00 AM"
                     className="text-grayInactive text-lg font-normal mt-2"
                     {...register("closingHour", {
                       required: true,
                     })}
-                  />
+                  /> */}
                   {errors.closingHour && (
                     <div className="text-red-500 text-sm font-normal pt-1">
                       {errors.closingHour?.message}
