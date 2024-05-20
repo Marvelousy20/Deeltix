@@ -73,7 +73,7 @@ export const Dashboard = () => {
       <section className="flex items-center justify-between">
         <Headings
           user={'Olivia'}
-          detail={`Here s the update with ${restuarantName} 🥙`}
+          detail={`Here's the update with ${restuarantName} 🥙`}
           // detail={`Here’s the update with `}
         />
         <div className="w-fit text-sm font-normal cursor-pointer text-white  bg-[#121212] rounded-[20px] py-2 px-3">
@@ -86,7 +86,7 @@ export const Dashboard = () => {
           {sales.map((item, _idx) => (
             <div
               key={_idx}
-              className="border border-[#0000001A] bg-[#F9F9F9] p-6"
+              className="border rounded-lg border-[#0000001A] bg-[#F9F9F9] p-6"
             >
               <section className="flex flex-col">
                 <p className="text-sm font-normal text-grayInactive">
@@ -110,7 +110,7 @@ export const Dashboard = () => {
           {user.map((item, _idx) => (
             <div
               key={_idx}
-              className="border border-[#0000001A] bg-[#F9F9F9] p-6"
+              className="border rounded-lg border-[#0000001A] bg-[#F9F9F9] p-6"
             >
               <section className="flex flex-col gap-3">
                 <p className="text-sm font-normal text-grayInactive ">
@@ -125,7 +125,7 @@ export const Dashboard = () => {
         </section>
       </div>
 
-      <div className="h-[350px] w-full border border-grayBottom rounded-[20px] p-[24px]">
+      <div className="h-[450px] w-full border border-grayBottom rounded-[20px] pt-[24px] px-[24px]">
         <AreaChartComponent stats={weekly_stat?.output} />
       </div>
 
