@@ -10,6 +10,7 @@ import { useUser } from "@/context/user/user";
 import { useRouter } from "next/navigation";
 import ModalPassword from "./ui/modals/modal-password";
 import { useState } from "react";
+import { Turn as Hamburger } from "hamburger-react";
 
 export default function Navbar({
   signinOpen,
@@ -25,11 +26,11 @@ export default function Navbar({
   const { isLoggedIn } = useUser();
   console.log(isLoggedIn);
 
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpened, setOpen] = useState(false);
 
-  const openModal = () => {
-    setIsOpened(true);
-  };
+  // const openModal = () => {
+  //   setIsOpened(true);
+  // };
 
   return (
     <div className="!z-[1000] relative">
@@ -38,9 +39,9 @@ export default function Navbar({
           <LoggedInNavbar />
         ) : (
           <section className="relative">
-            <div className="pt-10 fixed top-0 w-full hidden lg:block">
-              <section className="bg-grayblack flex justify-between items-center rounded-[5.5rem] px-8 py-6 mx-20 text-white">
-                <div className="flex items-center gap-x-10">
+            <div className="pt-10 fixed top-0 w-full lg:block">
+              <section className="bg-grayblack relative flex justify-between items-center rounded-t-[3rem] lg:rounded-[5.5rem] px-8 py-6 mx-4 md:mx-8 lg:mx-20 text-white">
+                <div className="lg:flex items-center gap-x-10">
                   <Link href="/" className="flex items-center">
                     <Image
                       src="/dashboard/logo.svg"
@@ -52,7 +53,7 @@ export default function Navbar({
 
                   <Link
                     href="/restaurant-dashboard"
-                    className="font-bold text-xl hover:text-primary transition-all ease-in duration-500"
+                    className="font-bold hidden lg:block text-xl hover:text-primary transition-all ease-in duration-500"
                   >
                     For business
                   </Link>
@@ -62,53 +63,54 @@ export default function Navbar({
                 {/* <div className="cursor-pointer">Lekki</div> */}
 
                 {/* Profile */}
-                <div className="space-x-4">
+                <div className="space-x-4 hidden lg:block">
                   <Button onClick={loginOpen}>Sign in</Button>
 
                   <Button variant="primary" onClick={signup}>
                     Create Account
                   </Button>
                 </div>
+
+                <div className="md:hidden">
+                  <Hamburger size={20} toggled={isOpened} toggle={setOpen} />
+                </div>
+
+                {/* mobile nav */}
+                {isOpened && (
+                  <div className="absolute top-full w-full bg-grayblack right-0 left-0 p-8">
+                    <nav className=" flex lg:hidden flex-col items-start text-white">
+                      <div className="flex flex-col space-y-4 w-full items-center">
+                        <div className="mb-4">
+                          <Link
+                            href="/restaurant-dashboard"
+                            className="font-bold transition-all text-xl ease-in-out duration-200 w-4/5"
+                          >
+                            For business
+                          </Link>
+                        </div>
+                        <Button
+                          variant="primary"
+                          onClick={() => push("/user-signin")}
+                          className="w-4/5"
+                        >
+                          Sign in
+                        </Button>
+
+                        <Button
+                          variant="primary"
+                          onClick={() => push("/user-signup")}
+                          className="w-4/5"
+                        >
+                          Create Account
+                        </Button>
+                      </div>
+                      <ModalSignIn opened={login} close={loginClose} />
+                      <SignUp opened={opened} close={close} />
+                    </nav>
+                  </div>
+                )}
               </section>
             </div>
-
-            {/* mobile nav */}
-
-            <nav className=" flex lg:hidden flex-col  items-start gap-6 text-white">
-              <div className="">
-                <Link
-                  href="/restaurant-dashboard"
-                  className="font-bold text-xl transition-all ease-in-out duration-200"
-                >
-                  For business
-                </Link>
-              </div>
-
-              {/* location */}
-              {/* <div>Lekki</div> */}
-
-              <div className="flex flex-col space-y-4">
-                <Button
-                  className="lg:hidden block"
-                  size="sm"
-                  variant="primary"
-                  // onClick={signinOpen}
-                  onClick={() => push("/user-signin")}
-                >
-                  Sign in
-                </Button>
-
-                <Button
-                  size="sm"
-                  variant="primary"
-                  onClick={() => push("/user-signup")}
-                >
-                  Create Account
-                </Button>
-              </div>
-              <ModalSignIn opened={login} close={loginClose} />
-              <SignUp opened={opened} close={close} />
-            </nav>
           </section>
         )}
       </header>

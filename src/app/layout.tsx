@@ -10,7 +10,7 @@ import { UserProvider } from "@/context/user/user";
 
 export const metadata: Metadata = {
   title: "Resturants near you",
-  description: "Discover Restaurants and make reservations.",
+  description: "Discover  reservations.",
 };
 
 const roman = localfont({

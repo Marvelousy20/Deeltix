@@ -24,8 +24,8 @@ export default function Home() {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <main className="bg flex flex-col lg:block gap-10 lg:gap-0 overflow-hidden">
-      <div className="bg-background lg:pt-32 pt-0">
-        <div className="lg:hidden block">
+      <div className="bg-background pt-28 lg:pt-32">
+        {/* <div className="lg:hidden block">
           <div className="border-b-[1px] flex items-center px-6 justify-between max-h-[70px] border-[#E9E9E9] bg-grayblack fixed inset-0 z-[9999] backdrop-blur-md ">
             <figure>
               <Image
@@ -37,8 +37,8 @@ export default function Home() {
             </figure>
             <UserDrawer />
           </div>
-        </div>
-        <div className="lg:max-w-[40rem] mt-20 max-w-[300px] mx-auto lg:text-[3.5rem] text-[2rem] text-center lg:pt-20 pt-5">
+        </div> */}
+        <div className="lg:max-w-[40rem] mt-20 max-w-[300px] mx-auto lg:text-[3.5rem] text-[2rem] text-center lg:pt-20">
           <h1>
             Discover
             <span className="text-grayblack font-extrabold"> Restaurants </span>
