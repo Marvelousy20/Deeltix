@@ -20,7 +20,7 @@ export const Profile = () => {
           <UserDrawer />
         </div>
       </div>
-      <div className="bg-[#F7F7F7] lg:pt-32 pt-20">
+      <div className="bg-[#975949] lg:pt-32 pt-20">
         <div className="flex flex-col items-center lg:pt-20 pt-0">
           <h3 className=" text-[56px] font-medium text-grayBlack">
             My Profile

@@ -7,11 +7,12 @@ import {
   LogoutCurve,
   People,
   Profile,
+  ReceiptText,
   Reserve,
   Wallet,
   Wallet3,
 } from "iconsax-react";
-import { Sidebar, Wine } from "lucide-react";
+import { QrCode } from "lucide-react";
 import { Isidebar } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
@@ -46,8 +47,13 @@ export const DashboardLayout = ({
     { name: "Get started", link: "/get-started", icon: <Category size="18" /> },
 
     { name: "Dashboard", link: "/dashboard", icon: <Home2 size="18" /> },
-    { name: "Reservation", link: "/reservation", icon: <Wine size={18} /> },
+    { name: "Reservation", link: "/reservation", icon: <ReceiptText /> },
     { name: "Menu", link: "/menu", icon: <Reserve size="18" /> },
+    {
+      name: "QR Code",
+      link: "/restaurant-qrcode",
+      icon: <QrCode size={18} />,
+    },
     { name: "Guest Book", link: "/guest-book", icon: <People size="18" /> },
     // {
     //   name: "Wallet",
