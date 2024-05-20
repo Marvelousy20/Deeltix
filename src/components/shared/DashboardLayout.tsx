@@ -69,7 +69,7 @@ export const DashboardLayout = ({
 
   return (
     <section className="flex items-start w-full h-screen">
-      <div className="h-full w-[240px] bg-[#101323] hidden flex-col items-center py-10 gap-20 lg:flex">
+      <div className="w-[240px] bg-[#101323] hidden flex-col items-center py-10 gap-20 lg:flex h-screen overflow-auto">
         <figure>
           <Image
             src="/dashboard/logo.svg"
@@ -133,7 +133,7 @@ export const DashboardLayout = ({
           ))} */}
         </div>
       </div>
-      <div className="h-full flex-1 overflow-y-auto transact-scroll">
+      <div className="flex-1 overflow-y-auto transact-scroll h-screen overflow-hidden">
         <UserProvider>
           <Header />
           {children}

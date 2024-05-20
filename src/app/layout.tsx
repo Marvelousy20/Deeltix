@@ -10,7 +10,7 @@ import { UserProvider } from "@/context/user/user";
 
 export const metadata: Metadata = {
   title: "Resturants near you",
-  description: "Discover  reservations.",
+  description: "Discover Restaurants and make reservations.",
 };
 
 const roman = localfont({
@@ -27,7 +27,9 @@ export default function RootLayout({
       <QueryProvider>
         <ProductProvider>
           <UserProvider>
-            <body className={`${roman.variable} font-roman transact-scroll`}>
+            <body
+              className={`${roman.variable} font-roman overflow-y-auto bg-green-400`}
+            >
               {children}
               <ToastContainer />
             </body>

@@ -3,7 +3,7 @@ import { ProfileTab } from "./tab";
 
 export const RestaurantProfile = () => {
   return (
-    <div className="flex flex-col p-8 gap-8 items-center justify-center">
+    <div className="flex flex-col p-8 gap-8 items-center justify-center bg-orange-500 overflow-hidden">
       <ProfileTab />
     </div>
   );

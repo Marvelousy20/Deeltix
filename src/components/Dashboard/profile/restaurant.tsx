@@ -140,7 +140,7 @@ export const RestaurantProfile = ({
     });
   };
   return (
-    <div className="">
+    <div className="bg-red-500">
       <section className="">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="flex flex-col gap-6">
@@ -228,7 +228,7 @@ export const RestaurantProfile = ({
               </div>
             </div>
             {/* country */}
-            <div>
+            {/* <div>
               <label className="text-grayHelp text-lg font-medium">
                 Country
               </label>
@@ -248,15 +248,6 @@ export const RestaurantProfile = ({
                   />
                 </SelectTrigger>
                 <SelectContent className="text-grayInactive text-lg font-normal">
-                  {/* {data?.data?.map((country: any, _i: any) => (
-                    <SelectItem
-                      key={_i}
-                      className="rounded-xl"
-                      value={country?.name?.common}
-                    >
-                      {country?.name?.common}
-                    </SelectItem>
-                  ))} */}
                   <SelectItem className="rounded-xl" value="Nigeria">
                     Nigeria
                   </SelectItem>
@@ -265,9 +256,9 @@ export const RestaurantProfile = ({
               <div className="text-red-500 text-sm font-normal pt-1">
                 {errors.country?.message}
               </div>
-            </div>
+            </div> */}
 
-            <div className="">
+            {/* <div className="">
               <label className="text-grayHelp text-lg font-medium">
                 Average price
               </label>
@@ -281,11 +272,11 @@ export const RestaurantProfile = ({
                   {errors.averagePrice?.message}
                 </div>
               )}
-            </div>
+            </div> */}
 
             <div className="h-[1px] w-full bg-[#D0D5DD]"></div>
 
-            <section className="flex flex-col gap-6">
+            {/* <section className="flex flex-col gap-6">
               <article className="flex items-center gap-3 lg:max-w-[27rem]">
                 <div className="w-full">
                   <label className="text-grayHelp text-lg font-medium">
@@ -369,13 +360,7 @@ export const RestaurantProfile = ({
                   <label className="text-grayHelp text-lg font-medium">
                     From
                   </label>
-                  {/* <Input
-                    placeholder="9:00 AM"
-                    className="text-grayInactive text-lg font-normal mt-2"
-                    {...register("openingHour", {
-                      required: true,
-                    })}
-                  /> */}
+                  
                   <div className="flex w-full mt-2 rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300">
                     <TimePicker
                       required
@@ -415,13 +400,7 @@ export const RestaurantProfile = ({
                       clockIcon={null}
                     />
                   </div>
-                  {/* <Input
-                    placeholder="9:00 AM"
-                    className="text-grayInactive text-lg font-normal mt-2"
-                    {...register("closingHour", {
-                      required: true,
-                    })}
-                  /> */}
+
                   {errors.closingHour && (
                     <div className="text-red-500 text-sm font-normal pt-1">
                       {errors.closingHour?.message}
@@ -442,7 +421,7 @@ export const RestaurantProfile = ({
                   <p className="text-white font-medium text-xl">Submit</p>
                 )}
               </Button>
-            </section>
+            </section> */}
           </div>
         </form>
       </section>
