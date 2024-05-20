@@ -23,9 +23,8 @@ export const GuestUpdate = ({
         onClose={close}
         centered
         title="Guest details"
-        size="40%"
       >
-        <section className=" flex items-center justify-center py-4">
+        <section className="lg:w-[40%] w-full flex items-center justify-center py-4">
           <div className="flex flex-col gap-4 w-[400px]">
             {/* <div className="flex items-center justify-between">
               <h3 className=" font-bold text-xl text-[#121212]">Receipt</h3>

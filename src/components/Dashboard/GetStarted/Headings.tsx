@@ -23,18 +23,22 @@ export const Headings = ({
           className="lg:block hidden"
         /> */}
       </div>
-      <div className="flex flex-col gap-2">
-        <h3 className="text-comment md:text-xl font-bold flex items-center gap-2">
-          <Image
-            src="/dashboard/restaurant.svg"
-            width={40}
-            height={40}
-            alt="Restaurant logo"
-            className="lg:hidden block"
-          />
-          Welcome {managerName}
-        </h3>
-        <p className="font-normal text-base text-grayInactive">{detail}</p>
+      <div className="flex  items-center gap-2">
+        <Image
+          src="/dashboard/restaurant.svg"
+          width={40}
+          height={40}
+          alt="Restaurant logo"
+          className=" block"
+        />
+        <div className="flex flex-col lg:gap-2 gap-1">
+          <h3 className="text-comment md:text-xl text-xl font-bold flex items-center gap-2 whitespace-nowrap w-full">
+            Welcome {managerName}
+          </h3>
+          <p className="font-normal lg:text-base text-sm text-grayInactive">
+            {detail}
+          </p>
+        </div>
       </div>
     </div>
   );

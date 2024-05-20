@@ -46,9 +46,8 @@ export const ReservationModal = ({
         onClose={close}
         centered
         withCloseButton={true}
-        size="30%"
       >
-        <div className="">
+        <div className="lg:w-[30%] w-full">
           <div className="w-full h-[2px] bg-grayoutline mb-5"></div>
           <Card className="w-full h-full !bg-white !border-none">
             <CardContent className="">

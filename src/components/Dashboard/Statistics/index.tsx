@@ -1,15 +1,16 @@
-'use client';
-import React from 'react';
-import { Headings } from '../GetStarted/Headings';
-import { DashboardReservation } from './UpcomingReservation';
-import { Guest } from './RecentGuest';
-import { DataTable } from '@/components/Table/DataTable';
-import { transactionColumns, transactionData } from './TransactionTable';
-import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
-import { useUser } from '@/context/restaurant/user';
-import { useQuery } from '@tanstack/react-query';
-import { api } from '@/axios-config';
-import AreaChartComponent from './Chart';
+"use client";
+import React from "react";
+import { Headings } from "../GetStarted/Headings";
+import { DashboardReservation } from "./UpcomingReservation";
+import { Guest } from "./RecentGuest";
+import { DataTable } from "@/components/Table/DataTable";
+import { transactionColumns, transactionData } from "./TransactionTable";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { useUser } from "@/context/restaurant/user";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/axios-config";
+import AreaChartComponent from "./Chart";
+import { Button } from "@/components/ui/button";
 
 export const Dashboard = () => {
   const { restaurantId, restuarantName } = useUser();
@@ -23,7 +24,7 @@ export const Dashboard = () => {
       // return await api.get<ReservationStat>(
       return await api.get(`/api/restaurants/${restaurantId}/daily-stats`);
     },
-    queryKey: ['daily-stat', 'stat'],
+    queryKey: ["daily-stat", "stat"],
     enabled: !!restaurantId,
     select: (data) => data?.data?.data?.data,
   });
@@ -37,52 +38,55 @@ export const Dashboard = () => {
       // return await api.get<ReservationStat>(
       return await api.get(`/api/reservations/${restaurantId}/chart/weekly`);
     },
-    queryKey: ['weekly-stat', 'stat'],
+    queryKey: ["weekly-stat", "stat"],
     enabled: !!restaurantId,
     select: (data) => data?.data?.data?.data,
   });
 
   const sales = [
     {
-      sale: 'Total revenue',
-      amount: daily_stat ? `${daily_stat?.stats.totalRevenue}` : '0',
-      percentage: '10% from yesterday',
+      sale: "Total revenue",
+      amount: daily_stat ? `${daily_stat?.stats.totalRevenue}` : "0",
+      percentage: "10% from yesterday",
       arrow: <ArrowDownRight color="#F71616" />,
     },
     {
-      sale: 'Page view',
-      amount: daily_stat ? `${daily_stat?.stats.pageViews}` : '0',
-      percentage: '10% from yesterday',
+      sale: "Page view",
+      amount: daily_stat ? `${daily_stat?.stats.pageViews}` : "0",
+      percentage: "10% from yesterday",
       arrow: <ArrowUpRight color="#1DA533" />,
     },
   ];
 
   const user = [
     {
-      type: 'Reservation',
-      amount: daily_stat ? `${daily_stat?.stats.totalReservationCount}` : '0',
+      type: "Reservation",
+      amount: daily_stat ? `${daily_stat?.stats.totalReservationCount}` : "0",
     },
     {
-      type: 'Customer',
-      amount: daily_stat ? `${daily_stat?.stats.upcomingReservations}` : '0',
+      type: "Customer",
+      amount: daily_stat ? `${daily_stat?.stats.upcomingReservations}` : "0",
     },
   ];
 
   return (
     <div className="p-8 flex flex-col gap-8">
-      <section className="flex items-center justify-between">
+      <section className="lg:flex space-y-[24px] lg:space-y-0 w-full items-center lg:justify-between justify-normal">
         <Headings
-          user={'Olivia'}
+          user={"Olivia"}
           detail={`Here s the update with ${restuarantName} 🥙`}
           // detail={`Here’s the update with `}
         />
-        <div className="w-fit text-sm font-normal cursor-pointer text-white  bg-[#121212] rounded-[20px] py-2 px-3">
+        <Button className="text-sm font-normal cursor-pointer text-white  bg-[#121212] rounded-[20px] py-2 px-3 w-full lg:w-fit">
           Download sales report
-        </div>
+        </Button>
+        {/* <div className="w-fit text-sm font-normal cursor-pointer text-white  bg-[#121212] rounded-[20px] py-2 px-3">
+          Download sales report
+        </div> */}
       </section>
       {/* Chart and stat */}
-      <div className="grid grid-cols-2 gap-6">
-        <section className="grid grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-6">
+        <section className="grid lg:grid-cols-2 grid-cols-1 gap-6">
           {sales.map((item, _idx) => (
             <div
               key={_idx}
@@ -106,7 +110,7 @@ export const Dashboard = () => {
           ))}
         </section>
 
-        <section className="grid grid-cols-2 gap-6">
+        <section className="grid lg:grid-cols-2 grid-cols-1 gap-6">
           {user.map((item, _idx) => (
             <div
               key={_idx}

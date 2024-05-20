@@ -78,14 +78,8 @@ export default function UserAddressModal({
 
   return (
     <>
-      <Modal
-        opened={opened}
-        onClose={close}
-        centered
-        title="New address"
-        size="40%"
-      >
-        <div className="flex flex-col bg-white rounded-lg">
+      <Modal opened={opened} onClose={close} centered title="New address">
+        <div className="flex lg:w-[40%] w-full flex-col bg-white rounded-lg">
           <div className="flex flex-col">
             <div className="h-[1px] w-full bg-[#F0F3F8]"></div>
             <form

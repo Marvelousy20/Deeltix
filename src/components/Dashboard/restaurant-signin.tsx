@@ -78,7 +78,7 @@ export const RestaurantSignIn = () => {
         ? push("/get-started")
         : push("/dashboard");
       toast.success("Successfully logged in");
-      reset()
+      reset();
     },
 
     onError(error) {
@@ -100,8 +100,18 @@ export const RestaurantSignIn = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            <h1 className="text-3xl font-bold text-dark3">Welcome back</h1>
-
+            <div className="flex flex-col gap-3">
+              <h1 className="text-3xl font-bold text-dark3">Welcome back</h1>
+              <p className="font-bold text-base text-[#636C71]">
+                Don&apos;t have an account?{" "}
+                <span
+                  onClick={() => push("/restaurant-registration")}
+                  className="text-[#574DFF] cursor-pointer"
+                >
+                  Create Account
+                </span>
+              </p>
+            </div>
             <div className="lg:w-[27rem]">
               <label className="text-grayHelp text-lg font-medium">
                 Email address
