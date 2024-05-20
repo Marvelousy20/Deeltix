@@ -125,7 +125,7 @@ export const Dashboard = () => {
         </section>
       </div>
 
-      <div className="h-[350px] w-full border border-grayBottom rounded-[20px] p-[24px]">
+      <div className="h-[450px] w-full border border-grayBottom rounded-[20px] pt-[24px] px-[24px]">
         <AreaChartComponent stats={weekly_stat?.output} />
       </div>
 
