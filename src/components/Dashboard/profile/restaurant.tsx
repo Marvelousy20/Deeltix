@@ -14,6 +14,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 
 import { Input } from "../../ui/input";
@@ -140,291 +141,277 @@ export const RestaurantProfile = ({
     });
   };
   return (
-    <div className="bg-red-500">
-      <section className="">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-          <div className="flex flex-col gap-6">
-            {/* restaurant Name */}
-            <div>
-              <label className="text-grayHelp text-lg font-medium">
-                <div className="flex items-center justify-between w-full">
-                  <p>Name</p>
-                </div>
-              </label>
-              <Input
-                placeholder="Deluxe Kitchen"
-                className="text-grayInactive text-lg font-normal mt-2"
-                {...register("name")}
-              />
-              <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.name?.message}
+    <section className="">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
+          {/* restaurant Name */}
+          <div>
+            <label className="text-grayHelp text-lg font-medium">
+              <div className="flex items-center justify-between w-full">
+                <p>Name</p>
               </div>
+            </label>
+            <Input
+              placeholder="Deluxe Kitchen"
+              className="text-grayInactive text-lg font-normal mt-2"
+              {...register("name")}
+            />
+            <div className="text-red-500 text-sm font-normal pt-1">
+              {errors.name?.message}
             </div>
-            <div>
-              <label className="text-grayHelp text-lg font-medium">Bio</label>
-              <Textarea
-                placeholder="Tell us a little bit about yourself"
-                className="resize-none  mt-2"
-                {...register("description")}
-              />
-              <p className="pt-3">
-                NB: Be very expressive with your offerings 😉
-              </p>
-              {errors.description && (
-                <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.description?.message}
-                </div>
-              )}
-            </div>
-
-            {/* address */}
-            <div>
-              <label className="text-grayHelp text-lg font-medium">
-                <div className="flex items-center justify-between w-full">
-                  <p>Address</p>
-                  <div className="flex items-center text-[#574DFF] text-sm gap-1 cursor-pointer font-normal">
-                    <MapPin size={16} />
-                    <p className="text-sm font-normal">use current location</p>
-                  </div>
-                </div>
-              </label>
-              <Input
-                placeholder="Lekki Phase 1, Lekki, Lagos, Nigeria"
-                className="text-grayInactive text-lg font-normal mt-2"
-                {...register("address")}
-              />
-              <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.address?.message}
-              </div>
-            </div>
-            {/* state */}
-            <div>
-              <label className="text-grayHelp text-lg font-medium">State</label>
-
-              <Select
-                onValueChange={(value) =>
-                  setValue("state", value, {
-                    shouldValidate: true,
-                  })
-                }
-                defaultValue={watch().state}
-              >
-                <SelectTrigger>
-                  <SelectValue
-                    placeholder="Select your state"
-                    className="text-grayInactive text-lg font-normal"
-                  />
-                </SelectTrigger>
-                <SelectContent className="text-grayInactive text-lg font-normal">
-                  {states.map((state, _i) => (
-                    <SelectItem key={_i} className="rounded-xl" value={state}>
-                      {state}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.state?.message}
-              </div>
-            </div>
-            {/* country */}
-            {/* <div>
-              <label className="text-grayHelp text-lg font-medium">
-                Country
-              </label>
-
-              <Select
-                onValueChange={(value) =>
-                  setValue("country", value, {
-                    shouldValidate: true,
-                  })
-                }
-                defaultValue={watch().country}
-              >
-                <SelectTrigger>
-                  <SelectValue
-                    placeholder="Select your country"
-                    className="text-grayInactive text-lg font-normal"
-                  />
-                </SelectTrigger>
-                <SelectContent className="text-grayInactive text-lg font-normal">
-                  <SelectItem className="rounded-xl" value="Nigeria">
-                    Nigeria
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-              <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.country?.message}
-              </div>
-            </div> */}
-
-            {/* <div className="">
-              <label className="text-grayHelp text-lg font-medium">
-                Average price
-              </label>
-              <Input
-                placeholder="Enter your average price"
-                className="text-grayInactive text-lg font-normal mt-2"
-                {...register("averagePrice")}
-              />
-              {errors.averagePrice && (
-                <div className="text-red-500 text-sm font-normal pt-1">
-                  {errors.averagePrice?.message}
-                </div>
-              )}
-            </div> */}
-
-            <div className="h-[1px] w-full bg-[#D0D5DD]"></div>
-
-            {/* <section className="flex flex-col gap-6">
-              <article className="flex items-center gap-3 lg:max-w-[27rem]">
-                <div className="w-full">
-                  <label className="text-grayHelp text-lg font-medium">
-                    Open at
-                  </label>
-
-                  <Select
-                    onValueChange={(value) =>
-                      setValue("openingDay", value, {
-                        shouldValidate: true,
-                      })
-                    }
-                    defaultValue={watch().openingDay}
-                  >
-                    <SelectTrigger>
-                      <SelectValue
-                        placeholder="Select opening days"
-                        className="text-grayInactive text-lg font-normal"
-                      />
-                    </SelectTrigger>
-                    <SelectContent className="text-grayInactive text-lg font-normal">
-                      {weekDays.map((week, _i) => (
-                        <SelectItem
-                          key={_i}
-                          className="rounded-xl"
-                          value={week}
-                        >
-                          {week}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors.openingDay && (
-                    <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.openingDay?.message}
-                    </div>
-                  )}
-                </div>
-
-                <div className="w-full">
-                  <label className="text-grayHelp text-lg font-medium">
-                    Close from
-                  </label>
-
-                  <Select
-                    onValueChange={(value) =>
-                      setValue("closingDay", value, {
-                        shouldValidate: true,
-                      })
-                    }
-                    defaultValue={watch().closingDay}
-                  >
-                    <SelectTrigger>
-                      <SelectValue
-                        placeholder="Select opening days"
-                        className="text-grayInactive text-lg font-normal"
-                      />
-                    </SelectTrigger>
-                    <SelectContent className="text-grayInactive text-lg font-normal">
-                      {weekDays.map((week, _i) => (
-                        <SelectItem
-                          key={_i}
-                          className="rounded-xl"
-                          value={week}
-                        >
-                          {week}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors.closingDay && (
-                    <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.closingDay?.message}
-                    </div>
-                  )}
-                </div>
-              </article>
-
-              <article className="flex items-center gap-3 lg:max-w-[27rem]">
-                <div className="w-full">
-                  <label className="text-grayHelp text-lg font-medium">
-                    From
-                  </label>
-                  
-                  <div className="flex w-full mt-2 rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300">
-                    <TimePicker
-                      required
-                      {...register("openingHour")}
-                      onChange={handleChangeOpen}
-                      value={openTime}
-                      amPmAriaLabel="Select AM/PM"
-                      clockAriaLabel="Toggle clock"
-                      clearIcon={null}
-                      shouldCloseClock={() => true}
-                      disableClock={false}
-                      clockIcon={null}
-                    />
-                  </div>
-                  {errors.openingHour && (
-                    <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.openingHour?.message}
-                    </div>
-                  )}
-                </div>
-
-                <div className="w-full">
-                  <label className="text-grayHelp text-lg font-medium">
-                    To
-                  </label>
-                  <div className="flex mt-2 w-full rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300">
-                    <TimePicker
-                      required
-                      {...register("closingHour")}
-                      onChange={handleChangeClose}
-                      value={closeTime}
-                      amPmAriaLabel="Select AM/PM"
-                      clockAriaLabel="Toggle clock"
-                      clearIcon={null}
-                      shouldCloseClock={() => true}
-                      disableClock={false}
-                      clockIcon={null}
-                    />
-                  </div>
-
-                  {errors.closingHour && (
-                    <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.closingHour?.message}
-                    </div>
-                  )}
-                </div>
-              </article>
-              <Button
-                type="submit"
-                className="w-full !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
-              >
-                {isLoading ? (
-                  <span className="flex items-center gap-2 text-white font-medium text-xl">
-                    <p>Submitting</p>
-                    <Loader size="sm" />
-                  </span>
-                ) : (
-                  <p className="text-white font-medium text-xl">Submit</p>
-                )}
-              </Button>
-            </section> */}
           </div>
-        </form>
-      </section>
-    </div>
+          <div>
+            <label className="text-grayHelp text-lg font-medium">Bio</label>
+            <Textarea
+              placeholder="Tell us a little bit about yourself"
+              className="resize-none  mt-2"
+              {...register("description")}
+            />
+            <p className="pt-3">
+              NB: Be very expressive with your offerings 😉
+            </p>
+            {errors.description && (
+              <div className="text-red-500 text-sm font-normal pt-1">
+                {errors.description?.message}
+              </div>
+            )}
+          </div>
+
+          {/* address */}
+          <div>
+            <label className="text-grayHelp text-lg font-medium">
+              <div className="flex items-center justify-between w-full">
+                <p>Address</p>
+                <div className="flex items-center text-[#574DFF] text-sm gap-1 cursor-pointer font-normal">
+                  <MapPin size={16} />
+                  <p className="text-sm font-normal">use current location</p>
+                </div>
+              </div>
+            </label>
+            <Input
+              placeholder="Lekki Phase 1, Lekki, Lagos, Nigeria"
+              className="text-grayInactive text-lg font-normal mt-2"
+              {...register("address")}
+            />
+            <div className="text-red-500 text-sm font-normal pt-1">
+              {errors.address?.message}
+            </div>
+          </div>
+          {/* state */}
+          <div className="relative">
+            <label className="text-grayHelp text-lg font-medium">State</label>
+
+            <Select
+              onValueChange={(value) =>
+                setValue("state", value, {
+                  shouldValidate: true,
+                })
+              }
+              defaultValue={watch().state}
+            >
+              <SelectTrigger>
+                <SelectValue
+                  placeholder="Select your state"
+                  className="text-grayInactive text-lg font-normal"
+                />
+              </SelectTrigger>
+              <SelectContent className="text-grayInactive text-lg font-normal">
+                {states.map((state, _i) => (
+                  <SelectItem key={_i} className="rounded-xl" value={state}>
+                    {state}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <div className="text-red-500 text-sm font-normal pt-1">
+              {errors.state?.message}
+            </div>
+          </div>
+          {/* country */}
+          <div className="relative">
+            <label className="text-grayHelp text-lg font-medium">Country</label>
+
+            <Select
+              onValueChange={(value) =>
+                setValue("country", value, {
+                  shouldValidate: true,
+                })
+              }
+              defaultValue={watch().country}
+            >
+              <SelectTrigger>
+                <SelectValue
+                  placeholder="Select your country"
+                  className="text-grayInactive text-lg font-normal"
+                />
+              </SelectTrigger>
+              <SelectContent className="text-grayInactive text-lg font-normal">
+                <SelectItem className="rounded-xl" value="Nigeria">
+                  Nigeria
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <div className="text-red-500 text-sm font-normal pt-1">
+              {errors.country?.message}
+            </div>
+          </div>
+
+          <div className="">
+            <label className="text-grayHelp text-lg font-medium">
+              Average price
+            </label>
+            <Input
+              placeholder="Enter your average price"
+              className="text-grayInactive text-lg font-normal mt-2"
+              {...register("averagePrice")}
+            />
+            {errors.averagePrice && (
+              <div className="text-red-500 text-sm font-normal pt-1">
+                {errors.averagePrice?.message}
+              </div>
+            )}
+          </div>
+
+          <div className="h-[1px] w-full bg-[#D0D5DD]"></div>
+
+          <section className="flex flex-col gap-6">
+            <article className="flex items-center gap-3 lg:max-w-[27rem]">
+              <div className="w-full relative">
+                <label className="text-grayHelp text-lg font-medium">
+                  Open at
+                </label>
+
+                <Select
+                  onValueChange={(value) =>
+                    setValue("openingDay", value, {
+                      shouldValidate: true,
+                    })
+                  }
+                  defaultValue={watch().openingDay}
+                >
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder="Select opening days"
+                      className="text-grayInactive text-lg font-normal"
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="text-grayInactive text-lg font-normal">
+                    {weekDays.map((week, _i) => (
+                      <SelectItem key={_i} className="rounded-xl" value={week}>
+                        {week}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.openingDay && (
+                  <div className="text-red-500 text-sm font-normal pt-1">
+                    {errors.openingDay?.message}
+                  </div>
+                )}
+              </div>
+
+              <div className="w-full relative">
+                <label className="text-grayHelp text-lg font-medium">
+                  Close from
+                </label>
+
+                <Select
+                  onValueChange={(value) =>
+                    setValue("closingDay", value, {
+                      shouldValidate: true,
+                    })
+                  }
+                  defaultValue={watch().closingDay}
+                >
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder="Select opening days"
+                      className="text-grayInactive text-lg font-normal"
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="text-grayInactive text-lg font-normal">
+                    {weekDays.map((week, _i) => (
+                      <SelectItem key={_i} className="rounded-xl" value={week}>
+                        {week}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.closingDay && (
+                  <div className="text-red-500 text-sm font-normal pt-1">
+                    {errors.closingDay?.message}
+                  </div>
+                )}
+              </div>
+            </article>
+
+            <article className="flex items-center gap-3 lg:max-w-[27rem]">
+              <div className="w-full">
+                <label className="text-grayHelp text-lg font-medium">
+                  From
+                </label>
+
+                <div className="flex w-full mt-2 rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300">
+                  <TimePicker
+                    required
+                    {...register("openingHour")}
+                    onChange={handleChangeOpen}
+                    value={openTime}
+                    amPmAriaLabel="Select AM/PM"
+                    clockAriaLabel="Toggle clock"
+                    clearIcon={null}
+                    shouldCloseClock={() => true}
+                    disableClock={false}
+                    clockIcon={null}
+                  />
+                </div>
+                {errors.openingHour && (
+                  <div className="text-red-500 text-sm font-normal pt-1">
+                    {errors.openingHour?.message}
+                  </div>
+                )}
+              </div>
+
+              <div className="w-full">
+                <label className="text-grayHelp text-lg font-medium">To</label>
+                <div className="flex mt-2 w-full rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300">
+                  <TimePicker
+                    required
+                    {...register("closingHour")}
+                    onChange={handleChangeClose}
+                    value={closeTime}
+                    amPmAriaLabel="Select AM/PM"
+                    clockAriaLabel="Toggle clock"
+                    clearIcon={null}
+                    shouldCloseClock={() => true}
+                    disableClock={false}
+                    clockIcon={null}
+                  />
+                </div>
+
+                {errors.closingHour && (
+                  <div className="text-red-500 text-sm font-normal pt-1">
+                    {errors.closingHour?.message}
+                  </div>
+                )}
+              </div>
+            </article>
+            <Button
+              type="submit"
+              className="w-full !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
+            >
+              {isLoading ? (
+                <span className="flex items-center gap-2 text-white font-medium text-xl">
+                  <p>Submitting</p>
+                  <Loader size="sm" />
+                </span>
+              ) : (
+                <p className="text-white font-medium text-xl">Submit</p>
+              )}
+            </Button>
+          </section>
+        </div>
+      </form>
+    </section>
   );
 };

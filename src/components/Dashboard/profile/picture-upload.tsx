@@ -84,7 +84,7 @@ export const ProfileUpload = ({ user }: any) => {
   }, [userfile]);
 
   return (
-    <div className="flex flex-col items-center justify-center !overflow-x-hidden bg-yellow-300 ">
+    <div className="flex flex-col items-center justify-center !overflow-x-hidden">
       <section className="border border-grayBottom rounded-[24px] p-4 md:p-9 w-full flex flex-col gap-6">
         {/* <div className="flex flex-col item-center justify-between">
           <h3 className="text-xl font-bold text-grayBlack2">
