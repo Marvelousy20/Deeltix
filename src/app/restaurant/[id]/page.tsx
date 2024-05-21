@@ -31,14 +31,11 @@ import Map from '@/components/Map';
 
 export default function DetailPage() {
   const { id } = useParams();
-  console.log('ID', id);
   const searchParam = useSearchParams();
   const [bookmark, setBookmark] = useState(false);
   const restaurantid = searchParam.get('restaurant');
   const query = useQueryClient();
   const [scroll, setScroll] = useState<number | null>(null);
-
-  console.log('RESTAURANT_ID', restaurantid);
 
   const handleScroll = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -53,7 +50,6 @@ export default function DetailPage() {
     queryKey: ['single-restaurant'],
     select: ({ data }) => data?.data?.data?.restaurant,
   });
-  console.log('single-restaurant:', data);
   // request to get restaurant menu
   const { data: menu, isLoading: menuLoading } = useQuery({
     queryFn: async () =>
