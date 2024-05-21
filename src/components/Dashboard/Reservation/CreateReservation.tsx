@@ -57,7 +57,6 @@ export default function CreateReservations() {
   });
   const [userdate, setUserDate] = useState<Date | null>();
   const [timer, setTimer] = useState("");
-  const [timeinitial, setTimeInitial] = useState("am");
   const queryClient = useQueryClient();
   const { errors } = formState;
 
@@ -75,10 +74,17 @@ export default function CreateReservations() {
     },
   });
 
+  function convertTo12HourFormat(selectedTime: string) {
+    let [hours, minutes] = selectedTime.split(':').map(Number);
+    let period = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    let formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${period}`;
+    return formattedTime;
+  }
+
   const onSubmit = (values: z.infer<typeof reservationSchema>) => {
     const date = dayjs(userdate).format("YYYY-MM-DD");
-    const time = `${timer} ${timeinitial}`;
-    console.log({ ...values, date, time });
+    const time =  convertTo12HourFormat(timer);
     mutate({ ...values, date, time });
     reset();
     setUserDate(null);
@@ -132,7 +138,7 @@ export default function CreateReservations() {
                 className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
               />
             </div>
-            <select
+            {/* <select
               required
               value={timeinitial}
               onChange={(e) => setTimeInitial(e.target.value)}
@@ -142,7 +148,7 @@ export default function CreateReservations() {
             >
               <option value="am">am</option>
               <option value="pm">pm</option>
-            </select>
+            </select> */}
           </div>
           {/* <Select
             
