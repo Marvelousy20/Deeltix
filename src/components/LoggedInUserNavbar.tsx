@@ -19,8 +19,8 @@ export default function LoggedInNavbar() {
 
   return (
     <div className="">
-      <div className="pt-6 lg:pt-10 fixed w-full z-50 lg:block overflow-hidden">
-        <section className="bg-grayblack flex justify-between items-center rounded-t-[3rem] lg:rounded-[5.5rem] px-8 py-6 mx-4 md:mx-8 lg:mx-20 text-white">
+      <div className="lg:pt-10 fixed w-full z-50 lg:block overflow-hidden">
+        <section className="bg-grayblack flex justify-between items-center lg:rounded-[5.5rem] px-8 py-6 lg:mx-20 text-white">
           <Link href="/">
             <Image src="/dashboard/logo.svg" alt="img" width="80" height="80" />
           </Link>

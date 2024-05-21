@@ -39,8 +39,8 @@ export default function Navbar({
           <LoggedInNavbar />
         ) : (
           <section className="relative">
-            <div className="pt-6 lg:pt-10 fixed top-0 w-full lg:block">
-              <section className="bg-grayblack relative flex justify-between items-center rounded-t-[3rem] lg:rounded-[5.5rem] px-8 py-6 mx-4 md:mx-8 lg:mx-20 text-white">
+            <div className="lg:pt-10 fixed top-0 w-full lg:block">
+              <section className="bg-grayblack relative flex justify-between items-center lg:rounded-[5.5rem] px-8 py-6 lg:mx-20 text-white">
                 <div className="lg:flex items-center gap-x-10">
                   <Link href="/" className="flex items-center">
                     <Image
