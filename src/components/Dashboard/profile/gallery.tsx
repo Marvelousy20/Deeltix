@@ -147,7 +147,7 @@ export default function Gallery({user}: any) {
             <p className="text-[#574DFF]">{progress.pc.toFixed(0)}%</p>
           )}
         </div>
-        <section className="flex items-center justify-between">
+        <section className="flex justify-between md:w-[600px]">
           <div className="flex flex-col gap-[2px]">
             <h4 className="font-medium text-base text-grayHelp">
               Background photo

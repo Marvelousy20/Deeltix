@@ -111,7 +111,7 @@ export const MultipleUpload = ({ otherPics }: any) => {
   return (
     <section className="flex flex-col">
       <div className="flex flex-col gap-4">
-        <section className="flex items-center justify-between">
+        <section className="flex justify-between md:w-[600px]">
           <div className="flex flex-col gap-[2px]">
             <div className="flex items-center gap-2">
               {userfile.length === 0 ? (
