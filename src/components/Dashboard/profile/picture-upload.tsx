@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { RestaurantProfile } from "./restaurant";
 import { Progress } from "@/components/ui/progress";
 
-export const ProfileUpload = ({user}:any) => {
+export const ProfileUpload = ({ user }: any) => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const [progress, setProgress] = useState({ pc: 0 });
   const inputRef = useRef<HTMLInputElement>(null);
@@ -149,7 +149,7 @@ export const ProfileUpload = ({user}:any) => {
             className="hidden"
           />
         </div> */}
-        <RestaurantProfile displayPicture={restaurantUpload} user={user}/>
+        <RestaurantProfile displayPicture={restaurantUpload} user={user} />
       </section>
     </div>
   );
