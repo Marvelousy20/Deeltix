@@ -15,10 +15,10 @@ export const Profile = () => {
     <div>
       {/* mobile navbar */}
       <div className="lg:hidden block">
-        <div className="border-b-[1px] flex items-center px-6 justify-between max-h-[70px] border-[#E9E9E9] fixed inset-0 z-[9999] backdrop-blur-md bg-grayblack">
+        {/* <div className="border-b-[1px] flex items-center px-6 justify-between max-h-[70px] border-[#E9E9E9] fixed inset-0 z-[9999] backdrop-blur-md bg-grayblack">
           <Image src="/dashboard/logo.svg" alt="img" width="120" height="120" />
           <UserDrawer />
-        </div>
+        </div> */}
       </div>
       <div className="bg-[#975949] lg:pt-32 pt-20">
         <div className="flex flex-col items-center lg:pt-20 pt-0">

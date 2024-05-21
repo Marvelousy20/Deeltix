@@ -39,7 +39,7 @@ export default function Navbar({
           <LoggedInNavbar />
         ) : (
           <section className="relative">
-            <div className="pt-10 fixed top-0 w-full lg:block">
+            <div className="pt-6 lg:pt-10 fixed top-0 w-full lg:block">
               <section className="bg-grayblack relative flex justify-between items-center rounded-t-[3rem] lg:rounded-[5.5rem] px-8 py-6 mx-4 md:mx-8 lg:mx-20 text-white">
                 <div className="lg:flex items-center gap-x-10">
                   <Link href="/" className="flex items-center">
@@ -69,9 +69,12 @@ export default function Navbar({
                   <Button variant="primary" onClick={signup}>
                     Create Account
                   </Button>
+
+                  <ModalSignIn opened={login} close={loginClose} />
+                  <SignUp opened={opened} close={close} />
                 </div>
 
-                <div className="md:hidden">
+                <div className="lg:hidden">
                   <Hamburger size={20} toggled={isOpened} toggle={setOpen} />
                 </div>
 
@@ -104,8 +107,6 @@ export default function Navbar({
                           Create Account
                         </Button>
                       </div>
-                      <ModalSignIn opened={login} close={loginClose} />
-                      <SignUp opened={opened} close={close} />
                     </nav>
                   </div>
                 )}
