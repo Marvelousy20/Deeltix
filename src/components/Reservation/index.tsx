@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { Loader } from "@mantine/core";
 import dayjs from "dayjs";
+import { startOfDay } from 'date-fns';
 import { IUserReservation, RestaurantDetails } from "@/types";
 import { useDisclosure } from "@mantine/hooks";
 import { ConfirmReservation } from "./confirm-reservation";
@@ -84,12 +85,20 @@ export default function CreateReservations({
       handleError(error as ErrorType);
     },
   });
+
+  function convertTo12HourFormat(selectedTime: string) {
+    let [hours, minutes] = selectedTime.split(':').map(Number);
+    let period = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    let formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${period}`;
+    return formattedTime;
+  }
+
   const confirmDate = dayjs(userdate).format("YYYY-MM-DD");
-  const confirmTime = `${timer} ${timeinitial}`;
+  const confirmTime = convertTo12HourFormat(timer);
   const onSubmit = (values: z.infer<typeof reservationSchema>) => {
     const date = dayjs(userdate).format("YYYY-MM-DD");
-    const time = `${timer} ${timeinitial}`;
-    console.log({ ...values, date, time });
+    const time = convertTo12HourFormat(timer)
     mutate({ ...values, date, time });
   };
   return (
@@ -123,6 +132,7 @@ export default function CreateReservations({
                 selected={dayjs(userdate).format("DD MM YYYY") as any}
                 onSelect={setUserDate}
                 initialFocus
+                disabled={[{ before: startOfDay(new Date()) }]}
               />
             </PopoverContent>
           </Popover>
@@ -140,7 +150,7 @@ export default function CreateReservations({
                 className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
               />
             </div>
-            <select
+            {/* <select
               required
               value={timeinitial}
               onChange={(e) => setTimeInitial(e.target.value)}
@@ -150,7 +160,7 @@ export default function CreateReservations({
             >
               <option value="am">am</option>
               <option value="pm">pm</option>
-            </select>
+            </select> */}
           </div>
         </div>
         {/* guest */}

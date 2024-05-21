@@ -125,7 +125,7 @@ export const DpUpload = ({displayPic}: any) => {
             )}
           </div>
 
-          <section className="flex items-center justify-between">
+          <section className="flex justify-between md:w-[600px]">
             <div className="flex flex-col gap-[2px]">
               <h4 className="font-medium text-base text-grayHelp">
                 Card Photo
@@ -154,7 +154,6 @@ export const DpUpload = ({displayPic}: any) => {
         <div className="flex flex-col gap-3">
           {userfile.length === 0 ? (
             <div className="w-[400px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm">
-              <Image src={`${displayPic}`} width={400} height={200} alt="display-picture"/>
             </div>
           ) : (
             <section>
