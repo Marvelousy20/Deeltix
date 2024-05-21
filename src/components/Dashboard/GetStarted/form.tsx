@@ -83,7 +83,7 @@ export const RestaurantForm = () => {
   const { errors } = formState;
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: IUpdateRestaurantOverview) =>
-      // console.log(`/api/restaurants/profile/${restaurantId}`),
+      // console.log(data),
       await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
     mutationKey: ['update-restaurant-profile'],
     onSuccess(data) {
@@ -96,8 +96,20 @@ export const RestaurantForm = () => {
       handleError(error as ErrorType);
     },
   });
+
+  function convertTo12HourFormat(selectedTime: string) {
+    let [hours, minutes] = selectedTime.split(':').map(Number);
+    let period = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    let formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${period}`;
+    return formattedTime;
+  }
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate(values);
+    const openingHour = convertTo12HourFormat(values.openingHour)
+    const closingHour = convertTo12HourFormat(values.closingHour)
+    mutate({...values, closingHour, openingHour})
+    // mutate(values);
     reset();
   };
   return (
@@ -381,6 +393,7 @@ export const RestaurantForm = () => {
                 </label>
                 <Input
                   placeholder="9:00 AM"
+                  type='time'
                   className="text-grayInactive text-lg font-normal mt-2"
                   customMaxWidth="w-full"
                   {...register('openingHour', {
@@ -398,6 +411,7 @@ export const RestaurantForm = () => {
                 <label className="text-grayHelp text-lg font-medium">To</label>
                 <Input
                   placeholder="9:00 AM"
+                  type='time'
                   className="text-grayInactive text-lg font-normal mt-2"
                   customMaxWidth="w-full"
                   {...register('closingHour', {

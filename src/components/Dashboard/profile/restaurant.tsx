@@ -130,14 +130,20 @@ export const RestaurantProfile = ({
     },
   });
 
+  function convertTo12HourFormat(selectedTime: string) {
+    let [hours, minutes] = selectedTime.split(':').map(Number);
+    let period = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    let formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${period}`;
+    return formattedTime;
+  }
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const { openingHour, closingHour, ...others } = values;
-    mutate({ ...others, openingHour: openTime, closingHour: closeTime });
-    console.log("restesting:", {
-      ...others,
-      openingHour: openTime,
-      closingHour: closeTime,
-    });
+    const openingHour = convertTo12HourFormat(values.openingHour)
+    const closingHour = convertTo12HourFormat(values.closingHour)
+    mutate({...values, closingHour, openingHour})
+    // mutate(values);
+    reset();
   };
   return (
     <div className="">
@@ -364,32 +370,21 @@ export const RestaurantProfile = ({
                 </div>
               </article>
 
-              <article className="flex items-center gap-3 lg:max-w-[27rem]">
+              <article className="flex items-center justify-between w-full gap-5">
                 <div className="w-full">
                   <label className="text-grayHelp text-lg font-medium">
                     From
                   </label>
-                  {/* <Input
+                  <Input
+                    value={closeTime}
                     placeholder="9:00 AM"
+                    type='time'
                     className="text-grayInactive text-lg font-normal mt-2"
-                    {...register("openingHour", {
+                    customMaxWidth="w-full"
+                    {...register('openingHour', {
                       required: true,
                     })}
-                  /> */}
-                  <div className="flex w-full mt-2 rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300">
-                    <TimePicker
-                      required
-                      {...register("openingHour")}
-                      onChange={handleChangeOpen}
-                      value={openTime}
-                      amPmAriaLabel="Select AM/PM"
-                      clockAriaLabel="Toggle clock"
-                      clearIcon={null}
-                      shouldCloseClock={() => true}
-                      disableClock={false}
-                      clockIcon={null}
-                    />
-                  </div>
+                  />
                   {errors.openingHour && (
                     <div className="text-red-500 text-sm font-normal pt-1">
                       {errors.openingHour?.message}
@@ -398,37 +393,23 @@ export const RestaurantProfile = ({
                 </div>
 
                 <div className="w-full">
-                  <label className="text-grayHelp text-lg font-medium">
-                    To
-                  </label>
-                  <div className="flex mt-2 w-full rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300">
-                    <TimePicker
-                      required
-                      {...register("closingHour")}
-                      onChange={handleChangeClose}
-                      value={closeTime}
-                      amPmAriaLabel="Select AM/PM"
-                      clockAriaLabel="Toggle clock"
-                      clearIcon={null}
-                      shouldCloseClock={() => true}
-                      disableClock={false}
-                      clockIcon={null}
-                    />
-                  </div>
-                  {/* <Input
-                    placeholder="9:00 AM"
+                  <label className="text-grayHelp text-lg font-medium">To</label>
+                  <Input
+                    value={openTime}
+                    type='time'
                     className="text-grayInactive text-lg font-normal mt-2"
-                    {...register("closingHour", {
+                    customMaxWidth="w-full"
+                    {...register('closingHour', {
                       required: true,
                     })}
-                  /> */}
+                  />
                   {errors.closingHour && (
                     <div className="text-red-500 text-sm font-normal pt-1">
                       {errors.closingHour?.message}
                     </div>
                   )}
                 </div>
-              </article>
+            </article>
               <Button
                 type="submit"
                 className="w-full !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
