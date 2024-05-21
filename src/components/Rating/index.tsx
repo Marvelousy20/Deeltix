@@ -28,7 +28,7 @@ const review = [
 export default function Rating({
   restaurantId,
 }: {
-  restaurantId: string | null;
+  restaurantId: string | null | string[];
 }) {
   const { data, isLoading } = useQuery({
     queryFn: async () =>

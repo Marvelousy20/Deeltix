@@ -1,68 +1,71 @@
-"use client";
+'use client';
 
-import { useParams } from "next/navigation";
-import Image from "next/image";
-import { formatPrice } from "@/lib/utils";
-import Overview from "@/components/Overview";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Reservation from "@/components/Reservation";
-import Rating from "@/components/Rating";
-import AllRestaurants from "@/components/Reservation/AllRestuarant";
-import { Input } from "@/components/ui/input";
-import UserDrawer from "@/components/Drawer";
-import { Bookmark } from "lucide-react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { auth } from "@/axios-config";
-import { useSearchParams } from "next/navigation";
+import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import { formatPrice } from '@/lib/utils';
+import Overview from '@/components/Overview';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Reservation from '@/components/Reservation';
+import Rating from '@/components/Rating';
+import AllRestaurants from '@/components/Reservation/AllRestuarant';
+import { Input } from '@/components/ui/input';
+import UserDrawer from '@/components/Drawer';
+import { Bookmark } from 'lucide-react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { auth } from '@/axios-config';
+import { useSearchParams } from 'next/navigation';
 import {
   MenuCategoryDetails,
   MenuDetails,
   UserSingleRestaurant,
-} from "@/types";
-import UserRating from "@/components/Rating/User-Rating";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { ErrorType, handleError } from "@/lib/handle-error";
-import MenuCard from "@/components/Menu/MenuCard";
-import { Skeleton } from "@/components/ui/skeleton";
-import { clsx } from "@mantine/core";
-import Link from "next/link";
-import Map from "@/components/Map";
+} from '@/types';
+import UserRating from '@/components/Rating/User-Rating';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { ErrorType, handleError } from '@/lib/handle-error';
+import MenuCard from '@/components/Menu/MenuCard';
+import { Skeleton } from '@/components/ui/skeleton';
+import { clsx } from '@mantine/core';
+import Link from 'next/link';
+import Map from '@/components/Map';
 
 export default function DetailPage() {
   const { id } = useParams();
+  console.log('ID', id);
   const searchParam = useSearchParams();
   const [bookmark, setBookmark] = useState(false);
-  const restaurantid = searchParam.get("restaurant");
+  const restaurantid = searchParam.get('restaurant');
   const query = useQueryClient();
   const [scroll, setScroll] = useState<number | null>(null);
 
+  console.log('RESTAURANT_ID', restaurantid);
+
   const handleScroll = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const menu = document.getElementById("menuList") as HTMLElement;
-    menu.scrollIntoView({ behavior: "smooth" });
+    const menu = document.getElementById('menuList') as HTMLElement;
+    menu.scrollIntoView({ behavior: 'smooth' });
   };
 
   const [categorymenu, setCategoryMenu] = useState<MenuDetails | null>(null);
   const { data, isLoading } = useQuery({
     queryFn: async () =>
-      await auth.get<UserSingleRestaurant>(`/api/restaurants/${restaurantid}`),
-    queryKey: ["single-restaurant"],
+      await auth.get<UserSingleRestaurant>(`/api/restaurants/${id}`),
+    queryKey: ['single-restaurant'],
     select: ({ data }) => data?.data?.data?.restaurant,
   });
-  console.log("single-restaurant:", data);
+  console.log('single-restaurant:', data);
   // request to get restaurant menu
   const { data: menu, isLoading: menuLoading } = useQuery({
     queryFn: async () =>
-      await auth.get<MenuDetails>(`/api/restaurants/${restaurantid}/menu`),
-    queryKey: ["all-menu"],
+      await auth.get<MenuDetails>(`/api/restaurants/${id}/menu`),
+    queryKey: ['all-menu'],
   });
 
   // request to get restaurant category menu
   const fetchData = async (categoryid: string) => {
     try {
       const categoryMenu = await auth.get<MenuDetails>(
-        `/api/restaurants/${restaurantid}/menu?category=${categoryid}`
+        `/api/restaurants/${id}/menu?category=${categoryid}`
       );
       setCategoryMenu(categoryMenu.data);
     } catch (error: any) {
@@ -75,20 +78,20 @@ export default function DetailPage() {
   const { data: category, isLoading: categoryLoading } = useQuery({
     queryFn: async () =>
       await auth.get<MenuCategoryDetails>(
-        `/api/restaurants/${restaurantid}/menu/categories`
+        `/api/restaurants/${id}/menu/categories`
       ),
-    queryKey: ["menu-category"],
+    queryKey: ['menu-category'],
   });
 
   // request for bookmark
   const { mutate, isLoading: bookmarkLoading } = useMutation({
     mutationFn: async () =>
-      await auth.patch(`/api/restaurants/${restaurantid}/bookmark`),
-    mutationKey: ["bookmark"],
+      await auth.patch(`/api/restaurants/${id}/bookmark`),
+    mutationKey: ['bookmark'],
     onSuccess() {
-      toast.success("Restaurant has been bookmarked");
+      toast.success('Restaurant has been bookmarked');
       setBookmark(true);
-      query.invalidateQueries(["all-bookmark"]);
+      query.invalidateQueries(['all-bookmark']);
     },
     onError(error) {
       handleError(error as ErrorType);
@@ -129,7 +132,7 @@ export default function DetailPage() {
               <Bookmark
                 onClick={() => mutate()}
                 size={25}
-                color={bookmark ? "#FF0000" : "#2C2929"}
+                color={bookmark ? '#FF0000' : '#2C2929'}
                 className="cursor-pointer"
               />
             </div>
@@ -171,16 +174,16 @@ export default function DetailPage() {
             {/* Tabs component */}
             <div className="col-span-4 lg:w-[60%] w-full">
               <section className="grid grid-cols-4 mb-8">
-                {["Overview", "Menu", "Photos", "Review"].map((items, idx) => (
+                {['Overview', 'Menu', 'Photos', 'Review'].map((items, idx) => (
                   <Link
                     href={
                       idx === 0
-                        ? "#overview"
+                        ? '#overview'
                         : idx === 1
-                        ? "#menuList"
+                        ? '#menuList'
                         : idx === 2
-                        ? "#photos"
-                        : "#review"
+                        ? '#photos'
+                        : '#review'
                     }
                     key={idx}
                     onClick={() => {
@@ -191,8 +194,8 @@ export default function DetailPage() {
                     <p
                       className={clsx(
                         scroll === idx
-                          ? "border-b-[2px] border-b-black pb-2 px-4 cursor-pointer w-fit"
-                          : " cursor-pointer px-4"
+                          ? 'border-b-[2px] border-b-black pb-2 px-4 cursor-pointer w-fit'
+                          : ' cursor-pointer px-4'
                       )}
                     >
                       {items}
@@ -275,8 +278,8 @@ export default function DetailPage() {
                 </div>
 
                 <div className="flex flex-col items-center">
-                  <UserRating restaurantId={restaurantid} />
-                  <Rating restaurantId={restaurantid} />
+                  <UserRating restaurantId={id} />
+                  <Rating restaurantId={id} />
                 </div>
               </div>
             </div>
