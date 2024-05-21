@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { Loader } from "@mantine/core";
 import dayjs from "dayjs";
+import { startOfDay } from 'date-fns';
 import { IRestaurantReservation } from "@/types";
 export default function CreateReservations() {
   const { restaurantId } = useUser();
@@ -121,6 +122,7 @@ export default function CreateReservations() {
                 selected={dayjs(userdate).format("DD MM YYYY") as any}
                 onSelect={setUserDate}
                 initialFocus
+                disabled={[{ before: startOfDay(new Date()) }]}
               />
             </PopoverContent>
           </Popover>
