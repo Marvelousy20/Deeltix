@@ -12,7 +12,7 @@ export const MenuDropDown = () => {
   const { setIsLoggedIn } = useUser();
 
   const handleSignOut = () => {
-    console.log('logging out')
+    console.log("logging out");
     localStorage.clear();
     cookieStorage.clear();
     localStorage.removeItem("isLoggedIn");
@@ -61,9 +61,11 @@ export const MenuDropDown = () => {
             </div>
 
             <div
-              onClick={() => (items.name === 'Sign out' ? handleSignOut() : null)}
+              onClick={() =>
+                items.name === "Sign out" ? handleSignOut() : null
+              }
               className={clsx(
-                items.name === 'Sign out'
+                items.name === "Sign out"
                   ? "flex items-center justify-between w-[150px]  cursor-pointer py-2 px-1 hover:bg-gray hover:rounded-lg"
                   : "flex items-center justify-between border-b border-grayoutline w-[150px] max-w-[150px] py-2 px-1 cursor-pointer hover:bg-gray hover:rounded-lg"
               )}

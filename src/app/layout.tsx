@@ -27,7 +27,7 @@ export default function RootLayout({
       <QueryProvider>
         <ProductProvider>
           <UserProvider>
-            <body className={`${roman.variable} font-roman transact-scroll`}>
+            <body className={`${roman.variable} font-roman overflow-y-auto`}>
               {children}
               <ToastContainer />
             </body>

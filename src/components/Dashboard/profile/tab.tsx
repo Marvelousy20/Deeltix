@@ -8,9 +8,9 @@ import { useUser } from "@/context/restaurant/user";
 import Gallery from "./gallery";
 
 export const ProfileTab = () => {
-  const {user} = useUser()
-  if (!user){
-    return <div>loading</div>
+  const { user } = useUser();
+  if (!user) {
+    return <div>loading</div>;
   }
   return (
     <section className="max-w-lg lg:min-w-[32.5rem]">
@@ -50,11 +50,11 @@ export const ProfileTab = () => {
         </TabsList>
 
         <TabsContent value="account">
-          <RestaurantAccount user={user}/>
+          <RestaurantAccount user={user} />
         </TabsContent>
 
         <TabsContent value="restaurant">
-          <ProfileUpload user={user}/>
+          <ProfileUpload user={user} />
         </TabsContent>
 
         <TabsContent value="password">
@@ -62,7 +62,7 @@ export const ProfileTab = () => {
         </TabsContent>
 
         <TabsContent value="gallery">
-          <Gallery user={user}/>
+          <Gallery user={user} />
         </TabsContent>
       </Tabs>
     </section>

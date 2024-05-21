@@ -12,7 +12,7 @@ import {
   Wallet,
   Wallet3,
 } from "iconsax-react";
-import { Sidebar, Wine } from "lucide-react";
+import { QrCode } from "lucide-react";
 import { Isidebar } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
@@ -49,6 +49,11 @@ export const DashboardLayout = ({
     { name: "Dashboard", link: "/dashboard", icon: <Home2 size="18" /> },
     { name: "Reservation", link: "/reservation", icon: <Receipt size={18} /> },
     { name: "Menu", link: "/menu", icon: <Reserve size="18" /> },
+    {
+      name: "QR Code",
+      link: "/restaurant-qrcode",
+      icon: <QrCode size={18} />,
+    },
     { name: "Guest Book", link: "/guest-book", icon: <People size="18" /> },
     // {
     //   name: "Wallet",
@@ -70,7 +75,7 @@ export const DashboardLayout = ({
 
   return (
     <section className="flex items-start w-full h-screen">
-      <div className="h-full w-[240px] bg-[#101323] hidden flex-col items-center py-10 gap-20 lg:flex">
+      <div className="w-[240px] bg-[#101323] hidden flex-col items-center py-10 gap-20 lg:flex h-screen overflow-auto">
         <figure>
           <Image
             src="/dashboard/logo.svg"
@@ -134,7 +139,7 @@ export const DashboardLayout = ({
           ))} */}
         </div>
       </div>
-      <div className="h-full flex-1 overflow-y-auto transact-scroll">
+      <div className="flex-1 overflow-y-auto transact-scroll h-screen overflow-hidden">
         <UserProvider>
           <Header />
           {children}

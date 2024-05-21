@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/moving-border";
 import Hero from "../../../public/dashboard/dash.png";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Turn as Hamburger } from "hamburger-react";
 import RestaurantDashBoardNavbar from "@/components/RestaurantDashboardNavbar";
 
 const cards = [
