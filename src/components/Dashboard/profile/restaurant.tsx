@@ -132,17 +132,19 @@ export const RestaurantProfile = ({
   });
 
   function convertTo12HourFormat(selectedTime: string) {
-    let [hours, minutes] = selectedTime.split(':').map(Number);
-    let period = hours >= 12 ? 'PM' : 'AM';
+    let [hours, minutes] = selectedTime.split(":").map(Number);
+    let period = hours >= 12 ? "PM" : "AM";
     hours = hours % 12 || 12;
-    let formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${period}`;
+    let formattedTime = `${hours}:${
+      minutes < 10 ? "0" + minutes : minutes
+    } ${period}`;
     return formattedTime;
   }
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const openingHour = convertTo12HourFormat(values.openingHour)
-    const closingHour = convertTo12HourFormat(values.closingHour)
-    mutate({...values, closingHour, openingHour})
+    const openingHour = convertTo12HourFormat(values.openingHour);
+    const closingHour = convertTo12HourFormat(values.closingHour);
+    mutate({ ...values, closingHour, openingHour });
     // mutate(values);
     reset();
   };
@@ -320,58 +322,61 @@ export const RestaurantProfile = ({
                 <label className="text-grayHelp text-lg font-medium">
                   Close from
                 </label>
-              <article className="flex items-center justify-between w-full gap-5">
-                <div className="w-full">
-                  <label className="text-grayHelp text-lg font-medium">
-                    From
-                  </label>
-                  <Input
-                    value={closeTime}
-                    placeholder="9:00 AM"
-                    type='time'
-                    className="text-grayInactive text-lg font-normal mt-2"
-                    customMaxWidth="w-full"
-                    {...register('openingHour', {
-                      required: true,
-                    })}
-                  />
-                  {errors.openingHour && (
-                    <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.openingHour?.message}
-                    </div>
-                  )}
-                </div>
+                <article className="flex items-center justify-between w-full gap-5">
+                  <div className="w-full">
+                    <label className="text-grayHelp text-lg font-medium">
+                      From
+                    </label>
+                    <Input
+                      value={closeTime}
+                      placeholder="9:00 AM"
+                      type="time"
+                      className="text-grayInactive text-lg font-normal mt-2"
+                      customMaxWidth="w-full"
+                      {...register("openingHour", {
+                        required: true,
+                      })}
+                    />
+                    {errors.openingHour && (
+                      <div className="text-red-500 text-sm font-normal pt-1">
+                        {errors.openingHour?.message}
+                      </div>
+                    )}
+                  </div>
 
-                <div className="w-full">
-                  <label className="text-grayHelp text-lg font-medium">To</label>
-                  <Input
-                    value={openTime}
-                    type='time'
-                    className="text-grayInactive text-lg font-normal mt-2"
-                    customMaxWidth="w-full"
-                    {...register('closingHour', {
-                      required: true,
-                    })}
-                  />
-                  {errors.closingHour && (
-                    <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.closingHour?.message}
-                    </div>
+                  <div className="w-full">
+                    <label className="text-grayHelp text-lg font-medium">
+                      To
+                    </label>
+                    <Input
+                      value={openTime}
+                      type="time"
+                      className="text-grayInactive text-lg font-normal mt-2"
+                      customMaxWidth="w-full"
+                      {...register("closingHour", {
+                        required: true,
+                      })}
+                    />
+                    {errors.closingHour && (
+                      <div className="text-red-500 text-sm font-normal pt-1">
+                        {errors.closingHour?.message}
+                      </div>
+                    )}
+                  </div>
+                </article>
+                <Button
+                  type="submit"
+                  className="w-full !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
+                >
+                  {isLoading ? (
+                    <span className="flex items-center gap-2 text-white font-medium text-xl">
+                      <p>Submitting</p>
+                      <Loader size="sm" />
+                    </span>
+                  ) : (
+                    <p className="text-white font-medium text-xl">Submit</p>
                   )}
-                </div>
-            </article>
-              <Button
-                type="submit"
-                className="w-full !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
-              >
-                {isLoading ? (
-                  <span className="flex items-center gap-2 text-white font-medium text-xl">
-                    <p>Submitting</p>
-                    <Loader size="sm" />
-                  </span>
-                ) : (
-                  <p className="text-white font-medium text-xl">Submit</p>
-                )}
+                </Button>
               </div>
             </article>
             <Button
