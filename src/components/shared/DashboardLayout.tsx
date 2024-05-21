@@ -7,7 +7,7 @@ import {
   LogoutCurve,
   People,
   Profile,
-  ReceiptText,
+  Receipt,
   Reserve,
   Wallet,
   Wallet3,
@@ -47,7 +47,7 @@ export const DashboardLayout = ({
     { name: "Get started", link: "/get-started", icon: <Category size="18" /> },
 
     { name: "Dashboard", link: "/dashboard", icon: <Home2 size="18" /> },
-    { name: "Reservation", link: "/reservation", icon: <ReceiptText /> },
+    { name: "Reservation", link: "/reservation", icon: <Receipt size={18} /> },
     { name: "Menu", link: "/menu", icon: <Reserve size="18" /> },
     {
       name: "QR Code",
