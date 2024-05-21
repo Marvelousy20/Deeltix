@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { formatPrice } from "@/lib/utils";
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { formatPrice } from '@/lib/utils';
 import {
   Carousel,
   CarouselContent,
@@ -27,7 +27,8 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
   // const [bookmark, setBookmark] = useState(false);
 
   function handleShowDetail(restaurantName: string, restaurantId: string) {
-    router.push(`/${restaurantName}?restaurant=${restaurantId}`);
+    // router.push(`/${restaurantName}?restaurant=${restaurantId}`);
+    router.push(`/restaurant/${restaurantId}`);
   }
   console.log('carousel', data);
 

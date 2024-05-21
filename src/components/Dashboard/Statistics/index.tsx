@@ -70,7 +70,7 @@ export const Dashboard = () => {
   ];
 
   return (
-    <div className="p-8 flex flex-col gap-8">
+    <div className="px-5 my-6 lg:mt-0 lg:p-8 flex flex-col gap-8">
       <section className="lg:flex space-y-[24px] lg:space-y-0 w-full items-center lg:justify-between justify-normal">
         <Headings
           user={"Olivia"}
@@ -93,12 +93,15 @@ export const Dashboard = () => {
               className="border rounded-lg border-[#0000001A] bg-[#F9F9F9] p-6"
             >
               <section className="flex flex-col">
-                <p className="text-sm font-normal text-grayInactive">
-                  {item.sale}
-                </p>
-                <h3 className="font-medium pt-3 pb-2 text-3xl text-[#000000]">
-                  {item.amount}
-                </h3>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-normal text-grayInactive">
+                    {item.sale}
+                  </p>
+                  <h3 className="font-medium pt-3 pb-2 text-3xl text-[#000000]">
+                    {item.amount}
+                  </h3>
+                </div>
+
                 <div className="flex items-center gap-1">
                   <div>{item.arrow}</div>
                   <p className="font-normal text-sm text-[#000000]">
@@ -129,7 +132,7 @@ export const Dashboard = () => {
         </section>
       </div>
 
-      <div className="h-[450px] w-full border border-grayBottom rounded-[20px] pt-[24px] px-[24px]">
+      <div className="h-[348px] lg:h-[450px] w-full border border-grayBottom rounded-[20px] pt-4 lg:pt-6 lg:px-6">
         <AreaChartComponent stats={weekly_stat?.output} />
       </div>
 

@@ -18,7 +18,7 @@ import { Loader } from "@mantine/core";
 export default function UserRating({
   restaurantId,
 }: {
-  restaurantId: string | null;
+  restaurantId: string | null | string[];
 }) {
   const [rating, setRating] = useState<number>(0);
   const [isTyping, setIsTyping] = useState(false);

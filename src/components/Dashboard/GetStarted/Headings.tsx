@@ -13,7 +13,7 @@ export const Headings = ({
   const { managerName } = useUser();
 
   return (
-    <div className="flex items-center lg:gap-4 px-4 lg:px-0">
+    <div className="flex items-center lg:gap-4 lg:px-0">
       <div>
         {/* <Image
           src="/dashboard/restaurant.svg"
@@ -32,7 +32,7 @@ export const Headings = ({
           className=" block"
         />
         <div className="flex flex-col lg:gap-2 gap-1">
-          <h3 className="text-comment md:text-xl text-xl font-bold flex items-center gap-2 whitespace-nowrap w-full">
+          <h3 className="text-comment text-xl font-bold flex items-center gap-2 whitespace-nowrap w-full">
             Welcome {managerName}
           </h3>
           <p className="font-normal lg:text-base text-sm text-grayInactive">

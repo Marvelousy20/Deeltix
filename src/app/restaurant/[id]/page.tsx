@@ -31,11 +31,14 @@ import Map from "@/components/Map";
 
 export default function DetailPage() {
   const { id } = useParams();
+  console.log("ID", id);
   const searchParam = useSearchParams();
   const [bookmark, setBookmark] = useState(false);
   const restaurantid = searchParam.get("restaurant");
   const query = useQueryClient();
   const [scroll, setScroll] = useState<number | null>(null);
+
+  console.log("RESTAURANT_ID", restaurantid);
 
   const handleScroll = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -46,7 +49,7 @@ export default function DetailPage() {
   const [categorymenu, setCategoryMenu] = useState<MenuDetails | null>(null);
   const { data, isLoading } = useQuery({
     queryFn: async () =>
-      await auth.get<UserSingleRestaurant>(`/api/restaurants/${restaurantid}`),
+      await auth.get<UserSingleRestaurant>(`/api/restaurants/${id}`),
     queryKey: ["single-restaurant"],
     select: ({ data }) => data?.data?.data?.restaurant,
   });
@@ -54,7 +57,7 @@ export default function DetailPage() {
   // request to get restaurant menu
   const { data: menu, isLoading: menuLoading } = useQuery({
     queryFn: async () =>
-      await auth.get<MenuDetails>(`/api/restaurants/${restaurantid}/menu`),
+      await auth.get<MenuDetails>(`/api/restaurants/${id}/menu`),
     queryKey: ["all-menu"],
   });
 
@@ -62,7 +65,7 @@ export default function DetailPage() {
   const fetchData = async (categoryid: string) => {
     try {
       const categoryMenu = await auth.get<MenuDetails>(
-        `/api/restaurants/${restaurantid}/menu?category=${categoryid}`
+        `/api/restaurants/${id}/menu?category=${categoryid}`
       );
       setCategoryMenu(categoryMenu.data);
     } catch (error: any) {
@@ -75,15 +78,14 @@ export default function DetailPage() {
   const { data: category, isLoading: categoryLoading } = useQuery({
     queryFn: async () =>
       await auth.get<MenuCategoryDetails>(
-        `/api/restaurants/${restaurantid}/menu/categories`
+        `/api/restaurants/${id}/menu/categories`
       ),
     queryKey: ["menu-category"],
   });
 
   // request for bookmark
   const { mutate, isLoading: bookmarkLoading } = useMutation({
-    mutationFn: async () =>
-      await auth.patch(`/api/restaurants/${restaurantid}/bookmark`),
+    mutationFn: async () => await auth.patch(`/api/restaurants/${id}/bookmark`),
     mutationKey: ["bookmark"],
     onSuccess() {
       toast.success("Restaurant has been bookmarked");
@@ -98,19 +100,7 @@ export default function DetailPage() {
   return (
     <div className="w-full">
       <div>
-        {/* mobile navbar */}
-        <div className="lg:hidden block">
-          <div className="border-b-[1px] flex items-center px-6 justify-between max-h-[70px] border-[#E9E9E9] fixed inset-0 z-[9999] backdrop-blur-md bg-grayblack">
-            <Image
-              src="/dashboard/logo.svg"
-              alt="img"
-              width="120"
-              height="120"
-            />
-            <UserDrawer />
-          </div>
-        </div>
-        <div className="mt-16 lg:mt-0 w-full lg:h-[500px]">
+        <div className="w-full lg:h-[500px]">
           <Image
             src={data?.banner as string}
             alt="restaurant-banner"
@@ -275,8 +265,8 @@ export default function DetailPage() {
                 </div>
 
                 <div className="flex flex-col items-center">
-                  <UserRating restaurantId={restaurantid} />
-                  <Rating restaurantId={restaurantid} />
+                  <UserRating restaurantId={id} />
+                  <Rating restaurantId={id} />
                 </div>
               </div>
             </div>
