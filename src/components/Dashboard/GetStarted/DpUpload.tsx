@@ -15,9 +15,9 @@ import { Progress } from "@/components/ui/progress";
 
 import { Loader } from "@mantine/core";
 interface IDp {
-    displayPicture: string[];
+  displayPicture: string[];
 }
-export const DpUpload = ({displayPic}: any) => {
+export const DpUpload = ({ displayPic }: any) => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [dp, setDp] = useState([]);
@@ -105,7 +105,6 @@ export const DpUpload = ({displayPic}: any) => {
     <section className="flex flex-col gap-[48px]">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-5">
-
           <div className="flex items-center gap-2">
             {userfile.length === 0 ? (
               ""
@@ -125,16 +124,17 @@ export const DpUpload = ({displayPic}: any) => {
             )}
           </div>
 
-          <section className="flex justify-between md:w-[600px]">
+          <section className="flex flex-col lg:flex-row justify-between lg:w-[600px]">
             <div className="flex flex-col gap-[2px]">
               <h4 className="font-medium text-base text-grayHelp">
                 Card Photo
               </h4>
               <p className="text-sm font-normal text-[#98A2B3]">
-              This image will compel potential customers to review your page <br/> and menu. 960x720px aspect ratio
+                This image will compel potential customers to review your page{" "}
+                <br /> and menu. 960x720px aspect ratio
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mt-4 lg:mt-0">
               <div
                 onClick={handleClick}
                 className="flex items-center justify-center gap-2 cursor-pointer w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
@@ -153,8 +153,7 @@ export const DpUpload = ({displayPic}: any) => {
         </div>
         <div className="flex flex-col gap-3">
           {userfile.length === 0 ? (
-            <div className="w-[400px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm">
-            </div>
+            <div className="w-[400px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm"></div>
           ) : (
             <section>
               {userfile.map((image, _idx) => (

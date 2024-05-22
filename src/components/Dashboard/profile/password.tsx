@@ -102,7 +102,7 @@ export const RestaurantPassword = () => {
                 </label>
 
                 {/* input */}
-                <div className=" items-center lg:min-w-[27rem] mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+                <div className=" items-center w-full lg:min-w-[27rem] mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                   <input
                     type={type}
                     placeholder="Enter your password"
@@ -140,7 +140,7 @@ export const RestaurantPassword = () => {
                 </label>
 
                 {/* input */}
-                <div className=" items-center lg:min-w-[27rem] mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+                <div className=" items-center w-full lg:min-w-[27rem] mt-2 justify-between flex h-12 rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                   <input
                     type={type}
                     placeholder="Enter your password"
@@ -178,7 +178,7 @@ export const RestaurantPassword = () => {
                 </label>
 
                 {/* input */}
-                <div className=" items-center lg:min-w-[27rem] mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
+                <div className=" items-center w-full lg:min-w-[27rem] mt-2 justify-between flex h-12 rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
                   <input
                     type={type}
                     placeholder="Enter your password"

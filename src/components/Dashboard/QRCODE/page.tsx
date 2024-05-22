@@ -11,6 +11,9 @@ import { QRCode } from "react-qrcode-logo";
 import { FirstFrame } from "@/components/QRCode-frames/first-frame";
 import { SecondFrame } from "@/components/QRCode-frames/second-frame";
 import { ThirdFrame } from "@/components/QRCode-frames/third-frame";
+import { Button } from "@/components/ui/button";
+import { Save } from "lucide-react";
+import { Download } from "lucide-react";
 
 const formSchema = z.object({
   foreground: z.string().min(2, {
@@ -86,19 +89,19 @@ export const RestaurantQrCode = () => {
     console.log(values);
   };
   return (
-    <div className="flex w-full items-center  justify-center">
-      <section className="">
+    <div className="flex w-full items-center justify-center p-5 lg:p-0">
+      <section className="w-full lg:w-auto">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-2xl text-[#000000]">
+            <h3 className="font-bold text-xl lg:text-2xl text-[#000000]">
               QR Code Generator
             </h3>
             <p className="font-normal text-base text-grayInactive">
               Create and edit your Restaurant QR Code
             </p>
           </div>
-          <section className="flex items-start  gap-6">
-            <div className="border border-grayBottom rounded-[24px] p-4 lg:p-6 max-w-lg lg:w-[60rem]">
+          <section className="flex flex-col lg:flex-row items-start gap-6 gap-y-52 w-full">
+            <div className="border relative border-grayBottom rounded-[24px] p-4 lg:p-6 max-w-lg lg:w-[60rem] order-2 lg:order-1 w-full">
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-4"
@@ -276,10 +279,20 @@ export const RestaurantQrCode = () => {
                     className="text-[#574DFF]"
                   />
                 </div>
+
+                <div className="flex lg:justify-end">
+                  <Button
+                    type="submit"
+                    className="flex gap-2 bg-[#574DFF] w-full lg:w-[6.4rem] text-white mt-10"
+                  >
+                    <Save size={15} />
+                    Save
+                  </Button>
+                </div>
               </form>
             </div>
             {/* <div className="w-[150px] h-[150px] bg-red-500"></div> */}
-            <div className="h-[150px] w-[150px]">
+            <div className="h-[150px] lg:w-[150px] order-1 lg:order-2 lg:block justify-center w-full">
               {thirdFrame ? (
                 <div
                   className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
@@ -315,6 +328,16 @@ export const RestaurantQrCode = () => {
                   <SecondFrame color={color} fcolor={fcolor} f2size={size} />
                 </div>
               ) : null}
+
+              <div className="flex justify-center w-full">
+                <Button
+                  type="submit"
+                  className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
+                >
+                  <Save size={15} />
+                  Download
+                </Button>
+              </div>
             </div>
           </section>
         </div>
