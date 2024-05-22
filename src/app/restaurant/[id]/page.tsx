@@ -93,7 +93,8 @@ export default function DetailPage() {
       query.invalidateQueries(["all-bookmark"]);
     },
     onError(error) {
-      handleError(error as ErrorType);
+      toast.error("Bookmark this restaurant? Sign in first.");
+      // handleError(error as ErrorType);
     },
   });
 

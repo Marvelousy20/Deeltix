@@ -76,7 +76,10 @@ export default function ModalSignIn({
     },
 
     onError(error) {
-      handleError(error as ErrorType);
+      toast.error(
+        "Hmm, that password doesn't look quite right. Please try again."
+      );
+      // handleError(error as ErrorType);
     },
   });
 

@@ -86,7 +86,7 @@ export const RestaurantQrCode = () => {
     console.log(values);
   };
   return (
-    <div className="flex w-full items-center  justify-center">
+    <div className="flex w-full items-center p-8 justify-center">
       <section className="">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-2">
@@ -261,58 +261,46 @@ export const RestaurantQrCode = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <p>Size</p>
-                    <p>{`${size}px`}</p>
-                  </div>
-                  <Slider
-                    value={size}
-                    onValueChange={(value) => setSize(value)}
-                    // defaultValue={[33]}
-                    max={100}
-                    step={1}
-                    color="#574DFF"
-                    className="text-[#574DFF]"
-                  />
-                </div>
               </form>
             </div>
-            {/* <div className="w-[150px] h-[150px] bg-red-500"></div> */}
             <div className="h-[150px] w-[150px]">
               {thirdFrame ? (
                 <div
-                  className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
+                  className={`border border-grayBottom w-fit h-fit`}
                   style={{
                     padding: `${slider}px`,
-                    borderRadius: `${radius}px`,
+                    // borderRadius: `${radius}px`,
                     backgroundColor: `${color}`,
                   }}
                 >
-                  <ThirdFrame color={color} fcolor={fcolor} />
+                  <ThirdFrame
+                    color={color}
+                    fcolor={fcolor}
+                    numbers={[radius, radius, radius]}
+                  />
                 </div>
               ) : firstFrame ? (
                 <div
-                  className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
+                  className={`border border-grayBottom rounded-[18px] w-fit h-fit`}
                   style={{
                     padding: `${slider}px`,
-                    borderRadius: `${radius}px`,
+                    // borderRadius: `${radius}px`,
                     backgroundColor: `${color}`,
                   }}
                 >
-                  <FirstFrame color={color} fcolor={fcolor} size={size} />
+                  <FirstFrame color={color} fcolor={fcolor} />
                 </div>
               ) : secondFrame ? (
                 <div
-                  className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
+                  className={`border border-grayBottom rounded-t-[20px] rounded-b-lg w-fit h-fit`}
                   style={{
                     padding: `${slider}px`,
-                    borderRadius: `${radius}px`,
+                    // borderRadius: `${radius}px`,
                     backgroundColor: `${color}`,
                     overflow: "hidden",
                   }}
                 >
-                  <SecondFrame color={color} fcolor={fcolor} f2size={size} />
+                  <SecondFrame color={color} fcolor={fcolor} />
                 </div>
               ) : null}
             </div>

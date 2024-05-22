@@ -45,13 +45,14 @@ export default function UserRating({
       await auth.post(`/api/restaurants/${restaurantId}/review`, data),
     mutationKey: ["rating"],
     onSuccess() {
-      toast.success("Rating made successfully");
+      toast.success("Review made successfully");
       query.invalidateQueries(["user-review"]);
       setRating(0);
       reset();
     },
     onError(error) {
-      handleError(error as ErrorType);
+      toast.error("Review this restaurant? Sign in first");
+      // handleError(error as ErrorType);
     },
   });
 
