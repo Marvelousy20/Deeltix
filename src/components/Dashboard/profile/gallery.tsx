@@ -1,4 +1,3 @@
-
 "use client";
 import { DocumentUpload, GalleryEdit } from "iconsax-react";
 import Image from "next/image";
@@ -22,11 +21,11 @@ interface IBackground {
   banner: string[];
 }
 
-export default function Gallery({user}: any) {
-    const displayPic: string = user.data.data.restaurant.displayPicture;
-    const bannerPic:string = user.data.data.restaurant.banner;
-    const otherPics:string[] = user.data.data.restaurant.pictures;
-    const [userfile, setUserFile] = useState<File[]>([]);
+export default function Gallery({ user }: any) {
+  const displayPic: string = user.data.data.restaurant.displayPicture;
+  const bannerPic: string = user.data.data.restaurant.banner;
+  const otherPics: string[] = user.data.data.restaurant.pictures;
+  const [userfile, setUserFile] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const { banner, setBanner } = useProduct();
   const [background, setBackground] = useState([]);
@@ -131,7 +130,7 @@ export default function Gallery({user}: any) {
 
         <div className="flex items-center gap-2">
           {userfile.length === 0 ? (
-            ''
+            ""
           ) : (
             <Progress
               max={100}
@@ -142,12 +141,12 @@ export default function Gallery({user}: any) {
           )}
 
           {userfile.length === 0 ? (
-            ''
+            ""
           ) : (
             <p className="text-[#574DFF]">{progress.pc.toFixed(0)}%</p>
           )}
         </div>
-        <section className="flex justify-between md:w-[600px]">
+        <section className="flex flex-col lg:flex-row justify-between lg:w-[600px]">
           <div className="flex flex-col gap-[2px]">
             <h4 className="font-medium text-base text-grayHelp">
               Background photo
@@ -156,7 +155,7 @@ export default function Gallery({user}: any) {
               Header image for your restaurant page. 1280x720px aspect ratio
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mt-4 lg:mt-0">
             <div
               onClick={handleClick}
               className="flex items-center justify-center gap-2 cursor-pointer w-fit py-3 px-4 bg-[#EAECF0] rounded-[24px]"
@@ -175,9 +174,14 @@ export default function Gallery({user}: any) {
       </div>
       <div className="flex flex-col gap-3">
         {userfile.length === 0 ? (
-          <div className="w-[600px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm">
+          <div className="lg:w-[600px] h-[200px] overflow-hidden flex items-center justify-center border  border-spacing-6 border-dashed border-[#574DFF] rounded-sm">
             {/* image will be here */}
-            <Image src={`${bannerPic}`} width={600} height={200} alt="display-picture"/>
+            <Image
+              src={`${bannerPic}`}
+              width={600}
+              height={200}
+              alt="display-picture"
+            />
           </div>
         ) : (
           <section>
@@ -206,9 +210,9 @@ export default function Gallery({user}: any) {
         />
       </div>
       {/* display Picture uploader */}
-      <DpUpload displayPic={displayPic}/>
+      <DpUpload displayPic={displayPic} />
       {/* multiple upload */}
-      <MultipleUpload otherPics={otherPics}/>
+      <MultipleUpload otherPics={otherPics} />
     </section>
   );
 }

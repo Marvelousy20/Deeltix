@@ -11,6 +11,9 @@ import { QRCode } from "react-qrcode-logo";
 import { FirstFrame } from "@/components/QRCode-frames/first-frame";
 import { SecondFrame } from "@/components/QRCode-frames/second-frame";
 import { ThirdFrame } from "@/components/QRCode-frames/third-frame";
+import { Button } from "@/components/ui/button";
+import { Save } from "lucide-react";
+import { Download } from "lucide-react";
 
 const formSchema = z.object({
   foreground: z.string().min(2, {
@@ -27,6 +30,7 @@ const formSchema = z.object({
   }),
 });
 export const RestaurantQrCode = () => {
+  const [restaurantName, setRestaurantName] = useState("");
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
   const [size, setSize] = useState([16]);
@@ -86,19 +90,19 @@ export const RestaurantQrCode = () => {
     console.log(values);
   };
   return (
-    <div className="flex w-full items-center  justify-center">
-      <section className="">
+    <div className="flex w-full items-center justify-center p-5 lg:p-8">
+      <section className="w-full lg:w-auto">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-2xl text-[#000000]">
+            <h3 className="font-bold text-xl lg:text-2xl text-[#000000]">
               QR Code Generator
             </h3>
             <p className="font-normal text-base text-grayInactive">
               Create and edit your Restaurant QR Code
             </p>
           </div>
-          <section className="flex items-start  gap-6">
-            <div className="border border-grayBottom rounded-[24px] p-4 lg:p-6 max-w-lg lg:w-[60rem]">
+          <section className="flex flex-col lg:flex-row items-start gap-6 gap-y-52 w-full">
+            <div className="border relative border-grayBottom rounded-[24px] p-4 lg:p-6 max-w-lg lg:w-[60rem] order-2 lg:order-1 w-full">
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-4"
@@ -228,11 +232,13 @@ export const RestaurantQrCode = () => {
                     Restaurant name
                   </label>
                   <Input
-                    placeholder="Enter full name"
+                    value={restaurantName}
+                    onChange={(e) => setRestaurantName(e.target.value)}
+                    placeholder="Enter restaurant name"
                     className="text-grayInactive text-lg font-normal mt-2 w-full"
-                    {...register("restaurantName", {
-                      required: true,
-                    })}
+                    // {...register("restaurantName", {
+                    //   required: true,
+                    // })}
                   />
                   {errors.restaurantName && (
                     <div className="text-red-500 text-sm font-normal pt-1">
@@ -241,7 +247,7 @@ export const RestaurantQrCode = () => {
                   )}
                 </div>
 
-                <div>
+                {/* <div>
                   <label className="text-grayHelp text-lg font-medium">
                     Text color
                   </label>
@@ -260,8 +266,8 @@ export const RestaurantQrCode = () => {
                       {errors.textColor.message}
                     </div>
                   )}
-                </div>
-                <div className="flex flex-col gap-3">
+                </div> */}
+                {/* <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <p>Size</p>
                     <p>{`${size}px`}</p>
@@ -275,45 +281,101 @@ export const RestaurantQrCode = () => {
                     color="#574DFF"
                     className="text-[#574DFF]"
                   />
+                </div> */}
+
+                <div className="flex lg:justify-end">
+                  <Button
+                    type="submit"
+                    className="flex gap-2 bg-[#574DFF] w-full lg:w-[6.4rem] text-white mt-10"
+                  >
+                    <Save size={15} />
+                    Save
+                  </Button>
                 </div>
               </form>
             </div>
-            {/* <div className="w-[150px] h-[150px] bg-red-500"></div> */}
-            <div className="h-[150px] w-[150px]">
+            <div className="h-[150px] lg:w-[150px] order-1 lg:order-2 lg:block justify-center w-full">
               {thirdFrame ? (
-                <div
-                  className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
-                  style={{
-                    padding: `${slider}px`,
-                    borderRadius: `${radius}px`,
-                    backgroundColor: `${color}`,
-                  }}
-                >
-                  <ThirdFrame color={color} fcolor={fcolor} />
-                </div>
+                <section>
+                  <div
+                    className={`border border-grayBottom w-fit h-fit`}
+                    style={{
+                      padding: `${slider}px`,
+                      // borderRadius: `${radius}px`,
+                      backgroundColor: `${color}`,
+                    }}
+                  >
+                    <ThirdFrame
+                      color={color}
+                      fcolor={fcolor}
+                      numbers={[radius, radius, radius]}
+                    />
+                  </div>
+                  <div className="flex justify-center w-full">
+                    <Button
+                      type="submit"
+                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
+                    >
+                      <Save size={15} />
+                      Download
+                    </Button>
+                  </div>
+                </section>
               ) : firstFrame ? (
-                <div
-                  className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
-                  style={{
-                    padding: `${slider}px`,
-                    borderRadius: `${radius}px`,
-                    backgroundColor: `${color}`,
-                  }}
-                >
-                  <FirstFrame color={color} fcolor={fcolor} size={size} />
-                </div>
+                <section>
+                  <div
+                    className={`border border-grayBottom rounded-[18px] w-fit h-fit`}
+                    style={{
+                      padding: `${slider}px`,
+                      // borderRadius: `${radius}px`,
+                      backgroundColor: `${color}`,
+                    }}
+                  >
+                    <FirstFrame
+                      color={color}
+                      fcolor={fcolor}
+                      name={restaurantName}
+                      numbers={[radius, radius, radius]}
+                    />
+                  </div>
+                  <div className="flex justify-center w-full">
+                    <Button
+                      type="submit"
+                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
+                    >
+                      <Save size={15} />
+                      Download
+                    </Button>
+                  </div>
+                </section>
               ) : secondFrame ? (
-                <div
-                  className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
-                  style={{
-                    padding: `${slider}px`,
-                    borderRadius: `${radius}px`,
-                    backgroundColor: `${color}`,
-                    overflow: "hidden",
-                  }}
-                >
-                  <SecondFrame color={color} fcolor={fcolor} f2size={size} />
-                </div>
+                <section>
+                  <div
+                    className={`border border-grayBottom rounded-t-[20px] rounded-b-lg w-fit h-fit`}
+                    style={{
+                      padding: `${slider}px`,
+                      // borderRadius: `${radius}px`,
+                      backgroundColor: `${color}`,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <SecondFrame
+                      color={color}
+                      fcolor={fcolor}
+                      name={restaurantName}
+                      numbers={[radius, radius, radius]}
+                    />
+                  </div>
+                  <div className="flex justify-center w-full">
+                    <Button
+                      type="submit"
+                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
+                    >
+                      <Save size={15} />
+                      Download
+                    </Button>
+                  </div>
+                </section>
               ) : null}
             </div>
           </section>

@@ -71,8 +71,10 @@ export const MenuUpload = () => {
     },
     mutationKey: ['menu, restuarant'],
     onSuccess() {
+
       toast.success('Yuppy! Menu added successfully.');
       router.push('/menu');
+
       reset();
       setUrl([]);
     },
@@ -112,21 +114,21 @@ export const MenuUpload = () => {
   }, [restaurantId]);
 
   return (
-    <div className="p-8 gap-[48px] flex flex-col">
+    <div className="p-4 lg:p-8 lg:gap-[48px] flex flex-col">
       {/* <Breadcrumbs breadcrumb={"Add first menu"} /> */}
 
-      <section className="flex flex-col items-center justify-center">
-        <div className="border border-grayBottom rounded-[24px] px-4 py-8 lg:p-[4rem] w-fit">
+      <section className="lg:flex flex-col items-center justify-center w-full">
+        <div className="lg:border border-grayBottom rounded-[24px] py-8 lg:p-[4rem] lg:w-fit">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[9.1rem]"
+            className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[9.1rem] w-full"
           >
-            <div className="">
+            <div className="w-full">
               <h3 className="text-xl font-bold text-grayBlack2 pb-8">
                 Menu details
               </h3>
               {/* name */}
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6 w-full">
                 <div className="">
                   <label className="text-grayHelp text-lg font-medium">
                     Name
@@ -134,7 +136,8 @@ export const MenuUpload = () => {
                   <Input
                     placeholder="eg. Fried rice"
                     className="text-grayInactive text-lg font-normal mt-2"
-                    {...register('name')}
+                    // customMaxWidth="100px"
+                    {...register("name")}
                   />
                   {errors.name && (
                     <div className="text-red-500 text-sm font-normal pt-1">
@@ -232,7 +235,7 @@ export const MenuUpload = () => {
 
             <Button
               type="submit"
-              className="bg-blue-600 text-white"
+              className="bg-blue-600 text-white w-full"
               disabled={isLoading}
             >
               Submit

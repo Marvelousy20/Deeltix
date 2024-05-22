@@ -29,7 +29,7 @@ import { toast } from "react-toastify";
 import { ErrorType, handleError } from "@/lib/handle-error";
 import { Loader } from "@mantine/core";
 import dayjs from "dayjs";
-import { startOfDay } from 'date-fns';
+import { startOfDay } from "date-fns";
 import { IUserReservation, RestaurantDetails } from "@/types";
 import { useDisclosure } from "@mantine/hooks";
 import { ConfirmReservation } from "./confirm-reservation";
@@ -82,15 +82,18 @@ export default function CreateReservations({
       queryClient.invalidateQueries(["pending-reservation"]);
     },
     onError(error) {
-      handleError(error as ErrorType);
+      toast.error("Want to make a reservation? Sign in first");
+      // handleError(error as ErrorType);
     },
   });
 
   function convertTo12HourFormat(selectedTime: string) {
-    let [hours, minutes] = selectedTime.split(':').map(Number);
-    let period = hours >= 12 ? 'PM' : 'AM';
+    let [hours, minutes] = selectedTime.split(":").map(Number);
+    let period = hours >= 12 ? "PM" : "AM";
     hours = hours % 12 || 12;
-    let formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${period}`;
+    let formattedTime = `${hours}:${
+      minutes < 10 ? "0" + minutes : minutes
+    } ${period}`;
     return formattedTime;
   }
 
@@ -98,7 +101,7 @@ export default function CreateReservations({
   const confirmTime = convertTo12HourFormat(timer);
   const onSubmit = (values: z.infer<typeof reservationSchema>) => {
     const date = dayjs(userdate).format("YYYY-MM-DD");
-    const time = convertTo12HourFormat(timer)
+    const time = convertTo12HourFormat(timer);
     mutate({ ...values, date, time });
   };
   return (

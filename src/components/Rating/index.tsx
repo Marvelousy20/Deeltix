@@ -73,7 +73,8 @@ export default function Rating({
       setIsliked(true);
     },
     onError(error) {
-      handleError(error as ErrorType);
+      toast.error("Want to like this? Sign in first.");
+      // handleError(error as ErrorType);
     },
   });
 
@@ -114,12 +115,14 @@ export default function Rating({
             <hr className="mt-6 mb-5" />
 
             <div className="flex gap-10">
-              <div className="flex items-center gap-2 border-r pr-6">
+              <div
+                onClick={() => {
+                  // confirmation(review?.id);
+                  mutate(review?.id);
+                }}
+                className="flex items-center gap-2 border-r pr-6 cursor-pointer"
+              >
                 <ThumbsUp
-                  onClick={() => {
-                    // confirmation(review?.id);
-                    mutate(review?.id);
-                  }}
                   className={`${
                     liked ? "text-blue-500" : "white"
                   } cursor-pointer`}

@@ -11,6 +11,19 @@ import { useRouter } from "next/navigation";
 import ModalPassword from "./ui/modals/modal-password";
 import { useState } from "react";
 import { Turn as Hamburger } from "hamburger-react";
+import { QrCode } from "lucide-react";
+import { Isidebar } from "@/types";
+import {
+  Category,
+  Home2,
+  LogoutCurve,
+  People,
+  Profile,
+  Receipt,
+  Reserve,
+  Wallet,
+  Wallet3,
+} from "iconsax-react";
 
 export default function Navbar({
   signinOpen,
@@ -32,6 +45,8 @@ export default function Navbar({
   //   setIsOpened(true);
   // };
 
+
+
   return (
     <div className="!z-[1000] relative">
       <header className="overflow-hidden">
@@ -39,8 +54,8 @@ export default function Navbar({
           <LoggedInNavbar />
         ) : (
           <section className="relative">
-            <div className="pt-6 lg:pt-10 fixed top-0 w-full lg:block">
-              <section className="bg-grayblack relative flex justify-between items-center rounded-t-[3rem] lg:rounded-[5.5rem] px-8 py-6 mx-4 md:mx-8 lg:mx-20 text-white">
+            <div className="lg:pt-10 fixed top-0 w-full lg:block">
+              <section className="bg-grayblack relative flex justify-between items-center lg:rounded-[5.5rem] px-8 py-6 lg:mx-20 text-white">
                 <div className="lg:flex items-center gap-x-10">
                   <Link href="/" className="flex items-center">
                     <Image
