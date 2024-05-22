@@ -30,6 +30,7 @@ const formSchema = z.object({
   }),
 });
 export const RestaurantQrCode = () => {
+  const [restaurantName, setRestaurantName] = useState("");
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
   const [size, setSize] = useState([16]);
@@ -89,7 +90,7 @@ export const RestaurantQrCode = () => {
     console.log(values);
   };
   return (
-    <div className="flex w-full items-center justify-center p-5 lg:p-0">
+    <div className="flex w-full items-center justify-center p-5 lg:p-8">
       <section className="w-full lg:w-auto">
         <div className="flex flex-col gap-12">
           <div className="flex flex-col gap-2">
@@ -231,11 +232,13 @@ export const RestaurantQrCode = () => {
                     Restaurant name
                   </label>
                   <Input
-                    placeholder="Enter full name"
+                    value={restaurantName}
+                    onChange={(e) => setRestaurantName(e.target.value)}
+                    placeholder="Enter restaurant name"
                     className="text-grayInactive text-lg font-normal mt-2 w-full"
-                    {...register("restaurantName", {
-                      required: true,
-                    })}
+                    // {...register("restaurantName", {
+                    //   required: true,
+                    // })}
                   />
                   {errors.restaurantName && (
                     <div className="text-red-500 text-sm font-normal pt-1">
@@ -244,7 +247,7 @@ export const RestaurantQrCode = () => {
                   )}
                 </div>
 
-                <div>
+                {/* <div>
                   <label className="text-grayHelp text-lg font-medium">
                     Text color
                   </label>
@@ -263,8 +266,8 @@ export const RestaurantQrCode = () => {
                       {errors.textColor.message}
                     </div>
                   )}
-                </div>
-                <div className="flex flex-col gap-3">
+                </div> */}
+                {/* <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <p>Size</p>
                     <p>{`${size}px`}</p>
@@ -278,7 +281,7 @@ export const RestaurantQrCode = () => {
                     color="#574DFF"
                     className="text-[#574DFF]"
                   />
-                </div>
+                </div> */}
 
                 <div className="flex lg:justify-end">
                   <Button
@@ -291,53 +294,89 @@ export const RestaurantQrCode = () => {
                 </div>
               </form>
             </div>
-            {/* <div className="w-[150px] h-[150px] bg-red-500"></div> */}
             <div className="h-[150px] lg:w-[150px] order-1 lg:order-2 lg:block justify-center w-full">
               {thirdFrame ? (
-                <div
-                  className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
-                  style={{
-                    padding: `${slider}px`,
-                    borderRadius: `${radius}px`,
-                    backgroundColor: `${color}`,
-                  }}
-                >
-                  <ThirdFrame color={color} fcolor={fcolor} />
-                </div>
+                <section>
+                  <div
+                    className={`border border-grayBottom w-fit h-fit`}
+                    style={{
+                      padding: `${slider}px`,
+                      // borderRadius: `${radius}px`,
+                      backgroundColor: `${color}`,
+                    }}
+                  >
+                    <ThirdFrame
+                      color={color}
+                      fcolor={fcolor}
+                      numbers={[radius, radius, radius]}
+                    />
+                  </div>
+                  <div className="flex justify-center w-full">
+                    <Button
+                      type="submit"
+                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
+                    >
+                      <Save size={15} />
+                      Download
+                    </Button>
+                  </div>
+                </section>
               ) : firstFrame ? (
-                <div
-                  className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
-                  style={{
-                    padding: `${slider}px`,
-                    borderRadius: `${radius}px`,
-                    backgroundColor: `${color}`,
-                  }}
-                >
-                  <FirstFrame color={color} fcolor={fcolor} size={size} />
-                </div>
+                <section>
+                  <div
+                    className={`border border-grayBottom rounded-[18px] w-fit h-fit`}
+                    style={{
+                      padding: `${slider}px`,
+                      // borderRadius: `${radius}px`,
+                      backgroundColor: `${color}`,
+                    }}
+                  >
+                    <FirstFrame
+                      color={color}
+                      fcolor={fcolor}
+                      name={restaurantName}
+                      numbers={[radius, radius, radius]}
+                    />
+                  </div>
+                  <div className="flex justify-center w-full">
+                    <Button
+                      type="submit"
+                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
+                    >
+                      <Save size={15} />
+                      Download
+                    </Button>
+                  </div>
+                </section>
               ) : secondFrame ? (
-                <div
-                  className={`border border-grayBottom rounded-[24px] w-fit h-fit`}
-                  style={{
-                    padding: `${slider}px`,
-                    borderRadius: `${radius}px`,
-                    backgroundColor: `${color}`,
-                    overflow: "hidden",
-                  }}
-                >
-                  <SecondFrame color={color} fcolor={fcolor} f2size={size} />
-                </div>
+                <section>
+                  <div
+                    className={`border border-grayBottom rounded-t-[20px] rounded-b-lg w-fit h-fit`}
+                    style={{
+                      padding: `${slider}px`,
+                      // borderRadius: `${radius}px`,
+                      backgroundColor: `${color}`,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <SecondFrame
+                      color={color}
+                      fcolor={fcolor}
+                      name={restaurantName}
+                      numbers={[radius, radius, radius]}
+                    />
+                  </div>
+                  <div className="flex justify-center w-full">
+                    <Button
+                      type="submit"
+                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
+                    >
+                      <Save size={15} />
+                      Download
+                    </Button>
+                  </div>
+                </section>
               ) : null}
-
-              <div className="flex justify-center w-full">
-                <Button
-                  type="submit"
-                  className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
-                >
-                  <Save size={15} />
-                  Download
-                </Button>
-              </div>
             </div>
           </section>
         </div>
