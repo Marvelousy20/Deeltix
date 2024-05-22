@@ -11,6 +11,19 @@ import { useRouter } from "next/navigation";
 import ModalPassword from "./ui/modals/modal-password";
 import { useState } from "react";
 import { Turn as Hamburger } from "hamburger-react";
+import { QrCode } from "lucide-react";
+import { Isidebar } from "@/types";
+import {
+  Category,
+  Home2,
+  LogoutCurve,
+  People,
+  Profile,
+  Receipt,
+  Reserve,
+  Wallet,
+  Wallet3,
+} from "iconsax-react";
 
 export default function Navbar({
   signinOpen,
@@ -31,6 +44,8 @@ export default function Navbar({
   // const openModal = () => {
   //   setIsOpened(true);
   // };
+
+
 
   return (
     <div className="!z-[1000] relative">

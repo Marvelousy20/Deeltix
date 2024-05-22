@@ -17,7 +17,7 @@ export const Breadcrumbs = ({
   savelink?: string;
 }) => {
   return (
-    <section className="flex items-center justify-between">
+    <section className="flex flex-col lg:flex-row lg:items-center gap-y-4 justify-between">
       <div className="flex items-center gap-2">
         {link && (
           <Link href={link}>
@@ -27,16 +27,19 @@ export const Breadcrumbs = ({
         <ArrowRight2 size="16" />
         <p className="text-base font-medium text-comment">{breadcrumb}</p>
       </div>
-      {savelink && (
-        <Link href={savelink}>
-          <Button
-            type="submit"
-            className=" text-card font-medium text-sm bg-primary lg:py-5 px-6 rounded-[40px] h-0 py-4"
-          >
-            {action}
-          </Button>
-        </Link>
-      )}
+
+      <div>
+        {savelink && (
+          <Link href={savelink} className="w-full">
+            <Button
+              type="submit"
+              className=" text-card font-medium text-sm bg-primary lg:py-5 px-6 rounded-[40px] h-0 py-4 w-full"
+            >
+              {action}
+            </Button>
+          </Link>
+        )}
+      </div>
     </section>
   );
 };
