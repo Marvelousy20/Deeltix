@@ -1,30 +1,30 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
+'use client';
+import React, { useEffect, useRef, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Product } from "./ProductUpload";
-import { useMutation } from "@tanstack/react-query";
-import { api } from "@/axios-config";
-import { IMenus } from "@/types";
-import { toast } from "react-toastify";
-import { ErrorType, handleError } from "@/lib/handle-error";
-import { useUser } from "@/context/restaurant/user";
-import { useQuery } from "@tanstack/react-query";
-import AddCategory from "../Menu/addCategory";
-import { useDisclosure } from "@mantine/hooks";
-import { useProduct } from "@/context/restaurant/product";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { Product } from './ProductUpload';
+import { useMutation } from '@tanstack/react-query';
+import { api } from '@/axios-config';
+import { IMenus } from '@/types';
+import { toast } from 'react-toastify';
+import { ErrorType, handleError } from '@/lib/handle-error';
+import { useUser } from '@/context/restaurant/user';
+import { useQuery } from '@tanstack/react-query';
+import AddCategory from '../Menu/addCategory';
+import { useDisclosure } from '@mantine/hooks';
+import { useProduct } from '@/context/restaurant/product';
+import { useRouter } from 'next/navigation';
 
 type categoryType = {
   id: string;
@@ -39,16 +39,16 @@ export const MenuUpload = () => {
   const { url, setUrl } = useProduct();
   const formSchema = z.object({
     name: z.string().min(2, {
-      message: "Enter food name",
+      message: 'Enter food name',
     }),
     description: z.string().min(10, {
-      message: "Enter food description",
+      message: 'Enter food description',
     }),
     category: z.string().min(2, {
-      message: "Enter food category",
+      message: 'Enter food category',
     }),
     price: z.string().min(2, {
-      message: "Enter food price",
+      message: 'Enter food price',
     }),
   });
 
@@ -57,10 +57,10 @@ export const MenuUpload = () => {
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      description: "",
-      category: "",
-      price: "",
+      name: '',
+      description: '',
+      category: '',
+      price: '',
     },
   });
   const { errors } = formState;
@@ -69,10 +69,12 @@ export const MenuUpload = () => {
     mutationFn: async (data: IMenus) => {
       await api.post(`/api/restaurants/${restaurantId}/menu`, data);
     },
-    mutationKey: ["menu, restuarant"],
+    mutationKey: ['menu, restuarant'],
     onSuccess() {
-      toast.success("Yuppy! Menu added successfully.");
-      router.push("/menu");
+
+      toast.success('Yuppy! Menu added successfully.');
+      router.push('/menu');
+
       reset();
       setUrl([]);
     },
@@ -104,7 +106,7 @@ export const MenuUpload = () => {
 
   const { data } = useQuery({
     queryFn: fetchCategory,
-    queryKey: ["category restaurant"],
+    queryKey: ['category restaurant'],
   });
 
   useEffect(() => {
@@ -151,7 +153,7 @@ export const MenuUpload = () => {
                   <Textarea
                     placeholder="Seasoned with curry, thyme"
                     className="resize-none  mt-2"
-                    {...register("description")}
+                    {...register('description')}
                   />
 
                   {errors.description && (
@@ -169,7 +171,7 @@ export const MenuUpload = () => {
 
                   <Select
                     onValueChange={(value) =>
-                      setValue("category", value, {
+                      setValue('category', value, {
                         shouldValidate: true,
                       })
                     }
@@ -215,7 +217,7 @@ export const MenuUpload = () => {
                   <Input
                     placeholder="₦5,000.00"
                     className="text-grayInactive text-lg font-normal mt-2"
-                    {...register("price")}
+                    {...register('price')}
                   />
                   {errors.price && (
                     <div className="text-red-500 text-sm font-normal pt-1">
