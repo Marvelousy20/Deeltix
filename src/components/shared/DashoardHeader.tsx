@@ -77,7 +77,7 @@ export const Header = () => {
   };
 
   return (
-    <section className="flex lg:flex-row sticky top-0 z-[99] items-center gap-y-4 w-full justify-between py-4 px-4 md:px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
+    <section className="flex lg:flex-row sticky top-0 z-[50] items-center gap-y-4 w-full justify-between py-4 px-4 md:px-8 backdrop-blur-md bg-[#F5F5F5]/50 border-b-[2px] border-grayBottom ">
       <Image
         src="/dashboard/logo.svg"
         alt="img"
@@ -122,18 +122,24 @@ export const Header = () => {
         </div>
       </div>
 
-      {/* <NotificationDrawer opened={opened} close={close} /> */}
+      <NotificationDrawer opened={opened} close={close} />
 
-      <div className="lg:hidden">
+      <div className="lg:hidden z-40 relative">
         <Hamburger toggled={isOpen} toggle={setOpen} size={15} />
       </div>
 
       {/* Mobile Navs */}
       {isOpen && (
         <div className="lg:hidden absolute top-full bg-[#111323] text-white w-full left-0 p-8">
-          <div className="h-[30px] w-[30px] border rounded-full border-grayHeader bg-grayHeader flex items-center justify-center ">
-            <User size={20} />
+          <div className="flex justify-between items-center">
+            <div className="h-[30px] w-[30px] border rounded-full z-10 border-grayHeader bg-grayHeader flex items-center justify-center ">
+              <User size={20} />
+            </div>
+            {/* <div className="lg:hidden z-40 relative">
+              <Hamburger toggled={isOpen} toggle={setOpen} size={15} />
+            </div> */}
           </div>
+
           <div className="flex flex-col gap-1">
             <h3 className="text-[#FEFEFE] text-lg font-medium">
               {restuarantName}
@@ -143,23 +149,25 @@ export const Header = () => {
             </p>
           </div>
 
-          {sideBar.map(({ name, link, icon }, idx) => (
-            <Link
-              onClick={idx === 7 ? handleLogout : undefined}
-              href={link}
-              key={idx}
-              className={clsx(
-                link === pathName
-                  ? "text-red-500 outline-none border-[#636C71] rounded-[20px] p-4 !bg-blue-500 text-base font-medium"
-                  : "text-base font-medium text-white border-none"
-              )}
-            >
-              <div className="flex items-center gap-4 py-[8px] px-[10px]">
-                <span>{icon}</span>
-                <span>{name}</span>
-              </div>
-            </Link>
-          ))}
+          <div className="grid gap-y-6 mt-6">
+            {sideBar.map(({ name, link, icon }, idx) => (
+              <Link
+                onClick={idx === 7 ? handleLogout : undefined}
+                href={link}
+                key={idx}
+                className={clsx(
+                  link === pathName
+                    ? "text-[#574DFF] p-3 outline-none border-[#636C71] rounded-[20px] bg-[#574DFF12] block bg-opacity-10 text-base font-medium"
+                    : "text-base font-medium text-white border-none"
+                )}
+              >
+                <div className="flex items-center gap-4">
+                  <span>{icon}</span>
+                  <span>{name}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </section>

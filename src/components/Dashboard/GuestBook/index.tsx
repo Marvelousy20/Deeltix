@@ -49,24 +49,24 @@ export const Guests = () => {
     // },
   ];
   return (
-    <div className="p-[32px]">
-      <section className="flex items-center justify-between">
+    <div className="pt-5 px-8">
+      <section className="flex flex-col lg:flex-row lg:items-center justify-between">
         <div className="flex flex-col gap-1">
           <h3 className="font-bold text-xl text-[#42474B]">Guest book</h3>
-          <p className="font-normal text-base text-[#636C71]">
+          <p className="font-normal text-sm lg:text-base text-[#636C71]">
             A list of all seated guest
           </p>
         </div>
         <div
           onClick={() => setAddGuest(true)}
-          className="flex items-center cursor-pointer gap-2 py-3 px-4 bg-[#574DFF] rounded-[40px]"
+          className="flex justify-center lg:justify-start items-center cursor-pointer gap-2 mt-4 lg:mt-0 py-3 px-4 bg-[#574DFF] rounded-[40px]"
         >
           <PlusCircle color="#F0F3F8" />
           <p className="text-[#F0F3F8] text-sm font-medium">new guest</p>
         </div>
       </section>
 
-      <section className="grid grid-cols-2 py-8">
+      <section className="grid grid-cols-1 py-8">
         {list.map((item, _idx) => (
           <div key={_idx} className="border border-[#EAECF0]  p-[40px]">
             <section className="flex justify-between items-start">
@@ -88,7 +88,7 @@ export const Guests = () => {
 
       {/* table */}
       <section className="flex flex-col gap-5">
-        <div className="flex items-center justify-between p-[15px] w-full bg-[#F2F4F7] rounded-[24px]">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-y-4 lg:justify-between p-[15px] w-full bg-[#F2F4F7] rounded-[24px]">
           <h3 className="font-medium text-xl text-[#2C2929]">Guest List</h3>
           <Input placeholder="Filter names..." className="max-w-sm" />
         </div>

@@ -81,14 +81,14 @@ export default function Reservation() {
   console.log("past-reservation: ", pastReservation);
   return (
     <div className="pt-5 px-8">
-      <section className="flex items-center justify-between">
+      <section className="flex flex-col lg:flex-row lg:items-center gap-y-2 justify-between">
         <div className="flex flex-col gap-1">
           <h3 className="font-bold text-xl text-[#42474B]">Reservations</h3>
-          <p className="font-normal text-base text-[#636C71]">
+          <p className="font-normal text-sm lg:text-base text-[#636C71]">
             Manage your restaurants reservations
           </p>
         </div>
-        <div className="flex items-center px-4 py-3 gap-2 bg-[#574DFF] rounded-[40px]">
+        <div className="flex items-center justify-center lg:justify-start mt-4 lg:mt-0 px-4 py-3 gap-2 bg-[#574DFF] rounded-[40px]">
           {/* <PlusCircle color="#F0F3F8" /> */}
           <Link
             href="/reservation/create"
@@ -105,8 +105,8 @@ export default function Reservation() {
         </div>
       </section>
 
-      <section className="grid grid-cols-3 mt-4">
-        <div className="flex justify-between border border-[#EAECF0] col-span-1 lg:p-10">
+      <section className="grid grid-cols-1 lg:grid-cols-3 mt-8 lg:mt-4">
+        <div className="flex justify-between border border-[#EAECF0] col-span-1 px-10 py-5 lg:p-10">
           <div>
             <h2>Total Reservations</h2>
             <p className="text-xl lg:text-3xl mt-4 font-bold">
@@ -124,7 +124,7 @@ export default function Reservation() {
           </div>
         </div>
 
-        <div className="flex justify-between border border-[#EAECF0] col-span-1 lg:p-10">
+        <div className="flex justify-between border border-[#EAECF0] col-span-1 px-10 py-5 lg:p-10">
           <div>
             <h2>All time seated guests</h2>
             <p className="text-xl lg:text-3xl mt-4 font-bold">
@@ -142,7 +142,7 @@ export default function Reservation() {
           </div>
         </div>
 
-        <div className="flex justify-between border border-[#EAECF0] col-span-1 lg:p-10">
+        <div className="flex justify-between border border-[#EAECF0] col-span-1 px-10 py-5 lg:p-10">
           <div>
             <h2>Upcoming Reservation</h2>
             <p className="text-xl lg:text-3xl mt-4 font-bold">
