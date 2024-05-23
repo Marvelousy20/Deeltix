@@ -21,6 +21,7 @@ import {
   AccordionItem,
 } from "@/components/ui/accordion";
 import { url } from "inspector";
+import { Clock9, MapPin } from "lucide-react";
 
 export interface IMenu {
   headings: string;
@@ -88,30 +89,33 @@ export default function Menu() {
     <div className="flex flex-col gap-4">
       <div
         style={style}
-        className={`text-white flex flex-col gap-4 bg-no-repeat bg-cover opacity-90 h-[40vh] items-center justify-center`}
+        className={`text-white relative flex flex-col gap-4 bg-no-repeat bg-cover opacity-90 py-[6rem] items-center justify-center`}
       >
-        <div className="flex flex-col gap-3">
+        <div className="absolute inset-0 bg-black opacity-80"></div>
+        <div className="flex flex-col gap-3 z-10">
           <p className="font-bold text-4xl text-center">{data?.name}</p>
           <p className="font-base font-medium text-center">
             {data?.description}
           </p>
-          <div
-            className="flex px-[24px] py-[i6px] gap-6 bg-[#background: rgba(87, 77, 255, 0.2);
-;
-]"
-          >
-            <div className="">
-              <span>i</span> {data?.openingHour}-{data?.closingHour}
+          <div className="flex gap-6 bg-[#574DFF33] bg-opacity-20 rounded-full py-4 px-6">
+            <div className="flex items-center gap-1">
+              <span>
+                <Clock9 size={15} />
+              </span>
+              {data?.openingHour}-{data?.closingHour}
             </div>
-            <div>
-              <span>i</span> {data?.address}
+            <div className="flex items-center gap-1">
+              <span>
+                <MapPin size={15} />
+              </span>
+              {data?.address}
             </div>
-          </div>
-          <div className="mt-6 bg-[#574DFF] flex gap-2 rounded-3xl py-3 px-4">
-            <Receipt size={18} />
-            Make a reservation
           </div>
         </div>
+        <button className="mt-6 bg-[#574DFF] gap-2 rounded-3xl py-3 px-4 flex justify-center items-center z-10">
+          <Receipt size={18} />
+          Make a reservation
+        </button>
       </div>
       <div className="container flex flex-col lg:px-[10rem]">
         <div className="flex flex-row gap-4 items-center justify-center flex-wrap">
