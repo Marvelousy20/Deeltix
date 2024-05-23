@@ -37,7 +37,6 @@ export default function Navbar({
 
   const { push } = useRouter();
   const { isLoggedIn } = useUser();
-  console.log(isLoggedIn);
 
   const [isOpened, setOpen] = useState(false);
 

@@ -67,7 +67,6 @@ export const VerifyEmail = ({
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     mutate({ email: email, otp: otp });
-    console.log("email result: ", { email, otp });
   };
 
   return (

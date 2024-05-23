@@ -89,7 +89,6 @@ export const RestaurantQrCode = () => {
   const { errors } = formState;
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     //   mutate(values);
-    console.log(values);
   };
   return (
     <div className="flex w-full items-center justify-center p-5 lg:p-8">

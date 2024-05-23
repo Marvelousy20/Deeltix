@@ -30,7 +30,6 @@ export default function CarouselSlider({ data }: RestaurantDetails) {
     // router.push(`/${restaurantName}?restaurant=${restaurantId}`);
     router.push(`/restaurant/${restaurantId}`);
   }
-  console.log('carousel', data);
 
   // request for bookmark
   const { mutate, isLoading: bookmarkLoading } = useMutation({

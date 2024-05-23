@@ -44,9 +44,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     queryKey: ["manager-restaurant-profile"],
   });
 
-  console.log("user", user);
-  console.log("RESTAURANTID", restaurantId);
-
   return (
     <UserContext.Provider
       value={{ user, fetchUser, restaurantId, restuarantName, managerName }}

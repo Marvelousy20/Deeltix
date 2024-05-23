@@ -23,7 +23,6 @@ export default function UserRating({
   const [rating, setRating] = useState<number>(0);
   const [isTyping, setIsTyping] = useState(false);
   const query = useQueryClient();
-  console.log("ratings", rating);
   const formSchema = z.object({
     feedback: z.string().min(0, {
       message: "Leave a review",
@@ -58,7 +57,6 @@ export default function UserRating({
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate({ ...values, rating });
-    console.log({ ...values, rating });
   };
 
   return (

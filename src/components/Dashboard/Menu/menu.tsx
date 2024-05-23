@@ -35,7 +35,6 @@ export const MenuDetails = ({
   const handleDeleteMenu = async () => {
     try {
       await mutateAsync();
-      console.log("Menu deleted successfully");
     } catch (error) {
       console.error(error);
     }

@@ -73,7 +73,6 @@ export default function UserAddressModal({
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate(values);
-    // console.log(values);
   };
 
   return (

@@ -58,7 +58,6 @@ export default function SignupPage() {
     onSuccess() {
       toast.success("Yuppy! Check your email for verification code");
       cookieStorage.setItem("email", getValues("email"));
-      console.log(cookieStorage.setItem("email", getValues("email")));
       reset();
       open();
     },

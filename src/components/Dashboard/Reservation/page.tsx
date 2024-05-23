@@ -46,8 +46,6 @@ export default function Reservation() {
     select: (data) => data?.data?.data?.data,
   });
 
-  console.log(data);
-
   // past reservation
   const { data: pastReservation, isLoading: pastLoading } = useQuery({
     queryFn: async () => {
@@ -78,7 +76,6 @@ export default function Reservation() {
     select: (data) => data?.data?.data?.data,
   });
 
-  console.log("past-reservation: ", pastReservation);
   return (
     <div className="pt-5 px-8">
       <section className="flex flex-col lg:flex-row lg:items-center gap-y-2 justify-between">

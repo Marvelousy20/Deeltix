@@ -47,7 +47,6 @@ export const RestaurantBackground = () => {
 
   const upload = () => {
     if (userfile) {
-      console.log("file upload:", userfile);
     }
   };
 
@@ -101,8 +100,6 @@ export const RestaurantBackground = () => {
   useEffect(() => {
     handleSubmit();
   }, [userfile]);
-
-  console.log("banner", banner);
 
   // Uploading background image
   const { restaurantId } = useUser();

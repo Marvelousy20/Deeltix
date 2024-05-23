@@ -80,7 +80,6 @@ export default function UserPassword() {
   const { errors } = formState;
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate(values);
-    // console.log(values);
   };
 
   return (

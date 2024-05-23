@@ -71,7 +71,6 @@ export const MobileSignUp = () => {
     onSuccess() {
       toast.success("Yuppy! Check your email for verification code");
       cookieStorage.setItem("email", getValues("email"));
-      console.log(cookieStorage.setItem("email", getValues("email")));
       push("/user-verify-email");
       reset();
     },
