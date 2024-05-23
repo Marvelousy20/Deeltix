@@ -14,6 +14,8 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "react-toastify";
 import { Loader } from "@mantine/core";
 
+
+
 export const MultipleUpload = ({ otherPics }: any) => {
   const [userfile, setUserFile] = useState<File[]>([]);
   const [multiple, setMultiple] = useState([]);

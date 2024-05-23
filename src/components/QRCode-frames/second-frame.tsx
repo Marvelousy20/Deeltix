@@ -6,11 +6,13 @@ export const SecondFrame = ({
   fcolor,
   name,
   numbers,
+  url
 }: {
   color: string;
   fcolor: string;
   name: string;
   numbers: any;
+  url?: string;
 }) => {
   return (
     <div className="bg-black p-[4px] rounded-b-[8px]">
@@ -18,10 +20,10 @@ export const SecondFrame = ({
         {name}
       </div>
       <QRCode
-        value="https://www.deeltix.com/"
         bgColor={`${color}`}
         fgColor={`${fcolor}`}
         eyeRadius={numbers}
+        value={url}
         // qrStyle={'fluid'}
         // logoImage="/dashboard/logo.svg"
       />

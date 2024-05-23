@@ -6,16 +6,18 @@ export const FirstFrame = ({
   fcolor,
   name,
   numbers,
+  url 
 }: {
   color: string;
   fcolor: string;
   name: string;
   numbers: any;
+  url?: string;
 }) => {
   return (
     <div className="bg-black p-[4px] rounded-t-[8px] rounded-b-[8px] overflow-hidden">
       <QRCode
-        value="https://www.deeltix.com/"
+        value={url}
         bgColor={`${color}`}
         fgColor={`${fcolor}`}
         eyeRadius={numbers}

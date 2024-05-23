@@ -12,13 +12,13 @@ export interface IMenu {
   price: number;
   description: string;
   category:
-    | "rice"
-    | "chicken"
-    | "pastries"
-    | "burger"
-    | "deserts"
-    | "hotdog"
-    | "salads";
+    | 'rice'
+    | 'chicken'
+    | 'pastries'
+    | 'burger'
+    | 'deserts'
+    | 'hotdog'
+    | 'salads';
 }
 
 export interface ILoggedinUser {
@@ -436,8 +436,10 @@ export interface SingleRestaurant {
   country?: string;
   description?: string;
   displayPicture?: string;
-  openingDays?: string;
-  openingHours?: string;
+  openingDay?: string;
+  closingDay?: string;
+  openingHour?: string;
+  closingHour?: string;
   pictures?: string[];
   banner?: string;
   state?: string;
