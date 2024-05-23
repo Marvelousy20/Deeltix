@@ -6,16 +6,18 @@ export const ThirdFrame = ({
   color,
   fcolor,
   numbers,
+  url
 }: {
   color: string;
   fcolor: string;
   numbers: any;
+  url?: string;    // Make 'url' optional and provide a default value
 }) => {
   return (
     <QRCode
-      value="https://www.deeltix.com/"
-      bgColor={`${color}`}
-      fgColor={`${fcolor}`}
+      value={url}
+      bgColor={color}
+      fgColor={fcolor}
       eyeRadius={numbers}
       // qrStyle={'fluid'}
       // logoImage="/dashboard/logo.svg"

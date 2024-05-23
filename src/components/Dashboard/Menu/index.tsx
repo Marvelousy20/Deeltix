@@ -1,14 +1,14 @@
 "use client";
 import { DataTable } from "@/components/Table/DataTable";
 import { People, Reserve } from "iconsax-react";
-import { FolderOpen, PlusCircle } from "lucide-react";
+import { CloudCog, FolderOpen, PlusCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { menuColumns } from "./table-column";
 import { useUser } from "@/context/restaurant/user";
 import { api } from "@/axios-config";
 import { toast } from "react-toastify";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { MenuType } from "@/types";
 
@@ -19,6 +19,7 @@ export interface IMenu {
 }
 
 export const CustomerMenu = () => {
+  const queryClient = useQueryClient();
   const { restaurantId } = useUser();
   const [menu, setMenu] = useState<MenuType[]>([]);
   const { data: totalMenu, isLoading: guestLoading } = useQuery({
@@ -27,6 +28,7 @@ export const CustomerMenu = () => {
     queryKey: ["all-guest"],
     enabled: !!restaurantId,
   });
+  console.log("menusss: ", totalMenu);
 
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["menu"],
@@ -46,6 +48,7 @@ export const CustomerMenu = () => {
   useEffect(() => {
     if (isSuccess) {
       setMenu(data?.data.data.data.menu);
+      queryClient.invalidateQueries(["edit-menu"]);
     }
   }, [restaurantId, data]);
 

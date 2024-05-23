@@ -1,10 +1,19 @@
-import React from 'react';
+import React from "react";
 
-function Categories(name: any) {
+interface MenuProps {
+  name: any;
+  activeCategoryName: string | undefined;
+}
+
+function Categories({ name, activeCategoryName }: MenuProps) {
   return (
-    <div className="text-primary bg-[#574DFF1A] px-4 py-3 rounded-lg max-w-fit">
-      {name.name}
-      </div>
+    <div
+      className={`px-4 py-3 rounded-lg max-w-fit bg-[#F7F7F7] ${
+        activeCategoryName === name && "text-primary bg-[#574DFF1A]"
+      }`}
+    >
+      {name}
+    </div>
   );
 }
 

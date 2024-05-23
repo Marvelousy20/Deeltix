@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -30,6 +31,7 @@ const formSchema = z.object({
   }),
 });
 export const RestaurantQrCode = () => {
+  const { id } = useParams();
   const [restaurantName, setRestaurantName] = useState("");
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
@@ -306,6 +308,7 @@ export const RestaurantQrCode = () => {
                     }}
                   >
                     <ThirdFrame
+                    url={`www.deeltix.com/restaurant/${id}/menu`}
                       color={color}
                       fcolor={fcolor}
                       numbers={[radius, radius, radius]}
@@ -332,6 +335,7 @@ export const RestaurantQrCode = () => {
                     }}
                   >
                     <FirstFrame
+                    url={`www.deeltix.com/restaurant/661d478a3bf2fc58076fb30d/menu`}
                       color={color}
                       fcolor={fcolor}
                       name={restaurantName}
@@ -360,6 +364,7 @@ export const RestaurantQrCode = () => {
                     }}
                   >
                     <SecondFrame
+                      url={`www.deeltix.com/restaurant/661d478a3bf2fc58076fb30d/menu`}
                       color={color}
                       fcolor={fcolor}
                       name={restaurantName}

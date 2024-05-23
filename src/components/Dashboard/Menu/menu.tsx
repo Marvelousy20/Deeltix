@@ -41,6 +41,8 @@ export const MenuDetails = ({
     }
   };
 
+  
+
   return (
     <div>
       <div className="rounded-[32px]">
@@ -49,7 +51,7 @@ export const MenuDetails = ({
             <MoreHorizontal />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="rounded-xl border border-grayoutline mt-10">
-            <MenuDropDown onDelete={handleDeleteMenu} />
+            <MenuDropDown onDelete={handleDeleteMenu} onView={""} id={id} menu={restaurantId} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
