@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,10 +13,22 @@ import { api } from "@/axios-config";
 export const MenuDetails = ({
   id,
   restaurantId,
+  menuname,
+  description,
+  price,
+  image,
 }: {
   id: string;
   restaurantId: string;
+  menuname: string;
+  description: string;
+  price: number;
+  image: string;
 }) => {
+  const [collap, setCollap] = useState(false);
+  const handleClose = () => {
+    setCollap(!collap);
+  };
   const queryClient = useQueryClient();
 
   const deleteMenu = async () => {
@@ -41,8 +53,6 @@ export const MenuDetails = ({
     }
   };
 
-  
-
   return (
     <div>
       <div className="rounded-[32px]">
@@ -51,7 +61,15 @@ export const MenuDetails = ({
             <MoreHorizontal />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="rounded-xl border border-grayoutline mt-10">
-            <MenuDropDown onDelete={handleDeleteMenu} onView={""} id={id} menu={restaurantId} />
+            <MenuDropDown
+              onDelete={handleDeleteMenu}
+              id={id}
+              menu={restaurantId}
+              menuname={menuname}
+              description={description}
+              price={price}
+              image={image}
+            />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

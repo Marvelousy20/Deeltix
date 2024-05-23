@@ -18,12 +18,14 @@ import { useDisclosure } from "@mantine/hooks";
 import { useProduct } from "@/context/restaurant/product";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { Product } from "./Dashboard/GetStarted/ProductUpload";
+import { EditMenuPhoto } from "./EditMenuPhoto";
 
 interface IEditMenu {
   name: string;
   description: string;
   price: string;
-  image: string[];
+  image?: string[];
 }
 
 export const EditRestaurantMenu = () => {
@@ -31,8 +33,7 @@ export const EditRestaurantMenu = () => {
   const menuId = searchParams.get("menuid");
   const menurestaurantId = searchParams.get("restaurantid");
   const router = useRouter();
-  const { restaurantId } = useUser();
-  const { url, setUrl } = useProduct();
+  const { menuEdit, setMenuEdit } = useProduct();
   const { push } = useRouter();
   //endpoint to fetch single menu
   const { data } = useQuery({
@@ -82,15 +83,17 @@ export const EditRestaurantMenu = () => {
     defaultValues: {
       name: data?.data?.data?.data?.menu?.name,
       description: data?.data?.data?.data?.menu?.description,
-      price: data?.data?.data?.data?.menu?.price,
+      price: data?.data?.data?.data?.menu?.price.toString(),
     },
   });
   const { errors } = formState;
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const datas = { ...values, image: data?.data?.data?.data?.menu?.image };
-    mutate(datas);
+    const datas = { ...values, image: menuEdit };
+    menuEdit.length === 0 ? mutate(values) : mutate(datas);
   };
+
+  console.log("price:", data?.data?.data?.data?.menu?.price);
 
   return (
     <div className="p-4 lg:p-8 lg:gap-[48px] flex flex-col">
@@ -161,14 +164,15 @@ export const EditRestaurantMenu = () => {
               </div>
             </div>
 
-            {/*  file upload */}
-            {/* <div>
-              <Product />
-            </div> */}
+            {/* file upload */}
+            <div>
+              <EditMenuPhoto image={data?.data?.data?.data?.menu?.image} />
+              {/* <Product /> */}
+            </div>
 
             <Button
               type="submit"
-              className="bg-blue-600 text-white w-full"
+              className="bg-blue-600 text-white w-[200px]"
               disabled={isLoading}
             >
               Submit
