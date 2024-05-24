@@ -39,6 +39,7 @@
     "embla-carousel-react": "^8.0.0-rc19",
     "framer-motion": "^11.0.8",
     "hamburger-react": "^2.5.0",
+    "html-to-image": "^1.11.11",
     "iconsax-react": "^0.0.8",
     "lucide-react": "^0.302.0",
     "next": "14.0.4",

@@ -1,32 +1,45 @@
-"use client";
-import React from "react";
-import { QRCode } from "react-qrcode-logo";
-export const FirstFrame = ({
+'use client';
+import React from 'react';
+import { QRCode } from 'react-qrcode-logo';
+export const QrFrame = ({
   color,
   fcolor,
   name,
   numbers,
-  url 
+  url,
+  frame = 1,
 }: {
   color: string;
   fcolor: string;
-  name: string;
+  name?: string;
   numbers: any;
   url?: string;
+  frame?: number;
 }) => {
   return (
-    <div className="bg-black p-[4px] rounded-t-[8px] rounded-b-[8px] overflow-hidden">
+    <div
+      className={`flex w-fit h-fit 
+      ${frame == 3 && 'flex-col-reverse'}
+    ${frame == 2 && 'flex-col'}
+    `}
+    >
       <QRCode
         value={url}
         bgColor={`${color}`}
         fgColor={`${fcolor}`}
         eyeRadius={numbers}
-        // qrStyle={'fluid'}
+        qrStyle={'fluid'}
         // logoImage="/dashboard/logo.svg"
       />
-      <div className="text-white flex max-w-[150px] items-center text-base justify-center">
-        {name}
-      </div>
+      {frame !== 1 && (
+        <div className="p-1 text-center">
+          <div
+            className={`flex max-w-[150px] items-center font-bold text-base justify-center text-${fcolor}`}
+          >
+            {name}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
