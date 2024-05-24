@@ -80,7 +80,6 @@ function MobileResetPassword() {
   });
   const email = cookieStorage.getItem("email");
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values, otp);
     mutate({ ...values, otp });
   };
 

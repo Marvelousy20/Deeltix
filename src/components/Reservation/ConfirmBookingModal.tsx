@@ -30,7 +30,6 @@ const formSchema = z.object({
 });
 
 function onSubmit(values: z.infer<typeof formSchema>) {
-  console.log(values);
 }
 
 export default function ConfirmationModal() {

@@ -65,7 +65,6 @@ export const Product = () => {
     mutationKey: ["menu-upload"],
 
     onSuccess({ data }) {
-      console.log("menu upload :", data?.data?.data?.urls[0]);
       setUrl(data?.data?.data?.urls[0]);
       // toast.success("File uploaded successfully");
       // Router.push(`/get-started/menu?menu=${data?.data?.data.urls[0]}`);
@@ -74,8 +73,6 @@ export const Product = () => {
       handleError(error as ErrorType);
     },
   });
-
-  console.log("urls", url);
 
   const handleSubmit = () => {
     try {

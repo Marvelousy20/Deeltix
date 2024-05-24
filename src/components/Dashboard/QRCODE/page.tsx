@@ -1,45 +1,58 @@
-"use client";
-import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import { useParams } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { Slider } from "@/components/ui/slider";
-import { SketchPicker } from "react-color";
-import { QRCode } from "react-qrcode-logo";
-import { FirstFrame } from "@/components/QRCode-frames/first-frame";
-import { SecondFrame } from "@/components/QRCode-frames/second-frame";
-import { ThirdFrame } from "@/components/QRCode-frames/third-frame";
-import { Button } from "@/components/ui/button";
-import { Save } from "lucide-react";
-import { Download } from "lucide-react";
+'use client';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { Input } from '@/components/ui/input';
+import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { Slider } from '@/components/ui/slider';
+import { SketchPicker } from 'react-color';
+import { QRCode } from 'react-qrcode-logo';
+import { QrFrame } from '@/components/QRCode-frames/first-frame';
+import { SecondFrame } from '@/components/QRCode-frames/second-frame';
+import { ThirdFrame } from '@/components/QRCode-frames/third-frame';
+import { Button } from '@/components/ui/button';
+import { Save } from 'lucide-react';
+import { Download } from 'lucide-react';
+import { any, string } from 'prop-types';
+import { useUser } from '@/context/restaurant/user';
+import { frame } from 'framer-motion';
+import { toPng } from 'html-to-image';
 
 const formSchema = z.object({
   foreground: z.string().min(2, {
-    message: "Enter color code",
+    message: 'Enter color code',
   }),
   background: z.string().min(2, {
-    message: "Enter color code",
+    message: 'Enter color code',
   }),
   restaurantName: z.string().min(2, {
-    message: "Enter restaurant name",
+    message: 'Enter restaurant name',
   }),
   textColor: z.string().min(2, {
-    message: "Enter text color",
+    message: 'Enter text color',
   }),
 });
 export const RestaurantQrCode = () => {
-  const { id } = useParams();
-  const [restaurantName, setRestaurantName] = useState("");
+  const [resId, setResId]: any = useState('');
+  const { restaurantId } = useUser();
+  const [restaurantName, setRestaurantName] = useState('');
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
   const [size, setSize] = useState([16]);
-  const [color, setColor] = useState("#FFF");
-  const [fcolor, setFcolor] = useState("#000");
+  const [color, setColor] = useState('#FFF');
+  const [fcolor, setFcolor] = useState('#000');
   const [show, setShow] = useState(false);
   const [fshow, setFshow] = useState(false);
+
+  // new
+  const [activeFrame, setActiveFrame] = useState(1);
+
+  const HandleActiveFrame = (frameNumber: number) => {
+    setActiveFrame(frameNumber);
+  };
+
   const handleShow = () => {
     setShow(!show);
   };
@@ -59,38 +72,43 @@ export const RestaurantQrCode = () => {
     setFcolor(e.target.value);
   };
 
-  // Frame states
-  const [firstFrame, setFirstFrame] = useState(false);
-  const [secondFrame, setSecondFrame] = useState(false);
-  const [thirdFrame, setThirdFrame] = useState(false);
+  const [qrstyles, setQrStyles] = useState({});
 
-  const handleFirstFrame = () => {
-    setFirstFrame(!firstFrame);
-  };
-
-  const handleSecondFrame = () => {
-    setSecondFrame(!secondFrame);
-  };
-
-  const handleThirdFrame = () => {
-    setThirdFrame(!thirdFrame);
-  };
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      foreground: "",
-      background: "",
-      restaurantName: "",
-      textColor: "",
+      foreground: '',
+      background: '',
+      restaurantName: '',
+      textColor: '',
     },
   });
+  const ref = useRef<HTMLDivElement>(null);
   const { errors } = formState;
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     //   mutate(values);
-    console.log(values);
   };
+
+  const onButtonClick = useCallback(() => {
+    if (ref.current === null) {
+      return;
+    }
+
+    toPng(ref.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.download = restaurantName
+          ? `${restaurantName}-qr.png`
+          : 'RestaurantQr.png';
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [ref]);
   return (
     <div className="flex w-full items-center justify-center p-5 lg:p-8">
       <section className="w-full lg:w-auto">
@@ -114,30 +132,51 @@ export const RestaurantQrCode = () => {
                     Select frame
                   </h3>
                   <div className="flex items-center gap-4">
-                    <Image
-                      src="/restaurants/third-frame.png"
-                      width={60}
-                      height={60}
-                      alt="First-frame"
-                      onClick={handleThirdFrame}
-                      className="cursor-pointer"
-                    />
-                    <Image
-                      src="/restaurants/second-frame.png"
-                      width={60}
-                      height={60}
-                      alt="First-frame"
-                      onClick={handleFirstFrame}
-                      className="cursor-pointer"
-                    />
-                    <Image
-                      src="/restaurants/first-frame.png"
-                      width={60}
-                      height={60}
-                      alt="First-frame"
-                      onClick={handleSecondFrame}
-                      className="cursor-pointer"
-                    />
+                    <div
+                      className={`${
+                        activeFrame == 1 &&
+                        'border-2 bg-[#574DFF] border-[#574DFF]'
+                      }`}
+                    >
+                      <Image
+                        src="/restaurants/third-frame.png"
+                        width={60}
+                        height={60}
+                        alt="First-frame"
+                        onClick={() => setActiveFrame(1)}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                    <div
+                      className={`${
+                        activeFrame == 2 &&
+                        'border-2 bg-[#574DFF] border-[#574DFF]'
+                      }`}
+                    >
+                      <Image
+                        src="/restaurants/second-frame.png"
+                        width={60}
+                        height={60}
+                        alt="First-frame"
+                        onClick={() => setActiveFrame(2)}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                    <div
+                      className={`${
+                        activeFrame == 3 &&
+                        'border-2 bg-[#574DFF] border-[#574DFF]'
+                      }`}
+                    >
+                      <Image
+                        src="/restaurants/first-frame.png"
+                        width={60}
+                        height={60}
+                        alt="First-frame"
+                        onClick={() => setActiveFrame(3)}
+                        className="cursor-pointer"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div>
@@ -296,92 +335,38 @@ export const RestaurantQrCode = () => {
                 </div>
               </form>
             </div>
-            <div className="h-[150px] lg:w-[150px] order-1 lg:order-2 lg:block justify-center w-full">
-              {thirdFrame ? (
-                <section>
-                  <div
-                    className={`border border-grayBottom w-fit h-fit`}
-                    style={{
-                      padding: `${slider}px`,
-                      // borderRadius: `${radius}px`,
-                      backgroundColor: `${color}`,
-                    }}
+            <div className="h-[150px] lg:w-[150px] order-1 lg:order-2 lg:block flex justify-center w-full items-center">
+              <section>
+                <div
+                  ref={ref}
+                  className={`w-fit h-fit rounded-lg p-2 shadow-inherit`}
+                  style={{
+                    padding: `${slider}px`,
+                    // borderRadius: `${radius}px`,
+                    backgroundColor: `${color}`,
+                    overflow: 'hidden',
+                  }}
+                >
+                  <QrFrame
+                    frame={activeFrame}
+                    url={`www.deeltix.com/restaurant/${restaurantId}/menu`}
+                    color={color}
+                    fcolor={fcolor}
+                    name={restaurantName}
+                    numbers={[radius, radius, radius, radius]}
+                  />
+                </div>
+                <div className="flex justify-center w-full">
+                  <Button
+                    onClick={onButtonClick}
+                    type="submit"
+                    className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
                   >
-                    <ThirdFrame
-                    url={`www.deeltix.com/restaurant/${id}/menu`}
-                      color={color}
-                      fcolor={fcolor}
-                      numbers={[radius, radius, radius]}
-                    />
-                  </div>
-                  <div className="flex justify-center w-full">
-                    <Button
-                      type="submit"
-                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
-                    >
-                      <Save size={15} />
-                      Download
-                    </Button>
-                  </div>
-                </section>
-              ) : firstFrame ? (
-                <section>
-                  <div
-                    className={`border border-grayBottom rounded-[18px] w-fit h-fit`}
-                    style={{
-                      padding: `${slider}px`,
-                      // borderRadius: `${radius}px`,
-                      backgroundColor: `${color}`,
-                    }}
-                  >
-                    <FirstFrame
-                    url={`www.deeltix.com/restaurant/661d478a3bf2fc58076fb30d/menu`}
-                      color={color}
-                      fcolor={fcolor}
-                      name={restaurantName}
-                      numbers={[radius, radius, radius]}
-                    />
-                  </div>
-                  <div className="flex justify-center w-full">
-                    <Button
-                      type="submit"
-                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
-                    >
-                      <Save size={15} />
-                      Download
-                    </Button>
-                  </div>
-                </section>
-              ) : secondFrame ? (
-                <section>
-                  <div
-                    className={`border border-grayBottom rounded-t-[20px] rounded-b-lg w-fit h-fit`}
-                    style={{
-                      padding: `${slider}px`,
-                      // borderRadius: `${radius}px`,
-                      backgroundColor: `${color}`,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <SecondFrame
-                      url={`www.deeltix.com/restaurant/661d478a3bf2fc58076fb30d/menu`}
-                      color={color}
-                      fcolor={fcolor}
-                      name={restaurantName}
-                      numbers={[radius, radius, radius]}
-                    />
-                  </div>
-                  <div className="flex justify-center w-full">
-                    <Button
-                      type="submit"
-                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
-                    >
-                      <Save size={15} />
-                      Download
-                    </Button>
-                  </div>
-                </section>
-              ) : null}
+                    <Save size={15} />
+                    Download
+                  </Button>
+                </div>
+              </section>
             </div>
           </section>
         </div>

@@ -68,8 +68,6 @@ export default function Menu() {
   >("");
 
   if (categoryLoading) return <div>Loading categories...</div>;
-  console.log(menuItems);
-  console.log(activeCategoryId);
 
   const categoriesIds = categories?.data?.data?.data?.menuCategories.map(
     (category) => category.id

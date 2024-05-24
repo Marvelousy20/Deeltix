@@ -41,7 +41,6 @@ export const DashboardLayout = ({
 
     queryKey: ["show"],
   });
-  console.log("get:", data?.data?.data?.data?.showGetStartedPage);
 
   const sideBar: Isidebar[] = [
     { name: "Get started", link: "/get-started", icon: <Category size="18" /> },

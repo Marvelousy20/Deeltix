@@ -28,7 +28,6 @@ export const CustomerMenu = () => {
     queryKey: ["all-guest"],
     enabled: !!restaurantId,
   });
-  console.log("menusss: ", totalMenu);
 
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["menu"],
@@ -65,7 +64,6 @@ export const CustomerMenu = () => {
     },
   ];
 
-  console.log(menu);
   return (
     <div className="p-[32px]">
       <section className="flex flex-col lg:flex-row lg:items-center justify-between">

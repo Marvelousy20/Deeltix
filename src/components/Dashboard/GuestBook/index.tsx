@@ -34,8 +34,6 @@ export const Guests = () => {
     select: (data) => data?.data?.data?.data,
   });
 
-  // console.log("guestss :", data?.guests);
-
   const list: IGuest[] = [
     {
       headings: "Total Guest",

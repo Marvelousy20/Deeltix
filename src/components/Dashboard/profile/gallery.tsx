@@ -53,7 +53,6 @@ export default function Gallery({ user }: any) {
 
   const upload = () => {
     if (userfile) {
-      console.log("file upload:", userfile);
     }
   };
 
