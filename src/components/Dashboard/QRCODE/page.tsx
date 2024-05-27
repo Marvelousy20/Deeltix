@@ -2,22 +2,15 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { Slider } from '@/components/ui/slider';
 import { SketchPicker } from 'react-color';
-import { QRCode } from 'react-qrcode-logo';
-import { QrFrame } from '@/components/QRCode-frames/first-frame';
-import { SecondFrame } from '@/components/QRCode-frames/second-frame';
-import { ThirdFrame } from '@/components/QRCode-frames/third-frame';
+import { QrFrame } from '@/components/QRCode-frames/qrFrame';
 import { Button } from '@/components/ui/button';
 import { Save } from 'lucide-react';
-import { Download } from 'lucide-react';
-import { any, string } from 'prop-types';
 import { useUser } from '@/context/restaurant/user';
-import { frame } from 'framer-motion';
 import { toPng } from 'html-to-image';
 
 const formSchema = z.object({
