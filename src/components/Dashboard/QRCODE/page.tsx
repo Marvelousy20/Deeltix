@@ -12,12 +12,26 @@ import { Button } from '@/components/ui/button';
 import { Save } from 'lucide-react';
 import { useUser } from '@/context/restaurant/user';
 import { toPng } from 'html-to-image';
+import { useMutation } from '@tanstack/react-query';
+import { api } from '@/axios-config';
+import { toast } from 'react-toastify';
+
+interface ISettings {
+  frame: string;
+  cornerRadius: string;
+  foregroundColor: string;
+  backgroundColor: string;
+  padding: string;
+  // restaurantName: string;
+  // textColor: string;
+  style: string;
+}
 
 const formSchema = z.object({
-  foreground: z.string().min(2, {
+  foregroundColor: z.string().min(2, {
     message: 'Enter color code',
   }),
-  background: z.string().min(2, {
+  backgroundColor: z.string().min(2, {
     message: 'Enter color code',
   }),
   restaurantName: z.string().min(2, {
@@ -27,24 +41,17 @@ const formSchema = z.object({
     message: 'Enter text color',
   }),
 });
+
 export const RestaurantQrCode = () => {
-  const [resId, setResId]: any = useState('');
   const { restaurantId } = useUser();
   const [restaurantName, setRestaurantName] = useState('');
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
-  const [size, setSize] = useState([16]);
   const [color, setColor] = useState('#FFF');
   const [fcolor, setFcolor] = useState('#000');
   const [show, setShow] = useState(false);
   const [fshow, setFshow] = useState(false);
-
-  // new
   const [activeFrame, setActiveFrame] = useState(1);
-
-  const HandleActiveFrame = (frameNumber: number) => {
-    setActiveFrame(frameNumber);
-  };
 
   const handleShow = () => {
     setShow(!show);
@@ -54,34 +61,44 @@ export const RestaurantQrCode = () => {
   };
   const handleChange = (colorpicker: any) => {
     setColor(colorpicker.hex);
+    setValue('backgroundColor', colorpicker.hex);
   };
   const forchange = (forecolor: any) => {
     setFcolor(forecolor.hex);
+    setValue('foregroundColor', forecolor.hex);
   };
-  const inputChange = (e: any) => {
-    setColor(e.target.value);
+  const RestName = (restName: any) => {
+    setRestaurantName(restName);
+    setValue('restaurantName', restName);
   };
-  const foreInputChange = (e: any) => {
-    setFcolor(e.target.value);
-  };
+  const ref = useRef<HTMLDivElement>(null);
 
-  const [qrstyles, setQrStyles] = useState({});
-
-  const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
+  const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      foreground: '',
-      background: '',
+      foregroundColor: fcolor,
+      backgroundColor: color,
       restaurantName: '',
-      textColor: '',
+      textColor: '#000',
     },
   });
-  const ref = useRef<HTMLDivElement>(null);
+
   const { errors } = formState;
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    //   mutate(values);
+    const { foregroundColor, backgroundColor } = values;
+    const allSetting = {
+      frame: activeFrame.toString(),
+      foregroundColor,
+      backgroundColor,
+      padding: `${slider[0]}px`.toString(),
+      cornerRadius: `${radius[0]}px`.toString(),
+      style: 'normal',
+    };
+    console.log(allSetting);
+    mutate(allSetting);
   };
 
   const onButtonClick = useCallback(() => {
@@ -102,6 +119,25 @@ export const RestaurantQrCode = () => {
         console.log(err);
       });
   }, [ref]);
+
+  const { mutate, isLoading: saveIsloading } = useMutation({
+    mutationFn: async (data: ISettings) =>
+      await api.post(`/api/restaurants/${restaurantId}/qr-settings/save`, data),
+    mutationKey: ['setting'],
+    onSuccess() {
+      toast.success('Settings Saved');
+    },
+    onError(error) {
+      toast.error('Something happened, try again!');
+    },
+  });
+
+  useEffect(() => {
+    setValue('foregroundColor', fcolor);
+    setValue('backgroundColor', color);
+    setValue('restaurantName', color);
+  }, [fcolor, color, setValue, restaurantName]);
+
   return (
     <div className="flex w-full items-center justify-center p-5 lg:p-8">
       <section className="w-full lg:w-auto">
@@ -185,16 +221,19 @@ export const RestaurantQrCode = () => {
                       placeholder="Enter full name"
                       className="text-grayInactive text-lg font-normal mt-2 w-full"
                       value={fcolor}
-                      onChange={foreInputChange}
+                      onChange={(e) => {
+                        setFcolor(e.target.value);
+                        setValue('foregroundColor', e.target.value);
+                      }}
                     />
                     <div
                       onClick={handleFshow}
                       className="h-[40px] w-[40px] bg-[#574DFF] rounded-lg"
                     ></div>
                   </div>
-                  {errors.foreground && (
+                  {errors.foregroundColor && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.foreground.message}
+                      {errors.foregroundColor.message}
                     </div>
                   )}
                 </div>
@@ -212,21 +251,20 @@ export const RestaurantQrCode = () => {
                     <Input
                       placeholder="Enter full name"
                       value={color}
-                      onChange={inputChange}
-                      // onChange={(val) => setColor(val)}
+                      onChange={(e) => {
+                        setColor(e.target.value);
+                        setValue('backgroundColor', e.target.value);
+                      }}
                       className="text-grayInactive text-lg font-normal mt-2 w-full"
-                      // {...register("background", {
-                      //   required: true,
-                      // })}
                     />
                     <div
                       onClick={handleShow}
                       className="h-[40px] w-[40px] bg-[#574DFF] rounded-lg"
                     ></div>
                   </div>
-                  {errors.background && (
+                  {errors.backgroundColor && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.background.message}
+                      {errors.backgroundColor.message}
                     </div>
                   )}
                 </div>
@@ -238,7 +276,6 @@ export const RestaurantQrCode = () => {
                   <Slider
                     value={slider}
                     onValueChange={(value) => setSlider(value)}
-                    // defaultValue={[33]}
                     max={100}
                     step={1}
                     color="#574DFF"
@@ -254,7 +291,6 @@ export const RestaurantQrCode = () => {
                   <Slider
                     value={radius}
                     onValueChange={(value) => setRadius(value)}
-                    // defaultValue={[33]}
                     max={100}
                     step={1}
                     color="#574DFF"
@@ -267,12 +303,13 @@ export const RestaurantQrCode = () => {
                   </label>
                   <Input
                     value={restaurantName}
-                    onChange={(e) => setRestaurantName(e.target.value)}
+                    onChange={(e) => {
+                      setRestaurantName(e.target.value);
+                      setValue('restaurantName', e.target.value);
+                    }}
                     placeholder="Enter restaurant name"
                     className="text-grayInactive text-lg font-normal mt-2 w-full"
-                    // {...register("restaurantName", {
-                    //   required: true,
-                    // })}
+                    // {...register('restaurantName')}
                   />
                   {errors.restaurantName && (
                     <div className="text-red-500 text-sm font-normal pt-1">
@@ -280,42 +317,6 @@ export const RestaurantQrCode = () => {
                     </div>
                   )}
                 </div>
-
-                {/* <div>
-                  <label className="text-grayHelp text-lg font-medium">
-                    Text color
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      placeholder="Enter full name"
-                      className="text-grayInactive text-lg font-normal mt-2 w-full"
-                      {...register("textColor", {
-                        required: true,
-                      })}
-                    />
-                    <div className="h-[40px] w-[40px] bg-[#574DFF] rounded-lg"></div>
-                  </div>
-                  {errors.textColor && (
-                    <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.textColor.message}
-                    </div>
-                  )}
-                </div> */}
-                {/* <div className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <p>Size</p>
-                    <p>{`${size}px`}</p>
-                  </div>
-                  <Slider
-                    value={size}
-                    onValueChange={(value) => setSize(value)}
-                    // defaultValue={[33]}
-                    max={100}
-                    step={1}
-                    color="#574DFF"
-                    className="text-[#574DFF]"
-                  />
-                </div> */}
 
                 <div className="flex lg:justify-end">
                   <Button
@@ -335,7 +336,6 @@ export const RestaurantQrCode = () => {
                   className={`w-fit h-fit rounded-lg p-2 shadow-inherit`}
                   style={{
                     padding: `${slider}px`,
-                    // borderRadius: `${radius}px`,
                     backgroundColor: `${color}`,
                     overflow: 'hidden',
                   }}
