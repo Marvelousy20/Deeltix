@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Save } from 'lucide-react';
 import { useUser } from '@/context/restaurant/user';
 import { toPng } from 'html-to-image';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { api } from '@/axios-config';
 import { toast } from 'react-toastify';
 
@@ -52,6 +52,7 @@ export const RestaurantQrCode = () => {
   const [show, setShow] = useState(false);
   const [fshow, setFshow] = useState(false);
   const [activeFrame, setActiveFrame] = useState(1);
+  const [savedSettings, setSavedSettings] = useState<ISettings | undefined>();
 
   const handleShow = () => {
     setShow(!show);
@@ -73,13 +74,25 @@ export const RestaurantQrCode = () => {
   };
   const ref = useRef<HTMLDivElement>(null);
 
+  //fetch saved settings
+  const { data, isSuccess } = useQuery({
+    queryFn: async () =>
+      await api.get(`/api/restaurants/${restaurantId}/qr-settings
+    `),
+    queryKey: ['qr-settings'],
+    // isSuccess: setSavedSettings(data?.data?.data?.data.QRSettings)
+  });
+  isSuccess && setSavedSettings(data?.data?.data?.data.QRSettings);
+
+  console.log('settings', data);
+
   const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      foregroundColor: fcolor,
-      backgroundColor: color,
+      foregroundColor: savedSettings?.foregroundColor,
+      backgroundColor: savedSettings?.backgroundColor,
       restaurantName: '',
       textColor: '#000',
     },
@@ -324,7 +337,7 @@ export const RestaurantQrCode = () => {
                     className="flex gap-2 bg-[#574DFF] w-full lg:w-[6.4rem] text-white mt-10"
                   >
                     <Save size={15} />
-                    Save
+                    {saveIsloading ? 'loading' : 'Save'}
                   </Button>
                 </div>
               </form>
