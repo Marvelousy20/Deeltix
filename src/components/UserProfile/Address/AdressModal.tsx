@@ -78,47 +78,49 @@ export default function UserAddressModal({
   return (
     <>
       <Modal opened={opened} onClose={close} centered title="New address">
-        <div className="flex lg:w-[40%] w-full flex-col bg-white rounded-lg">
+        <div className="flex w-full flex-col bg-white rounded-lg">
           <div className="flex flex-col">
             <div className="h-[1px] w-full bg-[#F0F3F8]"></div>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className=" flex flex-col items-center py-4 justify-center space-y-4"
             >
-              <div className="flex flex-col">
-                <label className="flex items-center justify-between ">
-                  <p className="font-bold text-lg text-grayHelp">
-                    Your address
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src="/location.svg"
-                      width={20}
-                      height={20}
-                      alt="close-modal"
-                    />
-                    <p className="font-normal text-sm text-[#FF0000]">
-                      Get current location
+              <section className="flex items-center w-full">
+                <div className="flex flex-col justify-center lg:w-[27rem] w-full">
+                  <label className="flex items-center justify-between ">
+                    <p className="font-bold text-lg text-grayHelp">
+                      Your address
                     </p>
-                  </div>
-                </label>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src="/location.svg"
+                        width={20}
+                        height={20}
+                        alt="close-modal"
+                      />
+                      <p className="font-normal text-sm text-[#FF0000]">
+                        Get current location
+                      </p>
+                    </div>
+                  </label>
 
-                <Input
-                  placeholder="Enter address"
-                  className="text-grayInactive lg:min-w-[27rem] w-full text-lg font-normal mt-2"
-                  {...register("address", {
-                    onChange: () => setIsTyping(true),
-                  })}
-                />
-                {errors.address && (
-                  <div className="text-red-500 text-sm font-normal pt-1">
-                    {errors.address?.message}
-                  </div>
-                )}
-              </div>
+                  <Input
+                    placeholder="Enter address"
+                    className="text-grayInactive text-lg font-normal mt-2"
+                    {...register("address", {
+                      onChange: () => setIsTyping(true),
+                    })}
+                  />
+                  {errors.address && (
+                    <div className="text-red-500 text-sm font-normal pt-1">
+                      {errors.address?.message}
+                    </div>
+                  )}
+                </div>
+              </section>
 
-              <section className="flex items-center">
-                <div className="lg:min-w-[27rem] w-full flex flex-col justify-center">
+              <section className="flex items-center w-full">
+                <div className=" flex flex-col justify-center lg:w-[27rem] w-full">
                   <label className="text-grayHelp text-lg font-medium">
                     State
                   </label>
@@ -155,8 +157,8 @@ export default function UserAddressModal({
                 </div>
               </section>
 
-              <section className="flex items-center">
-                <div className="lg:min-w-[27rem] w-full">
+              <section className="flex items-center w-full ">
+                <div className=" w-full lg:w-[27rem]">
                   <label className="text-grayHelp text-lg font-medium">
                     Country
                   </label>
