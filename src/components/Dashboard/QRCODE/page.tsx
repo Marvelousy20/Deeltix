@@ -1,48 +1,48 @@
-'use client';
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { Input } from '@/components/ui/input';
-import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { Slider } from '@/components/ui/slider';
-import { SketchPicker } from 'react-color';
-import { QRCode } from 'react-qrcode-logo';
-import { QrFrame } from '@/components/QRCode-frames/first-frame';
-import { SecondFrame } from '@/components/QRCode-frames/second-frame';
-import { ThirdFrame } from '@/components/QRCode-frames/third-frame';
-import { Button } from '@/components/ui/button';
-import { Save } from 'lucide-react';
-import { Download } from 'lucide-react';
-import { any, string } from 'prop-types';
-import { useUser } from '@/context/restaurant/user';
-import { frame } from 'framer-motion';
-import { toPng } from 'html-to-image';
+"use client";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import { Input } from "@/components/ui/input";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { Slider } from "@/components/ui/slider";
+import { SketchPicker } from "react-color";
+import { QRCode } from "react-qrcode-logo";
+import { QrFrame } from "@/components/QRCode-frames/first-frame";
+import { SecondFrame } from "@/components/QRCode-frames/second-frame";
+import { ThirdFrame } from "@/components/QRCode-frames/third-frame";
+import { Button } from "@/components/ui/button";
+import { Save } from "lucide-react";
+import { Download } from "lucide-react";
+import { any, string } from "prop-types";
+import { useUser } from "@/context/restaurant/user";
+import { frame } from "framer-motion";
+import { toPng } from "html-to-image";
 
 const formSchema = z.object({
   foreground: z.string().min(2, {
-    message: 'Enter color code',
+    message: "Enter color code",
   }),
   background: z.string().min(2, {
-    message: 'Enter color code',
+    message: "Enter color code",
   }),
   restaurantName: z.string().min(2, {
-    message: 'Enter restaurant name',
+    message: "Enter restaurant name",
   }),
   textColor: z.string().min(2, {
-    message: 'Enter text color',
+    message: "Enter text color",
   }),
 });
 export const RestaurantQrCode = () => {
-  const [resId, setResId]: any = useState('');
+  const [resId, setResId]: any = useState("");
   const { restaurantId } = useUser();
-  const [restaurantName, setRestaurantName] = useState('');
+  const [restaurantName, setRestaurantName] = useState("");
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
   const [size, setSize] = useState([16]);
-  const [color, setColor] = useState('#FFF');
-  const [fcolor, setFcolor] = useState('#000');
+  const [color, setColor] = useState("#FFF");
+  const [fcolor, setFcolor] = useState("#000");
   const [show, setShow] = useState(false);
   const [fshow, setFshow] = useState(false);
 
@@ -79,10 +79,10 @@ export const RestaurantQrCode = () => {
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      foreground: '',
-      background: '',
-      restaurantName: '',
-      textColor: '',
+      foreground: "",
+      background: "",
+      restaurantName: "",
+      textColor: "",
     },
   });
   const ref = useRef<HTMLDivElement>(null);
@@ -98,10 +98,10 @@ export const RestaurantQrCode = () => {
 
     toPng(ref.current, { cacheBust: true })
       .then((dataUrl) => {
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.download = restaurantName
           ? `${restaurantName}-qr.png`
-          : 'RestaurantQr.png';
+          : "RestaurantQr.png";
         link.href = dataUrl;
         link.click();
       })
@@ -135,7 +135,7 @@ export const RestaurantQrCode = () => {
                     <div
                       className={`${
                         activeFrame == 1 &&
-                        'border-2 bg-[#574DFF] border-[#574DFF]'
+                        "border-2 bg-[#574DFF] border-[#574DFF]"
                       }`}
                     >
                       <Image
@@ -150,7 +150,7 @@ export const RestaurantQrCode = () => {
                     <div
                       className={`${
                         activeFrame == 2 &&
-                        'border-2 bg-[#574DFF] border-[#574DFF]'
+                        "border-2 bg-[#574DFF] border-[#574DFF]"
                       }`}
                     >
                       <Image
@@ -165,7 +165,7 @@ export const RestaurantQrCode = () => {
                     <div
                       className={`${
                         activeFrame == 3 &&
-                        'border-2 bg-[#574DFF] border-[#574DFF]'
+                        "border-2 bg-[#574DFF] border-[#574DFF]"
                       }`}
                     >
                       <Image
@@ -335,21 +335,21 @@ export const RestaurantQrCode = () => {
                 </div>
               </form>
             </div>
-            <div className="h-[150px] lg:w-[150px] order-1 lg:order-2 lg:block flex justify-center w-full items-center">
+            <div className="h-[150px] mt-10 lg:mt-0 lg:w-[150px] order-1 lg:order-2 lg:block flex justify-center w-full items-center">
               <section>
                 <div
                   ref={ref}
-                  className={`w-fit h-fit rounded-lg p-2 shadow-inherit`}
+                  className={`w-fit h-fit rounded-lg p-2 shadow-inherit border border-grayBottom`}
                   style={{
                     padding: `${slider}px`,
                     // borderRadius: `${radius}px`,
                     backgroundColor: `${color}`,
-                    overflow: 'hidden',
+                    overflow: "hidden",
                   }}
                 >
                   <QrFrame
                     frame={activeFrame}
-                    url={`www.deeltix.com/restaurant/${restaurantId}/menu`}
+                    url={`https://www.deeltix.com/restaurant/${restaurantId}/menu`}
                     color={color}
                     fcolor={fcolor}
                     name={restaurantName}
@@ -360,7 +360,7 @@ export const RestaurantQrCode = () => {
                   <Button
                     onClick={onButtonClick}
                     type="submit"
-                    className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
+                    className="flex gap-2 bg-[#574DFF] w-full text-white mt-5"
                   >
                     <Save size={15} />
                     Download

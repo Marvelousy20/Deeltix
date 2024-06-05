@@ -18,7 +18,7 @@ export const AddressEmptyState = () => {
         <figure className="rounded-full flex items-center justify-center h-[80px] w-[80px] border bg-milky border-grayoutline">
           <Image src="/order.png" width={50} height={50} alt="Order" />
         </figure>
-        <p className=" text-2xl font-normal text-grayBlack2">
+        <p className=" text-2xl text-center font-normal text-grayBlack2">
           There’s no saved address here
         </p>
         <Button

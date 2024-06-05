@@ -6,7 +6,7 @@ export const SecondFrame = ({
   fcolor,
   name,
   numbers,
-  url
+  url,
 }: {
   color: string;
   fcolor: string;

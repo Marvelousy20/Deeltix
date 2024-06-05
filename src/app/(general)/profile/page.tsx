@@ -4,7 +4,7 @@ import React from "react";
 
 const UserProfile = () => {
   return (
-    <div className="bg-red-600 overflow-hidden">
+    <div className="overflow-hidden">
       <Profile />
     </div>
   );
