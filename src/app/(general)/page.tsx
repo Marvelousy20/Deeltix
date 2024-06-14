@@ -49,7 +49,7 @@ export default function Home() {
             </span>
           </h1>
 
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center hidden">
             <Input
               type="search"
               placeholder="Search for a restaurant, cuisine e.t.c"
@@ -142,16 +142,13 @@ export default function Home() {
               order analytics conveniently.
             </p>
 
-            <div className="flex justify-between items-center gap-3 lg:gap-6 mt-8 w-full">
+            <div className="flex items-start gap-3 lg:gap-6 mt-8 w-full">
               <Link
                 href="/restaurant-dashboard"
                 className="bg-dark lg:text-base whitespace-nowrap text-sm font-normal text-white w-1/2 rounded-[2.5rem] h-12 px-4 items-center flex justify-center"
               >
                 Get started now
               </Link>
-              <Button className="bg-offwhite lg:text-base text-sm w-1/2 font-normal hover:bg-opacity-40">
-                Learn more
-              </Button>
             </div>
 
             <div className="pt-10">
