@@ -7,11 +7,11 @@ export default function Footer() {
       <div className="py-12 w-full  px-20 hidden lg:block">
         <div className="flex justify-between ">
           <div>
-            <h1>Deeltix</h1>
+            <Image src="/dashboard/logo.svg" alt="img" width="80" height="80" />
           </div>
 
           <div className="flex flex-col items-center">
-            <ul className="flex gap-16">
+            <ul className="flex gap-16 hidden">
               <li>
                 <a href="/about us">About us</a>
               </li>
@@ -47,13 +47,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="https://twitter.com/Deeltix">
                   <Twitter stroke="#1877F2" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <Facebook stroke="#1877F2" />
                 </a>
               </li>
             </ul>
@@ -67,7 +62,7 @@ export default function Footer() {
           <Image src="/dashboard/logo.svg" alt="img" width="80" height="80" />
         </div>
         <div className="flex flex-col gap-5">
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between hidden">
             <ul className="flex flex-col gap-5 text-background">
               <li>
                 <a href="/about us">About us</a>
@@ -102,13 +97,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="https://twitter.com/Deeltix">
                   <Twitter stroke="#1877F2" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <Facebook stroke="#1877F2" />
                 </a>
               </li>
             </ul>
