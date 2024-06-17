@@ -1,24 +1,31 @@
-"use client";
-import React, { useEffect, useState, useCallback, useRef } from "react";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import { useParams } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { Slider } from "@/components/ui/slider";
-import { SketchPicker } from "react-color";
-import { QRCode } from "react-qrcode-logo";
-import { QrFrame } from "@/components/QRCode-frames/first-frame";
-import { SecondFrame } from "@/components/QRCode-frames/second-frame";
-import { ThirdFrame } from "@/components/QRCode-frames/third-frame";
-import { Button } from "@/components/ui/button";
-import { Save } from "lucide-react";
-import { Download } from "lucide-react";
-import { any, string } from "prop-types";
-import { useUser } from "@/context/restaurant/user";
-import { frame } from "framer-motion";
-import { toPng } from "html-to-image";
+'use client';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { Input } from '@/components/ui/input';
+import Image from 'next/image';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { Slider } from '@/components/ui/slider';
+import { SketchPicker } from 'react-color';
+import { QrFrame } from '@/components/QRCode-frames/qrFrame';
+import { Button } from '@/components/ui/button';
+import { Save } from 'lucide-react';
+import { useUser } from '@/context/restaurant/user';
+import { toPng } from 'html-to-image';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { api } from '@/axios-config';
+import { toast } from 'react-toastify';
+
+interface ISettings {
+  frame: string;
+  cornerRadius: string;
+  foregroundColor: string;
+  backgroundColor: string;
+  padding: string;
+  RestaurantNick: string;
+  // textColor: string;
+  style: string;
+}
 
 const formSchema = z.object({
   foreground: z.string().min(2, {
@@ -27,8 +34,8 @@ const formSchema = z.object({
   background: z.string().min(2, {
     message: "Enter color code",
   }),
-  restaurantName: z.string().min(2, {
-    message: "Enter restaurant name",
+  RestaurantNick: z.string().min(2, {
+    message: 'Enter restaurant name',
   }),
   textColor: z.string().min(2, {
     message: "Enter text color",
@@ -37,7 +44,7 @@ const formSchema = z.object({
 export const RestaurantQrCode = () => {
   const [resId, setResId]: any = useState("");
   const { restaurantId } = useUser();
-  const [restaurantName, setRestaurantName] = useState("");
+  const [RestaurantNick, setRestaurantNick] = useState('');
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
   const [size, setSize] = useState([16]);
@@ -45,13 +52,8 @@ export const RestaurantQrCode = () => {
   const [fcolor, setFcolor] = useState("#000");
   const [show, setShow] = useState(false);
   const [fshow, setFshow] = useState(false);
-
-  // new
-  const [activeFrame, setActiveFrame] = useState(1);
-
-  const HandleActiveFrame = (frameNumber: number) => {
-    setActiveFrame(frameNumber);
-  };
+  const [activeFrame, setActiveFrame] = useState('1');
+  // const [savedSettings, setSavedSettings] = useState<ISettings | undefined>();
 
   const handleShow = () => {
     setShow(!show);
@@ -65,30 +67,76 @@ export const RestaurantQrCode = () => {
   const forchange = (forecolor: any) => {
     setFcolor(forecolor.hex);
   };
-  const inputChange = (e: any) => {
-    setColor(e.target.value);
+  const RestName = (restName: any) => {
+    setRestaurantNick(restName);
+    setValue('RestaurantNick', restName);
   };
-  const foreInputChange = (e: any) => {
-    setFcolor(e.target.value);
-  };
+  const ref = useRef<HTMLDivElement>(null);
 
-  const [qrstyles, setQrStyles] = useState({});
+  // saved settings
+  const { data: settings, isLoading: settingLoading } = useQuery({
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      return await api.get(`/api/restaurants/${restaurantId}/qr-settings`);
+    },
+    queryKey: ['restaurantId', 'qr-settings'],
+    enabled: !!restaurantId,
+    select: (data) => data?.data?.data?.data?.QRSettings,
+  });
+
+  useEffect(() => {
+    if (settings) {
+      setActiveFrame(settings.frame);
+      setColor(settings.backgroundColor);
+      setFcolor(settings.foregroundColor);
+      setActiveFrame(settings.frame);
+      setRadius([Number(settings.cornerRadius)]);
+      setSlider([Number(settings.padding)]);
+      setRestaurantNick(settings.RestaurantNick);
+    }
+  }, [settings]);
+
+  // const { backgroundColor } =  settings?.QRSettings;
+  console.log(settings);
+
+  //fetch saved settings
+  const { data, isSuccess } = useQuery({
+    queryFn: async () =>
+      await api.get(`/api/restaurants/${restaurantId}/qr-settings
+    `),
+    queryKey: ['qr-settings'],
+    // isSuccess: setSavedSettings(data?.data?.data?.data.QRSettings)
+  });
+  // isSuccess && setSavedSettings(data?.data?.data?.data.QRSettings);
 
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      foreground: "",
-      background: "",
-      restaurantName: "",
-      textColor: "",
+      foregroundColor: fcolor,
+      backgroundColor: color,
+      textColor: '#000',
+      RestaurantNick: RestaurantNick,
     },
   });
   const ref = useRef<HTMLDivElement>(null);
   const { errors } = formState;
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    //   mutate(values);
+    const { foregroundColor, backgroundColor } = values;
+    const allSetting = {
+      frame: activeFrame.toString(),
+      foregroundColor,
+      backgroundColor,
+      RestaurantNick: `${RestaurantNick}`,
+      padding: `${slider[0]}`.toString(),
+      cornerRadius: `${radius[0]}`.toString(),
+      style: 'normal',
+    };
+    console.log(allSetting);
+    mutate(allSetting);
   };
 
   const onButtonClick = useCallback(() => {
@@ -98,10 +146,10 @@ export const RestaurantQrCode = () => {
 
     toPng(ref.current, { cacheBust: true })
       .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.download = restaurantName
-          ? `${restaurantName}-qr.png`
-          : "RestaurantQr.png";
+        const link = document.createElement('a');
+        link.download = RestaurantNick
+          ? `${RestaurantNick}-qr.png`
+          : 'RestaurantQr.png';
         link.href = dataUrl;
         link.click();
       })
@@ -109,6 +157,26 @@ export const RestaurantQrCode = () => {
         console.log(err);
       });
   }, [ref]);
+
+  //SAVE RESTURANTS QR SETTINGS
+  const { mutate, isLoading: saveIsloading } = useMutation({
+    mutationFn: async (data: ISettings) =>
+      await api.post(`/api/restaurants/${restaurantId}/qr-settings/save`, data),
+    mutationKey: ['setting'],
+    onSuccess() {
+      toast.success('Settings Saved');
+    },
+    onError(error) {
+      toast.error('Something happened, try again!');
+    },
+  });
+
+  useEffect(() => {
+    setValue('foregroundColor', fcolor);
+    setValue('backgroundColor', color);
+    setValue('RestaurantNick', color);
+  }, [fcolor, color, setValue, RestaurantNick]);
+
   return (
     <div className="flex w-full items-center justify-center p-5 lg:p-8">
       <section className="w-full lg:w-auto">
@@ -134,8 +202,8 @@ export const RestaurantQrCode = () => {
                   <div className="flex items-center gap-4">
                     <div
                       className={`${
-                        activeFrame == 1 &&
-                        "border-2 bg-[#574DFF] border-[#574DFF]"
+                        activeFrame == '1' &&
+                        'border-2 bg-[#574DFF] border-[#574DFF]'
                       }`}
                     >
                       <Image
@@ -143,14 +211,14 @@ export const RestaurantQrCode = () => {
                         width={60}
                         height={60}
                         alt="First-frame"
-                        onClick={() => setActiveFrame(1)}
+                        onClick={() => setActiveFrame('1')}
                         className="cursor-pointer"
                       />
                     </div>
                     <div
                       className={`${
-                        activeFrame == 2 &&
-                        "border-2 bg-[#574DFF] border-[#574DFF]"
+                        activeFrame == '2' &&
+                        'border-2 bg-[#574DFF] border-[#574DFF]'
                       }`}
                     >
                       <Image
@@ -158,14 +226,14 @@ export const RestaurantQrCode = () => {
                         width={60}
                         height={60}
                         alt="First-frame"
-                        onClick={() => setActiveFrame(2)}
+                        onClick={() => setActiveFrame('2')}
                         className="cursor-pointer"
                       />
                     </div>
                     <div
                       className={`${
-                        activeFrame == 3 &&
-                        "border-2 bg-[#574DFF] border-[#574DFF]"
+                        activeFrame == '3' &&
+                        'border-2 bg-[#574DFF] border-[#574DFF]'
                       }`}
                     >
                       <Image
@@ -173,7 +241,7 @@ export const RestaurantQrCode = () => {
                         width={60}
                         height={60}
                         alt="First-frame"
-                        onClick={() => setActiveFrame(3)}
+                        onClick={() => setActiveFrame('3')}
                         className="cursor-pointer"
                       />
                     </div>
@@ -270,20 +338,24 @@ export const RestaurantQrCode = () => {
                 </div>
                 <div>
                   <label className="text-grayHelp text-lg font-medium">
-                    Restaurant name
+                    Restaurant name{' '}
+                    <span className="text-xs">(or popularly known as)</span>
                   </label>
                   <Input
-                    value={restaurantName}
-                    onChange={(e) => setRestaurantName(e.target.value)}
-                    placeholder="Enter restaurant name"
+                    value={RestaurantNick}
+                    onChange={(e) => {
+                      setRestaurantNick(e.target.value);
+                      setValue('RestaurantNick', e.target.value);
+                    }}
+                    placeholder="e.g Deeltix"
                     className="text-grayInactive text-lg font-normal mt-2 w-full"
                     // {...register("restaurantName", {
                     //   required: true,
                     // })}
                   />
-                  {errors.restaurantName && (
+                  {errors.RestaurantNick && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.restaurantName.message}
+                      {errors.RestaurantNick.message}
                     </div>
                   )}
                 </div>
@@ -352,7 +424,7 @@ export const RestaurantQrCode = () => {
                     url={`https://www.deeltix.com/restaurant/${restaurantId}/menu`}
                     color={color}
                     fcolor={fcolor}
-                    name={restaurantName}
+                    name={RestaurantNick}
                     numbers={[radius, radius, radius, radius]}
                   />
                 </div>
