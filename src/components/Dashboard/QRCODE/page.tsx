@@ -28,28 +28,28 @@ interface ISettings {
 }
 
 const formSchema = z.object({
-  foreground: z.string().min(2, {
-    message: "Enter color code",
+  foregroundColor: z.string().min(2, {
+    message: 'Enter color code',
   }),
-  background: z.string().min(2, {
-    message: "Enter color code",
+  backgroundColor: z.string().min(2, {
+    message: 'Enter color code',
   }),
   RestaurantNick: z.string().min(2, {
     message: 'Enter restaurant name',
   }),
   textColor: z.string().min(2, {
-    message: "Enter text color",
+    message: 'Enter text color',
   }),
 });
 export const RestaurantQrCode = () => {
-  const [resId, setResId]: any = useState("");
+  const [resId, setResId]: any = useState('');
   const { restaurantId } = useUser();
   const [RestaurantNick, setRestaurantNick] = useState('');
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
   const [size, setSize] = useState([16]);
-  const [color, setColor] = useState("#FFF");
-  const [fcolor, setFcolor] = useState("#000");
+  const [color, setColor] = useState('#FFF');
+  const [fcolor, setFcolor] = useState('#000');
   const [show, setShow] = useState(false);
   const [fshow, setFshow] = useState(false);
   const [activeFrame, setActiveFrame] = useState('1');
@@ -71,7 +71,6 @@ export const RestaurantQrCode = () => {
     setRestaurantNick(restName);
     setValue('RestaurantNick', restName);
   };
-  const ref = useRef<HTMLDivElement>(null);
 
   // saved settings
   const { data: settings, isLoading: settingLoading } = useQuery({
@@ -97,9 +96,6 @@ export const RestaurantQrCode = () => {
       setRestaurantNick(settings.RestaurantNick);
     }
   }, [settings]);
-
-  // const { backgroundColor } =  settings?.QRSettings;
-  console.log(settings);
 
   //fetch saved settings
   const { data, isSuccess } = useQuery({
@@ -135,7 +131,6 @@ export const RestaurantQrCode = () => {
       cornerRadius: `${radius[0]}`.toString(),
       style: 'normal',
     };
-    console.log(allSetting);
     mutate(allSetting);
   };
 
@@ -257,19 +252,19 @@ export const RestaurantQrCode = () => {
 
                   <div className="flex items-center gap-2">
                     <Input
-                      placeholder="Enter full name"
+                      placeholder="e.g white"
                       className="text-grayInactive text-lg font-normal mt-2 w-full"
                       value={fcolor}
-                      onChange={foreInputChange}
+                      onChange={(e) => setFcolor(e.target.value)}
                     />
                     <div
                       onClick={handleFshow}
                       className="h-[40px] w-[40px] bg-[#574DFF] rounded-lg"
                     ></div>
                   </div>
-                  {errors.foreground && (
+                  {errors.foregroundColor && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.foreground.message}
+                      {errors.foregroundColor.message}
                     </div>
                   )}
                 </div>
@@ -285,9 +280,9 @@ export const RestaurantQrCode = () => {
                   ) : null}
                   <div className="flex items-center gap-2">
                     <Input
-                      placeholder="Enter full name"
+                      placeholder="e.g blue"
                       value={color}
-                      onChange={inputChange}
+                      onChange={(e) => setColor(e.target.value)}
                       // onChange={(val) => setColor(val)}
                       className="text-grayInactive text-lg font-normal mt-2 w-full"
                       // {...register("background", {
@@ -299,9 +294,9 @@ export const RestaurantQrCode = () => {
                       className="h-[40px] w-[40px] bg-[#574DFF] rounded-lg"
                     ></div>
                   </div>
-                  {errors.background && (
+                  {errors.backgroundColor && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.background.message}
+                      {errors.backgroundColor.message}
                     </div>
                   )}
                 </div>
@@ -416,7 +411,7 @@ export const RestaurantQrCode = () => {
                     padding: `${slider}px`,
                     // borderRadius: `${radius}px`,
                     backgroundColor: `${color}`,
-                    overflow: "hidden",
+                    overflow: 'hidden',
                   }}
                 >
                   <QrFrame
@@ -428,15 +423,17 @@ export const RestaurantQrCode = () => {
                     numbers={[radius, radius, radius, radius]}
                   />
                 </div>
-                <div className="flex justify-center w-full">
-                  <Button
-                    onClick={onButtonClick}
-                    type="submit"
-                    className="flex gap-2 bg-[#574DFF] w-full text-white mt-5"
-                  >
-                    <Save size={15} />
-                    Download
-                  </Button>
+                <div className="flex justify-center items-center w-full">
+                  <div>
+                    <Button
+                      onClick={onButtonClick}
+                      type="submit"
+                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-5"
+                    >
+                      <Save size={15} />
+                      Download
+                    </Button>
+                  </div>
                 </div>
               </section>
             </div>
