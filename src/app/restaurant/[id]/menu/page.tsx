@@ -154,7 +154,7 @@ export default function Menu() {
                         <ul className="grid grid-cols-1 md:grid-cols-2 gap-10">
                           {menuItems?.data.data.data.menu.map((item: any) => (
                             <div
-                              className="flex bg-background rounded-lg max-w-[34rem] h-full mt-6 p-3 gap-4 pt-4"
+                              className="flex flex-col md:flex md:flex-row bg-background rounded-lg max-w-[34rem] h-full mt-6 p-3 gap-4 pt-4"
                               key={item.id}
                             >
                               <div className="relative min-w-[13rem] h-[9.5rem]">
@@ -163,7 +163,7 @@ export default function Menu() {
                                   alt="menu-image"
                                   // width={216}
                                   // height={126}
-                                  className="w-[13rem] h-[9.5rem] object-cover"
+                                  className="w-full h-full md:w-[13rem] md:h-[9.5rem] object-cover"
                                 />
                               </div>
                               <div className="flex flex-col justify-between pb-6">
