@@ -42,12 +42,10 @@ const formSchema = z.object({
   }),
 });
 export const RestaurantQrCode = () => {
-  const [resId, setResId]: any = useState('');
   const { restaurantId } = useUser();
   const [RestaurantNick, setRestaurantNick] = useState('');
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
-  const [size, setSize] = useState([16]);
   const [color, setColor] = useState('#FFF');
   const [fcolor, setFcolor] = useState('#000');
   const [show, setShow] = useState(false);
@@ -87,6 +85,7 @@ export const RestaurantQrCode = () => {
 
   useEffect(() => {
     if (settings) {
+      toast.info('settings synced');
       setActiveFrame(settings.frame);
       setColor(settings.backgroundColor);
       setFcolor(settings.foregroundColor);
@@ -103,8 +102,8 @@ export const RestaurantQrCode = () => {
       await api.get(`/api/restaurants/${restaurantId}/qr-settings
     `),
     queryKey: ['qr-settings'],
-    // isSuccess: setSavedSettings(data?.data?.data?.data.QRSettings)
   });
+  // isSuccess: toast.info('settings synced'),
   // isSuccess && setSavedSettings(data?.data?.data?.data.QRSettings);
 
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
@@ -114,7 +113,7 @@ export const RestaurantQrCode = () => {
     defaultValues: {
       foregroundColor: fcolor,
       backgroundColor: color,
-      textColor: '#000',
+      // textColor: fcolor,
       RestaurantNick: RestaurantNick,
     },
   });
