@@ -34,7 +34,8 @@ export const QrFrame = ({
       {frame !== '1' && (
         <div className="p-1 text-center">
           <div
-            className={`flex max-w-[150px] items-center font-bold text-base justify-center text-[${fcolor}]`} // text-[${fcolor}]
+            className={`flex max-w-[150px] items-center font-bold text-base justify-center `}
+            style={{ color: fcolor }}
           >
             {name}
           </div>
