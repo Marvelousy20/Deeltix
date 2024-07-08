@@ -152,12 +152,12 @@ export default function Home() {
             </div>
 
             <div className="pt-10">
-              <p className="lg:text-2xl text-xl lg:font-medium font-bold text-center">
+              {/* <p className="lg:text-2xl text-xl lg:font-medium font-bold text-center">
                 Wanna discover places?
                 <span onClick={open} className="underline cursor-pointer">
                   Join Deeltix
                 </span>
-              </p>
+              </p> */}
               <SignUp opened={opened} close={close} />
             </div>
           </div>
