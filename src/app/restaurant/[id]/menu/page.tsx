@@ -1,27 +1,27 @@
-"use client";
-import React, { useState } from "react";
-import { Receipt } from "iconsax-react";
-import Image from "next/image";
+'use client';
+import React, { useState } from 'react';
+import { Receipt } from 'iconsax-react';
+import Image from 'next/image';
 // import Accordion from "./Accordion";
 import {
   MenuCategoryDetails,
   MenuDetails,
   MenuType,
   UserSingleRestaurant,
-} from "@/types";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
-import { api, auth } from "@/axios-config";
-import { useQueries, useQuery } from "@tanstack/react-query";
-import Categories from "./Categories";
+} from '@/types';
+import { useParams } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { api, auth } from '@/axios-config';
+import { useQueries, useQuery } from '@tanstack/react-query';
+import Categories from './Categories';
 import {
   Accordion,
   AccordionTrigger,
   AccordionContent,
   AccordionItem,
-} from "@/components/ui/accordion";
-import { url } from "inspector";
-import { Clock9, MapPin } from "lucide-react";
+} from '@/components/ui/accordion';
+import { url } from 'inspector';
+import { Clock9, MapPin } from 'lucide-react';
 
 export interface IMenu {
   headings: string;
@@ -39,7 +39,7 @@ export default function Menu() {
   const { data, isLoading } = useQuery({
     queryFn: async () =>
       await auth.get<UserSingleRestaurant>(`/api/restaurants/${id}`),
-    queryKey: ["sigle-restaurat"],
+    queryKey: ['sigle-restaurat'],
     enabled: !!id,
     select: ({ data }) => data?.data?.data?.restaurant,
   });
@@ -50,13 +50,13 @@ export default function Menu() {
       await auth.get<MenuCategoryDetails>(
         `/api/restaurants/${id}/menu/categories`
       ),
-    queryKey: ["menu-category"],
+    queryKey: ['menu-category'],
   });
 
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   // Fetch menu items for the active category
   const { data: menuItems, isLoading: menuLoading } = useQuery(
-    ["menu-items", activeCategoryId],
+    ['menu-items', activeCategoryId],
     () => auth.get(`/api/restaurants/${id}/menu?category=${activeCategoryId}`),
     {
       enabled: !!activeCategoryId, // Only run the query if activeCategoryId is not null
@@ -65,7 +65,7 @@ export default function Menu() {
 
   const [activeCategoryName, setActiveCategoryName] = useState<
     string | undefined
-  >("");
+  >('');
 
   if (categoryLoading) return <div>Loading categories...</div>;
 
@@ -82,6 +82,8 @@ export default function Menu() {
   const style = {
     backgroundImage: `url(${data?.displayPicture})`,
   };
+
+  console.log(data);
 
   return (
     <div className="flex flex-col gap-4">
