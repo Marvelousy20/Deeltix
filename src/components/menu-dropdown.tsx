@@ -12,7 +12,7 @@ export const MenuDropDown = () => {
   const { setIsLoggedIn } = useUser();
 
   const handleSignOut = () => {
-    console.log("logging out");
+
     localStorage.clear();
     cookieStorage.clear();
     localStorage.removeItem("isLoggedIn");

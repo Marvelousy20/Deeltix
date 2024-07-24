@@ -35,17 +35,20 @@ const formSchema = z
   });
 
 export default function UserPassword() {
-  const [eyeopen, setEyeOpen] = useState(false);
-  const [type, setType] = useState("password");
+  const [password, setPassword] = useState(false);
+  const [newPassword, setNewPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(false);
 
-  function handleOpen() {
-    setType("text");
-    setEyeOpen(true);
+  function handlePassword() {
+    setPassword(!password);
   }
 
-  function handleClose() {
-    setType("password");
-    setEyeOpen(false);
+  function handleNewPassword() {
+    setNewPassword(!newPassword);
+  }
+
+  function handleConfirmPassword() {
+    setConfirmPassword(!confirmPassword);
   }
 
   const [isTyping, setIsTyping] = useState(false);
@@ -80,7 +83,6 @@ export default function UserPassword() {
   const { errors } = formState;
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate(values);
-    // console.log(values);
   };
 
   return (
@@ -95,121 +97,95 @@ export default function UserPassword() {
             className="flex flex-col w-full gap-10 border border-grayoutline rounded-[32px] p-8"
           >
             <div className="lg:flex items-start justify-between">
-              <div className="flex flex-col gap-10">
-                <div className="">
+              <div className="flex flex-col w-full gap-10">
+                <div className="w-full lg:max-w-[27rem] relative">
                   <label className="text-grayHelp text-lg font-medium">
                     Old password
                   </label>
-
-                  {/* input */}
-                  <div className=" items-center lg:min-w-[27rem] mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
-                    <input
-                      type={type}
-                      placeholder="Enter your password"
-                      className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
-                      {...register("oldPassword", {
-                        onChange: () => setIsTyping(true),
-                      })}
-                    />
-
-                    {eyeopen ? (
-                      <Eye
-                        size={32}
-                        className=" cursor-pointer pr-3"
-                        onClick={handleClose}
-                      />
-                    ) : (
-                      <EyeSlash
-                        size={32}
-                        className=" cursor-pointer pr-3"
-                        onClick={handleOpen}
-                      />
-                    )}
-                  </div>
-
+                  <Input
+                    placeholder="Enter your password"
+                    type={password ? "password" : "text"}
+                    className="text-grayInactive text-lg font-normal mt-2"
+                    {...register("oldPassword", {
+                      onChange: () => setIsTyping(true),
+                    })}
+                  />
                   {errors.oldPassword && (
-                    <div className="text-red-500 max-w-[400px] text-sm font-normal pt-3">
+                    <div className="text-red-500 text-sm font-normal pt-3">
                       {errors.oldPassword?.message}
                     </div>
                   )}
+                  <span
+                    onClick={handlePassword}
+                    className="absolute right-0 top-[53%]"
+                  >
+                    {password ? (
+                      <EyeSlash size={32} className=" cursor-pointer pr-3" />
+                    ) : (
+                      <Eye size={32} className=" cursor-pointer pr-3" />
+                    )}
+                  </span>
                 </div>
+
                 {/* enter password */}
-                <div className="">
+                <div className="w-full lg:max-w-[27rem] relative">
                   <label className="text-grayHelp text-lg font-medium">
                     New password
                   </label>
-
-                  {/* input */}
-                  <div className=" items-center lg:min-w-[27rem]  mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
-                    <input
-                      type={type}
-                      placeholder="Enter your password"
-                      className="h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
-                      {...register("newPassword", {
-                        onChange: () => setIsTyping(true),
-                      })}
-                    />
-
-                    {eyeopen ? (
-                      <Eye
-                        size={32}
-                        className=" cursor-pointer pr-3"
-                        onClick={handleClose}
-                      />
-                    ) : (
-                      <EyeSlash
-                        size={32}
-                        className=" cursor-pointer pr-3"
-                        onClick={handleOpen}
-                      />
-                    )}
-                  </div>
-
+                  <Input
+                    placeholder="Enter your password"
+                    type={newPassword ? "password" : "text"}
+                    className="text-grayInactive text-lg font-normal mt-2"
+                    {...register("newPassword", {
+                      onChange: () => setIsTyping(true),
+                    })}
+                  />
                   {errors.newPassword && (
-                    <div className="text-red-500 max-w-[400px] text-sm font-normal pt-3">
+                    <div className="text-red-500 text-sm font-normal pt-3">
                       {errors.newPassword?.message}
                     </div>
                   )}
+                  <span
+                    onClick={handleNewPassword}
+                    className="absolute right-0 top-[53%]"
+                  >
+                    {newPassword ? (
+                      <EyeSlash size={32} className=" cursor-pointer pr-3" />
+                    ) : (
+                      <Eye size={32} className=" cursor-pointer pr-3" />
+                    )}
+                  </span>
                 </div>
                 {/* re-enter password */}
               </div>
 
-              <div className="">
+              <div className="w-full lg:max-w-[27rem] relative mt-10 lg:mt-0">
                 <label className="text-grayHelp text-lg font-medium">
                   Confirm password
                 </label>
-
-                {/* input */}
-                <div className=" items-center lg:min-w-[27rem] mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
-                  <input
-                    type={type}
-                    placeholder="Enter your password"
-                    className="w-full h-12 px-3 outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
-                    {...register("confirmPassword", {
-                      onChange: () => setIsTyping(true),
-                    })}
-                  />
-
-                  {eyeopen ? (
-                    <Eye
-                      size={32}
-                      className=" cursor-pointer pr-3"
-                      onClick={handleClose}
-                    />
-                  ) : (
-                    <EyeSlash
-                      size={32}
-                      className=" cursor-pointer pr-3"
-                      onClick={handleOpen}
-                    />
-                  )}
-                </div>
-
+                <Input
+                  placeholder="Enter your password"
+                  type={confirmPassword ? "password" : "text"}
+                  className="text-grayInactive text-lg font-normal mt-2"
+                  {...register("confirmPassword", {
+                    onChange: () => setIsTyping(true),
+                  })}
+                />
                 {errors.confirmPassword && (
-                  <div className="text-red-500 max-w-[400px] text-sm font-normal pt-3">
+                  <div className="text-red-500 text-sm font-normal pt-3">
                     {errors.confirmPassword?.message}
                   </div>
                 )}
+                <span
+                  onClick={handleConfirmPassword}
+                  className="absolute right-0 top-[53%]"
+                >
+                  {confirmPassword ? (
+                    <EyeSlash size={32} className=" cursor-pointer pr-3" />
+                  ) : (
+                    <Eye size={32} className=" cursor-pointer pr-3" />
+                  )}
+                </span>
               </div>
             </div>
             <Button

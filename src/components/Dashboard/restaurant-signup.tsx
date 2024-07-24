@@ -86,7 +86,6 @@ export const RestaurantSignUp = () => {
     mutate(values);
   };
 
-  console.log(errors);
   const words = "Elevate your Restaurant Experience";
 
   return (

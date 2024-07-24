@@ -12,7 +12,6 @@ export interface Reservation {
 }
 
 export default function ReservationCard({ data }: Reservation) {
-  console.log("pending", data);
   const [opened, { open, close }] = useDisclosure();
   const [openedReservationId, setOpenedReservationId] = useState<string | null>(
     null

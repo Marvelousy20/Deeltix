@@ -19,17 +19,10 @@ import { useRouter } from "next/navigation";
 import { MoveLeft } from "lucide-react";
 
 export const MobileSignUp = () => {
-  const [eyeopen, setEyeOpen] = useState(false);
-  const [type, setType] = useState("password");
+  const [password, setPassword] = useState(false);
   const { push } = useRouter();
-  function handleOpen() {
-    setType("text");
-    setEyeOpen(true);
-  }
-
-  function handleClose() {
-    setType("password");
-    setEyeOpen(false);
+  function handlePassword() {
+    setPassword(!password);
   }
 
   const formSchema = z.object({
@@ -71,7 +64,6 @@ export const MobileSignUp = () => {
     onSuccess() {
       toast.success("Yuppy! Check your email for verification code");
       cookieStorage.setItem("email", getValues("email"));
-      console.log(cookieStorage.setItem("email", getValues("email")));
       push("/user-verify-email");
       reset();
     },
@@ -150,37 +142,31 @@ export const MobileSignUp = () => {
               )}
             </div>
 
-            <div className="w-full lg:max-w-[27rem]">
+            <div className="w-full lg:max-w-[27rem] relative">
               <label className="text-grayHelp text-lg font-medium">
                 Password
               </label>
-              <div className=" items-center  mt-2 justify-between flex h-12 w-[300px] rounded-2xl border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
-                <input
-                  type={type}
-                  placeholder="Password"
-                  className="h-12 px-3 w-full outline-none rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
-                  {...register("password")}
-                />
-
-                {eyeopen ? (
-                  <Eye
-                    size={32}
-                    className=" cursor-pointer pr-3"
-                    onClick={handleClose}
-                  />
-                ) : (
-                  <EyeSlash
-                    size={32}
-                    className=" cursor-pointer pr-3"
-                    onClick={handleOpen}
-                  />
-                )}
-              </div>
+              <Input
+                placeholder="Enter your password"
+                type={password ? "password" : "text"}
+                className="text-grayInactive text-lg font-normal mt-2"
+                {...register("password")}
+              />
               {errors.password && (
-                <div className="text-red-500 max-w-[400px] text-sm font-normal pt-3">
+                <div className="text-red-500 text-sm font-normal pt-3">
                   {errors.password?.message}
                 </div>
               )}
+              <span
+                onClick={handlePassword}
+                className="absolute right-0 top-[53%]"
+              >
+                {password ? (
+                  <EyeSlash size={32} className=" cursor-pointer pr-3" />
+                ) : (
+                  <Eye size={32} className=" cursor-pointer pr-3" />
+                )}
+              </span>
             </div>
 
             <div className="text-sm flex gap-1">

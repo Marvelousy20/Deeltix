@@ -82,9 +82,9 @@ export default function Rating({
     <section className="w-full md:w-full">
       {data?.map((review, idx) => (
         <div key={idx} className="mt-8 border rounded-[1.25rem]  lg:p-6 p-4">
-          <div className="flex flex-row justify-between items-center md:flex-row">
+          <div className="flex lg:flex-row flex-col justify-between items-start md:flex-row">
             {/* Profile part */}
-            <div className="flex lg:items-center item-start gap-4">
+            <div className="lg:flex space-y-3 lg:space-y-0 item-start gap-4">
               <div className="lg:h-12 lg:w-12 h-12 w-12 rounded-full bg-background flex justify-center items-center text-[1.5rem]">
                 {review?.user?.profile?.name.slice(0, 1)}
               </div>

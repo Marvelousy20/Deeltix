@@ -83,7 +83,6 @@ export const RestaurantForm = () => {
   const { errors } = formState;
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: IUpdateRestaurantOverview) =>
-      // console.log(data),
       await api.patch(`/api/restaurants/profile/${restaurantId}`, data),
     mutationKey: ["update-restaurant-profile"],
     onSuccess(data) {

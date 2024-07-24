@@ -77,7 +77,6 @@ export const SignUp = ({
     onSuccess() {
       toast.success("Yuppy! Check your email for verification code");
       cookieStorage.setItem("email", getValues("email"));
-      console.log(cookieStorage.setItem("email", getValues("email")));
       reset();
       close();
       open();

@@ -53,7 +53,6 @@ export const RestaurantForgotPassword = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate(values);
-    console.log(values);
   };
 
   const words = "Elevate your Restaurant Experience";

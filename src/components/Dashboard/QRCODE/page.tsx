@@ -1,45 +1,60 @@
-"use client";
-import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import { useParams } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { Slider } from "@/components/ui/slider";
-import { SketchPicker } from "react-color";
-import { QRCode } from "react-qrcode-logo";
-import { FirstFrame } from "@/components/QRCode-frames/first-frame";
-import { SecondFrame } from "@/components/QRCode-frames/second-frame";
-import { ThirdFrame } from "@/components/QRCode-frames/third-frame";
-import { Button } from "@/components/ui/button";
-import { Save } from "lucide-react";
-import { Download } from "lucide-react";
+'use client';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { Input } from '@/components/ui/input';
+import Image from 'next/image';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { Slider } from '@/components/ui/slider';
+import { SketchPicker } from 'react-color';
+import { QrFrame } from '@/components/QRCode-frames/qrFrame';
+import { Button } from '@/components/ui/button';
+import { Save } from 'lucide-react';
+import { useUser } from '@/context/restaurant/user';
+import { toPng } from 'html-to-image';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { api } from '@/axios-config';
+import { toast } from 'react-toastify';
+
+interface ISettings {
+  frame: string;
+  cornerRadius: string;
+  foregroundColor: string;
+  backgroundColor: string;
+  padding: string;
+  RestaurantNick: string;
+  // textColor: string;
+  style: string;
+}
 
 const formSchema = z.object({
-  foreground: z.string().min(2, {
-    message: "Enter color code",
+  foregroundColor: z.string().min(2, {
+    message: 'Enter color code',
   }),
-  background: z.string().min(2, {
-    message: "Enter color code",
+  backgroundColor: z.string().min(2, {
+    message: 'Enter color code',
   }),
-  restaurantName: z.string().min(2, {
-    message: "Enter restaurant name",
+  RestaurantNick: z.string().min(2, {
+    message: 'Enter restaurant name',
   }),
   textColor: z.string().min(2, {
-    message: "Enter text color",
+    message: 'Enter text color',
   }),
 });
 export const RestaurantQrCode = () => {
-  const { id } = useParams();
-  const [restaurantName, setRestaurantName] = useState("");
+  const [resId, setResId]: any = useState('');
+  const { restaurantId } = useUser();
+  const [RestaurantNick, setRestaurantNick] = useState('');
   const [slider, setSlider] = useState([0]);
   const [radius, setRadius] = useState([0]);
   const [size, setSize] = useState([16]);
-  const [color, setColor] = useState("#FFF");
-  const [fcolor, setFcolor] = useState("#000");
+  const [color, setColor] = useState('#FFF');
+  const [fcolor, setFcolor] = useState('#000');
   const [show, setShow] = useState(false);
   const [fshow, setFshow] = useState(false);
+  const [activeFrame, setActiveFrame] = useState('1');
+  // const [savedSettings, setSavedSettings] = useState<ISettings | undefined>();
+
   const handleShow = () => {
     setShow(!show);
   };
@@ -52,45 +67,111 @@ export const RestaurantQrCode = () => {
   const forchange = (forecolor: any) => {
     setFcolor(forecolor.hex);
   };
-  const inputChange = (e: any) => {
-    setColor(e.target.value);
-  };
-  const foreInputChange = (e: any) => {
-    setFcolor(e.target.value);
+  const RestName = (restName: any) => {
+    setRestaurantNick(restName);
+    setValue('RestaurantNick', restName);
   };
 
-  // Frame states
-  const [firstFrame, setFirstFrame] = useState(false);
-  const [secondFrame, setSecondFrame] = useState(false);
-  const [thirdFrame, setThirdFrame] = useState(false);
+  // saved settings
+  const { data: settings, isLoading: settingLoading } = useQuery({
+    queryFn: async () => {
+      if (!restaurantId) {
+        return;
+      }
+      return await api.get(`/api/restaurants/${restaurantId}/qr-settings`);
+    },
+    queryKey: ['restaurantId', 'qr-settings'],
+    enabled: !!restaurantId,
+    select: (data) => data?.data?.data?.data?.QRSettings,
+  });
 
-  const handleFirstFrame = () => {
-    setFirstFrame(!firstFrame);
-  };
+  useEffect(() => {
+    if (settings) {
+      setActiveFrame(settings.frame);
+      setColor(settings.backgroundColor);
+      setFcolor(settings.foregroundColor);
+      setActiveFrame(settings.frame);
+      setRadius([Number(settings.cornerRadius)]);
+      setSlider([Number(settings.padding)]);
+      setRestaurantNick(settings.RestaurantNick);
+    }
+  }, [settings]);
 
-  const handleSecondFrame = () => {
-    setSecondFrame(!secondFrame);
-  };
+  //fetch saved settings
+  const { data, isSuccess } = useQuery({
+    queryFn: async () =>
+      await api.get(`/api/restaurants/${restaurantId}/qr-settings
+    `),
+    queryKey: ['qr-settings'],
+    // isSuccess: setSavedSettings(data?.data?.data?.data.QRSettings)
+  });
+  // isSuccess && setSavedSettings(data?.data?.data?.data.QRSettings);
 
-  const handleThirdFrame = () => {
-    setThirdFrame(!thirdFrame);
-  };
   const { handleSubmit, register, formState, reset, watch, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      foreground: "",
-      background: "",
-      restaurantName: "",
-      textColor: "",
+      foregroundColor: fcolor,
+      backgroundColor: color,
+      textColor: '#000',
+      RestaurantNick: RestaurantNick,
     },
   });
+  const ref = useRef<HTMLDivElement>(null);
   const { errors } = formState;
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    //   mutate(values);
-    console.log(values);
+    const { foregroundColor, backgroundColor } = values;
+    const allSetting = {
+      frame: activeFrame.toString(),
+      foregroundColor,
+      backgroundColor,
+      RestaurantNick: `${RestaurantNick}`,
+      padding: `${slider[0]}`.toString(),
+      cornerRadius: `${radius[0]}`.toString(),
+      style: 'normal',
+    };
+    mutate(allSetting);
   };
+
+  const onButtonClick = useCallback(() => {
+    if (ref.current === null) {
+      return;
+    }
+
+    toPng(ref.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.download = RestaurantNick
+          ? `${RestaurantNick}-qr.png`
+          : 'RestaurantQr.png';
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [ref]);
+
+  //SAVE RESTURANTS QR SETTINGS
+  const { mutate, isLoading: saveIsloading } = useMutation({
+    mutationFn: async (data: ISettings) =>
+      await api.post(`/api/restaurants/${restaurantId}/qr-settings/save`, data),
+    mutationKey: ['setting'],
+    onSuccess() {
+      toast.success('Settings Saved');
+    },
+    onError(error) {
+      toast.error('Something happened, try again!');
+    },
+  });
+
+  useEffect(() => {
+    setValue('foregroundColor', fcolor);
+    setValue('backgroundColor', color);
+    setValue('RestaurantNick', color);
+  }, [fcolor, color, setValue, RestaurantNick]);
+
   return (
     <div className="flex w-full items-center justify-center p-5 lg:p-8">
       <section className="w-full lg:w-auto">
@@ -114,30 +195,51 @@ export const RestaurantQrCode = () => {
                     Select frame
                   </h3>
                   <div className="flex items-center gap-4">
-                    <Image
-                      src="/restaurants/third-frame.png"
-                      width={60}
-                      height={60}
-                      alt="First-frame"
-                      onClick={handleThirdFrame}
-                      className="cursor-pointer"
-                    />
-                    <Image
-                      src="/restaurants/second-frame.png"
-                      width={60}
-                      height={60}
-                      alt="First-frame"
-                      onClick={handleFirstFrame}
-                      className="cursor-pointer"
-                    />
-                    <Image
-                      src="/restaurants/first-frame.png"
-                      width={60}
-                      height={60}
-                      alt="First-frame"
-                      onClick={handleSecondFrame}
-                      className="cursor-pointer"
-                    />
+                    <div
+                      className={`${
+                        activeFrame == '1' &&
+                        'border-2 bg-[#574DFF] border-[#574DFF]'
+                      }`}
+                    >
+                      <Image
+                        src="/restaurants/third-frame.png"
+                        width={60}
+                        height={60}
+                        alt="First-frame"
+                        onClick={() => setActiveFrame('1')}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                    <div
+                      className={`${
+                        activeFrame == '2' &&
+                        'border-2 bg-[#574DFF] border-[#574DFF]'
+                      }`}
+                    >
+                      <Image
+                        src="/restaurants/second-frame.png"
+                        width={60}
+                        height={60}
+                        alt="First-frame"
+                        onClick={() => setActiveFrame('2')}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                    <div
+                      className={`${
+                        activeFrame == '3' &&
+                        'border-2 bg-[#574DFF] border-[#574DFF]'
+                      }`}
+                    >
+                      <Image
+                        src="/restaurants/first-frame.png"
+                        width={60}
+                        height={60}
+                        alt="First-frame"
+                        onClick={() => setActiveFrame('3')}
+                        className="cursor-pointer"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div>
@@ -150,19 +252,19 @@ export const RestaurantQrCode = () => {
 
                   <div className="flex items-center gap-2">
                     <Input
-                      placeholder="Enter full name"
+                      placeholder="e.g white"
                       className="text-grayInactive text-lg font-normal mt-2 w-full"
                       value={fcolor}
-                      onChange={foreInputChange}
+                      onChange={(e) => setFcolor(e.target.value)}
                     />
                     <div
                       onClick={handleFshow}
                       className="h-[40px] w-[40px] bg-[#574DFF] rounded-lg"
                     ></div>
                   </div>
-                  {errors.foreground && (
+                  {errors.foregroundColor && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.foreground.message}
+                      {errors.foregroundColor.message}
                     </div>
                   )}
                 </div>
@@ -178,9 +280,9 @@ export const RestaurantQrCode = () => {
                   ) : null}
                   <div className="flex items-center gap-2">
                     <Input
-                      placeholder="Enter full name"
+                      placeholder="e.g blue"
                       value={color}
-                      onChange={inputChange}
+                      onChange={(e) => setColor(e.target.value)}
                       // onChange={(val) => setColor(val)}
                       className="text-grayInactive text-lg font-normal mt-2 w-full"
                       // {...register("background", {
@@ -192,9 +294,9 @@ export const RestaurantQrCode = () => {
                       className="h-[40px] w-[40px] bg-[#574DFF] rounded-lg"
                     ></div>
                   </div>
-                  {errors.background && (
+                  {errors.backgroundColor && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.background.message}
+                      {errors.backgroundColor.message}
                     </div>
                   )}
                 </div>
@@ -231,20 +333,24 @@ export const RestaurantQrCode = () => {
                 </div>
                 <div>
                   <label className="text-grayHelp text-lg font-medium">
-                    Restaurant name
+                    Restaurant name{' '}
+                    <span className="text-xs">(or popularly known as)</span>
                   </label>
                   <Input
-                    value={restaurantName}
-                    onChange={(e) => setRestaurantName(e.target.value)}
-                    placeholder="Enter restaurant name"
+                    value={RestaurantNick}
+                    onChange={(e) => {
+                      setRestaurantNick(e.target.value);
+                      setValue('RestaurantNick', e.target.value);
+                    }}
+                    placeholder="e.g Deeltix"
                     className="text-grayInactive text-lg font-normal mt-2 w-full"
                     // {...register("restaurantName", {
                     //   required: true,
                     // })}
                   />
-                  {errors.restaurantName && (
+                  {errors.RestaurantNick && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.restaurantName.message}
+                      {errors.RestaurantNick.message}
                     </div>
                   )}
                 </div>
@@ -296,92 +402,40 @@ export const RestaurantQrCode = () => {
                 </div>
               </form>
             </div>
-            <div className="h-[150px] lg:w-[150px] order-1 lg:order-2 lg:block justify-center w-full">
-              {thirdFrame ? (
-                <section>
-                  <div
-                    className={`border border-grayBottom w-fit h-fit`}
-                    style={{
-                      padding: `${slider}px`,
-                      // borderRadius: `${radius}px`,
-                      backgroundColor: `${color}`,
-                    }}
-                  >
-                    <ThirdFrame
-                    url={`www.deeltix.com/restaurant/${id}/menu`}
-                      color={color}
-                      fcolor={fcolor}
-                      numbers={[radius, radius, radius]}
-                    />
-                  </div>
-                  <div className="flex justify-center w-full">
+            <div className="h-[150px] mt-10 lg:mt-0 lg:w-[150px] order-1 lg:order-2 lg:block flex justify-center w-full items-center">
+              <section>
+                <div
+                  ref={ref}
+                  className={`w-fit h-fit rounded-lg p-2 shadow-inherit border border-grayBottom`}
+                  style={{
+                    padding: `${slider}px`,
+                    // borderRadius: `${radius}px`,
+                    backgroundColor: `${color}`,
+                    overflow: 'hidden',
+                  }}
+                >
+                  <QrFrame
+                    frame={activeFrame}
+                    url={`https://www.deeltix.com/restaurant/${restaurantId}/menu`}
+                    color={color}
+                    fcolor={fcolor}
+                    name={RestaurantNick}
+                    numbers={[radius, radius, radius, radius]}
+                  />
+                </div>
+                <div className="flex justify-center items-center w-full">
+                  <div>
                     <Button
+                      onClick={onButtonClick}
                       type="submit"
-                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
+                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-5"
                     >
                       <Save size={15} />
                       Download
                     </Button>
                   </div>
-                </section>
-              ) : firstFrame ? (
-                <section>
-                  <div
-                    className={`border border-grayBottom rounded-[18px] w-fit h-fit`}
-                    style={{
-                      padding: `${slider}px`,
-                      // borderRadius: `${radius}px`,
-                      backgroundColor: `${color}`,
-                    }}
-                  >
-                    <FirstFrame
-                    url={`www.deeltix.com/restaurant/661d478a3bf2fc58076fb30d/menu`}
-                      color={color}
-                      fcolor={fcolor}
-                      name={restaurantName}
-                      numbers={[radius, radius, radius]}
-                    />
-                  </div>
-                  <div className="flex justify-center w-full">
-                    <Button
-                      type="submit"
-                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
-                    >
-                      <Save size={15} />
-                      Download
-                    </Button>
-                  </div>
-                </section>
-              ) : secondFrame ? (
-                <section>
-                  <div
-                    className={`border border-grayBottom rounded-t-[20px] rounded-b-lg w-fit h-fit`}
-                    style={{
-                      padding: `${slider}px`,
-                      // borderRadius: `${radius}px`,
-                      backgroundColor: `${color}`,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <SecondFrame
-                      url={`www.deeltix.com/restaurant/661d478a3bf2fc58076fb30d/menu`}
-                      color={color}
-                      fcolor={fcolor}
-                      name={restaurantName}
-                      numbers={[radius, radius, radius]}
-                    />
-                  </div>
-                  <div className="flex justify-center w-full">
-                    <Button
-                      type="submit"
-                      className="flex gap-2 bg-[#574DFF] w-full text-white mt-10"
-                    >
-                      <Save size={15} />
-                      Download
-                    </Button>
-                  </div>
-                </section>
-              ) : null}
+                </div>
+              </section>
             </div>
           </section>
         </div>

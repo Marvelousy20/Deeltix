@@ -56,13 +56,11 @@ export const MobileVerifyEmail = () => {
   const handleReverify = (e: FormEvent) => {
     e.preventDefault();
     resendPin({ email: email });
-    console.log(resendPin({ email: email }));
   };
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     mutate({ email: email, otp: otp });
-    console.log("email result: ", { email, otp });
   };
 
   return (

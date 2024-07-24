@@ -21,7 +21,6 @@ export const AddressDetails = () => {
   //   select: ({ data }) => data?.data?.data,
   // });
 
-  // console.log(data);
   return (
     <div className="bg-white  lg:pt-[56px] pt-6 w-full">
       <div className="flex flex-col space-y-6 w-[90%] mx-auto">
