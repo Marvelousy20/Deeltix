@@ -1,6 +1,5 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -13,13 +12,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         className={`w-full relative flex justify-center ${
-          customMaxWidth || "lg:max-w-[27rem]"
+          customMaxWidth || 'lg:max-w-[27rem]'
         }`}
       >
         <input
           type={type}
           className={cn(
-            "flex h-12 w-full rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300",
+            'flex h-12 w-full rounded-full border border-neutral-200 bg-input px-3 py-5 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300',
             className
           )}
           ref={ref}
@@ -27,7 +26,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
         {icon && (
           <div className="absolute inset-y-0 right-0 top-8 flex items-center pr-0 pointer-events-none">
-            <Image src={icon} alt="icon" className="h-12 w-12" />
+            <img src={icon} alt="icon" className="h-12 w-12" />
           </div>
         )}
       </div>
@@ -35,6 +34,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = "Input";
+Input.displayName = 'Input';
 
 export { Input };

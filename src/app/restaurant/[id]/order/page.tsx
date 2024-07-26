@@ -88,14 +88,34 @@ function WhoIsOrdering() {
               )} */}
           </div>
           <div>
-            <Button
-              className="md:w-[300px] fixed text-white font-normal bottom-0 right-0 left-0 md:relative mb-4 mx-5 md:mx-0 md:mb-0"
-              variant="primary"
-              type="submit"
-            >
-              Next
-            </Button>
+            <fieldset className="text-[#2C2929] font-base">
+              <legend className="">Would you like an email receipt?</legend>
+              <div className="flex gap-2">
+                <input
+                  type="radio"
+                  id="emailRecipt"
+                  name="contact"
+                  value="yes"
+                />
+                <label htmlFor="emailRecipt">Yes</label>
+
+                <input
+                  type="radio"
+                  id="emailRecipt"
+                  name="contact"
+                  value="no"
+                />
+                <label htmlFor="emailRecipt">No</label>
+              </div>
+            </fieldset>
           </div>
+          <Button
+            className="w-[200px] md:w-[300px] text-white font-normal mx-auto"
+            variant="primary"
+            type="submit"
+          >
+            Next
+          </Button>
         </form>
       </div>
     </div>
