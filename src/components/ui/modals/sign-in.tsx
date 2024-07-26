@@ -17,6 +17,7 @@ import { Modal } from "@mantine/core";
 import ModalPassword from "./modal-password";
 import { Eye, EyeSlash, TrendUp } from "iconsax-react";
 import { useUser } from "@/context/user/user";
+import { SignInTabs } from "@/components/AuthenticationTabs/SignIns/sign-in-tab";
 
 export default function ModalSignIn({
   opened,
@@ -79,7 +80,6 @@ export default function ModalSignIn({
       toast.error(
         "Hmm, that password doesn't look quite right. Please try again."
       );
-      // handleError(error as ErrorType);
     },
   });
 
@@ -101,99 +101,19 @@ export default function ModalSignIn({
         }}
       >
         <div className="flex w-full bg-white rounded-lg">
-          <div className="lg:w-1/2 w-full lg:p-10 p-0">
-            <h1 className="lg:text-3xl text-2xl font-bold pb-6">
-              Sign in to your account
-            </h1>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-6"
-            >
-              <div className="w-full lg:max-w-[27rem]">
-                <label className="text-grayHelp text-lg font-medium">
-                  Email address
-                </label>
-                <Input
-                  placeholder="Enter your email address"
-                  type="email"
-                  className="text-grayInactive w-full lg:max-w-[27rem] text-lg font-normal mt-2"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <div className="text-red-500 text-sm font-normal pt-3">
-                    {errors.email?.message}
-                  </div>
-                )}
-              </div>
-
-              <div className="w-full lg:max-w-[27rem]">
-                <label className="text-grayHelp text-lg font-medium">
-                  Password
-                </label>
-
-                {/* input */}
-                <div className="items-center mt-2 w-full lg:max-w-[27rem justify-between flex h-12  rounded-full border border-neutral-200 bg-input py-5 text-sm  focus-within:ring-2 focus-within:ring-neutral-950 focus-within:ring-offset-2">
-                  <input
-                    type={type}
-                    placeholder="Enter your password"
-                    className="h-12 px-3 outline-none w-full  rounded-2xl text-grayInactive text-lg font-normal rounded-r-none border-none bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
-                    {...register("password")}
-                  />
-
-                  {eyeopen ? (
-                    <Eye
-                      size={32}
-                      className=" cursor-pointer pr-3"
-                      onClick={handleClose}
-                    />
-                  ) : (
-                    <EyeSlash
-                      size={32}
-                      className=" cursor-pointer pr-3"
-                      onClick={handleOpen}
-                    />
-                  )}
-                </div>
-
-                {errors.password && (
-                  <div className="text-red-500 max-w-[400px] text-sm font-normal pt-3">
-                    {errors.password?.message}
-                  </div>
-                )}
-              </div>
-
-              <div className="text-sm flex gap-1 mb-6">
-                <p className="text-sm font-normal text-[#565D62]">
-                  Can’t remember your password?{" "}
-                  <span
-                    onClick={() => {
-                      open();
-                      close();
-                    }}
-                    className="text-[#574DFF] cursor-pointer"
-                  >
-                    Reset here
-                  </span>
-                </p>
-              </div>
-
-              <Button
-                type="submit"
-                className=" lg:w-[300px] w-full"
-                variant="primary"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <span className="flex items-center gap-2 text-white font-medium text-xl">
-                    <span>Signing in</span> <Loader size="sm" />
-                  </span>
-                ) : (
-                  <span className="text-white font-medium text-xl">
-                    Sign in
-                  </span>
-                )}
-              </Button>
-            </form>
+          <div className="w-1/2">
+            <div className="flex flex-col items-center max-w-[400px]">
+              <h1 className="text-2xl font-bold pb-6">Sign in to account</h1>
+              <p className="text-lg font-normal text-center">
+                List your restaurant among the favourite restaurants in town
+              </p>
+            </div>
+            <div className="flex items-center justify-center">
+              <SignInTabs
+                personalClose={() => close()}
+                businessClose={() => close()}
+              />
+            </div>
           </div>
 
           <div className="rounded-r-lg hidden lg:block w-1/2 bg-[url('/signup-rest.png')] bg-cover bg-no-repeat bg-center"></div>
