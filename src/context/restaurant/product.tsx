@@ -13,14 +13,19 @@ interface IProduct {
   setUrl: Dispatch<SetStateAction<string[]>>;
   banner: string[];
   setBanner: Dispatch<SetStateAction<string[]>>;
+  menuEdit: string[];
+  setMenuEdit: Dispatch<SetStateAction<string[]>>;
 }
 
 const productContext = createContext<IProduct | undefined>(undefined);
 const ProductProvider = ({ children }: { children: React.ReactNode }) => {
   const [url, setUrl] = useState<string[]>([]);
+  const [menuEdit, setMenuEdit] = useState<string[]>([]);
   const [banner, setBanner] = useState<string[]>([]);
   return (
-    <productContext.Provider value={{ url, setUrl, banner, setBanner }}>
+    <productContext.Provider
+      value={{ url, setUrl, banner, setBanner, menuEdit, setMenuEdit }}
+    >
       {children}
     </productContext.Provider>
   );

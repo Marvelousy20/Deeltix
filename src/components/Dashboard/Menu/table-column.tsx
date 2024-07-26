@@ -42,7 +42,14 @@ export const menuColumns: ColumnDef<MenuType>[] = [
       return (
         <div>
           {/* onclick of this will console the user id based on the role you clicked */}
-          <MenuDetails id={user.id} restaurantId={user.restaurant} />
+          <MenuDetails
+            id={user.id}
+            restaurantId={user.restaurant}
+            menuname={user?.name}
+            description={user?.description}
+            price={user?.price}
+            image={user?.image}
+          />
           {/* <MoreHorizontal onClick={() => console.log(user.id)} /> */}
         </div>
       );
