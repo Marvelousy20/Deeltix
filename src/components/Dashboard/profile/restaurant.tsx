@@ -319,9 +319,6 @@ export const RestaurantProfile = ({
               </div>
 
               <div className="w-full relative">
-                <label className="text-grayHelp text-lg font-medium">
-                  Close from
-                </label>
                 <article className="flex items-center justify-between w-full gap-5">
                   <div className="w-full">
                     <label className="text-grayHelp text-lg font-medium">
@@ -364,7 +361,7 @@ export const RestaurantProfile = ({
                     )}
                   </div>
                 </article>
-                <Button
+                {/* <Button
                   type="submit"
                   className="w-full !px-4 py-2 bg-[#574DFF] text-white text-base font-medium rounded-lg border border-[#574DFF]"
                 >
@@ -376,7 +373,7 @@ export const RestaurantProfile = ({
                   ) : (
                     <p className="text-white font-medium text-xl">Submit</p>
                   )}
-                </Button>
+                </Button> */}
               </div>
             </article>
             <Button
